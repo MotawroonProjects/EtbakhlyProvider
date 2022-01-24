@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
-import com.etbakhly_provider.model.CartDataModel;
 import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.model.UserSettingsModel;
 import com.google.gson.Gson;
@@ -97,21 +96,6 @@ public class Preferences {
         SharedPreferences preferences = context.getSharedPreferences("settingsEbsar", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         return gson.fromJson(preferences.getString("settings", ""), UserSettingsModel.class);
-    }
-
-    public void createUpdateCartData(Context context, CartDataModel cartDataModel) {
-        SharedPreferences preferences = context.getSharedPreferences("cart", Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String data = gson.toJson(cartDataModel);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("data", data);
-        editor.apply();
-    }
-
-    public CartDataModel getCartData(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("cart", Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        return gson.fromJson(preferences.getString("data", ""), CartDataModel.class);
     }
 
 

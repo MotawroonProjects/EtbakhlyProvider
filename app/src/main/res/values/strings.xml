@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EtbakhlyProvider</string>
+    <string name="field_required">Field Required</string>
+    <string name="inv_email">Invaild Email</string>
 </resources>

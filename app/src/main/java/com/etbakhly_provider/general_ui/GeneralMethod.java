@@ -211,45 +211,45 @@ public class GeneralMethod {
     @BindingAdapter("user_image")
     public static void user_image(View view, String imageUrl) {
 
-
-        if (view instanceof CircleImageView) {
-            CircleImageView imageView = (CircleImageView) view;
-            if (imageUrl != null) {
-
-                Glide.with(view.getContext()).asBitmap()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .placeholder(R.drawable.circle_avatar)
-                        .load(imageUrl)
-                        .centerCrop()
-                        .into(imageView);
-
-            }
-        } else if (view instanceof RoundedImageView) {
-            RoundedImageView imageView = (RoundedImageView) view;
-
-            if (imageUrl != null) {
-
-                Glide.with(view.getContext()).asBitmap()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .placeholder(R.drawable.circle_avatar)
-                        .load(imageUrl)
-                        .centerCrop()
-                        .into(imageView);
-
-            }
-        } else if (view instanceof ImageView) {
-            ImageView imageView = (ImageView) view;
-
-            if (imageUrl != null) {
-
-                Glide.with(view.getContext()).asBitmap()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .placeholder(R.drawable.circle_avatar)
-                        .load(imageUrl)
-                        .centerCrop()
-                        .into(imageView);
-            }
-        }
+//
+//        if (view instanceof CircleImageView) {
+//            CircleImageView imageView = (CircleImageView) view;
+//            if (imageUrl != null) {
+//
+//                Glide.with(view.getContext()).asBitmap()
+//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                        .placeholder(R.drawable.circle_avatar)
+//                        .load(imageUrl)
+//                        .centerCrop()
+//                        .into(imageView);
+//
+//            }
+//        } else if (view instanceof RoundedImageView) {
+//            RoundedImageView imageView = (RoundedImageView) view;
+//
+//            if (imageUrl != null) {
+//
+//                Glide.with(view.getContext()).asBitmap()
+//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                        .placeholder(R.drawable.circle_avatar)
+//                        .load(imageUrl)
+//                        .centerCrop()
+//                        .into(imageView);
+//
+//            }
+//        } else if (view instanceof ImageView) {
+//            ImageView imageView = (ImageView) view;
+//
+//            if (imageUrl != null) {
+//
+//                Glide.with(view.getContext()).asBitmap()
+//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                        .placeholder(R.drawable.circle_avatar)
+//                        .load(imageUrl)
+//                        .centerCrop()
+//                        .into(imageView);
+//            }
+//        }
 
     }
 
@@ -341,21 +341,7 @@ public class GeneralMethod {
 
     }
 
-    @BindingAdapter("order_status")
-    public static void orderStatus(TextView textView, String status) {
-        if (status.equals("new")) {
-            textView.setText(textView.getContext().getString(R.string.order_sent));
-        } else if (status.equals("accepted")) {
-            textView.setText(textView.getContext().getString(R.string.delivered_to_the_delegate));
 
-        } else if (status.equals("delivering")) {
-            textView.setText(textView.getContext().getString(R.string.delivery_in_progress));
-
-        } else if (status.equals("ended")) {
-            textView.setText(textView.getContext().getString(R.string.end));
-
-        }
-    }
 
 }
 
