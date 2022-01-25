@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <variable
+            name="model"
+            type="com.etbakhly_provider.model.SignUpModel" />
+
+    </data>
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity_sign_up.SignUpActivity"
+        android:fitsSystemWindows="true"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        >
+
+        <fragment
+            android:id="@+id/navHostFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_signup" />
+
+        <Button
+                android:id="@+id/btnNext"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/rounded_primary"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:text="@string/next"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp"
+
+                />
+
+
+    </LinearLayout>
+</layout>

@@ -51,6 +51,11 @@
     <color name="gray31">#464646</color>
     <color name="gray32">#9B9B9B</color>
     <color name="gray33">#2E2E2E</color>
+    <color name="gray34">#FBFBFB</color>
+    <color name="gray35">#8E9397</color>
+    <color name="gray36">#BABABA</color>
+    <color name="gray37">#D3D3D3</color>
+    <color name="gray38">#969696</color>
 
     <color name="online">#4FC500</color>
 
@@ -66,5 +71,6 @@
     <color name="gray1_trans">#ddf5f5f5</color>
     <color name="rate_color">#FFD800</color>
     <color name="color00">#4FA13A</color>
+    <color name="color9">#4E9F98</color>
 
 </resources>
