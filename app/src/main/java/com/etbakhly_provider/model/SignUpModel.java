@@ -30,6 +30,12 @@ public class SignUpModel extends BaseObservable  {
 
     public ObservableField<String> error_name = new ObservableField<>();
     public ObservableField<String> error_address = new ObservableField<>();
+    public ObservableField<String> error_from = new ObservableField<>();
+    public ObservableField<String> error_to = new ObservableField<>();
+    public ObservableField<String> error_licenseNumber = new ObservableField<>();
+    public ObservableField<String> error_deliverytime = new ObservableField<>();
+    public ObservableField<String> error_processingtime = new ObservableField<>();
+
     public ObservableField<String> error_email = new ObservableField<>();
     public ObservableField<String> error_password = new ObservableField<>();
 
@@ -57,9 +63,13 @@ public class SignUpModel extends BaseObservable  {
     {
         if (!name.isEmpty()&&
                 !from.isEmpty()
-                &&!address.isEmpty()){
+                &&!address.isEmpty()
+        &&!to.isEmpty()&&service_id !=0
+        ){
             error_name.set(null);
             error_address.set(null);
+            error_from.set(null);
+            error_to.set(null);
             return true;
         }else {
             if (name.isEmpty()){
@@ -73,30 +83,62 @@ public class SignUpModel extends BaseObservable  {
             }else {
                 error_address.set(null);
             }
+            if (from.isEmpty()){
+                error_from.set(context.getString(R.string.field_required));
+            }else {
+                error_from.set(null);
+            }
+            if (to.isEmpty()){
+                error_to.set(context.getString(R.string.field_required));
+            }else {
+                error_to.set(null);
+            }
+            if (service_id ==0){
+                Toast.makeText(context,context.getResources().getString(R.string.ch_service),Toast.LENGTH_LONG).show();
+
+            }
 
             return false;
         }
     }
     public boolean isStep2Valid(Context context)
     {
-        if (service_id !=0&&
-                area_id !=0&&
+        if (
+                !licenseNumber.isEmpty()&&
                 !deliverytime.isEmpty()&&
                 !processingtime.isEmpty()&&
                 cat_id !=0
         )
         {
+            error_licenseNumber.set(null);
+            error_deliverytime.set(null);
+            error_processingtime.set(null);
+
+
             return true;
         }else {
-            if (service_id ==0){
+            if (licenseNumber.isEmpty()){
+                error_licenseNumber.set(context.getString(R.string.field_required));
+            }else {
+                error_licenseNumber.set(null);
             }
 
-            if (area_id ==0){
+            if (deliverytime.isEmpty()){
+                error_deliverytime.set(context.getString(R.string.field_required));
+            }else {
+                error_deliverytime.set(null);
+            }
+            if (processingtime.isEmpty()){
+                error_processingtime.set(context.getString(R.string.field_required));
+            }else {
+                error_processingtime.set(null);
             }
 
 
 
             if (cat_id ==0){
+                Toast.makeText(context,context.getResources().getString(R.string.ch_cat),Toast.LENGTH_LONG).show();
+
             }
 
             if (processingtime.isEmpty()){

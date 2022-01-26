@@ -252,6 +252,7 @@
                         >
 
                         <TextView
+                            android:id="@+id/tvFrom"
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center_vertical"
@@ -261,6 +262,7 @@
                             android:text="@string/from"
                             android:textSize="14sp"
                             android:layout_weight="1"
+                            error="@{model.error_from}"
                             android:paddingStart="8dp"
                             android:paddingEnd="8dp"
                           android:gravity="center_vertical"
@@ -294,6 +296,7 @@
                         >
 
                         <TextView
+                            android:id="@+id/tvTo"
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center_vertical"
@@ -304,6 +307,7 @@
                             android:textSize="14sp"
                             android:layout_weight="1"
                             android:paddingStart="8dp"
+                            error="@{model.error_to}"
                             android:paddingEnd="8dp"
                             android:gravity="center_vertical"
                             />
