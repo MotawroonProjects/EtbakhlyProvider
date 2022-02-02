@@ -2,7 +2,7 @@ package com.etbakhly_provider.tags;
 
 public class Tags {
 
-    public static String base_url = "http://user-store.donutland.com.sa/";
+    public static String base_url = "http://etbo5ly.coopq8.com/";
     public static final String IMAGE_Product_URL = "http://donutland.com.sa/public/images/product/";
     public static final String IMAGE_Slider_URL = base_url+"assets/images/sliders/";//type=1
     public static final String IMAGE_Maincategory_URL = "http://donutland.com.sa/public/images/category/";//type=2

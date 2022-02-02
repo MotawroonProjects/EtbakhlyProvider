@@ -33,4 +33,35 @@
     <string name="next">Next</string>
     <string name="ch_service">Choose Service</string>
     <string name="ch_cat">Choose Category</string>
+    <string name="welcome">welcome</string>
+    <string name="amana_kitchen">Amana Kitchen</string>
+    <string name="awaiting_approval">Awaiting approval</string>
+    <string name="underway">Underway</string>
+    <string name="completed">Completed</string>
+    <string name="order_number">Order number:</string>
+    <string name="dishes">Dishes</string>
+    <string name="prepared">Prepared</string>
+    <string name="reject">Reject</string>
+    <string name="r_s">R.S</string>
+    <string name="a_m">A.M</string>
+    <string name="wallet">Wallet</string>
+    <string name="communication">Communication</string>
+    <string name="notifications">Notifications</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="support">Support</string>
+    <string name="logout">Logout</string>
+    <string name="cook_me">Cook me</string>
+    <string name="phone">Phone number</string>
+    <string name="skip">Skip</string>
+    <string name="no_data_to_show">No data to show</string>
+    <string name="please_enter_the_verification_code_sent_to">Please enter the verification code sent to</string>
+    <string name="confirm">Confirm</string>
+    <string name="resend">Resend</string>
+    <string name="wait">Wait</string>
+    <string name="yes_i_have_read_it_and_agree_to_it">Yes, I have read it and agree to it</string>
+    <string name="do_read_our_terms_of_use_and_privacy_policy"><![CDATA[Do read our <font color ="#4D94BE"><a href="https://www.google.com">Terms of Use</a></font> and <font color ="#4D94BE"><a href="https://www.google.com">Privacy Policy</a></font>]]></string>
+    <string name="cnt_login">You cannot log in without agreeing to the Terms of Use</string>
+    <string name="choose_language">Change language</string>
+    <string name="choose_country">Choose country</string>
 </resources>

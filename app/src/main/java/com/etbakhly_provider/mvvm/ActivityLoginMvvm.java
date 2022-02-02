@@ -25,7 +25,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class ActivityLoginMvvm extends AndroidViewModel {
+public class  ActivityLoginMvvm extends AndroidViewModel {
     private static final String TAG = "ActivityLoginMvvm";
     private MutableLiveData<UserModel> onLoginSuccess = new MutableLiveData<>();
     private CompositeDisposable disposable = new CompositeDisposable();

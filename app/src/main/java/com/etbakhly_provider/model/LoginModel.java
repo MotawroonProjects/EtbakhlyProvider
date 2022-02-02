@@ -1,8 +1,8 @@
 package com.etbakhly_provider.model;
 
 import android.content.Context;
-import android.util.Log;
-import android.util.Patterns;
+
+
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -14,74 +14,43 @@ import com.etbakhly_provider.R;
 import java.io.Serializable;
 
 public class LoginModel extends BaseObservable implements Serializable {
-    private String email;
-    private String password;
-    public ObservableField<String> error_email = new ObservableField<>();
-    public ObservableField<String> error_password = new ObservableField<>();
+    private String phone_code;
+    private String phone;
+    public ObservableField<String> error_phone=new ObservableField<>();
 
     public LoginModel() {
-        email = "";
-        password = "";
+        phone_code ="+20";
+        phone ="";
     }
 
     public boolean isDataValid(Context context) {
-        if (!email.isEmpty()&& Patterns.EMAIL_ADDRESS.matcher(email).matches() &&
-                password.length() >= 6) {
-            error_email.set(null);
-            error_password.set(null);
-
-
+        if (!phone.isEmpty()){
+            error_phone.set(null);
             return true;
-        } else {
-
-         //   Log.e("dsds","dd");
-            if (email.isEmpty()) {
-                error_email.set(context.getString(R.string.field_required));
-
-            }
-            else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                error_email.set(context.getString(R.string.inv_email));
-            }
-            else {
-                error_email.set(null);
-
-            }
-
-            if (password.isEmpty()) {
-                error_password.set(context.getString(R.string.field_required));
-
-            } else if (password.length() < 6) {
-                error_password.set(context.getString(R.string.pass_short));
-
-            } else {
-                error_password.set(null);
-
-            }
-
+        }else {
+            error_phone.set(context.getString(R.string.field_required));
 
             return false;
         }
     }
+    @Bindable
+    public String getPhone_code() {
+        return phone_code;
+    }
+
+    public void setPhone_code(String phone_code) {
+        this.phone_code = phone_code;
+        notifyPropertyChanged(BR.phone_code);
+    }
 
     @Bindable
-    public String getEmail() {
-        return email;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-        notifyPropertyChanged(BR.email);
-    }
-
-    @Bindable
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-        notifyPropertyChanged(BR.password);
+    public void setPhone(String phone) {
+        this.phone = phone;
+        notifyPropertyChanged(BR.phone);
 
     }
-
 }

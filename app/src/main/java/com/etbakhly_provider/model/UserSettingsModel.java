@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class UserSettingsModel implements Serializable {
     private boolean isLanguageSelected = false;
     private boolean showIntroSlider = true;
+    private String option_id = "";
 
     public boolean isLanguageSelected() {
         return isLanguageSelected;

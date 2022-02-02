@@ -29,64 +29,44 @@ public class LanguageActivity extends BaseActivity {
         lang = getLang();
         selectedLang = lang;
         if (lang.equals("ar")) {
-            binding.tvArabic.setTextColor(getResources().getColor(R.color.color9));
-            binding.tvEnglish.setTextColor(getResources().getColor(R.color.gray35));
-
-            binding.chArabic.setVisibility(View.VISIBLE);
-            binding.chEnglish.setVisibility(View.GONE);
-            binding.chArabic.setChecked(true);
-            binding.chEnglish.setChecked(false);
+            binding.flAr.setBackgroundResource(R.drawable.small_stroke_primary);
+            binding.flEn.setBackgroundResource(0);
 
         } else {
-            binding.tvEnglish.setTextColor(getResources().getColor(R.color.color9));
-            binding.tvArabic.setTextColor(getResources().getColor(R.color.gray35));
-
-            binding.chEnglish.setVisibility(View.VISIBLE);
-            binding.chArabic.setVisibility(View.GONE);
-            binding.chEnglish.setChecked(true);
-            binding.chArabic.setChecked(false);
+            binding.flAr.setBackgroundResource(0);
+            binding.flEn.setBackgroundResource(R.drawable.small_stroke_primary);
 
         }
 
-        binding.llArabic.setOnClickListener(view -> {
+        binding.cardAr.setOnClickListener(view -> {
             selectedLang = "ar";
 
             if (!selectedLang.equals(lang)) {
-                binding.btnDone.setVisibility(View.VISIBLE);
+                binding.btnNext.setVisibility(View.VISIBLE);
 
             } else {
-                binding.btnDone.setVisibility(View.INVISIBLE);
+                binding.btnNext.setVisibility(View.INVISIBLE);
 
             }
-            binding.tvArabic.setTextColor(getResources().getColor(R.color.color9));
-            binding.tvEnglish.setTextColor(getResources().getColor(R.color.gray35));
-
-            binding.chArabic.setVisibility(View.VISIBLE);
-            binding.chEnglish.setVisibility(View.GONE);
-            binding.chArabic.setChecked(true);
-            binding.chEnglish.setChecked(false);
+            binding.flAr.setBackgroundResource(R.drawable.small_stroke_primary);
+            binding.flEn.setBackgroundResource(0);
 
         });
 
-        binding.llEnglish.setOnClickListener(view -> {
+        binding.cardEn.setOnClickListener(view -> {
             selectedLang = "en";
             if (!selectedLang.equals(lang)) {
-                binding.btnDone.setVisibility(View.VISIBLE);
+                binding.btnNext.setVisibility(View.VISIBLE);
 
             } else {
-                binding.btnDone.setVisibility(View.INVISIBLE);
+                binding.btnNext.setVisibility(View.INVISIBLE);
 
             }
-            binding.tvEnglish.setTextColor(getResources().getColor(R.color.color9));
-            binding.tvArabic.setTextColor(getResources().getColor(R.color.gray35));
-
-            binding.chEnglish.setVisibility(View.VISIBLE);
-            binding.chArabic.setVisibility(View.GONE);
-            binding.chEnglish.setChecked(true);
-            binding.chArabic.setChecked(false);
+            binding.flAr.setBackgroundResource(0);
+            binding.flEn.setBackgroundResource(R.drawable.small_stroke_primary);
         });
 
-        binding.btnDone.setOnClickListener(view -> {
+        binding.btnNext.setOnClickListener(view -> {
 
             Intent intent = getIntent();
             intent.putExtra("lang", selectedLang);

@@ -16,10 +16,13 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 
 import com.etbakhly_provider.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 
@@ -42,6 +45,13 @@ public class Common {
         }
 
 
+    }
+    public static void showSnackBar(CoordinatorLayout layout, String msg) {
+        Snackbar snackbar = Snackbar.make(layout, msg, Snackbar.LENGTH_LONG);
+        snackbar.getView().setBackgroundColor(ContextCompat.getColor(layout.getContext(), R.color.colorPrimary));
+        TextView textView = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setTextColor(ContextCompat.getColor(layout.getContext(), R.color.white));
+        snackbar.show();
     }
 
     public static ProgressDialog createProgressDialog(Context context, String msg) {

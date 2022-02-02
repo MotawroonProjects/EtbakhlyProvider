@@ -9,7 +9,7 @@ public class UserModel extends StatusResponse {
         return data;
     }
 
-    public static class Data implements Serializable {
+    public class Data implements Serializable {
         private User user;
         private String access_token;
         private String token_type;
@@ -36,117 +36,68 @@ public class UserModel extends StatusResponse {
             return firebase_token;
         }
 
-        public void setFirebase_token(String firebase_token) {
-            this.firebase_token = firebase_token;
-        }
-
         public class User implements Serializable{
-            private String id;
-            private String customer_group_id;
-            private String user_id;
-            private String name;
-            private String photo;
-            private String company_name;
-            private String email;
-            private String phone_number;
-            private String tax_no;
-            private String address;
-            private String city;
-            private String state;
-            private String postal_code;
-            private String country;
-            private String deposit;
-            private String expense;
-            private String code;
-            private String purchase_gifts;
-            private String register_by;
-            private String share_gifts;
-            private String is_active;
-            private String created_at;
-            private String updated_at;
+            public String id;
+            public String name;
+            public String phone;
+            public String phone_code;
+            public String email;
+            public String photo;
+            public String yes_i_read_it;
+            public String longitude;
+            public String latitude;
+            public String type;
+            public String is_completed;
+            public String software_type;
+            public String created_at;
+            public String updated_at;
 
             public String getId() {
                 return id;
-            }
-
-            public String getCustomer_group_id() {
-                return customer_group_id;
-            }
-
-            public String getUser_id() {
-                return user_id;
             }
 
             public String getName() {
                 return name;
             }
 
-            public String getPhoto() {
-                return photo;
+            public String getPhone() {
+                return phone;
             }
 
-            public String getCompany_name() {
-                return company_name;
+            public String getPhone_code() {
+                return phone_code;
             }
 
             public String getEmail() {
                 return email;
             }
 
-            public String getPhone_number() {
-                return phone_number;
+            public String getPhoto() {
+                return photo;
             }
 
-            public String getTax_no() {
-                return tax_no;
+            public String getYes_i_read_it() {
+                return yes_i_read_it;
             }
 
-            public String getAddress() {
-                return address;
+            public String getLongitude() {
+                return longitude;
             }
 
-            public String getCity() {
-                return city;
+            public String getLatitude() {
+                return latitude;
             }
 
-            public String getState() {
-                return state;
+            public String getType() {
+                return type;
             }
 
-            public String getPostal_code() {
-                return postal_code;
+            public String getIs_completed() {
+                return is_completed;
             }
 
-            public String getCountry() {
-                return country;
-            }
-
-            public String getDeposit() {
-                return deposit;
-            }
-
-            public String getExpense() {
-                return expense;
-            }
-
-            public String getCode() {
-                return code;
-            }
-
-            public String getPurchase_gifts() {
-                return purchase_gifts;
-            }
-
-            public String getRegister_by() {
-                return register_by;
-            }
-
-            public String getShare_gifts() {
-                return share_gifts;
-            }
-
-            public String getIs_active() {
-                return is_active;
+            public String getSoftware_type() {
+                return software_type;
             }
 
             public String getCreated_at() {

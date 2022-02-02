@@ -1,6 +1,7 @@
 package com.etbakhly_provider.services;
 
 
+import com.etbakhly_provider.model.OrderDataModel;
 import com.etbakhly_provider.model.StatusResponse;
 import com.etbakhly_provider.model.UserModel;
 
@@ -23,5 +24,15 @@ import retrofit2.http.Query;
 
 public interface Service {
 
+
+    @GET("api/Service/myOrder_provider")
+    Single<Response<OrderDataModel>>getMyOrder(@Query(value = "caterer_id") String caterer_id,
+                                               @Query(value = "is_end") String is_end);
+
+    @FormUrlEncoded
+    @POST("api/Catering/login")
+    Single<Response<UserModel>> login(@Field("phone_code") String phone_code,
+                                      @Field("phone") String phone,
+                                      @Field("yes_i_read_it") String yes_i_read_it);
 
 }

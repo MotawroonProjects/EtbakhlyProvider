@@ -3,11 +3,11 @@ package com.etbakhly_provider.model;
 import java.io.Serializable;
 
 public class StatusResponse implements Serializable {
-    protected int code;
+    protected int status;
     protected String message;
 
     public int getStatus() {
-        return code;
+        return status;
     }
 
     public String getMessage() {
