@@ -11,18 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.databinding.UnderwayItemBinding;
+import com.etbakhly_provider.databinding.PendingOrderItemBinding;
 import com.etbakhly_provider.model.OrderModel;
+import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentPendingOrders;
 
 import java.util.List;
 
-public class UnderwayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class PendingOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private List<OrderModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
 
-    public UnderwayAdapter(Context context, Fragment fragment) {
+    public PendingOrdersAdapter(Context context, Fragment fragment) {
         this.context = context;
         this.fragment = fragment;
         inflater = LayoutInflater.from(context);
@@ -31,7 +32,7 @@ public class UnderwayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        UnderwayItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.underway_item,parent,false);
+        PendingOrderItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.pending_order_item,parent,false);
         return new MyHolder(binding);
     }
 
@@ -39,6 +40,18 @@ public class UnderwayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder=(MyHolder)holder;
         myHolder.binding.setModel(list.get(position));
+        myHolder.binding.btnPrepared.setOnClickListener(view -> {
+            FragmentPendingOrders fragmentPendingOrders =(FragmentPendingOrders) fragment;
+            OrderModel orderModel = list.get(holder.getLayoutPosition());
+            String status ="";
+            if (orderModel.getStatus_order().equals("approval")){
+                status ="making";
+            }else if (orderModel.getStatus_order().equals("making")){
+                status = "delivery";
+            }
+
+            fragmentPendingOrders.changeStatus(orderModel.id,status);
+        });
     }
 
     @Override
@@ -51,8 +64,8 @@ public class UnderwayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder{
-        public UnderwayItemBinding binding;
-        public MyHolder(UnderwayItemBinding binding)
+        public PendingOrderItemBinding binding;
+        public MyHolder(PendingOrderItemBinding binding)
         {
             super(binding.getRoot());
             this.binding=binding;
@@ -68,4 +81,6 @@ public class UnderwayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         notifyDataSetChanged();
     }
+
+
 }

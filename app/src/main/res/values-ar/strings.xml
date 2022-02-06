@@ -41,7 +41,6 @@
     <string name="completed">المكتملة</string>
     <string name="order_number">رقم الطلب:</string>
     <string name="dishes">أطباق</string>
-    <string name="prepared">تم التحضير</string>
     <string name="reject">رفض</string>
     <string name="r_s">ر.س</string>
     <string name="a_m">ص</string>
@@ -65,4 +64,8 @@
     <string name="cnt_login">لا يمكنك تسجيل الدخول دون الموافقة على شروط الاستخدام</string>
     <string name="choose_language">تغيير اللغة</string>
     <string name="choose_country">إختر الدولة</string>
+    <string name="accept">قبول</string>
+    <string name="prepared">تم التحضير</string>
+    <string name="delivery_in_progress">جاري التوصيل</string>
+    <string name="sent_delivered_handed">تم التسليم</string>
 </resources>

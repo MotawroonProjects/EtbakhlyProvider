@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:typeface">monospace</item>
+        <item name="android:fontFamily">@font/ar_font</item>
         <item name="android:forceDarkAllowed" tools:ignore="NewApi">false</item>
 
 
@@ -14,11 +15,13 @@
     <style name="dialog_congratulation_animation">
         <item name="android:windowEnterAnimation">@anim/dialog_congratulation_enter</item>
         <item name="android:windowExitAnimation">@anim/dialog_congratulation_exit</item>
+
     </style>
     <style name="AppThemeMaterial" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/ar_font</item>
     </style>
 </resources>

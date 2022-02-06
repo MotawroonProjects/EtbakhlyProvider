@@ -10,19 +10,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.databinding.CompletedItemBinding;
-import com.etbakhly_provider.databinding.UnderwayItemBinding;
+
+import com.etbakhly_provider.databinding.CompletedOrderItemBinding;
 import com.etbakhly_provider.model.OrderModel;
 
 import java.util.List;
 
-public class CompletedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class CompletedOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private List<OrderModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
 
-    public CompletedAdapter(Context context, Fragment fragment) {
+    public CompletedOrdersAdapter(Context context, Fragment fragment) {
         this.context = context;
         this.fragment = fragment;
         inflater = LayoutInflater.from(context);
@@ -31,7 +31,7 @@ public class CompletedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CompletedItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.completed_item,parent,false);
+        CompletedOrderItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.completed_order_item,parent,false);
         return new MyHolder(binding);
     }
 
@@ -51,8 +51,8 @@ public class CompletedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder{
-        public CompletedItemBinding binding;
-        public MyHolder(CompletedItemBinding binding)
+        public CompletedOrderItemBinding binding;
+        public MyHolder(CompletedOrderItemBinding binding)
         {
             super(binding.getRoot());
             this.binding=binding;

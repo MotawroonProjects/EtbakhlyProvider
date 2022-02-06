@@ -3,6 +3,7 @@ package com.etbakhly_provider.uis.activity_setting;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.ActivitySettingsBinding;
@@ -19,6 +20,6 @@ public class SettingsActivity extends BaseActivity {
 
     private void initView() {
         binding.setLang(getLang());
-
+        binding.btnBack.setOnClickListener(view -> finish());
     }
 }

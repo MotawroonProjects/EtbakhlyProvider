@@ -40,7 +40,6 @@
     <string name="completed">Completed</string>
     <string name="order_number">Order number:</string>
     <string name="dishes">Dishes</string>
-    <string name="prepared">Prepared</string>
     <string name="reject">Reject</string>
     <string name="r_s">R.S</string>
     <string name="a_m">A.M</string>
@@ -64,4 +63,8 @@
     <string name="cnt_login">You cannot log in without agreeing to the Terms of Use</string>
     <string name="choose_language">Change language</string>
     <string name="choose_country">Choose country</string>
+    <string name="accept">Accept</string>
+    <string name="prepared">Prepared</string>
+    <string name="delivery_in_progress">Delivery in progress</string>
+    <string name="sent_delivered_handed">sent delivered handed</string>
 </resources>

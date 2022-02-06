@@ -1,8 +1,11 @@
 package com.etbakhly_provider.general_ui;
 
+import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,10 +39,22 @@ public class GeneralMethod {
         }
     }
 
+    @BindingAdapter("order_status")
+    public static void orderStatus(Button btnStatus, String status) {
+//        Log.e("ssss",status);
+        if (status.equals("approval")) {
+            btnStatus.setText(R.string.prepared);
+        } else if (status.equals("making")) {
+            btnStatus.setText(R.string.delivery_in_progress);
+
+        }
+
+    }
+
     @BindingAdapter("image3")
     public static void image3(View view, String imageUrl) {
         if (imageUrl != null) {
-            String imageUrl1 =imageUrl;
+            String imageUrl1 = imageUrl;
 
             view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
@@ -340,7 +355,6 @@ public class GeneralMethod {
         }
 
     }
-
 
 
 }

@@ -1,7 +1,6 @@
 package com.etbakhly_provider.uis.activity_login;
 
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -9,18 +8,14 @@ import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.ActivityLoginBinding;
 import com.etbakhly_provider.databinding.BottomSheetDialogBinding;
 import com.etbakhly_provider.model.LoginModel;
-import com.etbakhly_provider.mvvm.ActivityLoginMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activities_fragments_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;

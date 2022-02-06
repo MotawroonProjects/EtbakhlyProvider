@@ -21,12 +21,15 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class FragmentUnderwayMvvm extends AndroidViewModel {
+public class FragmentCompletedOrdersMvvm extends AndroidViewModel {
+
+
     private MutableLiveData<Boolean> isDataLoading;
     private MutableLiveData<List<OrderModel>> onDataSuccess;
 
     private CompositeDisposable disposable = new CompositeDisposable();
-    public FragmentUnderwayMvvm(@NonNull Application application) {
+
+    public FragmentCompletedOrdersMvvm(@NonNull Application application) {
         super(application);
     }
 
@@ -44,9 +47,9 @@ public class FragmentUnderwayMvvm extends AndroidViewModel {
         return onDataSuccess;
     }
 
-    public void getUnderwayOrder(String caterer_id){
+    public void getCompletedOrders(String caterer_id){
         getIsDataLoading().setValue(true);
-        Api.getService(Tags.base_url).getMyOrder(caterer_id,"approval")
+        Api.getService(Tags.base_url).getMyOrder(caterer_id,"completed")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<OrderDataModel>>() {
@@ -58,11 +61,12 @@ public class FragmentUnderwayMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<OrderDataModel> response) {
                         isDataLoading.setValue(false);
-                       if (response.isSuccessful()){
+                        if (response.isSuccessful()){
                             if (response.body()!=null && response.body().getStatus()==200 && response.body().getData()!=null){
                                 onDataSuccess.setValue(response.body().getData());
-
                             }
+                        }else {
+
                         }
                     }
 
@@ -73,6 +77,7 @@ public class FragmentUnderwayMvvm extends AndroidViewModel {
                     }
                 });
     }
+
     @Override
     protected void onCleared() {
         super.onCleared();

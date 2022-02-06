@@ -6,8 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,27 +15,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.adapter.CompletedAdapter;
-import com.etbakhly_provider.adapter.UnderwayAdapter;
+import com.etbakhly_provider.adapter.CompletedOrdersAdapter;
 import com.etbakhly_provider.databinding.FragmentOrderBinding;
-import com.etbakhly_provider.model.OrderModel;
-import com.etbakhly_provider.model.UserModel;
-import com.etbakhly_provider.mvvm.FragmentAwaitingApprovalMvvm;
-import com.etbakhly_provider.mvvm.FragmentCompletedMvvm;
+import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
+import com.etbakhly_provider.mvvm.FragmentCompletedOrdersMvvm;
 import com.etbakhly_provider.uis.activities_fragments_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
 
-import java.util.List;
 
-
-public class FragmentCompleted extends BaseFragment {
+public class FragmentCompletedOrders extends BaseFragment {
     private FragmentOrderBinding binding;
-    private CompletedAdapter adapter;
+    private CompletedOrdersAdapter adapter;
     private HomeActivity activity;
-    private FragmentCompletedMvvm mvvm;
-    private UserModel userModel;
-    public static FragmentCompleted newInstance() {
-        FragmentCompleted fragment = new FragmentCompleted();
+    private FragmentCompletedOrdersMvvm mvvm;
+
+    private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
+    private String caterer_id = "28";
+    public static FragmentCompletedOrders newInstance() {
+        FragmentCompletedOrders fragment = new FragmentCompletedOrders();
 
         return fragment;
     }
@@ -63,9 +58,17 @@ public class FragmentCompleted extends BaseFragment {
     }
 
     private void initView() {
-        adapter=new CompletedAdapter(activity,this) ;
+        activityHomeGeneralMvvm = ViewModelProviders.of(this).get(ActivityHomeGeneralMvvm.class);
 
-        mvvm= ViewModelProviders.of(this).get(FragmentCompletedMvvm.class);
+        activityHomeGeneralMvvm.getOnStatusSuccess().observe(activity,status->{
+            if (status.equals("completed")){
+                mvvm.getCompletedOrders(caterer_id);
+
+            }
+        });
+        adapter=new CompletedOrdersAdapter(activity,this) ;
+
+        mvvm= ViewModelProviders.of(this).get(FragmentCompletedOrdersMvvm.class);
 
         mvvm.getIsDataLoading().observe(activity, isLoading -> binding.swipeRefresh.setRefreshing(isLoading));
 
@@ -81,11 +84,13 @@ public class FragmentCompleted extends BaseFragment {
         });
 
         binding.swipeRefresh.setOnRefreshListener(() -> {
-            mvvm.getCompletedOrders("27");
+            mvvm.getCompletedOrders(caterer_id);
         });
         binding.recyclerOrder.setAdapter(adapter);
         binding.recyclerOrder.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.VERTICAL,false));
-        mvvm.getCompletedOrders("27");
+        mvvm.getCompletedOrders(caterer_id);
 
     }
+
+
 }

@@ -1,20 +1,19 @@
 package com.etbakhly_provider.uis.activities_fragments_home;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.HomePagerAdapter;
 import com.etbakhly_provider.databinding.ActivityHomeBinding;
-import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentAwaitingApproval;
-import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentCompleted;
-import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentUnderway;
+import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
+import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentNewOrders;
+import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentCompletedOrders;
+import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentPendingOrders;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_setting.SettingsActivity;
 
@@ -29,6 +28,7 @@ public class HomeActivity extends BaseActivity {
     private HomePagerAdapter pagerAdapter;
     private List<String> titles;
     private List<Fragment> fragmentList;
+    private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,12 @@ public class HomeActivity extends BaseActivity {
 
     }
 
+    public void setItemPos(int pos){
+        binding.pager.setCurrentItem(pos);
+    }
     private void initView() {
+
+
         titles = new ArrayList<>();
         fragmentList = new ArrayList<>();
         Paper.init(this);
@@ -48,15 +53,14 @@ public class HomeActivity extends BaseActivity {
         titles.add(getString(R.string.underway));
         titles.add(getString(R.string.completed));
 
-        fragmentList.add(FragmentAwaitingApproval.newInstance());
-        fragmentList.add(FragmentUnderway.newInstance());
-        fragmentList.add(FragmentCompleted.newInstance());
+        fragmentList.add(FragmentNewOrders.newInstance());
+        fragmentList.add(FragmentPendingOrders.newInstance());
+        fragmentList.add(FragmentCompletedOrders.newInstance());
 
         pagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), PagerAdapter.POSITION_UNCHANGED, fragmentList,titles);
         binding.tab.setupWithViewPager(binding.pager);
         binding.pager.setAdapter(pagerAdapter);
 
-        FragmentAwaitingApproval fragmentAwaitingApproval=(FragmentAwaitingApproval)fragmentList.get(0);
 
         binding.llMenu.setOnClickListener(view -> {
             Intent intent=new Intent(HomeActivity.this, SettingsActivity.class);
