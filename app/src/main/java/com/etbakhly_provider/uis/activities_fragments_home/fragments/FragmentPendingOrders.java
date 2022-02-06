@@ -60,11 +60,11 @@ public class FragmentPendingOrders extends Fragment {
     private void initView() {
         mvvm = ViewModelProviders.of(this).get(FragmentPendingOrdersMvvm.class);
         activityHomeGeneralMvvm = ViewModelProviders.of(activity).get(ActivityHomeGeneralMvvm.class);
-        mvvm.getOnStatusSuccess().observe(activity,status->{
-            if (status==1){
-                mvvm.getUnderwayOrder(caterer_id);
-            }else if (status==2){
-                mvvm.getUnderwayOrder(caterer_id);
+        mvvm.getOnStatusSuccess().observe(activity, status -> {
+            if (status == 1) {
+                mvvm.getPendingOrder(caterer_id);
+            } else if (status == 2) {
+                mvvm.getPendingOrder(caterer_id);
                 activityHomeGeneralMvvm.getOnStatusSuccess().setValue("completed");
             }
         });
@@ -97,16 +97,16 @@ public class FragmentPendingOrders extends Fragment {
         });
 
         binding.swipeRefresh.setOnRefreshListener(() -> {
-            mvvm.getUnderwayOrder(caterer_id);
+            mvvm.getPendingOrder(caterer_id);
         });
         binding.recyclerOrder.setAdapter(adapter);
         binding.recyclerOrder.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.VERTICAL, false));
-        mvvm.getUnderwayOrder(caterer_id);
+        mvvm.getPendingOrder(caterer_id);
 
     }
 
 
     public void changeStatus(String id, String status) {
-        mvvm.changeStatusOrder(status,id);
+        mvvm.changeStatusOrder(status, id);
     }
 }

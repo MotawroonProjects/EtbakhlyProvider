@@ -54,7 +54,7 @@ public class FragmentPendingOrdersMvvm extends AndroidViewModel {
         return onStatusSuccess;
     }
 
-    public void getUnderwayOrder(String caterer_id) {
+    public void getPendingOrder(String caterer_id) {
         getIsDataLoading().setValue(true);
         Api.getService(Tags.base_url).getMyOrder(caterer_id, "approval")
                 .subscribeOn(Schedulers.io())
