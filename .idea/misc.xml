@@ -38,8 +38,23 @@
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/fragment_order.xml" value="0.21603260869565216" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/fragment_underway.xml" value="0.21603260869565216" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/logo_layout.xml" value="0.24818840579710144" />
-        <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/pending_order_item.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/underway_item.xml" value="0.24592391304347827" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/drawable/ic_gallery.xml" value="0.19947916666666668" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/drawable/ic_left_arrow.xml" value="0.2722222222222222" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/drawable/ic_search.xml" value="0.15572916666666667" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/drawable/rounded_white.xml" value="0.15572916666666667" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/activity_app_category.xml" value="0.13958333333333334" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/activity_language.xml" value="0.27291666666666664" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/activity_language_country.xml" value="0.18" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/activity_map.xml" value="0.27291666666666664" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/activity_register.xml" value="0.22" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/activity_settings.xml" value="0.27291666666666664" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/activity_sign_up.xml" value="0.12" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/city_row.xml" value="0.27291666666666664" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/country_row.xml" value="0.27291666666666664" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/fragment_sign_up1.xml" value="0.27291666666666664" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/fragment_sign_up3.xml" value="0.27291666666666664" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/recview_layout.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/EtbakhlyProvider/app/src/main/res/drawable/circle_white.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/EtbakhlyProvider/app/src/main/res/drawable/ic_meal_outlined.xml" value="0.125" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/EtbakhlyProvider/app/src/main/res/drawable/ic_pin.xml" value="0.14635416666666667" />

@@ -32,7 +32,7 @@ public class CatererModel implements Serializable {
     public String updated_at;
     public String rates_val;
     public String rates_count;
-    public UserModel.Data.User user;
+    public UserModel.Data user;
     public List<Rate> rate;
 
     public String getId() {
@@ -147,7 +147,7 @@ public class CatererModel implements Serializable {
         return rates_count;
     }
 
-    public UserModel.Data.User getUser() {
+    public UserModel.Data getUser() {
         return user;
     }
 

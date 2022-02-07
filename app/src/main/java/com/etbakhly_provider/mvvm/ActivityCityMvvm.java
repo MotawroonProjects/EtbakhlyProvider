@@ -23,39 +23,27 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class ActivityCountryMvvm extends AndroidViewModel {
-    private static final String TAG = "ActivityCountryMvvm";
+public class ActivityCityMvvm extends AndroidViewModel {
+    private static final String TAG = "ActivityCityMvvm";
     private Context context;
 
-    private MutableLiveData<List<CountryModel>> countryLiveData;
+    private MutableLiveData<List<CountryModel>> cityLiveData;
     private MutableLiveData<Boolean> isLoadingLivData;
-    private MutableLiveData<CountryModel> selectedCountryLiveData;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
 
-    public ActivityCountryMvvm(@NonNull Application application) {
+    public ActivityCityMvvm(@NonNull Application application) {
         super(application);
         context = application.getApplicationContext();
     }
 
 
-    public MutableLiveData<List<CountryModel>> getCountryLiveData() {
-        if (countryLiveData == null) {
-            countryLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<CountryModel>> getCityLiveData() {
+        if (cityLiveData == null) {
+            cityLiveData = new MutableLiveData<>();
         }
-        return countryLiveData;
-    }
-
-    public MutableLiveData<CountryModel> getSelectedCountryLiveData() {
-        if (selectedCountryLiveData == null) {
-            selectedCountryLiveData = new MutableLiveData<>();
-        }
-        return selectedCountryLiveData;
-    }
-
-    public void setSelectedCountryLiveData(CountryModel countryModel) {
-        getSelectedCountryLiveData().setValue(countryModel);
+        return cityLiveData;
     }
 
 
@@ -68,11 +56,11 @@ public class ActivityCountryMvvm extends AndroidViewModel {
 
     //_________________________hitting api_________________________________
 
-    public void getCountries() {
+    public void getCity(String country_id) {
         isLoadingLivData.setValue(true);
 
         Api.getService(Tags.base_url)
-                .getCountry()
+                .getCityByCountryId(country_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<CountryDataModel>>() {
@@ -85,9 +73,8 @@ public class ActivityCountryMvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<CountryDataModel> response) {
                         isLoadingLivData.setValue(false);
                         if (response.isSuccessful()) {
-                            Log.d("status",response.body().getStatus()+"__");
                             if (response.body() != null && response.body().getStatus() == 200) {
-                                countryLiveData.setValue(response.body().getData());
+                                cityLiveData.setValue(response.body().getData());
                             }
                         }
                     }

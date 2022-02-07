@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">EtbakhlyProvider</string>
+    <string name="map_api_key">AIzaSyAnjvMAJEmiAv3yeCDUXWv-PboXiT_uaoQ</string>
+    <string name="search_key">AIzaSyAnjvMAJEmiAv3yeCDUXWv-PboXiT_uaoQ</string>
     <string name="field_required">Field Required</string>
     <string name="inv_email">Invaild Email</string>
     <string name="login">Login</string>
@@ -67,4 +69,12 @@
     <string name="prepared">Prepared</string>
     <string name="delivery_in_progress">Delivery in progress</string>
     <string name="sent_delivered_handed">sent delivered handed</string>
+    <string name="ph_em_found">phone number or email already exists</string>
+    <string name="ch_city">Choose City</string>
+    <string name="plz_ch_country">Please Choose Country</string>
+    <string name="select_location_on_map">Select Location on Map</string>
+    <string name="chef">Chef</string>
+    <string name="food_truck">Food Truck</string>
+    <string name="delivery_type">Delivery Type</string>
+    <string name="perm_image_denied">Permission image denied</string>
 </resources>

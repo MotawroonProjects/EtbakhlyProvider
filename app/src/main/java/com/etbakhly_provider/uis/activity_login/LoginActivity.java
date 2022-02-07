@@ -16,6 +16,7 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.ActivityLoginBinding;
 import com.etbakhly_provider.databinding.BottomSheetDialogBinding;
 import com.etbakhly_provider.model.LoginModel;
+import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activities_fragments_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
@@ -63,26 +64,28 @@ public class LoginActivity extends BaseActivity {
         binding.btnLogin.setOnClickListener(v -> {
             if (model.isDataValid(this)) {
                 Common.CloseKeyBoard(this, binding.edtPhone);
-//                openSheet();
-                navigateToVerificationCodeActivity();
+                openSheet();
             }
         });
 
 
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req == 1 && result.getResultCode() == RESULT_OK) {
-//                navigateToAppCategoryActivity("login");
-            } else if (req == 2 && result.getResultCode() == RESULT_OK && result.getData() != null) {
-                String option_id = result.getData().getStringExtra("option_id");
-                navigateToHomeActivity(option_id);
+           if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
+               UserModel userModel= (UserModel) result.getData().getSerializableExtra("data");
+               if(userModel.getData().getIs_completed().equals("yes")){
+                   setUserModel(userModel);
+                   navigateToHomeActivity();
+               }
+               else{
+
+               }
             }
         });
     }
 
-    private void navigateToHomeActivity(String option_id) {
+    private void navigateToHomeActivity() {
         Intent intent = new Intent(this, HomeActivity.class);
-        intent.putExtra("option_id", option_id);
         startActivity(intent);
         if (getUserModel() != null) {
             finish();

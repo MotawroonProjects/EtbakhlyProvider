@@ -13,9 +13,11 @@ import android.os.Bundle;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.ActivityVerificationCodeBinding;
+import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.model.UserSettingsModel;
 import com.etbakhly_provider.mvvm.ActivityVerificationMvvm;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
+import com.etbakhly_provider.uis.activity_register.RegisterActivity;
 import com.etbakhly_provider.uis.activity_signup.SignupActivity;
 
 public class VerificationCodeActivity extends BaseActivity {
@@ -33,6 +35,7 @@ public class VerificationCodeActivity extends BaseActivity {
         getDataFromIntent();
         initView();
     }
+
     private void getDataFromIntent() {
         Intent intent = getIntent();
         phone_code = intent.getStringExtra("phone_code");
@@ -66,11 +69,9 @@ public class VerificationCodeActivity extends BaseActivity {
             if (userModel == null) {
                 navigateToSignUpActivity();
             } else {
-                UserSettingsModel userSettingsModel = getUserSettings();
-//                userSettingsModel.setOption_id("");
-                setUserSettings(userSettingsModel);
-                setUserModel(userModel);
-                setResult(RESULT_OK);
+                Intent intent=getIntent();
+                intent.putExtra("data",userModel);
+                setResult(RESULT_OK,intent);
                 finish();
             }
         });
@@ -91,11 +92,10 @@ public class VerificationCodeActivity extends BaseActivity {
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK) {
-                UserSettingsModel userSettingsModel = getUserSettings();
-//                userSettingsModel.setOption_id("");
-                setUserSettings(userSettingsModel);
-
-                setResult(RESULT_OK);
+                UserModel userModel= (UserModel) result.getData().getSerializableExtra("data");
+                Intent intent=getIntent();
+                intent.putExtra("data",userModel);
+                setResult(RESULT_OK,intent);
                 finish();
             }
         });
@@ -104,7 +104,7 @@ public class VerificationCodeActivity extends BaseActivity {
     }
 
     private void navigateToSignUpActivity() {
-        Intent intent = new Intent(this, SignupActivity.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         intent.putExtra("phone_code", phone_code);
         intent.putExtra("phone", phone);
         launcher.launch(intent);

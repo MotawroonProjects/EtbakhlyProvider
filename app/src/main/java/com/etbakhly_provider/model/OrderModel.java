@@ -18,7 +18,7 @@ public class OrderModel implements Serializable {
     public String is_pay;
     public String created_at;
     public String updated_at;
-    public UserModel.Data.User user;
+    public UserModel.Data user;
     public AddressModel addressModel;
     public CatererModel catererModel;
     public OptionModel optionModel;
@@ -80,7 +80,7 @@ public class OrderModel implements Serializable {
         return updated_at;
     }
 
-    public UserModel.Data.User getUser() {
+    public UserModel.Data getUser() {
         return user;
     }
 
