@@ -109,4 +109,6 @@
     <string name="food_truck">Food Truck</string>
     <string name="delivery_type">Delivery Type</string>
     <string name="perm_image_denied">Permission image denied</string>
+    <string name="cancel">Cancel</string>
+    <string name="camera">Camera</string>
 </resources>

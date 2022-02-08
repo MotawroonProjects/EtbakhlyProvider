@@ -25,10 +25,7 @@
         <activity
             android:name=".uis.order_details.OrderDetailsActivity"
             android:exported="true" />
-        <activity
-            android:name=".uis.activity_splash.SplashActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".uis.activity_map.MapActivity"
             android:exported="false"

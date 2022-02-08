@@ -56,7 +56,6 @@ public interface Service {
     Single<Response<StatusResponse>> changeStatusOrder(@Field("order_id") String order_id,
                                                        @Field("status_order") String status_order,
                                                        @Field("why_cancel") String why_cancel);
-                                                       @Field("status_order") String status_order);
 
     @FormUrlEncoded
     @POST("api/Catering/signup")
@@ -70,13 +69,14 @@ public interface Service {
                                        @Field("software_type") String software_type
 
 
-
     );
+
     @GET("api/Catering/governorates")
     Single<Response<CountryDataModel>> getCountry();
 
     @GET("api/Catering/cities")
     Single<Response<CountryDataModel>> getCityByCountryId(@Query("governorates_id") String country_id);
+
     @GET("api/Catering/zones")
     Single<Response<CountryDataModel>> getZone(@Query("city_id") String city_id);
 }
