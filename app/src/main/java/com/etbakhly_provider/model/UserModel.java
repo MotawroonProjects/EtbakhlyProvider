@@ -10,103 +10,131 @@ public class UserModel extends StatusResponse {
     }
 
     public class Data implements Serializable {
-        private User user;
-        private String access_token;
-        private String token_type;
-        private String expires_in;
-        private String firebase_token;
+       private String id;
+       private String name;
+       private String phone;
+       private String phone_code;
+       private String email;
+       private String  photo;
+       private String yes_i_read_it;
+       private String longitude;
+       private String latitude;
+       private String type;
+       private String is_completed;
+       private String software_type;
+       private String created_at;
+       private String updated_at;
 
-        public User getUser() {
-            return user;
+        public String getId() {
+            return id;
         }
 
-        public String getAccess_token() {
-            return access_token;
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public String getToken_type() {
-            return token_type;
+        public String getName() {
+            return name;
         }
 
-        public String getExpires_in() {
-            return expires_in;
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public String getFirebase_token() {
-            return firebase_token;
+        public String getPhone() {
+            return phone;
         }
 
-        public class User implements Serializable{
-            public String id;
-            public String name;
-            public String phone;
-            public String phone_code;
-            public String email;
-            public String photo;
-            public String yes_i_read_it;
-            public String longitude;
-            public String latitude;
-            public String type;
-            public String is_completed;
-            public String software_type;
-            public String created_at;
-            public String updated_at;
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
 
-            public String getId() {
-                return id;
-            }
+        public String getPhone_code() {
+            return phone_code;
+        }
 
-            public String getName() {
-                return name;
-            }
+        public void setPhone_code(String phone_code) {
+            this.phone_code = phone_code;
+        }
 
-            public String getPhone() {
-                return phone;
-            }
+        public String getEmail() {
+            return email;
+        }
 
-            public String getPhone_code() {
-                return phone_code;
-            }
+        public void setEmail(String email) {
+            this.email = email;
+        }
 
-            public String getEmail() {
-                return email;
-            }
+        public String getPhoto() {
+            return photo;
+        }
 
-            public String getPhoto() {
-                return photo;
-            }
+        public void setPhoto(String photo) {
+            this.photo = photo;
+        }
 
-            public String getYes_i_read_it() {
-                return yes_i_read_it;
-            }
+        public String getYes_i_read_it() {
+            return yes_i_read_it;
+        }
 
-            public String getLongitude() {
-                return longitude;
-            }
+        public void setYes_i_read_it(String yes_i_read_it) {
+            this.yes_i_read_it = yes_i_read_it;
+        }
 
-            public String getLatitude() {
-                return latitude;
-            }
+        public String getLongitude() {
+            return longitude;
+        }
 
-            public String getType() {
-                return type;
-            }
+        public void setLongitude(String longitude) {
+            this.longitude = longitude;
+        }
 
-            public String getIs_completed() {
-                return is_completed;
-            }
+        public String getLatitude() {
+            return latitude;
+        }
 
-            public String getSoftware_type() {
-                return software_type;
-            }
+        public void setLatitude(String latitude) {
+            this.latitude = latitude;
+        }
 
-            public String getCreated_at() {
-                return created_at;
-            }
+        public String getType() {
+            return type;
+        }
 
-            public String getUpdated_at() {
-                return updated_at;
-            }
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getIs_completed() {
+            return is_completed;
+        }
+
+        public void setIs_completed(String is_completed) {
+            this.is_completed = is_completed;
+        }
+
+        public String getSoftware_type() {
+            return software_type;
+        }
+
+        public void setSoftware_type(String software_type) {
+            this.software_type = software_type;
+        }
+
+        public String getCreated_at() {
+            return created_at;
+        }
+
+        public void setCreated_at(String created_at) {
+            this.created_at = created_at;
+        }
+
+        public String getUpdated_at() {
+            return updated_at;
+        }
+
+        public void setUpdated_at(String updated_at) {
+            this.updated_at = updated_at;
         }
     }
 

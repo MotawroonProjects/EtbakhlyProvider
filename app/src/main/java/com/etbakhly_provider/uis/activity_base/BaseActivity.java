@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.etbakhly_provider.databinding.ToolbarBinding;
 import com.etbakhly_provider.language.Language;
 import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.model.UserSettingsModel;
@@ -69,14 +70,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-//    protected void setUpToolbar(ToolbarBinding binding, String title, int background, int arrowTitleColor) {
-//        binding.setLang(getLang());
-//        binding.setTitle(title);
-//        binding.arrow.setColorFilter(ContextCompat.getColor(this, arrowTitleColor));
-//        binding.tvTitle.setTextColor(ContextCompat.getColor(this, arrowTitleColor));
-//        binding.toolbar.setBackgroundResource(background);
-//        binding.llBack.setOnClickListener(v -> finish());
-//    }
+    protected void setUpToolbar(ToolbarBinding binding, String title, int background, int arrowTitleColor) {
+        binding.setLang(getLang());
+        binding.setTitle(title);
+        binding.arrow.setColorFilter(ContextCompat.getColor(this, arrowTitleColor));
+        binding.tvTitle.setTextColor(ContextCompat.getColor(this, arrowTitleColor));
+        binding.toolbar.setBackgroundResource(background);
+        binding.llBack.setOnClickListener(v -> finish());
+    }
 
     protected void clearUserModel(Context context) {
         Preferences preferences = Preferences.getInstance();

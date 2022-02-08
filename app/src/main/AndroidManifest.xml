@@ -30,6 +30,26 @@
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".uis.activity_map.MapActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".uis.activity_register.RegisterActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".uis.activity_country.CountryActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".uis.activity_language_country.LanguageCountryActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".uis.activity_city.CityActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
             android:name=".uis.activity_language.LanguageActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
@@ -43,6 +63,10 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".uis.activity_setting.SettingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".uis.activity_splash.SplashActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
