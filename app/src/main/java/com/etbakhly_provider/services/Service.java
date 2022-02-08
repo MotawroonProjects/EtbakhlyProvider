@@ -26,16 +26,18 @@ public interface Service {
 
 
     @GET("api/Service/myOrder_provider")
-    Single<Response<OrderDataModel>>getMyOrder(@Query(value = "caterer_id") String caterer_id,
-                                               @Query(value = "is_end") String is_end);
+    Single<Response<OrderDataModel>> getMyOrder(@Query(value = "caterer_id") String caterer_id,
+                                                @Query(value = "is_end") String is_end);
 
     @FormUrlEncoded
     @POST("api/Catering/login")
     Single<Response<UserModel>> login(@Field("phone_code") String phone_code,
                                       @Field("phone") String phone,
                                       @Field("yes_i_read_it") String yes_i_read_it);
+
     @FormUrlEncoded
     @POST("api/Service/change_status_Order")
     Single<Response<StatusResponse>> changeStatusOrder(@Field("order_id") String order_id,
-                                                       @Field("status_order") String status_order);
+                                                       @Field("status_order") String status_order,
+                                                       @Field("why_cancel") String why_cancel);
 }

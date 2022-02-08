@@ -74,5 +74,8 @@ dependencies {
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
     implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
     implementation 'com.applandeo:material-calendar-view:1.7.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:cardview-v7:21.0.3'
+
 
 }

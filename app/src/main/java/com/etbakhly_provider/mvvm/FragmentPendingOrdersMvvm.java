@@ -85,7 +85,7 @@ public class FragmentPendingOrdersMvvm extends AndroidViewModel {
     }
 
     public void changeStatusOrder(String status_order, String order_id) {
-        Api.getService(Tags.base_url).changeStatusOrder(order_id, status_order)
+        Api.getService(Tags.base_url).changeStatusOrder(order_id, status_order, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<StatusResponse>>() {

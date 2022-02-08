@@ -33,14 +33,15 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_home);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         initView();
 
     }
 
-    public void setItemPos(int pos){
+    public void setItemPos(int pos) {
         binding.pager.setCurrentItem(pos);
     }
+
     private void initView() {
 
 
@@ -49,21 +50,21 @@ public class HomeActivity extends BaseActivity {
         Paper.init(this);
         binding.setLang(lang);
 
-        titles.add(getString(R.string.awaiting_approval));
-        titles.add(getString(R.string.underway));
+        titles.add(getString(R.string.new_orders));
+        titles.add(getString(R.string.pending));
         titles.add(getString(R.string.completed));
 
         fragmentList.add(FragmentNewOrders.newInstance());
         fragmentList.add(FragmentPendingOrders.newInstance());
         fragmentList.add(FragmentCompletedOrders.newInstance());
 
-        pagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), PagerAdapter.POSITION_UNCHANGED, fragmentList,titles);
+        pagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), PagerAdapter.POSITION_UNCHANGED, fragmentList, titles);
         binding.tab.setupWithViewPager(binding.pager);
         binding.pager.setAdapter(pagerAdapter);
 
 
         binding.llMenu.setOnClickListener(view -> {
-            Intent intent=new Intent(HomeActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
             startActivity(intent);
 
         });

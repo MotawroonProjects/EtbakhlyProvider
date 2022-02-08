@@ -90,8 +90,8 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
                 });
     }
 
-    public void changeStatusOrder(String status_order, String order_id) {
-        Api.getService(Tags.base_url).changeStatusOrder(order_id, status_order)
+    public void changeStatusOrder(String status_order, String order_id, String why_cancel) {
+        Api.getService(Tags.base_url).changeStatusOrder(order_id, status_order, why_cancel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<StatusResponse>>() {
@@ -105,10 +105,10 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
                                 if (response.body().getStatus() == 200) {
-                                    if (status_order.equals("approval")){
+                                    if (status_order.equals("approval")) {
                                         getOnOrderStatusSuccess().setValue(1);
 
-                                    }else if (status_order.equals("refusal")){
+                                    } else if (status_order.equals("refusal")) {
                                         getOnOrderStatusSuccess().setValue(2);
 
                                     }

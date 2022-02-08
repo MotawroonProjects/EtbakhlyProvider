@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,10 +17,12 @@ import android.view.ViewGroup;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.NewOrdersAdapter;
+import com.etbakhly_provider.databinding.DialogAlertBinding;
 import com.etbakhly_provider.databinding.FragmentOrderBinding;
 import com.etbakhly_provider.model.OrderModel;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.mvvm.FragmentNewOrdersMvvm;
+import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activities_fragments_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
 
@@ -32,6 +35,7 @@ public class FragmentNewOrders extends BaseFragment {
     private FragmentNewOrdersMvvm mvvm;
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
     private String caterer_id = "28";
+    private String reason = "";
 
     public static FragmentNewOrders newInstance() {
         FragmentNewOrders fragment = new FragmentNewOrders();
@@ -83,11 +87,11 @@ public class FragmentNewOrders extends BaseFragment {
             }
         });
 
-        mvvm.getOnOrderStatusSuccess().observe(activity,status->{
-            if (status==1){
+        mvvm.getOnOrderStatusSuccess().observe(activity, status -> {
+            if (status == 1) {
                 activityHomeGeneralMvvm.getOnStatusSuccess().setValue("approval");
                 mvvm.getNewOrders(caterer_id);
-            }else if (status==2){
+            } else if (status == 2) {
                 mvvm.getNewOrders(caterer_id);
             }
         });
@@ -107,8 +111,63 @@ public class FragmentNewOrders extends BaseFragment {
 
 
     public void changeStatus(OrderModel orderModel, String status) {
-        mvvm.changeStatusOrder(status, orderModel.getId());
+        if (status.equals("approval")) {
+            mvvm.changeStatusOrder(status, orderModel.getId(), null);
+        } else {
+            createReasonDialog(status, orderModel.getId());
+        }
 
+
+    }
+
+    private void createReasonDialog(String status, String order_id) {
+        final AlertDialog dialog = new AlertDialog.Builder(activity)
+                .create();
+
+        DialogAlertBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_alert, null, false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setView(binding.getRoot());
+        dialog.show();
+
+
+        binding.radio1.setOnClickListener(view -> {
+            reason = "";
+            binding.anotherReason.setVisibility(View.GONE);
+            binding.anotherReason.setText(null);
+            binding.anotherReason.setError(null);
+
+        });
+        binding.radio2.setOnClickListener(view -> {
+            reason = "";
+            binding.anotherReason.setVisibility(View.GONE);
+            binding.anotherReason.setText(null);
+            binding.anotherReason.setError(null);
+
+
+        });
+
+        binding.radio3.setOnClickListener(view -> {
+            reason = "";
+            binding.anotherReason.setVisibility(View.VISIBLE);
+        });
+        binding.btnDone.setOnClickListener(view -> {
+            if (binding.radio3.isChecked()) {
+                reason = binding.anotherReason.getText().toString();
+                if (!reason.isEmpty()) {
+                    binding.anotherReason.setError(null);
+                    Common.CloseKeyBoard(activity, binding.anotherReason);
+                    mvvm.changeStatusOrder(status, order_id, reason);
+
+                } else {
+                    binding.anotherReason.setError(getString(R.string.field_required));
+                }
+            } else {
+                mvvm.changeStatusOrder(status, order_id, reason);
+
+            }
+            dialog.dismiss();
+
+        });
     }
 
 

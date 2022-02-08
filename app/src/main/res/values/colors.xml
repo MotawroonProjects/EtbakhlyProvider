@@ -22,7 +22,7 @@
     <color name="gray2">#7D7D7D</color>
     <color name="gray3">#29000000</color>
     <color name="gray4">#B0B0B0</color>
-    <color name="gray5">#eee</color>
+    <color name="gray5">#9F9F9F</color>
     <color name="gray6">#B0B0B0</color>
     <color name="gray7">#2A2A2A</color>
     <color name="gray8">#757575</color>
@@ -59,7 +59,7 @@
 
     <color name="online">#4FC500</color>
 
-    <color name="rate">#ffe816</color>
+
     <color name="book_trans">#99000000</color>
     <color name="transparent">#00000000</color>
     <color name="colorred">#F61C00</color>
@@ -69,11 +69,15 @@
     <color name="trans_black2">#33000000</color>
 
     <color name="gray1_trans">#ddf5f5f5</color>
+    <color name="rate">#ffe816</color>
     <color name="rate_color">#FFD800</color>
     <color name="price_color">#F2C029</color>
+
     <color name="color00">#4FA13A</color>
     <color name="color9">#4E9F98</color>
     <color name="color10">#7CB96D</color>
     <color name="color11">#DCF3D5</color>
+    <color name="color12">#f2c333</color>
+    <color name="color13">#F88F2E</color>
 
 </resources>

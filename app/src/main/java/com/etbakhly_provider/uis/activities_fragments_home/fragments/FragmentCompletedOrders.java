@@ -31,6 +31,7 @@ public class FragmentCompletedOrders extends BaseFragment {
 
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
     private String caterer_id = "28";
+
     public static FragmentCompletedOrders newInstance() {
         FragmentCompletedOrders fragment = new FragmentCompletedOrders();
 
@@ -48,9 +49,10 @@ public class FragmentCompletedOrders extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding= DataBindingUtil.inflate(inflater,R.layout.fragment_order, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order, container, false);
         return binding.getRoot();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -60,25 +62,25 @@ public class FragmentCompletedOrders extends BaseFragment {
     private void initView() {
         activityHomeGeneralMvvm = ViewModelProviders.of(this).get(ActivityHomeGeneralMvvm.class);
 
-        activityHomeGeneralMvvm.getOnStatusSuccess().observe(activity,status->{
-            if (status.equals("completed")){
+        activityHomeGeneralMvvm.getOnStatusSuccess().observe(activity, status -> {
+            if (status.equals("completed")) {
                 mvvm.getCompletedOrders(caterer_id);
 
             }
         });
-        adapter=new CompletedOrdersAdapter(activity,this) ;
+        adapter = new CompletedOrdersAdapter(activity, this);
 
-        mvvm= ViewModelProviders.of(this).get(FragmentCompletedOrdersMvvm.class);
+        mvvm = ViewModelProviders.of(this).get(FragmentCompletedOrdersMvvm.class);
 
         mvvm.getIsDataLoading().observe(activity, isLoading -> binding.swipeRefresh.setRefreshing(isLoading));
 
         mvvm.getOnDataSuccess().observe(activity, orderList -> {
-            if (orderList.size() >0){
-                if (adapter !=null){
+            if (orderList.size() > 0) {
+                if (adapter != null) {
                     adapter.updateList(orderList);
                     binding.tvNoData.setVisibility(View.GONE);
                 }
-            }else {
+            } else {
                 binding.tvNoData.setVisibility(View.VISIBLE);
             }
         });
@@ -87,7 +89,7 @@ public class FragmentCompletedOrders extends BaseFragment {
             mvvm.getCompletedOrders(caterer_id);
         });
         binding.recyclerOrder.setAdapter(adapter);
-        binding.recyclerOrder.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.VERTICAL,false));
+        binding.recyclerOrder.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.VERTICAL, false));
         mvvm.getCompletedOrders(caterer_id);
 
     }
