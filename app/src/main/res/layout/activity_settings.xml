@@ -38,7 +38,8 @@
                         android:src="@drawable/ic_left"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/white" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
 
@@ -206,7 +207,7 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:id="@+id/llProfile"
+                                android:id="@+id/llKitchenDetails"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"

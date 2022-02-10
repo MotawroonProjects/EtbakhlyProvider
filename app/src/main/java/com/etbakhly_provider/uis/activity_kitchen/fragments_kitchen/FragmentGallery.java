@@ -1,4 +1,4 @@
-package com.etbakhly_provider.uis.activity_profile.fragments_profile;
+package com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
@@ -16,20 +15,21 @@ import android.view.ViewGroup;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.GalleryAdapter;
 import com.etbakhly_provider.databinding.FragmentGalleryBinding;
+import com.etbakhly_provider.model.KitchenModel;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
-import com.etbakhly_provider.uis.activity_profile.ProfileActivity;
+import com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity;
 
 
 public class FragmentGallery extends BaseFragment {
     private FragmentGalleryBinding binding;
     private GalleryAdapter adapter;
-    private ProfileActivity activity;
+    private KitchenDetailsActivity activity;
 
 
-    public static FragmentGallery newInstance() {
+    public static FragmentGallery newInstance(KitchenModel model) {
         FragmentGallery fragment = new FragmentGallery();
         Bundle args = new Bundle();
-//        args.putSerializable("data", model);
+        args.putSerializable("data", model);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,7 +37,7 @@ public class FragmentGallery extends BaseFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        activity = (ProfileActivity) context;
+        activity = (KitchenDetailsActivity) context;
     }
 
     @Override

@@ -7,11 +7,11 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
+public class KitchenPagerAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> fragments;
     private List<String> titles;
 
-    public ProfilePagerAdapter(@NonNull FragmentManager fm, int behavior, List<Fragment> fragments, List<String> titles) {
+    public KitchenPagerAdapter(@NonNull FragmentManager fm, int behavior, List<Fragment> fragments, List<String> titles) {
         super(fm, behavior);
         this.fragments = fragments;
         this.titles = titles;
