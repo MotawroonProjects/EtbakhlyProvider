@@ -1,6 +1,7 @@
 package com.etbakhly_provider.uis.activities_fragments_home.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.mvvm.FragmentCompletedOrdersMvvm;
 import com.etbakhly_provider.uis.activities_fragments_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
+import com.etbakhly_provider.uis.order_details.OrderDetailsActivity;
 
 
 public class FragmentCompletedOrders extends BaseFragment {
@@ -30,7 +32,7 @@ public class FragmentCompletedOrders extends BaseFragment {
     private FragmentCompletedOrdersMvvm mvvm;
 
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
-    private String caterer_id = "28";
+    private String caterer_id = "27";
 
     public static FragmentCompletedOrders newInstance() {
         FragmentCompletedOrders fragment = new FragmentCompletedOrders();
@@ -95,4 +97,8 @@ public class FragmentCompletedOrders extends BaseFragment {
     }
 
 
+    public void navigateToDetails() {
+        Intent intent=new Intent(activity, OrderDetailsActivity.class);
+        startActivity(intent);
+    }
 }

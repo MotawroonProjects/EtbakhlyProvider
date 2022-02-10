@@ -72,7 +72,7 @@ public class FragmentCompletedOrdersMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("error", e.getMessage());
+                        Log.e("error", e.getMessage());
                         isDataLoading.setValue(false);
                     }
                 });

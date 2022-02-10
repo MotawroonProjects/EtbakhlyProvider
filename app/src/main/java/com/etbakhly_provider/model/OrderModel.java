@@ -109,8 +109,8 @@ public class OrderModel implements Serializable {
         public String feast_id;
         public String created_at;
         public String updated_at;
-        public String offer;
-        public String dishes;
+        public Offer offer;
+        public CategoryDishModel.Dish dishes;
         public BuffetModel buffetModel;
         public FeastModel feastModel;
 
@@ -150,11 +150,11 @@ public class OrderModel implements Serializable {
             return updated_at;
         }
 
-        public String getOffer() {
+        public Offer getOffer() {
             return offer;
         }
 
-        public String getDishes() {
+        public CategoryDishModel.Dish getDishes() {
             return dishes;
         }
 

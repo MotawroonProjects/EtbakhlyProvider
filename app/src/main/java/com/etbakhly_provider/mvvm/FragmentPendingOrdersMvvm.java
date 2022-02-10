@@ -78,7 +78,7 @@ public class FragmentPendingOrdersMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("error", e.getMessage());
+                        Log.e("error", e.getMessage());
                         isDataLoading.setValue(false);
                     }
                 });
@@ -115,7 +115,7 @@ public class FragmentPendingOrdersMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("error", e.getMessage());
+                        Log.e("error", e.getMessage());
                     }
                 });
     }

@@ -95,7 +95,7 @@
     <string name="no_ratings_to_show">لا توجد تقييمات لعرضها</string>
     <string name="select_your_order">حدد طلبك</string>
     <string name="buffet_menu">قائمة بوفيهات</string>
-    <string name="Dishes_menu">قائمة الاطباق</string>
+    <string name="dishes_menu">قائمة الاطباق</string>
     <string name="choose_the_dishes">اختر الاطباق</string>
     <string name="no_buffets_to_show">لا توجد بوفيهات لعرضها</string>
     <string name="no_dishes_to_show">لا توجد أطباق لعرضها</string>
@@ -111,4 +111,6 @@
     <string name="perm_image_denied">Permission image denied</string>
     <string name="cancel">Cancel</string>
     <string name="camera">Camera</string>
+    <string name="men_women">رجال ونساء</string>
+    <string name="undefined">لايهم</string>
 </resources>

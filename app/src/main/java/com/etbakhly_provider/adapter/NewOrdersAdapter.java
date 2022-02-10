@@ -1,7 +1,9 @@
 package com.etbakhly_provider.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -42,6 +44,10 @@ public class NewOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
+        myHolder.binding.llNewDetails.setOnClickListener(view -> {
+            FragmentNewOrders fragmentNewOrders=(FragmentNewOrders) fragment;
+            fragmentNewOrders.navigateToDetails();
+        });
         myHolder.binding.btnAccepted.setOnClickListener(view -> {
             FragmentNewOrders fragmentNewOrders = (FragmentNewOrders) fragment;
             fragmentNewOrders.changeStatus(list.get(holder.getLayoutPosition()), "approval");

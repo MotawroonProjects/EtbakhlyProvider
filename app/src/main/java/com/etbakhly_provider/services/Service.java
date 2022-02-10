@@ -5,6 +5,7 @@ import com.etbakhly_provider.model.CountryDataModel;
 import com.etbakhly_provider.model.OrderDataModel;
 import com.etbakhly_provider.model.PlaceGeocodeData;
 import com.etbakhly_provider.model.PlaceMapDetailsData;
+import com.etbakhly_provider.model.SingleOrderDataModel;
 import com.etbakhly_provider.model.StatusResponse;
 import com.etbakhly_provider.model.UserModel;
 
@@ -79,4 +80,7 @@ public interface Service {
 
     @GET("api/Catering/zones")
     Single<Response<CountryDataModel>> getZone(@Query("city_id") String city_id);
+
+    @GET("api/Catering/SingelOrder")
+    Single<Response<SingleOrderDataModel>> getOrderDetails(@Query("order_id") String order_id);
 }

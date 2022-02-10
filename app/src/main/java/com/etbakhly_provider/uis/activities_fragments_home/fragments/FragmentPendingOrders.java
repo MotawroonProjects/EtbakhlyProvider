@@ -1,6 +1,7 @@
 package com.etbakhly_provider.uis.activities_fragments_home.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.etbakhly_provider.databinding.FragmentOrderBinding;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.mvvm.FragmentPendingOrdersMvvm;
 import com.etbakhly_provider.uis.activities_fragments_home.HomeActivity;
+import com.etbakhly_provider.uis.order_details.OrderDetailsActivity;
 
 
 public class FragmentPendingOrders extends Fragment {
@@ -29,7 +31,7 @@ public class FragmentPendingOrders extends Fragment {
     private HomeActivity activity;
     private FragmentPendingOrdersMvvm mvvm;
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
-    private String caterer_id = "28";
+    private String caterer_id = "27";
 
     public static FragmentPendingOrders newInstance() {
         FragmentPendingOrders fragment = new FragmentPendingOrders();
@@ -74,16 +76,16 @@ public class FragmentPendingOrders extends Fragment {
             binding.swipeRefresh.setRefreshing(isLoading);
         });
 
-        mvvm.getOnDataSuccess().observe(activity, orderList -> {
-            if (orderList.size() > 0) {
-                if (adapter != null) {
-                    adapter.updateList(orderList);
-                    binding.tvNoData.setVisibility(View.GONE);
-                }
-            } else {
-                binding.tvNoData.setVisibility(View.VISIBLE);
-            }
-        });
+//        mvvm.getOnDataSuccess().observe(activity, orderList -> {
+//            if (orderList.size() > 0) {
+//                if (adapter != null) {
+//                    adapter.updateList(orderList);
+//                    binding.tvNoData.setVisibility(View.GONE);
+//                }
+//            } else {
+//                binding.tvNoData.setVisibility(View.VISIBLE);
+//            }
+//        });
         mvvm.getOnDataSuccess().observe(activity, orderModelList -> {
             if (orderModelList.size() > 0) {
                 if (adapter != null) {
@@ -109,4 +111,11 @@ public class FragmentPendingOrders extends Fragment {
     public void changeStatus(String id, String status) {
         mvvm.changeStatusOrder(status, id);
     }
+
+    public void navigateToDetails() {
+        Intent intent=new Intent(activity, OrderDetailsActivity.class);
+        startActivity(intent);
+    }
+
+
 }

@@ -355,6 +355,25 @@ public class GeneralMethod {
         }
 
     }
+    @BindingAdapter("providerType")
+    public static void providerType(TextView textView, String type) {
+        if (type != null) {
+            if (type.equals("man")) {
+                textView.setText(R.string.men);
+            } else if (type.equals("women")) {
+                textView.setText(R.string.women);
+
+            } else if (type.equals("man_and_women")) {
+                textView.setText(R.string.men_women);
+
+            } else if (type.equals("not_found")) {
+                textView.setText(R.string.undefined);
+
+            }
+        }
+
+
+    }
 
 
 }

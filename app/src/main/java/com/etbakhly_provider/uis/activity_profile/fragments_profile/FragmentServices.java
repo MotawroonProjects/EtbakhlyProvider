@@ -8,15 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.databinding.DialogAlertBinding;
-import com.etbakhly_provider.databinding.DialogLayoutBinding;
+
+import com.etbakhly_provider.databinding.ChooseDialogBinding;
 import com.etbakhly_provider.databinding.FragmentServicesBinding;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
 import com.etbakhly_provider.uis.activity_buffet.BuffetActivity;
@@ -58,20 +57,20 @@ public class FragmentServices extends BaseFragment {
             final AlertDialog dialog = new AlertDialog.Builder(activity)
                     .create();
 
-            DialogLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_layout, null, false);
+            ChooseDialogBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.choose_dialog, null, false);
             dialog.setCanceledOnTouchOutside(false);
             dialog.setView(binding.getRoot());
             dialog.show();
-            binding.llMenu.setOnClickListener(view1 -> {
-                Intent intent = new Intent(activity, BuffetActivity.class);
-                startActivity(intent);
-                dialog.dismiss();
-            });
-            binding.llChooseDishes.setOnClickListener(view12 -> {
-                Intent intent = new Intent(activity, DishesActivity.class);
-                startActivity(intent);
-                dialog.dismiss();
-            });
+//            binding.llMenu.setOnClickListener(view1 -> {
+//                Intent intent = new Intent(activity, BuffetActivity.class);
+//                startActivity(intent);
+//                dialog.dismiss();
+//            });
+//            binding.llChooseDishes.setOnClickListener(view12 -> {
+//                Intent intent = new Intent(activity, DishesActivity.class);
+//                startActivity(intent);
+//                dialog.dismiss();
+//            });
         });
         binding.cardViewBanquet.setOnClickListener(view -> {
 //            final AlertDialog dialog=new AlertDialog.Builder(activity)

@@ -2,6 +2,7 @@ package com.etbakhly_provider.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import com.etbakhly_provider.R;
 
 import com.etbakhly_provider.databinding.CompletedOrderItemBinding;
 import com.etbakhly_provider.model.OrderModel;
+import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentCompletedOrders;
 
 import java.util.List;
 
@@ -39,6 +41,13 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder=(MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
+        myHolder.binding.llCompletedDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentCompletedOrders fragmentCompletedOrders=(FragmentCompletedOrders) fragment;
+                fragmentCompletedOrders.navigateToDetails();
+            }
+        });
     }
 
     @Override

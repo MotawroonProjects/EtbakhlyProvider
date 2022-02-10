@@ -14,6 +14,7 @@ import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.share.App;
 import com.etbakhly_provider.tags.Tags;
 
+import java.io.IOException;
 import java.util.List;
 
 import io.reactivex.SingleObserver;
@@ -57,6 +58,7 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
     }
 
     public void getNewOrders(String caterer_id) {
+
         getIsDataLoading().setValue(true);
         Api.getService(Tags.base_url).getMyOrder(caterer_id, "new")
                 .subscribeOn(Schedulers.io())
@@ -69,23 +71,26 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<OrderDataModel> response) {
-                        isDataLoading.setValue(false);
                         getIsDataLoading().setValue(false);
-                        Log.e("llll", response.code() + "" + response.body().getStatus());
-                        if (response.isSuccessful()) {
+                        Log.e("code",response.body().getStatus()+"_");
 
+                        if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200 && response.body().getData() != null) {
                                 onDataSuccess.setValue(response.body().getData());
                             }
                         } else {
-
+                            try {
+                                Log.e("error",response.code()+""+response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("error", e.getMessage());
-                        isDataLoading.setValue(false);
+                        Log.e("error", e.toString());
+                        //getIsDataLoading().setValue(false);
                     }
                 });
     }
@@ -121,7 +126,7 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("error", e.getMessage());
+                        Log.e("error", e.getMessage());
                     }
                 });
     }

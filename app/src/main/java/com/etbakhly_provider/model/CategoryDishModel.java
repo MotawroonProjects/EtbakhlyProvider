@@ -36,7 +36,7 @@ public class CategoryDishModel implements Serializable {
     }
     public static class Dish implements Serializable{
 
-        public int id;
+        public String id;
         public String category_dishes_id;
         public String caterer_id;
         public String buffets_id;
@@ -48,8 +48,9 @@ public class CategoryDishModel implements Serializable {
         public String qty;
         public String created_at;
         public String updated_at;
+        private int amount = 0;
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 

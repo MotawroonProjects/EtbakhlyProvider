@@ -1,6 +1,7 @@
 package com.etbakhly_provider.uis.activities_fragments_home.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import com.etbakhly_provider.mvvm.FragmentNewOrdersMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activities_fragments_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
+import com.etbakhly_provider.uis.order_details.OrderDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -34,7 +37,7 @@ public class FragmentNewOrders extends BaseFragment {
     private HomeActivity activity;
     private FragmentNewOrdersMvvm mvvm;
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
-    private String caterer_id = "28";
+    private String caterer_id = "27";
     private String reason = "";
 
     public static FragmentNewOrders newInstance() {
@@ -66,16 +69,17 @@ public class FragmentNewOrders extends BaseFragment {
 
     private void initView() {
 
+        Log.e("eeee","juuihiuhi");
         activityHomeGeneralMvvm = ViewModelProviders.of(this).get(ActivityHomeGeneralMvvm.class);
 
 
-        adapter = new NewOrdersAdapter(activity, this);
         mvvm = ViewModelProviders.of(this).get(FragmentNewOrdersMvvm.class);
         mvvm.getIsDataLoading().observe(activity, isLoading -> {
             binding.swipeRefresh.setRefreshing(isLoading);
         });
 
         mvvm.getOnDataSuccess().observe(activity, orderList -> {
+            Log.e("ggg",orderList.size()+"");
             if (orderList.size() > 0) {
                 if (adapter != null) {
                     adapter.updateList(orderList);
@@ -90,6 +94,7 @@ public class FragmentNewOrders extends BaseFragment {
         mvvm.getOnOrderStatusSuccess().observe(activity, status -> {
             if (status == 1) {
                 activityHomeGeneralMvvm.getOnStatusSuccess().setValue("approval");
+                activity.setItemPos(1);
                 mvvm.getNewOrders(caterer_id);
             } else if (status == 2) {
                 mvvm.getNewOrders(caterer_id);
@@ -101,9 +106,9 @@ public class FragmentNewOrders extends BaseFragment {
             mvvm.getNewOrders(caterer_id);
         });
 
-
+        adapter = new NewOrdersAdapter(activity, this);
         binding.recyclerOrder.setAdapter(adapter);
-        binding.recyclerOrder.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.VERTICAL, false));
+        binding.recyclerOrder.setLayoutManager(new LinearLayoutManager(activity));
 
         mvvm.getNewOrders(caterer_id);
 
@@ -171,4 +176,8 @@ public class FragmentNewOrders extends BaseFragment {
     }
 
 
+    public void navigateToDetails() {
+        Intent intent=new Intent(activity, OrderDetailsActivity.class);
+        startActivity(intent);
+    }
 }

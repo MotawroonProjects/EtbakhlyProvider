@@ -2,6 +2,7 @@ package com.etbakhly_provider.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.PendingOrderItemBinding;
 import com.etbakhly_provider.model.OrderModel;
+import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentNewOrders;
 import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentPendingOrders;
 
 import java.util.List;
@@ -40,6 +42,13 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder=(MyHolder)holder;
         myHolder.binding.setModel(list.get(position));
+        myHolder.binding.llPendingDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentPendingOrders fragmentPendingOrders=(FragmentPendingOrders) fragment;
+                fragmentPendingOrders.navigateToDetails();
+            }
+        });
         myHolder.binding.btnPrepared.setOnClickListener(view -> {
             FragmentPendingOrders fragmentPendingOrders =(FragmentPendingOrders) fragment;
             OrderModel orderModel = list.get(holder.getLayoutPosition());

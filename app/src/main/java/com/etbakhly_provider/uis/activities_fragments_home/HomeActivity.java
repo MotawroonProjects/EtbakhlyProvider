@@ -2,10 +2,13 @@ package com.etbakhly_provider.uis.activities_fragments_home;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.HomePagerAdapter;
@@ -43,6 +46,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initView() {
+        activityHomeGeneralMvvm = ViewModelProviders.of(this).get(ActivityHomeGeneralMvvm.class);
 
 
         titles = new ArrayList<>();
@@ -61,7 +65,14 @@ public class HomeActivity extends BaseActivity {
         pagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), PagerAdapter.POSITION_UNCHANGED, fragmentList, titles);
         binding.tab.setupWithViewPager(binding.pager);
         binding.pager.setAdapter(pagerAdapter);
-
+//activityHomeGeneralMvvm.getOnStatusSuccess().observe(this, new Observer<String>() {
+//    @Override
+//    public void onChanged(String s) {
+//        if(s.equals("approval")){
+//            setItemPos(1);
+//        }
+//    }
+//});
 
         binding.llMenu.setOnClickListener(view -> {
             Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
