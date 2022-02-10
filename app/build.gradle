@@ -65,6 +65,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
+    implementation 'com.wdullaer:materialdatetimepicker:3.6.4'
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     //noinspection LifecycleAnnotationProcessorWithJava8

@@ -31,10 +31,13 @@ import com.etbakhly_provider.model.SignUpModel;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
 import com.etbakhly_provider.uis.activity_signup.SignupActivity;
+import com.google.android.material.timepicker.MaterialTimePicker;
 import com.squareup.picasso.Picasso;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -45,7 +48,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class FragmentSignup1 extends BaseFragment  {
+public class FragmentSignup1 extends BaseFragment  implements TimePickerDialog.OnTimeSetListener {
     private SignupActivity activity;
 
     private FragmentSignUp1Binding binding;
@@ -57,8 +60,10 @@ public class FragmentSignup1 extends BaseFragment  {
     private int selectedReq = 0;
     private Uri uri = null;
     private SignUpModel model;
+    private TimePickerDialog timePickerDialog;
 
     private CompositeDisposable disposable = new CompositeDisposable();
+    private String type;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -148,6 +153,22 @@ public class FragmentSignup1 extends BaseFragment  {
         });
 
         binding.btnCancel.setOnClickListener(view -> closeSheet());
+        binding.lltimefrom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                type="from";
+timePickerDialog.show(activity.getFragmentManager(),"");
+            }
+        });
+        binding.lltimeto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                type="to";
+                timePickerDialog.show(activity.getFragmentManager(),"");
+            }
+        });
+
+        createDateDialog();
     }
 
 
@@ -248,4 +269,24 @@ public class FragmentSignup1 extends BaseFragment  {
         super.onDestroyView();
         disposable.clear();
     }
+
+    @Override
+    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+
+    }
+    private void createDateDialog() {
+
+        Calendar calendar = Calendar.getInstance();
+        timePickerDialog = TimePickerDialog.newInstance(this, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), false);
+        timePickerDialog.dismissOnPause(true);
+        timePickerDialog.setAccentColor(ActivityCompat.getColor(activity, R.color.colorPrimary));
+        timePickerDialog.setCancelColor(ActivityCompat.getColor(activity, R.color.gray4));
+        timePickerDialog.setOkColor(ActivityCompat.getColor(activity, R.color.colorPrimary));
+        // datePickerDialog.setOkText(getString(R.string.select));
+        //datePickerDialog.setCancelText(getString(R.string.cancel));
+        timePickerDialog.setVersion(TimePickerDialog.Version.VERSION_2);
+        //  timePickerDialog.setMinTime(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
+
+    }
+
 }
