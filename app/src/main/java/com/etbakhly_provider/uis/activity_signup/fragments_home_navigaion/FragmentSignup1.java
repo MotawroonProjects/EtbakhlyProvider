@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -48,7 +49,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class FragmentSignup1 extends BaseFragment  implements TimePickerDialog.OnTimeSetListener {
+public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.OnTimeSetListener {
     private SignupActivity activity;
 
     private FragmentSignUp1Binding binding;
@@ -156,18 +157,33 @@ public class FragmentSignup1 extends BaseFragment  implements TimePickerDialog.O
         binding.lltimefrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                type="from";
-timePickerDialog.show(activity.getFragmentManager(),"");
+                type = "from";
+                timePickerDialog.show(activity.getFragmentManager(), "");
             }
         });
         binding.lltimeto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                type="to";
-                timePickerDialog.show(activity.getFragmentManager(),"");
+                type = "to";
+                timePickerDialog.show(activity.getFragmentManager(), "");
             }
         });
-
+        binding.rdDelivery.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                binding.rdDelivery.setChecked(true);
+                binding.rdSurrender.setChecked(false);
+                binding.flarea.setVisibility(View.VISIBLE);
+            }
+        });
+        binding.rdSurrender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                binding.rdDelivery.setChecked(false);
+                binding.rdSurrender.setChecked(true);
+                binding.flarea.setVisibility(View.GONE);
+            }
+        });
         createDateDialog();
     }
 
@@ -264,6 +280,7 @@ timePickerDialog.show(activity.getFragmentManager(),"");
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         return Uri.parse(MediaStore.Images.Media.insertImage(activity.getContentResolver(), bitmap, "", ""));
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -274,6 +291,7 @@ timePickerDialog.show(activity.getFragmentManager(),"");
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
 
     }
+
     private void createDateDialog() {
 
         Calendar calendar = Calendar.getInstance();

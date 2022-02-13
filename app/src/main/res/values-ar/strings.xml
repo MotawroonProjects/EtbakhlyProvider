@@ -24,9 +24,9 @@
     <string name="delivery_time">موعد التسليم</string>
     <string name="deliv_time2">مدة التوصيل</string>
     <string name="_15_20_m">15-20 م</string>
-    <string name="processing_time">processing time</string>
-    <string name="_3_hour">3 Hour</string>
-    <string name="booking_before">booking before</string>
+    <string name="processing_time">وقت التحضير</string>
+    <string name="_3_hour">3 ساعات</string>
+    <string name="booking_before">حجز قبل</string>
     <string name="service_provider">مقدم الخدمة</string>
     <string name="women">النساء</string>
     <string name="men">الرجال</string>
@@ -102,16 +102,16 @@
     <string name="no_dishes_to_show">لا توجد أطباق لعرضها</string>
 
     <string name="sent_delivered_handed">تم التسليم</string>
-    <string name="ph_em_found">phone number or email already exists</string>
-    <string name="ch_city">Choose City</string>
-    <string name="plz_ch_country">Please Choose Country</string>
-    <string name="select_location_on_map">Select Location on Map</string>
-    <string name="chef">Chef</string>
-    <string name="food_truck">Food Truck</string>
-    <string name="delivery_type">Delivery Type</string>
-    <string name="perm_image_denied">Permission image denied</string>
-    <string name="cancel">Cancel</string>
-    <string name="camera">Camera</string>
+    <string name="ph_em_found">رقم الجوال او البريد الالكترونى موجود مسبقا</string>
+    <string name="ch_city">اختر المدينه</string>
+    <string name="plz_ch_country">من فضلك اختر الدوله</string>
+    <string name="select_location_on_map">حدد موقعك على الخريطه</string>
+    <string name="chef">شيف</string>
+    <string name="food_truck">عربة طعام</string>
+    <string name="delivery_type">نوع التوصيل</string>
+    <string name="perm_image_denied">لا يمكنك الوصول للصور</string>
+    <string name="cancel">الغاء</string>
+    <string name="camera">كاميرا</string>
     <string name="men_women">رجال ونساء</string>
     <string name="undefined">لايهم</string>
 </resources>

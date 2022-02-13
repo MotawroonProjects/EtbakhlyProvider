@@ -31,6 +31,10 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".uis.activity_signup.SignupActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
             android:name=".uis.activity_register.RegisterActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
@@ -63,11 +67,11 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".uis.activity_splash.SplashActivity"
+            android:name=".uis.activities_fragments_home.HomeActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"></activity>
         <activity
-            android:name=".uis.activities_fragments_home.HomeActivity"
+            android:name=".uis.activity_splash.SplashActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
