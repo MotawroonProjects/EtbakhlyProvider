@@ -1,4 +1,4 @@
-package com.etbakhly_provider.uis.activity_signup.fragments_home_navigaion;
+package com.etbakhly_provider.uis.activity_signup.fragments_sign_up_navigation;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -32,7 +32,6 @@ import com.etbakhly_provider.model.SignUpModel;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
 import com.etbakhly_provider.uis.activity_signup.SignupActivity;
-import com.google.android.material.timepicker.MaterialTimePicker;
 import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 

@@ -20,6 +20,7 @@ import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_language.LanguageActivity;
 import com.etbakhly_provider.uis.activity_language_country.LanguageCountryActivity;
 import com.etbakhly_provider.uis.activity_login.LoginActivity;
+import com.etbakhly_provider.uis.activity_signup.SignupActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,8 +35,6 @@ import io.reactivex.schedulers.Schedulers;
 public class SplashActivity extends BaseActivity {
     private ActivitySplashBinding binding;
     private CompositeDisposable disposable = new CompositeDisposable();
-    private Preferences preferences;
-    private UserSettingsModel userSettingsModel;
     private int req;
     private ActivityResultLauncher<Intent> launcher;
 
@@ -51,11 +50,19 @@ public class SplashActivity extends BaseActivity {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (req == 1 && result.getResultCode() == RESULT_OK) {
                 if (result.getData() != null) {
+                    UserSettingsModel userSettingsModel = getUserSettings();
+                    if (userSettingsModel==null){
+                        userSettingsModel = new UserSettingsModel();
+                    }
+                    userSettingsModel.setFirstTime(false);
+                    setUserSettings(userSettingsModel);
                     String lang = result.getData().getStringExtra("lang");
                     refreshActivity(lang);
                 } else {
                     setUpData();
                 }
+            }else if (req==2&&result.getResultCode()==RESULT_OK){
+                navigateToHomeActivity();
             }
         });
         Observable.timer(2, TimeUnit.SECONDS)
@@ -87,20 +94,24 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void setUpData() {
-        req=1;
-        preferences = Preferences.getInstance();
-        userSettingsModel = preferences.getUserSettings(SplashActivity.this);
+        req = 1;
+        UserSettingsModel userSettingsModel = getUserSettings();
 
         if (userSettingsModel == null) {
             navigateToLanguageCountryActivity();
         } else {
-            if (userSettingsModel.getCityModel() == null) {
+            if (userSettingsModel.isFirstTime()) {
                 navigateToLanguageCountryActivity();
 
             } else {
 
                 if (getUserModel() != null) {
-                    navigateToHomeActivity();
+                    if (getUserModel().getData().getIs_completed().equals("yes")){
+                        navigateToHomeActivity();
+
+                    }else {
+                        navigateToCompleteSignUpActivity();
+                    }
 
                 } else {
                     navigateToLoginActivity();
@@ -110,11 +121,12 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
-    private void navigateToLanguageActivity() {
-        Intent intent = new Intent(this, LanguageActivity.class);
-        startActivity(intent);
-        //  finish();
+    private void navigateToCompleteSignUpActivity() {
+        req =2;
+        Intent intent = new Intent(this, SignupActivity.class);
+        launcher.launch(intent);
     }
+
 
     private void navigateToLanguageCountryActivity() {
         Intent intent = new Intent(this, LanguageCountryActivity.class);

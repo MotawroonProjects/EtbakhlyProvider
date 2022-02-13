@@ -27,7 +27,7 @@ public class KitchenModel implements Serializable {
     private String discount = "0.0";
     private String commercial_register;
     private String is_completed;
-    private String is_favorite = "no";
+    private String is_favorite = "false";
     private String rates_val;
     private String rates_count;
     private List<ZoneCover> zone_cover;
@@ -38,6 +38,7 @@ public class KitchenModel implements Serializable {
     private List<RateModel> rate;
     private List<FavoriteModel> favorite;
     private List<OfferModel> offers;
+
 
     public String getId() {
         return id;
@@ -135,16 +136,16 @@ public class KitchenModel implements Serializable {
         return is_favorite;
     }
 
+    public void setIs_favorite(String is_favorite) {
+        this.is_favorite = is_favorite;
+    }
+
     public String getRates_val() {
         return rates_val;
     }
 
     public String getRates_count() {
         return rates_count;
-    }
-
-    public List<ZoneCover> getZone_cover() {
-        return zone_cover;
     }
 
     public UserModel.Data getUser() {
@@ -173,6 +174,10 @@ public class KitchenModel implements Serializable {
 
     public List<OfferModel> getOffers() {
         return offers;
+    }
+
+    public List<ZoneCover> getZone_cover() {
+        return zone_cover;
     }
 
     public static class Photo implements Serializable {

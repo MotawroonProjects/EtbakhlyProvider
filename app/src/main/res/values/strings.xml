@@ -3,7 +3,7 @@
     <string name="map_api_key">AIzaSyAnjvMAJEmiAv3yeCDUXWv-PboXiT_uaoQ</string>
     <string name="search_key">AIzaSyAnjvMAJEmiAv3yeCDUXWv-PboXiT_uaoQ</string>
     <string name="field_required">Field Required</string>
-    <string name="inv_email">Invaild Email</string>
+    <string name="inv_email">Invalid Email</string>
     <string name="login">Login</string>
     <string name="done">Done</string>
     <string name="pass_short">Password Short</string>
@@ -121,4 +121,6 @@
     <string name="person">Person</string>
     <string name="sar">SAR</string>
     <string name="order">Order</string>
+    <string name="photo_required">Photo required</string>
+    <string name="update">Update</string>
 </resources>

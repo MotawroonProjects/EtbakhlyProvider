@@ -4,45 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
-    <data>
-        <variable
-            name="lang"
-            type="String" />
-    </data>
-
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities_fragments.activity_splash.SplashActivity"
-        android:background="@drawable/back"
-        >
+        tools:context=".uis.catering_uis.uis_client.client_activity_splash.ClientSplashActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+            android:src="@drawable/splash"
+            android:scaleType="centerCrop"
+            />
+        <include
+            android:id="@+id/logo"
+            layout="@layout/logo_layout"
+            android:layout_width="136dp"
+            android:layout_height="136dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
-
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:src="@drawable/logo"
-                android:layout_gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-    </FrameLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

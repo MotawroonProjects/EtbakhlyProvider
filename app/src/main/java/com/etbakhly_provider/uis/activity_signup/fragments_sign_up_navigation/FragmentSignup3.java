@@ -1,4 +1,4 @@
-package com.etbakhly_provider.uis.activity_signup.fragments_home_navigaion;
+package com.etbakhly_provider.uis.activity_signup.fragments_sign_up_navigation;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -96,14 +96,6 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-//    private void navigateToAppCategoryActivity(String action) {
-//        req = 2;
-//        Intent intent = new Intent(this, AppCategoryActivity.class);
-//        intent.putExtra("action", action);
-//        launcher.launch(intent);
-//
-//
-//    }
 
     private void openSheet() {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
@@ -140,7 +132,6 @@ public class LoginActivity extends BaseActivity {
         req = 1;
         Intent intent = new Intent(this, SignupActivity.class);
         intent.putExtra("data", userModel);
-
         launcher.launch(intent);
     }
 }

@@ -80,29 +80,11 @@ public class LanguageCountryActivity extends BaseActivity {
         });
 
         binding.btnSave.setOnClickListener(v -> {
-            if (mvvm.getSelectedCountry().getValue() != null && mvvm.getSelectedCity().getValue() != null && mvvm.getSelectedLocation().getValue() != null) {
-                UserSettingsModel userSettingsModel = getUserSettings();
-                if (userSettingsModel == null) {
-                    userSettingsModel = new UserSettingsModel();
-                }
-                userSettingsModel.setCityModel(mvvm.getSelectedCity().getValue());
-                userSettingsModel.setCountryModel(mvvm.getSelectedCountry().getValue());
-                userSettingsModel.setLocation(mvvm.getSelectedLocation().getValue());
+            Intent intent = getIntent();
+            intent.putExtra("lang", selectedLang);
+            setResult(RESULT_OK, intent);
+            finish();
 
-                setUserSettings(userSettingsModel);
-                if (!selectedLang.equals(lang)) {
-                    Intent intent = getIntent();
-                    intent.putExtra("lang", selectedLang);
-                    setResult(RESULT_OK, intent);
-
-                } else {
-                    setResult(RESULT_OK);
-
-                }
-                finish();
-            } else {
-                Common.showSnackBar(binding.root, getString(R.string.plz_ch_country));
-            }
         });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {

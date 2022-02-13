@@ -27,7 +27,9 @@ import com.etbakhly_provider.adapter.SpinnerServiceAdapter;
 import com.etbakhly_provider.databinding.ActivityRegisterBinding;
 import com.etbakhly_provider.model.RegisterModel;
 import com.etbakhly_provider.model.UserModel;
-import com.etbakhly_provider.mvvm.ActivitySignupMvvm;
+import com.etbakhly_provider.mvvm.ActivityRegisterMvvm;
+import com.etbakhly_provider.share.Common;
+import com.etbakhly_provider.tags.Tags;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
@@ -39,12 +41,18 @@ import java.util.List;
 public class RegisterActivity extends BaseActivity {
     private ActivityRegisterBinding binding;
     private RegisterModel model;
-    private ActivitySignupMvvm activitySignupMvvm;
+    private ActivityRegisterMvvm mvvm;
     private String phone_code, phone;
-    private ActivityResultLauncher<Intent> launcher;
     private UserModel userModel;
     private SpinnerServiceAdapter spinnerServiceAdapter;
-    private List<String> servicelist;
+    private List<String> optionsList;
+    private ActivityResultLauncher<Intent> launcher;
+    private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    private final String camera_permission = Manifest.permission.CAMERA;
+    private final int READ_REQ = 1, CAMERA_REQ = 2;
+    private int selectedReq = 0;
+    private Uri uri = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,9 +70,11 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void initView() {
-        activitySignupMvvm = ViewModelProviders.of(this).get(ActivitySignupMvvm.class);
+        mvvm = ViewModelProviders.of(this).get(ActivityRegisterMvvm.class);
         model = new RegisterModel(phone_code, phone);
-        servicelist = new ArrayList<>();
+        model.setContext(this);
+
+        optionsList = new ArrayList<>();
         spinnerServiceAdapter = new SpinnerServiceAdapter(this);
         binding.spinnerServices.setAdapter(spinnerServiceAdapter);
         binding.spinnerServices.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -90,46 +100,195 @@ public class RegisterActivity extends BaseActivity {
 
             }
         });
-        setdata();
+        setOptionData();
         userModel = getUserModel();
         if (userModel != null) {
-            model.setPhone_code(userModel.getData().getPhone_code());
-            model.setPhone(userModel.getData().getPhone());
+
+            phone_code = userModel.getData().getPhone_code();
+            phone = userModel.getData().getPhone();
+            model.setName(userModel.getData().getName());
+            model.setEmail(userModel.getData().getEmail());
+
+            model.setPhone_code(phone_code);
+            model.setPhone(phone);
+            binding.llPhone.setVisibility(View.GONE);
+
+            if (userModel.getData().getPhoto() != null) {
+                String url = Tags.base_url + userModel.getData().getPhoto();
+                Picasso.get().load(Uri.parse(url)).into(binding.image);
+                model.setPhotoUrl(url);
+            }
+
+
+            binding.btnNext.setText(getString(R.string.update));
 
 
         }
         binding.setModel(model);
 
-        activitySignupMvvm.getUserData().observe(this, userModel -> {
-            Intent intent = getIntent();
-            intent.putExtra("data", userModel);
-            setResult(RESULT_OK, intent);
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                if (selectedReq == READ_REQ) {
+
+                    uri = result.getData().getData();
+                    model.setPhotoUrl(uri.toString());
+
+                    File file = new File(Common.getImagePath(this, uri));
+                    Picasso.get().load(file).fit().into(binding.image);
+
+                } else if (selectedReq == CAMERA_REQ) {
+                    Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
+                    uri = getUriFromBitmap(bitmap);
+                    if (uri != null) {
+                        String path = Common.getImagePath(this, uri);
+                        model.setPhotoUrl(uri.toString());
+                        if (path != null) {
+                            Picasso.get().load(new File(path)).fit().into(binding.image);
+
+                        } else {
+                            Picasso.get().load(uri).fit().into(binding.image);
+
+                        }
+                    }
+                }
+            }
+        });
+
+        mvvm.getUserData().observe(this, userModel -> {
+            setUserModel(userModel);
+            setResult(RESULT_OK);
             finish();
 
         });
 
+        binding.cardViewImage.setOnClickListener(view -> {
+            Common.CloseKeyBoard(this, binding.edtName);
+            openSheet();
+        });
+        binding.flGallery.setOnClickListener(view -> {
+            closeSheet();
+            checkReadPermission();
+        });
+
+        binding.flCamera.setOnClickListener(view -> {
+            closeSheet();
+            checkCameraPermission();
+        });
+
+        binding.btnCancel.setOnClickListener(view -> closeSheet());
+
 
         binding.btnNext.setOnClickListener(view -> {
-            if (model.isDataValid(this)) {
+            if (getUserModel() == null) {
+                mvvm.signUp(model, this);
 
-                if (userModel == null) {
-                    activitySignupMvvm.signUp(model, this);
-                } else {
-                    //  activitySignupMvvm.update(model, userModel.getData().getId(), this);
-                }
+            } else {
 
             }
         });
 
     }
 
-    private void setdata() {
-        servicelist.add(getResources().getString(R.string.ch_service));
-        servicelist.add(getResources().getString(R.string.service));
-        servicelist.add(getResources().getString(R.string.chef));
-        servicelist.add(getResources().getString(R.string.food_truck));
-        spinnerServiceAdapter.updateData(servicelist);
+    private void setOptionData() {
+        optionsList.add(getResources().getString(R.string.service));
+        optionsList.add(getResources().getString(R.string.chef));
+        optionsList.add(getResources().getString(R.string.food_truck));
+        spinnerServiceAdapter.updateData(optionsList);
 
+    }
+
+
+    public void openSheet() {
+        binding.expandLayout.setExpanded(true, true);
+    }
+
+    public void closeSheet() {
+        binding.expandLayout.collapse(true);
+
+    }
+
+    public void checkReadPermission() {
+        closeSheet();
+        if (ActivityCompat.checkSelfPermission(this, READ_PERM) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{READ_PERM}, READ_REQ);
+        } else {
+            SelectImage(READ_REQ);
+        }
+    }
+
+    public void checkCameraPermission() {
+
+        closeSheet();
+
+        if (ContextCompat.checkSelfPermission(this, write_permission) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, camera_permission) == PackageManager.PERMISSION_GRANTED
+        ) {
+            SelectImage(CAMERA_REQ);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{camera_permission, write_permission}, CAMERA_REQ);
+        }
+    }
+
+    private void SelectImage(int req) {
+        selectedReq = req;
+        Intent intent = new Intent();
+
+        if (req == READ_REQ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            } else {
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+            }
+
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType("image/*");
+
+            launcher.launch(intent);
+
+        } else if (req == CAMERA_REQ) {
+            try {
+                intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                launcher.launch(intent);
+            } catch (SecurityException e) {
+                Toast.makeText(this, R.string.perm_image_denied, Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(this, R.string.perm_image_denied, Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == READ_REQ) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                SelectImage(requestCode);
+            } else {
+                Toast.makeText(this, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+            }
+
+        } else if (requestCode == CAMERA_REQ) {
+            if (grantResults.length > 0 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                SelectImage(requestCode);
+            } else {
+                Toast.makeText(this, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private Uri getUriFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
     }
 
 

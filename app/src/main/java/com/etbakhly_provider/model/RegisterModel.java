@@ -13,26 +13,38 @@ import com.etbakhly_provider.R;
 
 
 public class RegisterModel extends BaseObservable {
+    private String photoUrl;
     private String phone_code;
     private String phone;
     private String name;
     private String email;
     private String service;
+    private String address;
     private double lat;
     private double lng;
+    private boolean isValid;
+    private Context context;
     public ObservableField<String> error_name = new ObservableField<>();
     public ObservableField<String> error_email = new ObservableField<>();
+    public ObservableField<String> error_address = new ObservableField<>();
 
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
-    public boolean isDataValid(Context context) {
-        if (!name.isEmpty() &&
+    public boolean isDataValid() {
+        if (!photoUrl.isEmpty() &&
+                !name.isEmpty() &&
                 !email.isEmpty() &&
-                !service.isEmpty()&&
+                !address.isEmpty() &&
+                !service.isEmpty() &&
                 Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
         ) {
             error_name.set(null);
             error_email.set(null);
+            error_address.set(null);
+
 
             return true;
         } else {
@@ -44,6 +56,7 @@ public class RegisterModel extends BaseObservable {
                 error_name.set(null);
 
             }
+
             if (email.isEmpty()) {
                 error_email.set(context.getString(R.string.field_required));
 
@@ -55,20 +68,45 @@ public class RegisterModel extends BaseObservable {
 
             }
 
-if(service.isEmpty()){
-    Toast.makeText(context, context.getResources().getString(R.string.ch_service), Toast.LENGTH_SHORT).show();
-}
+            if (photoUrl.isEmpty()) {
+                Toast.makeText(context, R.string.photo_required, Toast.LENGTH_SHORT).show();
+            }
+            if (service.isEmpty()) {
+                Toast.makeText(context, context.getResources().getString(R.string.ch_service), Toast.LENGTH_SHORT).show();
+            }
+
+            if (address.isEmpty()) {
+                error_address.set(context.getString(R.string.field_required));
+
+            } else {
+                error_address.set(null);
+            }
             return false;
         }
     }
 
     public RegisterModel(String phone_code, String phone) {
+
         setPhone_code(phone_code);
         setPhone(phone);
+        setPhotoUrl("");
         setName("");
         setEmail("");
         setService("");
+        setAddress("");
 
+
+
+    }
+
+    @Bindable
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+        isDataValid();
     }
 
     public double getLat() {
@@ -103,6 +141,7 @@ if(service.isEmpty()){
     public void setName(String name) {
         this.name = name;
         notifyPropertyChanged(BR.name);
+        isDataValid();
     }
 
     @Bindable
@@ -113,6 +152,8 @@ if(service.isEmpty()){
     public void setEmail(String email) {
         this.email = email;
         notifyPropertyChanged(BR.email);
+        isDataValid();
+
 
     }
 
@@ -122,5 +163,37 @@ if(service.isEmpty()){
 
     public void setService(String service) {
         this.service = service;
+        isDataValid();
+
+    }
+
+    @Bindable
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+        notifyPropertyChanged(BR.address);
+        isDataValid();
+
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    @Bindable
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+        notifyPropertyChanged(BR.valid);
     }
 }

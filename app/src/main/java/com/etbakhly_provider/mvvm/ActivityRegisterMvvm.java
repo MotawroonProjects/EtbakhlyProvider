@@ -28,12 +28,12 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Response;
 
-public class ActivitySignupMvvm extends AndroidViewModel {
+public class ActivityRegisterMvvm extends AndroidViewModel {
     public MutableLiveData<UserModel> onUserDataSuccess;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    public ActivitySignupMvvm(@NonNull Application application) {
+    public ActivityRegisterMvvm(@NonNull Application application) {
         super(application);
 
 

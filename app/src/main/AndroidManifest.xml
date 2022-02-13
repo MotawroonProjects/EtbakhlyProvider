@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.etbakhly_provider">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -9,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m"
+        tools:ignore="AllowBackup">
         <activity
             android:name=".uis.activity_feats.FeastsActivity"
             android:exported="false" />
@@ -22,10 +35,10 @@
         <activity
             android:name=".uis.activity_kitchen.KitchenDetailsActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".uis.order_details.OrderDetailsActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
         <activity
             android:name=".uis.activity_map.MapActivity"
             android:exported="false"
@@ -66,21 +79,23 @@
             android:name=".uis.activity_setting.SettingsActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" >
+
+        </activity>
+        <activity
+            android:name=".uis.activities_fragments_home.HomeActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
+        <activity
+            android:name=".uis.activity_splash.SplashActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".uis.activities_fragments_home.HomeActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize"></activity>
-        <activity
-            android:name=".uis.activity_splash.SplashActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize">
-
         </activity>
 
         <meta-data

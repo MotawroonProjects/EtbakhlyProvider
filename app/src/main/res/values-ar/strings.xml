@@ -121,4 +121,6 @@
     <string name="person">شخص</string>
     <string name="sar">ر.س</string>
     <string name="order">طلب</string>
+    <string name="photo_required">إختر صورة الخدمة</string>
+    <string name="update">تعديل</string>
 </resources>

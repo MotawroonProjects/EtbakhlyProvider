@@ -21,8 +21,6 @@ import io.paperdb.Paper;
 public class SignupActivity extends BaseActivity  {
     private ActivitySignUpBinding binding;
     private NavController navController;
-    private Preferences preferences;
-    private UserModel userModel;
 
 
     @Override
@@ -35,12 +33,6 @@ public class SignupActivity extends BaseActivity  {
     }
 
     private void initView() {
-
-        preferences = Preferences.getInstance();
-
-       // homeActivityMvvm = ViewModelProviders.of(this).get(HomeActivityMvvm.class);
-
-
         navController = Navigation.findNavController(this, R.id.navHostFragment);
         NavigationUI.setupActionBarWithNavController(this, navController);
 
@@ -50,19 +42,6 @@ public class SignupActivity extends BaseActivity  {
     }
 
 
-    public void refreshActivity(String lang) {
-        Paper.book().write("lang", lang);
-        Language.setNewLocale(this, lang);
-        new Handler()
-                .postDelayed(() -> {
-
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
-                }, 500);
-
-
-    }
 
 
     @Override

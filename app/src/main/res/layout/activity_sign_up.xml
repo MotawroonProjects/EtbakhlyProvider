@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="model"
             type="com.etbakhly_provider.model.SignUpModel" />
 
     </data>
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activity_sign_up.SignUpActivity"
-        android:fitsSystemWindows="true"
         android:fillViewport="true"
+        android:fitsSystemWindows="true"
         android:orientation="vertical"
-        >
+        tools:context=".ui.activity_sign_up.SignUpActivity">
 
         <fragment
             android:id="@+id/navHostFragment"
@@ -30,18 +29,18 @@
             app:navGraph="@navigation/nav_signup" />
 
         <Button
-                android:id="@+id/btnNext"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/rounded_primary"
-                android:textSize="15sp"
-                android:textColor="@color/white"
-                android:text="@string/next"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="20dp"
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_primary"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="15sp"
 
-                />
+            />
 
 
     </LinearLayout>
