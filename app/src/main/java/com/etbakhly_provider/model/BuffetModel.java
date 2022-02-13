@@ -1,21 +1,27 @@
 package com.etbakhly_provider.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class BuffetModel implements Serializable {
-    public String id;
-    public String titel;
-    public String photo;
-    public String order_time;
-    public String service_provider_type;
-    public String price;
-    public String category_dishes_id;
-    public String caterer_id;
-    public String is_completed;
-    public String created_at;
-    public String updated_at;
-    public List<CategoryDishModel> categor_dishes;
+    private String id;
+    private String titel;
+    private String photo;
+    private String number_people;
+    private String order_time;
+    private String service_provider_type;
+    private String price;
+    private String category_dishes_id;
+    private String is_completed;
+    private String caterer_id;
+    private String created_at;
+    private String updated_at;
+    private boolean isInCart = false;
+    private int amountInCart = 0;
+    private List<Category> categor_dishes;
+
 
     public String getId() {
         return id;
@@ -27,6 +33,10 @@ public class BuffetModel implements Serializable {
 
     public String getPhoto() {
         return photo;
+    }
+
+    public String getNumber_people() {
+        return number_people;
     }
 
     public String getOrder_time() {
@@ -45,12 +55,12 @@ public class BuffetModel implements Serializable {
         return category_dishes_id;
     }
 
-    public String getCaterer_id() {
-        return caterer_id;
-    }
-
     public String getIs_completed() {
         return is_completed;
+    }
+
+    public String getCaterer_id() {
+        return caterer_id;
     }
 
     public String getCreated_at() {
@@ -61,7 +71,51 @@ public class BuffetModel implements Serializable {
         return updated_at;
     }
 
-    public List<CategoryDishModel> getCategor_dishes() {
+    public boolean isInCart() {
+        return isInCart;
+    }
+
+    public int getAmountInCart() {
+        return amountInCart;
+    }
+
+    public List<Category> getCategor_dishes() {
         return categor_dishes;
+    }
+    public static class Category implements Serializable {
+        private String id;
+        private String titel;
+        private String caterer_id;
+        private boolean isSelected = false;
+        @SerializedName(value = "dishes_buffet",alternate = {"dishes","dishes_feast"})
+        private List<DishModel> dishes_buffet;
+
+        public String getId() {
+            return id;
+        }
+
+        public String getTitel() {
+            return titel;
+        }
+
+        public String getCaterer_id() {
+            return caterer_id;
+        }
+
+        public List<DishModel> getDishes_buffet() {
+            return dishes_buffet;
+        }
+
+        public boolean isSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(boolean selected) {
+            isSelected = selected;
+        }
+
+        public void setDishes_buffet(List<DishModel> dishes_buffet) {
+            this.dishes_buffet = dishes_buffet;
+        }
     }
 }

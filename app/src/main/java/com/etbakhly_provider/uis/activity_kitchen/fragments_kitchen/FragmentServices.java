@@ -18,7 +18,7 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.ChooseDialogBinding;
 import com.etbakhly_provider.databinding.FragmentServicesBinding;
 import com.etbakhly_provider.model.KitchenModel;
-import com.etbakhly_provider.uis.FeastsActivity;
+import com.etbakhly_provider.uis.activity_feats.FeastsActivity;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
 import com.etbakhly_provider.uis.activity_buffet.BuffetActivity;
 import com.etbakhly_provider.uis.activity_dishes.DishesActivity;

@@ -6,22 +6,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.BuffetRowBinding;
+import com.etbakhly_provider.model.BuffetModel;
 
 import java.util.List;
 
 public class BuffetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Object> list;
+    private List<BuffetModel> list;
     private Context context;
     private LayoutInflater inflater;
+    private AppCompatActivity appCompatActivity;
 
     public BuffetAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+        appCompatActivity = (AppCompatActivity) context;
     }
 
     @NonNull
@@ -34,6 +38,7 @@ public class BuffetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
+        myHolder.binding.setModel(list.get(position));
     }
 
     @Override
@@ -41,7 +46,7 @@ public class BuffetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (list != null) {
             return list.size();
         } else {
-            return 10;
+            return 0;
         }
     }
 
@@ -54,7 +59,7 @@ public class BuffetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public void updateList(List<Object> list) {
+    public void updateList(List<BuffetModel> list) {
         if (list != null) {
             this.list = list;
         } else {

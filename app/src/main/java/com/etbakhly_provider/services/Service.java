@@ -1,7 +1,9 @@
 package com.etbakhly_provider.services;
 
 
+import com.etbakhly_provider.model.BuffetsDataModel;
 import com.etbakhly_provider.model.CountryDataModel;
+import com.etbakhly_provider.model.DishesDataModel;
 import com.etbakhly_provider.model.OrderDataModel;
 import com.etbakhly_provider.model.PlaceGeocodeData;
 import com.etbakhly_provider.model.PlaceMapDetailsData;
@@ -88,4 +90,14 @@ public interface Service {
     @GET("api/Catering/CatererDetails")
     Single<Response<SingleKitchenDataModel>> getKitchenDetails(@Query(value = "Caterer_id") String caterer_id,
                                                                @Query("user_id") String user_id);
+
+    @GET("api/Catering/caterer_dishes")
+    Single<Response<DishesDataModel>> getDishes(@Query("category_dishes_id") String category_dishes_id,
+                                                @Query("caterer_id") String caterer_id);
+    @GET("api/Catering/CatererBuffets")
+    Single<Response<BuffetsDataModel>> getBuffets(@Query(value = "Caterer_id") String Caterer_id);
+
+    @GET("api/Catering/CatererFeasts")
+    Single<Response<BuffetsDataModel>> getFeasts(@Query(value = "Caterer_id") String caterer_id);
+
 }

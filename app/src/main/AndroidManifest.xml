@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".uis.FeastsActivity"
+            android:name=".uis.activity_feats.FeastsActivity"
             android:exported="false" />
         <activity
             android:name=".uis.activity_dishes.DishesActivity"

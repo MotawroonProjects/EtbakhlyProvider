@@ -1,4 +1,4 @@
-package com.etbakhly_provider.uis;
+package com.etbakhly_provider.uis.activity_feats;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
