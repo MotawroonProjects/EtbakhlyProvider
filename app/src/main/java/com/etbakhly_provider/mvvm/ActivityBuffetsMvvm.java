@@ -81,5 +81,8 @@ public class ActivityBuffetsMvvm extends AndroidViewModel {
                     }
                 });
     }
+    private void updateData(List<BuffetModel> data,Context context){
+
+    }
 
 }

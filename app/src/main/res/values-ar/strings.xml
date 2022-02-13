@@ -114,4 +114,11 @@
     <string name="camera">كاميرا</string>
     <string name="men_women">رجال ونساء</string>
     <string name="undefined">لايهم</string>
+    <string name="in_advance">قبل</string>
+    <string name="days">يوم</string>
+    <string name="day">يوم</string>
+    <string name="people">شخص</string>
+    <string name="person">شخص</string>
+    <string name="sar">ر.س</string>
+    <string name="order">طلب</string>
 </resources>

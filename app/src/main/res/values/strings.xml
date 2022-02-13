@@ -114,4 +114,11 @@
     <string name="men_women">Men and women</string>
     <string name="undefined">undefined</string>
     <string name="dishes_menu">Dishes menu</string>
+    <string name="in_advance">in advance</string>
+    <string name="days">Days</string>
+    <string name="day">Day</string>
+    <string name="people">People</string>
+    <string name="person">Person</string>
+    <string name="sar">SAR</string>
+    <string name="order">Order</string>
 </resources>
