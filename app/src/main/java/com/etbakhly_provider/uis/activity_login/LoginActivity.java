@@ -20,6 +20,7 @@ import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activities_fragments_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
+import com.etbakhly_provider.uis.activity_signup.SignupActivity;
 import com.etbakhly_provider.uis.activity_verification_code.VerificationCodeActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -78,6 +79,7 @@ public class LoginActivity extends BaseActivity {
                    navigateToHomeActivity();
                }
                else{
+                   navigateToSignupActivity(userModel);
 
                }
             }
@@ -134,5 +136,11 @@ public class LoginActivity extends BaseActivity {
         intent.putExtra("phone", model.getPhone());
         launcher.launch(intent);
     }
+    private void navigateToSignupActivity(UserModel userModel) {
+        req = 1;
+        Intent intent = new Intent(this, SignupActivity.class);
+        intent.putExtra("data", userModel);
 
+        launcher.launch(intent);
+    }
 }
