@@ -11,27 +11,25 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".uis.FeastsActivity"
+            android:exported="false" />
+        <activity
             android:name=".uis.activity_dishes.DishesActivity"
             android:exported="false" />
         <activity
             android:name=".uis.activity_buffet.BuffetActivity"
             android:exported="false" />
         <activity
-            android:name=".uis.activity_profile.ProfileActivity"
+            android:name=".uis.activity_kitchen.KitchenDetailsActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize">
-
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".uis.order_details.OrderDetailsActivity"
-            android:exported="true" >
-
-        </activity>
-
+            android:exported="true"></activity>
         <activity
             android:name=".uis.activity_map.MapActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".uis.activity_signup.SignupActivity"
             android:exported="false"
@@ -39,19 +37,19 @@
         <activity
             android:name=".uis.activity_register.RegisterActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".uis.activity_country.CountryActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".uis.activity_language_country.LanguageCountryActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".uis.activity_city.CityActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".uis.activity_language.LanguageActivity"
             android:exported="false"
@@ -67,17 +65,15 @@
         <activity
             android:name=".uis.activity_setting.SettingsActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".uis.activities_fragments_home.HomeActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize">
-
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".uis.activity_splash.SplashActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.etbakhly_provider.uis.activity_profile.fragments_profile;
+package com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,8 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,26 +15,29 @@ import android.view.ViewGroup;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.RatingAdapter;
-import com.etbakhly_provider.databinding.FragmentGalleryBinding;
 import com.etbakhly_provider.databinding.FragmentRatingsBinding;
+import com.etbakhly_provider.model.KitchenModel;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
-import com.etbakhly_provider.uis.activity_profile.ProfileActivity;
+import com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity;
 
 
 public class FragmentRatings extends BaseFragment {
-    private ProfileActivity activity;
+    private KitchenDetailsActivity activity;
     private FragmentRatingsBinding binding;
     private RatingAdapter adapter;
 
-    public static FragmentRatings newInstance() {
+    public static FragmentRatings newInstance(KitchenModel model) {
         FragmentRatings fragment = new FragmentRatings();
+        Bundle args = new Bundle();
+        args.putSerializable("data", model);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        activity = (ProfileActivity) context;
+        activity = (KitchenDetailsActivity) context;
     }
 
     @Override

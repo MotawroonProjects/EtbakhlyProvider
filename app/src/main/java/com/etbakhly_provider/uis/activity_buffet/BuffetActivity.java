@@ -1,6 +1,5 @@
 package com.etbakhly_provider.uis.activity_buffet;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +12,7 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.BuffetAdapter;
 import com.etbakhly_provider.databinding.ActivityBuffetBinding;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
-import com.etbakhly_provider.uis.activity_profile.ProfileActivity;
+import com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity;
 
 public class BuffetActivity extends BaseActivity {
     private ActivityBuffetBinding binding;
@@ -36,7 +35,7 @@ public class BuffetActivity extends BaseActivity {
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BuffetActivity.this, ProfileActivity.class);
+                Intent intent = new Intent(BuffetActivity.this, KitchenDetailsActivity.class);
                 startActivity(intent);
                 finish();
             }

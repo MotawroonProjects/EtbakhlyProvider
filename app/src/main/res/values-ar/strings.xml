@@ -94,7 +94,8 @@
     <string name="no_gallery_to_show">لا يوجد صور لعرضها</string>
     <string name="no_ratings_to_show">لا توجد تقييمات لعرضها</string>
     <string name="select_your_order">حدد طلبك</string>
-    <string name="buffet_menu">قائمة بوفيهات</string>
+    <string name="buffets_menu">قائمة بوفيهات</string>
+    <string name="banquet_menu">قائمة ولائم</string>
     <string name="dishes_menu">قائمة الاطباق</string>
     <string name="choose_the_dishes">اختر الاطباق</string>
     <string name="no_buffets_to_show">لا توجد بوفيهات لعرضها</string>

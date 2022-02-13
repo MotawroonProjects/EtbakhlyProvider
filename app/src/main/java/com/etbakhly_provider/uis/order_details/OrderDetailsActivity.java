@@ -108,9 +108,9 @@ public class OrderDetailsActivity extends BaseActivity implements OnMapReadyCall
         binding.txtDelivery.setVisibility(View.GONE);
         binding.txtMaking.setVisibility(View.GONE);
 
-        binding.view1.setBackgroundColor(getResources().getColor(R.color.black));
-        binding.view2.setBackgroundColor(getResources().getColor(R.color.color00));
-        binding.view3.setBackgroundColor(getResources().getColor(R.color.color00));
+        binding.view1.setBackground(getResources().getDrawable(R.drawable.horizontal_line3));
+        binding.view2.setBackground(getResources().getDrawable(R.drawable.horizontal_line3));
+        binding.view3.setBackground(getResources().getDrawable(R.drawable.horizontal_line3));
 
 
         binding.imgApproval.setColorFilter(ContextCompat.getColor(this,R.color.color00), PorterDuff.Mode.SRC_IN);
@@ -127,17 +127,18 @@ public class OrderDetailsActivity extends BaseActivity implements OnMapReadyCall
         binding.txtDelivery.setVisibility(View.GONE);
         binding.txtMaking.setVisibility(View.GONE);
 
-        binding.view1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        binding.view2.setBackgroundColor(getResources().getColor(R.color.color00));
-        binding.view3.setBackgroundColor(getResources().getColor(R.color.color00));
+        binding.view1.setBackground(getResources().getDrawable(R.drawable.horizontal_line));
+        binding.view2.setBackground(getResources().getDrawable(R.drawable.horizontal_line3));
+        binding.view3.setBackground(getResources().getDrawable(R.drawable.horizontal_line3));
 
 
-        binding.imgApproval.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+        binding.imgApproval.setColorFilter(ContextCompat.getColor(this,R.color.color13), PorterDuff.Mode.SRC_IN);
         binding.imgMaking.setColorFilter(ContextCompat.getColor(this,R.color.color00),PorterDuff.Mode.SRC_IN);
         binding.imgDelivery.setColorFilter(ContextCompat.getColor(this,R.color.color00),PorterDuff.Mode.SRC_IN);
 
         binding.llNewOrderBtns.setVisibility(View.GONE);
         binding.btnDelvCompleted.setVisibility(View.VISIBLE);
+        binding.btnDelvCompleted.setText(R.string.prepared);
     }
     private void updateUI3() {
         binding.txtNew.setVisibility(View.VISIBLE);
@@ -145,9 +146,9 @@ public class OrderDetailsActivity extends BaseActivity implements OnMapReadyCall
         binding.txtMaking.setVisibility(View.VISIBLE);
         binding.txtDelivery.setVisibility(View.GONE);
 
-        binding.view1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        binding.view2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        binding.view3.setBackgroundColor(getResources().getColor(R.color.color00));
+        binding.view1.setBackground(getResources().getDrawable(R.drawable.horizontal_line));
+        binding.view2.setBackground(getResources().getDrawable(R.drawable.horizontal_line));
+        binding.view3.setBackground(getResources().getDrawable(R.drawable.horizontal_line3));
 
 
         binding.imgApproval.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent), PorterDuff.Mode.SRC_IN);
@@ -156,6 +157,7 @@ public class OrderDetailsActivity extends BaseActivity implements OnMapReadyCall
 
         binding.llNewOrderBtns.setVisibility(View.GONE);
         binding.btnDelvCompleted.setVisibility(View.VISIBLE);
+        binding.btnDelvCompleted.setText(R.string.completed);
     }
     private void updateUI4() {
         binding.txtNew.setVisibility(View.VISIBLE);
@@ -163,9 +165,9 @@ public class OrderDetailsActivity extends BaseActivity implements OnMapReadyCall
         binding.txtMaking.setVisibility(View.VISIBLE);
         binding.txtDelivery.setVisibility(View.VISIBLE);
 
-        binding.view1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        binding.view2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        binding.view3.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        binding.view1.setBackground(getResources().getDrawable(R.drawable.horizontal_line));
+        binding.view2.setBackground(getResources().getDrawable(R.drawable.horizontal_line));
+        binding.view3.setBackground(getResources().getDrawable(R.drawable.horizontal_line));
 
 
         binding.imgApproval.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent), PorterDuff.Mode.SRC_IN);

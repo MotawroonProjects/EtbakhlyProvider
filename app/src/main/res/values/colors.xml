@@ -68,7 +68,9 @@
     <color name="trans_black">#55000000</color>
     <color name="trans_black2">#33000000</color>
     <color name="black_trans">#55000000</color>
+    <color name="black2">#30000000</color>
 
+    <color name="alpha_white">#55ffffff</color>
     <color name="gray1_trans">#ddf5f5f5</color>
     <color name="rate">#ffe816</color>
     <color name="rate_color">#FFD800</color>
