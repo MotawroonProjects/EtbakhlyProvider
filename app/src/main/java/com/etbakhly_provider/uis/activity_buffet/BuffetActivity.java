@@ -14,6 +14,7 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.BuffetAdapter;
 import com.etbakhly_provider.databinding.ActivityBuffetBinding;
 import com.etbakhly_provider.mvvm.ActivityBuffetsMvvm;
+import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity;
 
@@ -21,7 +22,7 @@ public class BuffetActivity extends BaseActivity {
     private ActivityBuffetBinding binding;
     private BuffetAdapter adapter;
     private ActivityBuffetsMvvm mvvm;
-    private String kitchen_id = "";
+    private String kitchen_id = "27";
     private int req;
 
     private ActivityResultLauncher<Intent> launcher;
@@ -57,9 +58,18 @@ public class BuffetActivity extends BaseActivity {
         adapter = new BuffetAdapter(this);
         binding.recViewBuffet.setLayoutManager(new LinearLayoutManager(this));
         binding.recViewBuffet.setAdapter(adapter);
+
+        mvvm.getBuffets(kitchen_id, this);
+        binding.swipeRefresh.setOnRefreshListener(() -> mvvm.getBuffets(kitchen_id, this));
+
         binding.tvNoData.setVisibility(View.GONE);
         binding.btnBack.setOnClickListener(view -> {
             finish();
+        });
+        binding.addBuffet.setOnClickListener(view -> {
+            Intent intent = new Intent(BuffetActivity.this, AddBuffetActivity.class);
+            startActivity(intent);
+
         });
     }
 }

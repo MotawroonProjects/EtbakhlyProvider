@@ -91,9 +91,10 @@ public interface Service {
     Single<Response<SingleKitchenDataModel>> getKitchenDetails(@Query(value = "Caterer_id") String caterer_id,
                                                                @Query("user_id") String user_id);
 
-    @GET("api/Catering/caterer_dishes")
+    @GET("api/Catering/indexCategoryDishes")
     Single<Response<DishesDataModel>> getDishes(@Query("category_dishes_id") String category_dishes_id,
-                                                @Query("caterer_id") String caterer_id);
+                                                @Query("Caterer_id") String Caterer_id);
+
     @GET("api/Catering/CatererBuffets")
     Single<Response<BuffetsDataModel>> getBuffets(@Query(value = "Caterer_id") String Caterer_id);
 

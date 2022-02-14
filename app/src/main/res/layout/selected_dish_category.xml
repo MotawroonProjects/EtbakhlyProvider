@@ -4,13 +4,17 @@
 
     <data>
 
+        <variable
+            name="model"
+            type="com.etbakhly_provider.model.BuffetModel.Category" />
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/categoryItem"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_margin="5dp"
-        app:cardBackgroundColor="@color/color4"
+        app:cardBackgroundColor="@{model.selected?@color/white:@color/color4}"
         app:cardCornerRadius="20dp"
         app:cardElevation="3dp">
 
@@ -24,7 +28,7 @@
             android:lines="1"
             android:maxEms="6"
             android:padding="5dp"
-            android:text="الاطباق الرئيسية"
+            android:text="@{model.titel}"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp"
 

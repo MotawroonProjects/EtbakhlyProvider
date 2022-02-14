@@ -47,7 +47,7 @@ public class SpinnerServiceAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         @SuppressLint("ViewHolder") SpinnerRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.spinner_row, viewGroup, false);
 
-        binding.setTitle(list.get(i));
+//        binding.setTitle(list.get(i));
 
         return binding.getRoot();
     }

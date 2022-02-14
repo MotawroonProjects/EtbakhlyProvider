@@ -1,75 +1,64 @@
 package com.etbakhly_provider.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.databinding.DishBuffetRowBinding;
-import com.etbakhly_provider.model.DishModel;
+import com.etbakhly_provider.databinding.AddBuffetTitleRowBinding;
 
 import java.util.List;
 
-public class BuffetDishesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<DishModel> list;
+public class AddBuffetTitlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<Object> list;
     private Context context;
     private LayoutInflater inflater;
-    private AppCompatActivity appCompatActivity;
+    private AddBuffetDetailsAdapter buffetDetailsAdapter;
 
-
-    public BuffetDishesAdapter(Context context) {
+    public AddBuffetTitlesAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
-        appCompatActivity = (AppCompatActivity) context;
-
     }
-
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        DishBuffetRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.dish_buffet_row, parent, false);
+        AddBuffetTitleRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_buffet_title_row, parent, false);
         return new MyHolder(binding);
-
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
-        myHolder.binding.setModel(list.get(position));
-
+        buffetDetailsAdapter = new AddBuffetDetailsAdapter(context);
+        myHolder.binding.recAddBuffetDetails.setLayoutManager(new GridLayoutManager(context, 2));
+        myHolder.binding.recAddBuffetDetails.setAdapter(buffetDetailsAdapter);
     }
-
 
     @Override
     public int getItemCount() {
         if (list != null) {
             return list.size();
         } else {
-            return 0;
+            return 3;
         }
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        private DishBuffetRowBinding binding;
+        private AddBuffetTitleRowBinding binding;
 
-        public MyHolder(DishBuffetRowBinding binding) {
+        public MyHolder(AddBuffetTitleRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-
         }
-
     }
 
-    public void updateList(List<DishModel> list) {
+    public void updateList(List<Object> list) {
         if (list != null) {
             this.list = list;
         }

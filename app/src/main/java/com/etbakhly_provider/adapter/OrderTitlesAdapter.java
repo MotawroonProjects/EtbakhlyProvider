@@ -22,7 +22,6 @@ public class OrderTitlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private LayoutInflater inflater;
     private OrderDetailsAdapter detailsAdapter;
 
-
     public OrderTitlesAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);

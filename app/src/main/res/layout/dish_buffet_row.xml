@@ -7,6 +7,10 @@
         <variable
             name="lang"
             type="String" />
+
+        <variable
+            name="model"
+            type="com.etbakhly_provider.model.DishModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -27,10 +31,10 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    image="@{model.photo}"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/img_feats_booking"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1.2:1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +68,7 @@
                         android:ellipsize="end"
                         android:gravity="start"
                         android:lines="1"
-                        android:text="اسم الوجبة"
+                        android:text='@{model.titel??""}'
                         android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         android:textSize="14sp"
@@ -98,7 +102,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:lines="1"
-                    android:text="1200 R.S"
+                    android:text='@{model.price+" "+@string/sar}'
                     android:textColor="@color/colorPrimary"
                     android:textSize="13sp"
                     android:textStyle="bold"
@@ -113,7 +117,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:lines="1"
-                    android:text="details"
+                    android:text="@{model.details}"
                     android:textColor="@color/gray5"
                     android:textSize="12sp"
                     android:textStyle="bold"
@@ -121,36 +125,6 @@
 
                     />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:padding="3dp"
-                        android:src="@drawable/ic_users" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="تكفي 20 شخص"
-                        android:textColor="@color/gray14"
-                        android:textSize="12sp"
-
-                        />
-
-                </LinearLayout>
 
             </LinearLayout>
 

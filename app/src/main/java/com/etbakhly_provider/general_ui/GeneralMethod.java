@@ -169,7 +169,7 @@ public class GeneralMethod {
     @BindingAdapter("image")
     public static void image(View view, String imageUrl) {
         if (imageUrl != null) {
-            String imageUrl1 = Tags.IMAGE_Product_URL + imageUrl;
+            String imageUrl1 = Tags.base_url + imageUrl;
 
             view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
@@ -355,6 +355,7 @@ public class GeneralMethod {
         }
 
     }
+
     @BindingAdapter("providerType")
     public static void providerType(TextView textView, String type) {
         if (type != null) {

@@ -15,7 +15,6 @@ import com.etbakhly_provider.tags.Tags;
 
 import java.util.List;
 
-import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -23,13 +22,15 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class ActivityBuffetsMvvm extends AndroidViewModel {
+public class ActivityFeastsMvvm extends AndroidViewModel {
+
     private MutableLiveData<Boolean> isDataLoading;
     private MutableLiveData<List<BuffetModel>> onDataSuccess;
     private MutableLiveData<Integer> selectedPos = new MutableLiveData<>(-1);
+
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    public ActivityBuffetsMvvm(@NonNull Application application) {
+    public ActivityFeastsMvvm(@NonNull Application application) {
         super(application);
     }
 
@@ -54,9 +55,9 @@ public class ActivityBuffetsMvvm extends AndroidViewModel {
         return selectedPos;
     }
 
-    public void getBuffets(String kitchen_id, Context context) {
+    public void getFeasts(String kitchen_id, Context context) {
         getIsDataLoading().setValue(true);
-        Api.getService(Tags.base_url).getBuffets(kitchen_id)
+        Api.getService(Tags.base_url).getFeasts(kitchen_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<BuffetsDataModel>>() {
@@ -81,6 +82,5 @@ public class ActivityBuffetsMvvm extends AndroidViewModel {
                     }
                 });
     }
-
 
 }

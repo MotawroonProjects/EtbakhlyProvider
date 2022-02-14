@@ -60,6 +60,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recViewCategory"
                     android:layout_width="match_parent"
@@ -73,14 +74,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recViewCategory" />
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/floatingActionButton"
+                    android:id="@+id/llAddDish"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

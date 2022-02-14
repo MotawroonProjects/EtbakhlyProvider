@@ -2,6 +2,7 @@ package com.etbakhly_provider.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.SelectedDishCategoryBinding;
+import com.etbakhly_provider.model.BuffetModel;
+import com.etbakhly_provider.uis.activity_dishes.DishesActivity;
 
 import java.util.List;
 
 public class CategoryDishesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Object> list;
+    private List<BuffetModel.Category> list;
     private Context context;
     private LayoutInflater inflater;
     private AppCompatActivity appCompatActivity;
@@ -43,6 +46,33 @@ public class CategoryDishesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
+        myHolder.binding.setModel(list.get(position));
+        if (oldHolder == null) {
+            oldHolder = myHolder;
+        }
+        myHolder.itemView.setOnClickListener(view -> {
+            if (oldHolder != null) {
+                BuffetModel.Category oldCategory = list.get(oldPos);
+                oldCategory.setSelected(false);
+                list.set(oldPos, oldCategory);
+                MyHolder oHolder = (MyHolder) oldHolder;
+                oHolder.binding.setModel(oldCategory);
+
+            }
+            currentPos = myHolder.getAdapterPosition();
+            BuffetModel.Category category = list.get(currentPos);
+            category.setSelected(true);
+            list.set(currentPos, category);
+            myHolder.binding.setModel(category);
+
+            oldHolder = myHolder;
+            oldPos = currentPos;
+
+            if (appCompatActivity instanceof DishesActivity) {
+                DishesActivity activity = (DishesActivity) appCompatActivity;
+                activity.setItemCategory(category, currentPos);
+            }
+        });
 
     }
 
@@ -51,7 +81,7 @@ public class CategoryDishesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (list != null) {
             return list.size();
         } else {
-            return 10;
+            return 0;
         }
     }
 
@@ -66,7 +96,7 @@ public class CategoryDishesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     }
 
-    public void updateList(List<Object> list) {
+    public void updateList(List<BuffetModel.Category> list) {
         if (list != null) {
             this.list = list;
         }

@@ -47,7 +47,7 @@ public class SpinnerCountryAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         @SuppressLint("ViewHolder") SpinnerRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.spinner_row, viewGroup, false);
 
-        binding.setTitle(list.get(i).getTitel());
+//        binding.setTitle(list.get(i).getTitel());
 
         return binding.getRoot();
     }
