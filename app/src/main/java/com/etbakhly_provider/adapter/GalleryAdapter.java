@@ -9,22 +9,27 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.GalleryRowBinding;
+import com.etbakhly_provider.model.KitchenModel;
+import com.etbakhly_provider.tags.Tags;
 
 import java.util.List;
 
 public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Object> list;
+    private List<KitchenModel.Photo> list;
     private Context context;
     private LayoutInflater inflater;
-    private Fragment fragment;
 
 
-    public GalleryAdapter(Context context, Fragment fragment) {
+
+    public GalleryAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
-        this.fragment = fragment;
+
     }
 
     @NonNull
@@ -37,15 +42,19 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
+        myHolder.binding.setModel(list.get(position));
+        RequestOptions options = new RequestOptions();
+        Glide.with(context).asBitmap()
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .load(Tags.base_url+list.get(position).getPhoto())
+                .apply(options)
+                .into(myHolder.binding.image);
     }
 
     @Override
     public int getItemCount() {
-        if (list != null) {
-            return list.size();
-        } else {
-            return 10;
-        }
+        return list != null ? list.size() : 0;
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
@@ -60,7 +69,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     }
 
-    public void updateList(List<Object> list) {
+    public void updateList(List<KitchenModel.Photo> list) {
         if (list != null) {
             this.list = list;
         }

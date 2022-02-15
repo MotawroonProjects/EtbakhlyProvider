@@ -91,7 +91,7 @@ public class AddDishesActivity extends BaseActivity {
         binding.image.setOnClickListener(view -> openSheet());
 
 
-        binding.btnBack.setOnClickListener(view -> finish());
+        binding.llBack.setOnClickListener(view -> finish());
     }
 
     public void checkCameraPermission() {

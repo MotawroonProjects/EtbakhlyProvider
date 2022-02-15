@@ -81,7 +81,7 @@ public class DishesActivity extends BaseActivity {
 
         binding.recViewDishes.setLayoutManager(new LinearLayoutManager(this));
         binding.recViewDishes.setAdapter(dishesAdapter);
-        binding.btnBack.setOnClickListener(view -> finish());
+        binding.llBack.setOnClickListener(view -> finish());
         binding.llAddDish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

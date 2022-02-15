@@ -6,30 +6,27 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.databinding.RatingRowBinding;
-import com.etbakhly_provider.model.RateModel;
+import com.etbakhly_provider.databinding.DishBuffetRow2Binding;
+import com.etbakhly_provider.model.DishModel;
 
 import java.util.List;
 
-public class RatingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<RateModel> list;
+public class MenuDishesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<DishModel> list;
     private Context context;
-    private LayoutInflater inflater;
 
-    public RatingAdapter(Context context) {
+    public MenuDishesAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
-
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RatingRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.rating_row, parent, false);
+        DishBuffetRow2Binding binding = DataBindingUtil.inflate(inflater, R.layout.dish_buffet_row2, parent, false);
         return new MyHolder(binding);
     }
 
@@ -46,19 +43,24 @@ public class RatingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        private RatingRowBinding binding;
+        private DishBuffetRow2Binding binding;
 
-        public MyHolder(RatingRowBinding binding) {
+        public MyHolder(DishBuffetRow2Binding binding) {
             super(binding.getRoot());
             this.binding = binding;
 
+
         }
+
     }
 
-    public void updateList(List<RateModel> list) {
+    private LayoutInflater inflater;
+
+    public void updateList(List<DishModel> list) {
         if (list != null) {
             this.list = list;
         }
         notifyDataSetChanged();
     }
+
 }

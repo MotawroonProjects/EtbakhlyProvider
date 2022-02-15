@@ -1,4 +1,4 @@
-package com.etbakhly_provider.uis.activity_add_buffet;
+package com.etbakhly_provider.uis.activity_add_feast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -23,9 +23,9 @@ import android.widget.Toast;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.AddBuffetTitlesAdapter;
-import com.etbakhly_provider.adapter.OrderTitlesAdapter;
+import com.etbakhly_provider.adapter.AddFeastsTitlesAdapter;
 import com.etbakhly_provider.adapter.SpinnerItemAdapter;
-import com.etbakhly_provider.databinding.ActivityAddBuffetBinding;
+import com.etbakhly_provider.databinding.ActivityAddFeastBinding;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.squareup.picasso.Picasso;
@@ -34,9 +34,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.List;
 
-public class AddBuffetActivity extends BaseActivity {
-    private ActivityAddBuffetBinding binding;
-    private AddBuffetTitlesAdapter adapter;
+public class AddFeastActivity extends BaseActivity {
+    private ActivityAddFeastBinding binding;
+    private AddFeastsTitlesAdapter adapter;
     private SpinnerItemAdapter spinnerAdapter;
     private List<Object> list;
     private ActivityResultLauncher<Intent> launcher;
@@ -46,11 +46,10 @@ public class AddBuffetActivity extends BaseActivity {
     private final int READ_REQ = 1, CAMERA_REQ = 2;
     private int selectedReq = 0;
     private Uri uri = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_buffet);
+        binding= DataBindingUtil.setContentView(this,R.layout.activity_add_feast);
         initView();
     }
 
@@ -84,7 +83,6 @@ public class AddBuffetActivity extends BaseActivity {
                 }
             }
         });
-
         binding.flGallery.setOnClickListener(view -> {
             closeSheet();
             checkReadPermission();
@@ -114,11 +112,10 @@ public class AddBuffetActivity extends BaseActivity {
             }
         });
 
-        adapter = new AddBuffetTitlesAdapter(this);
+        adapter = new AddFeastsTitlesAdapter(this);
         binding.recView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         binding.recView.setAdapter(adapter);
     }
-
     public void checkCameraPermission() {
 
         closeSheet();
@@ -131,7 +128,6 @@ public class AddBuffetActivity extends BaseActivity {
             ActivityCompat.requestPermissions(this, new String[]{camera_permission, write_permission}, CAMERA_REQ);
         }
     }
-
     private void SelectImage(int req) {
         selectedReq = req;
         Intent intent = new Intent();

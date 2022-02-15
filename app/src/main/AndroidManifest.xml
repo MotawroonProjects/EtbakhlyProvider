@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.etbakhly_provider">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -22,12 +21,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m"
-        tools:ignore="AllowBackup">
+        tools:ignore="AllowBackup"
+        tools:targetApi="m">
+        <activity
+            android:name=".uis.activity_setting.setting_details.SettingDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uis.activity_add_feast.AddFeastActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uis.activity_feasts_details.FeastsDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uis.activity_buffet_details.BuffetDetailsActivity"
+            android:exported="false" />
         <activity
             android:name=".uis.activity_add_dishes.AddDishesActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".uis.activity_add_buffet.AddBuffetActivity"
             android:exported="false"
@@ -48,7 +59,6 @@
         <activity
             android:name=".uis.order_details.OrderDetailsActivity"
             android:exported="true" />
-
         <activity
             android:name=".uis.activity_map.MapActivity"
             android:exported="false"
@@ -56,7 +66,7 @@
         <activity
             android:name=".uis.activity_signup.SignupActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".uis.activity_register.RegisterActivity"
             android:exported="false"
@@ -89,14 +99,11 @@
             android:name=".uis.activity_setting.SettingsActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
         <activity
             android:name=".uis.activities_fragments_home.HomeActivity"
@@ -106,7 +113,6 @@
             android:name=".uis.activity_splash.SplashActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
-
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

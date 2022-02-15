@@ -123,6 +123,7 @@
     <string name="order">Order</string>
     <string name="add_buffet">Add Buffet</string>
     <string name="buffet_name">Buffet name</string>
+    <string name="feast_name">Feast name</string>
     <string name="number_of_people">Number of people</string>
     <string name="order2">Order</string>
     <string name="food_menu">Food Menu</string>
@@ -139,4 +140,8 @@
     <string name="sugar_free">Sugar Free</string>
     <string name="photo_required">Photo required</string>
     <string name="update">Update</string>
+    <string name="people2">People</string>
+    <string name="menu">Menu</string>
+    <string name="add_feast">Add Feast</string>
+
 </resources>

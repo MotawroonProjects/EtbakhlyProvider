@@ -25,6 +25,7 @@ public class FragmentRatings extends BaseFragment {
     private KitchenDetailsActivity activity;
     private FragmentRatingsBinding binding;
     private RatingAdapter adapter;
+    private KitchenModel model;
 
     public static FragmentRatings newInstance(KitchenModel model) {
         FragmentRatings fragment = new FragmentRatings();
@@ -38,6 +39,14 @@ public class FragmentRatings extends BaseFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity = (KitchenDetailsActivity) context;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            model = (KitchenModel) getArguments().getSerializable("data");
+        }
     }
 
     @Override
@@ -55,9 +64,15 @@ public class FragmentRatings extends BaseFragment {
     }
 
     private void initView() {
-        adapter = new RatingAdapter(activity, this);
-        binding.recViewRatings.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.VERTICAL, false));
-        binding.recViewRatings.setAdapter(adapter);
-        binding.tvNoData.setVisibility(View.GONE);
+        if (model.getRate().size() > 0) {
+            adapter = new RatingAdapter(activity);
+            adapter.updateList(model.getRate());
+            binding.recViewRatings.setLayoutManager(new LinearLayoutManager(activity));
+            binding.recViewRatings.setAdapter(adapter);
+            binding.tvNoData.setVisibility(View.GONE);
+        } else {
+            binding.tvNoData.setVisibility(View.VISIBLE);
+
+        }
     }
 }

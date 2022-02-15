@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.BuffetRowBinding;
 import com.etbakhly_provider.model.BuffetModel;
+import com.etbakhly_provider.uis.activity_buffet.BuffetActivity;
+import com.etbakhly_provider.uis.activity_feats.FeastsActivity;
 
 import java.util.List;
 
@@ -39,6 +41,18 @@ public class BuffetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
+        myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (appCompatActivity instanceof BuffetActivity){
+                    BuffetActivity activity=(BuffetActivity) appCompatActivity;
+                    activity.setItemData(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
+                }else if (appCompatActivity instanceof FeastsActivity){
+                    FeastsActivity activity=(FeastsActivity) appCompatActivity;
+                    activity.setItemData(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
+                }
+            }
+        });
     }
 
     @Override

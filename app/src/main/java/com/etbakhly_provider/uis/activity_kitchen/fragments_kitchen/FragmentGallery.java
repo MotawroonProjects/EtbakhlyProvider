@@ -23,6 +23,7 @@ import com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity;
 public class FragmentGallery extends BaseFragment {
     private FragmentGalleryBinding binding;
     private GalleryAdapter adapter;
+    private KitchenModel model;
     private KitchenDetailsActivity activity;
 
 
@@ -44,7 +45,7 @@ public class FragmentGallery extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            model = (KitchenModel) getArguments().getSerializable("data");
+            model = (KitchenModel) getArguments().getSerializable("data");
         }
     }
 
@@ -63,10 +64,17 @@ public class FragmentGallery extends BaseFragment {
     }
 
     private void initView() {
-        adapter = new GalleryAdapter(activity, this);
-        binding.recViewGallery.setLayoutManager(new GridLayoutManager(activity, 3));
-        binding.recViewGallery.setAdapter(adapter);
-        binding.tvNoData.setVisibility(View.GONE);
+        if (model.getPhotos().size() > 0) {
+            adapter=new GalleryAdapter(activity);
+
+            adapter.updateList(model.getPhotos());
+            binding.recViewGallery.setLayoutManager(new GridLayoutManager(activity,3));
+            binding.recViewGallery.setAdapter(adapter);
+            binding.tvNoData.setVisibility(View.GONE);
+        } else {
+            binding.tvNoData.setVisibility(View.VISIBLE);
+
+        }
     }
 
 }

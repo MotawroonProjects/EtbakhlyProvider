@@ -76,7 +76,7 @@ public class KitchenDetailsActivity extends BaseActivity {
 
         mvvm.getKitchenData(kitchen_id, "13");
 
-        binding.btnBack.setOnClickListener(view -> {
+        binding.llBack.setOnClickListener(view -> {
             Intent intent = new Intent(KitchenDetailsActivity.this, SettingsActivity.class);
             startActivity(intent);
             finish();

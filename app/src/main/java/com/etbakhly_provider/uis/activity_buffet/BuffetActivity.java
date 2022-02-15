@@ -1,6 +1,7 @@
 package com.etbakhly_provider.uis.activity_buffet;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,9 +14,11 @@ import android.view.View;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.BuffetAdapter;
 import com.etbakhly_provider.databinding.ActivityBuffetBinding;
+import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.mvvm.ActivityBuffetsMvvm;
 import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
+import com.etbakhly_provider.uis.activity_buffet_details.BuffetDetailsActivity;
 import com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity;
 
 public class BuffetActivity extends BaseActivity {
@@ -63,7 +66,7 @@ public class BuffetActivity extends BaseActivity {
         binding.swipeRefresh.setOnRefreshListener(() -> mvvm.getBuffets(kitchen_id, this));
 
         binding.tvNoData.setVisibility(View.GONE);
-        binding.btnBack.setOnClickListener(view -> {
+        binding.llBack.setOnClickListener(view -> {
             finish();
         });
         binding.addBuffet.setOnClickListener(view -> {
@@ -71,5 +74,24 @@ public class BuffetActivity extends BaseActivity {
             startActivity(intent);
 
         });
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
+                BuffetModel buffetModel = (BuffetModel) result.getData().getSerializableExtra("data");
+                if (mvvm.getSelectedPos().getValue() != -1) {
+                    mvvm.onDataSuccess().getValue().set(mvvm.getSelectedPos().getValue(), buffetModel);
+                    adapter.notifyItemChanged(mvvm.getSelectedPos().getValue());
+                    mvvm.getSelectedPos().setValue(-1);
+                }
+
+            }
+        });
+    }
+    public void setItemData(BuffetModel buffetModel, int adapterPosition) {
+        req = 1;
+        mvvm.getSelectedPos().setValue(adapterPosition);
+
+        Intent intent = new Intent(this, BuffetDetailsActivity.class);
+        intent.putExtra("data", buffetModel);
+        launcher.launch(intent);
     }
 }

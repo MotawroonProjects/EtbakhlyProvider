@@ -11,17 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.AddBuffetTitleRowBinding;
-import com.etbakhly_provider.databinding.AddFeastsTitleRowBinding;
+import com.etbakhly_provider.databinding.AddFeastsDetailsRowBinding;
 
 import java.util.List;
 
-public class AddBuffetTitlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AddFeastsTitlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private List<Object> list;
     private Context context;
     private LayoutInflater inflater;
-    private AddBuffetDetailsAdapter buffetDetailsAdapter;
+    private AddFeastsDetailsAdapter feastsDetailsAdapter;
 
-    public AddBuffetTitlesAdapter(Context context) {
+    public AddFeastsTitlesAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
@@ -29,16 +29,16 @@ public class AddBuffetTitlesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        AddFeastsTitleRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_feasts_title_row, parent, false);
+        AddBuffetTitleRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_buffet_title_row, parent, false);
         return new MyHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MyHolder myHolder = (MyHolder) holder;
-        buffetDetailsAdapter = new AddBuffetDetailsAdapter(context);
+       MyHolder myHolder = (MyHolder) holder;
+        feastsDetailsAdapter = new AddFeastsDetailsAdapter(context);
         myHolder.binding.recAddBuffetDetails.setLayoutManager(new GridLayoutManager(context, 2));
-        myHolder.binding.recAddBuffetDetails.setAdapter(buffetDetailsAdapter);
+        myHolder.binding.recAddBuffetDetails.setAdapter(feastsDetailsAdapter);
     }
 
     @Override
@@ -51,14 +51,13 @@ public class AddBuffetTitlesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        private AddFeastsTitleRowBinding binding;
+        private AddBuffetTitleRowBinding binding;
 
-        public MyHolder(AddFeastsTitleRowBinding binding) {
+        public MyHolder(AddBuffetTitleRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
     }
-
     public void updateList(List<Object> list) {
         if (list != null) {
             this.list = list;

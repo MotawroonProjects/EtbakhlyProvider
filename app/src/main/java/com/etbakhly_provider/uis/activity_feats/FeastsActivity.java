@@ -1,6 +1,7 @@
 package com.etbakhly_provider.uis.activity_feats;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
@@ -13,8 +14,11 @@ import android.view.View;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.BuffetAdapter;
 import com.etbakhly_provider.databinding.ActivityFeastsBinding;
+import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.mvvm.ActivityFeastsMvvm;
+import com.etbakhly_provider.uis.activity_add_feast.AddFeastActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
+import com.etbakhly_provider.uis.activity_feasts_details.FeastsDetailsActivity;
 
 public class FeastsActivity extends BaseActivity {
     private ActivityFeastsBinding binding;
@@ -59,8 +63,32 @@ public class FeastsActivity extends BaseActivity {
         binding.swipeRefresh.setOnRefreshListener(() -> mvvm.getFeasts(kitchen_id, this));
 
         binding.tvNoData.setVisibility(View.GONE);
-        binding.btnBack.setOnClickListener(view -> {
+        binding.llBack.setOnClickListener(view -> {
             finish();
         });
+        binding.addFeast.setOnClickListener(view -> {
+            Intent intent=new Intent(FeastsActivity.this, AddFeastActivity.class);
+            startActivity(intent);
+        });
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
+                BuffetModel buffetModel = (BuffetModel) result.getData().getSerializableExtra("data");
+                if (mvvm.getSelectedPos().getValue() != -1) {
+                    mvvm.onDataSuccess().getValue().set(mvvm.getSelectedPos().getValue(), buffetModel);
+                    adapter.notifyItemChanged(mvvm.getSelectedPos().getValue());
+                    mvvm.getSelectedPos().setValue(-1);
+                }
+
+            }
+        });
+    }
+    public void setItemData(BuffetModel feastsModel, int adapterPosition) {
+        req = 1;
+        mvvm.getSelectedPos().setValue(adapterPosition);
+
+        Intent intent = new Intent(this, FeastsDetailsActivity.class);
+        intent.putExtra("data", feastsModel);
+        launcher.launch(intent);
+
     }
 }

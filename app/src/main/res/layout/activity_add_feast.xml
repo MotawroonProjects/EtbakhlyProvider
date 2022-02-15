@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="lang"
             type="String" />
@@ -50,7 +49,7 @@
                         android:layout_marginEnd="5dp"
                         android:textColor="@color/white"
                         android:textSize="15sp"
-                        android:text="@string/add_dishes"
+                        android:text="@string/add_feast"
                         />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
@@ -105,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginBottom="3dp"
-                        android:text="@string/dish_name"
+                        android:text="@string/feast_name"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -115,35 +114,6 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/linear_shape"
-
-                        >
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="5dp"
-                            android:background="@color/transparent"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="3dp"
-                        android:text="@string/dish_size"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/linear_shape"
-
 
                         >
 
@@ -175,15 +145,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="3dp"
-                                android:text="@string/price"
+                                android:text="@string/number_of_people"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
-                                android:background="@drawable/linear_shape"
-                                android:orientation="horizontal">
+                                android:background="@drawable/linear_shape">
 
                                 <EditText
                                     android:layout_width="match_parent"
@@ -208,7 +177,80 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5dp"
-                                android:text="@string/calories"
+                                android:text="@string/price"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@drawable/linear_shape">
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="5dp"
+                                    android:background="@color/transparent"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="3dp"
+                                android:text="@string/service_provider"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@drawable/linear_shape">
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="5dp"
+                                    android:background="@color/transparent"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:text="@string/number"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -236,81 +278,52 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="3dp"
-                        android:text="@string/description"
+                        android:text="@string/order2"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="45dp"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/linear_shape"
 
-
                         >
 
-                        <EditText
-                            android:layout_width="match_parent"
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="5dp"
-                            android:background="@color/transparent"
-                            android:gravity="top"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:layout_weight="1"
+                            android:spinnerMode="dropdown" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/gray15">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <CheckBox
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/vegan_meal"
-                                android:textColor="@color/black"
-                                android:textSize="15sp" />
-
-                            <CheckBox
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/does_not_contain_trans_fats"
-                                android:textColor="@color/black"
-                                android:textSize="15sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <CheckBox
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/gluten_free"
-                                android:textColor="@color/black"
-                                android:textSize="15sp" />
-
-                            <CheckBox
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/sugar_free"
-                                android:textColor="@color/black"
-                                android:textSize="15sp" />
-                        </LinearLayout>
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="15dp"
+                            android:text="@string/food_menu"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
                     </LinearLayout>
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="15dp" />
+
                     <Button
+                        android:id="@+id/btnDone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"

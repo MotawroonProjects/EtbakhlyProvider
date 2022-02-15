@@ -123,6 +123,7 @@
     <string name="order">طلب</string>
     <string name="add_buffet">إضافة بوفيه</string>
     <string name="buffet_name">اسم البوفيه</string>
+    <string name="feast_name">اسم الوليمة</string>
     <string name="number_of_people">عدد الاشخاص</string>
     <string name="order2">الطلب</string>
     <string name="food_menu">قائمة الطعام</string>
@@ -139,4 +140,7 @@
     <string name="sugar_free">خالية من السكر</string>
     <string name="photo_required">إختر صورة الخدمة</string>
     <string name="update">تعديل</string>
+    <string name="people2">عدد الاشخاص</string>
+    <string name="menu">قائمة الطعام</string>
+    <string name="add_feast">إضافة وليمة</string>
 </resources>

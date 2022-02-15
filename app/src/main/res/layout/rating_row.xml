@@ -1,75 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="model"
+            type="com.etbakhly_provider.model.RateModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/ic_avatar"
-
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@color/gray1"
+                user_image="@{model.user.photo}"
                 />
+
+            <androidx.legacy.widget.Space
+                android:layout_width="12dp"
+                android:layout_height="0dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="أحمد علي"
+                    android:ellipsize="end"
+                    android:lines="1"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:text="@{model.user.name}"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
+
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:padding="3dp"
                         android:src="@drawable/ic_star" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="4dp"
-                        android:text="(5.8)"
-                        android:textColor="@color/color12"
-                        android:textSize="14sp" />
+                        android:text="@{model.value}"
+                        android:textColor="@color/rate"
+                        android:textSize="12sp"
+
+                        />
+
+
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد منه "
-                    android:textColor="@color/icon"
-                    android:textSize="14sp" />
-            </LinearLayout>
-        </LinearLayout>
+                    android:layout_marginTop="5dp"
+                    android:text="@{model.comment}"
+                    android:textColor="@color/gray5"
+                    android:textSize="13sp" />
 
+            </LinearLayout>
+
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/horizontal_line2" />
     </LinearLayout>
+
+
+
 </layout>
