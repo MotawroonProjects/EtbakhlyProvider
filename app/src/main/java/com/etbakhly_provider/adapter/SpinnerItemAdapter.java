@@ -52,7 +52,7 @@ public class SpinnerItemAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         @SuppressLint("ViewHolder") SpinnerRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.spinner_row, viewGroup, false);
-        binding.setLang(lang);
+        binding.setTitle(lang);
 //        binding.setModel(dataList.get(i));
         return binding.getRoot();
     }

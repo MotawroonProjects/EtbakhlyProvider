@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -26,11 +27,13 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.SpinnerServiceAdapter;
 import com.etbakhly_provider.databinding.ActivityRegisterBinding;
 import com.etbakhly_provider.model.RegisterModel;
+import com.etbakhly_provider.model.SelectedLocation;
 import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.mvvm.ActivityRegisterMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
+import com.etbakhly_provider.uis.activity_map.MapActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -50,7 +53,7 @@ public class RegisterActivity extends BaseActivity {
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final String camera_permission = Manifest.permission.CAMERA;
-    private final int READ_REQ = 1, CAMERA_REQ = 2;
+    private final int READ_REQ = 1, CAMERA_REQ = 2, ADDRESS_REQ = 3;
     private int selectedReq = 0;
     private Uri uri = null;
 
@@ -71,8 +74,10 @@ public class RegisterActivity extends BaseActivity {
 
     private void initView() {
         mvvm = ViewModelProviders.of(this).get(ActivityRegisterMvvm.class);
-        model = new RegisterModel(phone_code, phone);
-        model.setContext(this);
+        model = new RegisterModel(phone_code, phone, this);
+        //model.setContext(this);
+        binding.setLang(getLang());
+        model.setValid(false);
 
         optionsList = new ArrayList<>();
         spinnerServiceAdapter = new SpinnerServiceAdapter(this);
@@ -132,11 +137,13 @@ public class RegisterActivity extends BaseActivity {
 
                     uri = result.getData().getData();
                     model.setPhotoUrl(uri.toString());
-
                     File file = new File(Common.getImagePath(this, uri));
+                    Log.e("lllll",file.toString());
+
                     Picasso.get().load(file).fit().into(binding.image);
 
-                } else if (selectedReq == CAMERA_REQ) {
+                }
+                else if (selectedReq == CAMERA_REQ) {
                     Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
                     uri = getUriFromBitmap(bitmap);
                     if (uri != null) {
@@ -151,6 +158,15 @@ public class RegisterActivity extends BaseActivity {
                         }
                     }
                 }
+                else if (selectedReq == ADDRESS_REQ && result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    SelectedLocation location = (SelectedLocation) result.getData().getSerializableExtra("location");
+                  //  mvvm.setSelectedLocation(location);
+                    model.setAddress(location.getAddress());
+                    model.setLat(location.getLat());
+                    model.setLng(location.getLng());
+                    binding.setModel(model);
+                }
+
             }
         });
 
@@ -160,7 +176,12 @@ public class RegisterActivity extends BaseActivity {
             finish();
 
         });
-
+        binding.cardAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToMapActivity();
+            }
+        });
         binding.cardViewImage.setOnClickListener(view -> {
             Common.CloseKeyBoard(this, binding.edtName);
             openSheet();
@@ -190,6 +211,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void setOptionData() {
+        optionsList.add(getResources().getString(R.string.ch_service));
         optionsList.add(getResources().getString(R.string.service));
         optionsList.add(getResources().getString(R.string.chef));
         optionsList.add(getResources().getString(R.string.food_truck));
@@ -291,5 +313,9 @@ public class RegisterActivity extends BaseActivity {
         return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
     }
 
-
+    private void navigateToMapActivity() {
+        selectedReq = 3;
+        Intent intent = new Intent(this, MapActivity.class);
+        launcher.launch(intent);
+    }
 }

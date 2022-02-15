@@ -33,10 +33,15 @@ public class RegisterModel extends BaseObservable {
     }
 
     public boolean isDataValid() {
-        if (!photoUrl.isEmpty() &&
+        if (photoUrl != null &&
+                !photoUrl.isEmpty() &&
+                name != null &&
                 !name.isEmpty() &&
+                email != null &&
                 !email.isEmpty() &&
+                address != null &&
                 !address.isEmpty() &&
+                service != null &&
                 !service.isEmpty() &&
                 Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
@@ -44,39 +49,39 @@ public class RegisterModel extends BaseObservable {
             error_name.set(null);
             error_email.set(null);
             error_address.set(null);
-
+            setValid(true);
 
             return true;
         } else {
 
-            if (name.isEmpty()) {
-                error_name.set(context.getString(R.string.field_required));
+            if (name == null || name.isEmpty()) {
+                error_name.set(context.getResources().getString(R.string.field_required));
 
             } else {
                 error_name.set(null);
 
             }
 
-            if (email.isEmpty()) {
-                error_email.set(context.getString(R.string.field_required));
+            if (email == null || email.isEmpty()) {
+                error_email.set(context.getResources().getString(R.string.field_required));
 
             } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                error_email.set(context.getString(R.string.inv_email));
+                error_email.set(context.getResources().getString(R.string.inv_email));
 
             } else {
                 error_email.set(null);
 
             }
 
-            if (photoUrl.isEmpty()) {
+            if (photoUrl == null || photoUrl.isEmpty()) {
                 Toast.makeText(context, R.string.photo_required, Toast.LENGTH_SHORT).show();
             }
-            if (service.isEmpty()) {
+            if (service == null || service.isEmpty()) {
                 Toast.makeText(context, context.getResources().getString(R.string.ch_service), Toast.LENGTH_SHORT).show();
             }
 
-            if (address.isEmpty()) {
-                error_address.set(context.getString(R.string.field_required));
+            if (address == null || address.isEmpty()) {
+                error_address.set(context.getResources().getString(R.string.field_required));
 
             } else {
                 error_address.set(null);
@@ -85,8 +90,8 @@ public class RegisterModel extends BaseObservable {
         }
     }
 
-    public RegisterModel(String phone_code, String phone) {
-
+    public RegisterModel(String phone_code, String phone, Context context) {
+        this.context = context;
         setPhone_code(phone_code);
         setPhone(phone);
         setPhotoUrl("");
@@ -94,7 +99,6 @@ public class RegisterModel extends BaseObservable {
         setEmail("");
         setService("");
         setAddress("");
-
 
 
     }

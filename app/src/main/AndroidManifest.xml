@@ -14,27 +14,18 @@
         tools:ignore="ScopedStorage" />
 
     <application
+        android:name=".share.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
-        tools:targetApi="m">
-        <activity
-            android:name=".uis.activity_setting.setting_details.SettingDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".uis.activity_add_feast.AddFeastActivity"
-            android:exported="false" />
-        <activity
-            android:name=".uis.activity_feasts_details.FeastsDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".uis.activity_buffet_details.BuffetDetailsActivity"
-            android:exported="false" />
+        tools:targetApi="q"
+        >
         <activity
             android:name=".uis.activity_add_dishes.AddDishesActivity"
             android:exported="false"
@@ -96,7 +87,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".uis.activity_setting.SettingsActivity"
+            android:name=".uis.activity_splash.SplashActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -110,7 +101,7 @@
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".uis.activity_splash.SplashActivity"
+            android:name=".uis.activity_setting.SettingsActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
 
