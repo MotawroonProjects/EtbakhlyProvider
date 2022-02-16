@@ -143,5 +143,8 @@
     <string name="people2">People</string>
     <string name="menu">Menu</string>
     <string name="add_feast">Add Feast</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="delivery_zones">Delivery Zones</string>
 
 </resources>

@@ -37,7 +37,7 @@ public class BuffetDetailsActivity extends BaseActivity {
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
         adapter.updateList(model.getCategor_dishes());
         binding.recView.setAdapter(adapter);
-        binding.recView.setNestedScrollingEnabled(false);
+      //  binding.recView.setNestedScrollingEnabled(false);
 
         binding.llBack.setOnClickListener(v -> {
             finish();

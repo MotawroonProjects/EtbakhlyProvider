@@ -143,4 +143,7 @@
     <string name="people2">عدد الاشخاص</string>
     <string name="menu">قائمة الطعام</string>
     <string name="add_feast">إضافة وليمة</string>
+    <string name="terms_and_conditions">الشروط والاحكام</string>
+    <string name="privacy_policy">السياسة والخصوصية</string>
+    <string name="delivery_zones">مناطق التوصيل</string>
 </resources>

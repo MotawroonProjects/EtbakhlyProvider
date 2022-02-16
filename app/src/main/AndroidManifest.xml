@@ -24,8 +24,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
-        tools:targetApi="q"
-        >
+        tools:targetApi="q">
+        <activity
+            android:name=".uis.activity_add_new.AddNewDishActivity"
+            android:exported="false" />
         <activity
             android:name=".uis.activity_add_dishes.AddDishesActivity"
             android:exported="false"
@@ -89,6 +91,10 @@
         <activity
             android:name=".uis.activity_splash.SplashActivity"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity
+            android:name=".uis.activities_fragments_home.HomeActivity"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -97,11 +103,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".uis.activities_fragments_home.HomeActivity"
+            android:name=".uis.activity_buffet_details.BuffetDetailsActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".uis.activity_feasts_details.FeastsDetailsActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".uis.activity_add_feast.AddFeastActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".uis.activity_setting.SettingsActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".uis.activity_setting.setting_details.SettingDetailsActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
 

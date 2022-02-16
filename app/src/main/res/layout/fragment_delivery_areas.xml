@@ -7,41 +7,10 @@
 
     </data>
 
-    <androidx.cardview.widget.CardView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="10dp"
-        app:cardCornerRadius="10dp">
+        android:layout_height="match_parent"
+        >
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.etbakhly_provider.uis.activity_base.FragmentMapTouchListener"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/white"
-            app:cardCornerRadius="15dp"
-            app:layout_constraintBottom_toTopOf="@id/constraint"
-            app:layout_constraintStart_toStartOf="@id/constraint">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_gps" />
-        </androidx.cardview.widget.CardView>
-
-    </androidx.cardview.widget.CardView>
+    </FrameLayout>
 </layout>
