@@ -2,6 +2,7 @@ package com.etbakhly_provider.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.AddBuffetTitleRowBinding;
 import com.etbakhly_provider.databinding.AddFeastsTitleRowBinding;
+import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
 
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class AddBuffetTitlesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        AddFeastsTitleRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_feasts_title_row, parent, false);
+        AddBuffetTitleRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_buffet_title_row, parent, false);
         return new MyHolder(binding);
     }
 
@@ -39,6 +41,11 @@ public class AddBuffetTitlesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         buffetDetailsAdapter = new AddBuffetDetailsAdapter(context);
         myHolder.binding.recAddBuffetDetails.setLayoutManager(new GridLayoutManager(context, 2));
         myHolder.binding.recAddBuffetDetails.setAdapter(buffetDetailsAdapter);
+
+        myHolder.binding.llAddNew.setOnClickListener(view -> {
+            AddBuffetActivity addBuffetActivity =(AddBuffetActivity) context;
+            addBuffetActivity.navigateToAddNewDish();
+        });
     }
 
     @Override
@@ -51,9 +58,9 @@ public class AddBuffetTitlesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        private AddFeastsTitleRowBinding binding;
+        private AddBuffetTitleRowBinding binding;
 
-        public MyHolder(AddFeastsTitleRowBinding binding) {
+        public MyHolder(AddBuffetTitleRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

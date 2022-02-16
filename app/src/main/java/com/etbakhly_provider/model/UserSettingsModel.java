@@ -10,6 +10,7 @@ public class UserSettingsModel implements Serializable {
     private CountryModel countryModel;
     private CountryModel cityModel;
     private SelectedLocation location;
+
     public boolean isLanguageSelected() {
         return isLanguageSelected;
     }

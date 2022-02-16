@@ -2,6 +2,7 @@ package com.etbakhly_provider.uis.activity_add_feast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -183,5 +184,27 @@ public class AddFeastActivity extends BaseActivity {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == READ_REQ) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                SelectImage(requestCode);
+            } else {
+                Toast.makeText(this, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+            }
+
+        } else if (requestCode == CAMERA_REQ) {
+            if (grantResults.length > 0 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                SelectImage(requestCode);
+            } else {
+                Toast.makeText(this, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

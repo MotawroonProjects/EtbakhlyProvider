@@ -6,23 +6,20 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.databinding.AddBuffetTitleRowBinding;
-import com.etbakhly_provider.databinding.AddFeastsDetailsRowBinding;
-import com.etbakhly_provider.databinding.AddFeastsTitleRowBinding;
+import com.etbakhly_provider.databinding.DeliveryZoneRowBinding;
+
 
 import java.util.List;
 
-public class AddFeastsTitlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class DeliveryZoneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private List<Object> list;
     private Context context;
     private LayoutInflater inflater;
-    private AddFeastsDetailsAdapter feastsDetailsAdapter;
 
-    public AddFeastsTitlesAdapter(Context context) {
+    public DeliveryZoneAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
@@ -30,16 +27,13 @@ public class AddFeastsTitlesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        AddFeastsTitleRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_feasts_title_row, parent, false);
+        DeliveryZoneRowBinding binding= DataBindingUtil.inflate(inflater, R.layout.delivery_zone_row,parent,false);
         return new MyHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-       MyHolder myHolder = (MyHolder) holder;
-        feastsDetailsAdapter = new AddFeastsDetailsAdapter(context);
-        myHolder.binding.recAddBuffetDetails.setLayoutManager(new GridLayoutManager(context, 2));
-        myHolder.binding.recAddBuffetDetails.setAdapter(feastsDetailsAdapter);
+        MyHolder myHolder=(MyHolder) holder;
     }
 
     @Override
@@ -47,16 +41,17 @@ public class AddFeastsTitlesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (list != null) {
             return list.size();
         } else {
-            return 3;
+            return 10;
         }
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        private AddFeastsTitleRowBinding binding;
+        private DeliveryZoneRowBinding binding;
 
-        public MyHolder(AddFeastsTitleRowBinding binding) {
+        public MyHolder(DeliveryZoneRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+
         }
     }
     public void updateList(List<Object> list) {
