@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -19,6 +20,8 @@ import com.etbakhly_provider.mvvm.ActivityFeastsMvvm;
 import com.etbakhly_provider.uis.activity_add_feast.AddFeastActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_feasts_details.FeastsDetailsActivity;
+
+import java.util.ArrayList;
 
 public class FeastsActivity extends BaseActivity {
     private ActivityFeastsBinding binding;
@@ -49,9 +52,14 @@ public class FeastsActivity extends BaseActivity {
                     adapter.updateList(buffetsList);
                 }
             } else {
+                adapter.updateList(new ArrayList<>());
                 binding.tvNoData.setVisibility(View.VISIBLE);
 
             }
+        });
+
+        mvvm.getOnStatusSuccess().observe(this, status -> {
+            mvvm.getFeasts(kitchen_id,this);
         });
 
         binding.setLang(getLang());
@@ -90,5 +98,9 @@ public class FeastsActivity extends BaseActivity {
         intent.putExtra("data", feastsModel);
         launcher.launch(intent);
 
+    }
+
+    public void deleteFeast(BuffetModel buffetModel) {
+        mvvm.deleteFeasts(buffetModel.getId());
     }
 }

@@ -3,6 +3,7 @@ package com.etbakhly_provider.uis.activity_buffet;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,8 @@ import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_buffet_details.BuffetDetailsActivity;
 import com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity;
+
+import java.util.ArrayList;
 
 public class BuffetActivity extends BaseActivity {
     private ActivityBuffetBinding binding;
@@ -52,9 +55,14 @@ public class BuffetActivity extends BaseActivity {
                     adapter.updateList(buffetsList);
                 }
             } else {
+                adapter.updateList(new ArrayList<>());
                 binding.tvNoData.setVisibility(View.VISIBLE);
 
             }
+        });
+        mvvm.getOnStatusSuccess().observe(this, status -> {
+
+            mvvm.getBuffets(kitchen_id,this);
         });
 
         binding.setLang(getLang());
@@ -93,5 +101,9 @@ public class BuffetActivity extends BaseActivity {
         Intent intent = new Intent(this, BuffetDetailsActivity.class);
         intent.putExtra("data", buffetModel);
         launcher.launch(intent);
+    }
+
+    public void deleteBuffet(BuffetModel buffetModel) {
+        mvvm.deleteBuffet(buffetModel.getId());
     }
 }

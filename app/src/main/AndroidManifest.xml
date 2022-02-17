@@ -26,6 +26,12 @@
         tools:ignore="AllowBackup"
         tools:targetApi="q">
         <activity
+            android:name=".uis.activity_setting.wallet_activity.activity_payment.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uis.activity_setting.wallet_activity.WalletActivity"
+            android:exported="false" />
+        <activity
             android:name=".uis.activity_add_new.AddNewDishActivity"
             android:exported="false" />
         <activity
@@ -91,7 +97,7 @@
         <activity
             android:name=".uis.activities_fragments_home.HomeActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".uis.activity_splash.SplashActivity"
             android:exported="true"

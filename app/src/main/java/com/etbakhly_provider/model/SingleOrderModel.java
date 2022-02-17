@@ -22,7 +22,7 @@ public class SingleOrderModel implements Serializable {
     public String created_at;
     public String updated_at;
     public UserModel user;
-    public ZoneModel zones;
+    public ZoneCover.Zone zones;
     public CatererModel caterer;
     public List<OrderModel.OrderDetail> order_details;
     public OptionModel option;
@@ -99,7 +99,7 @@ public class SingleOrderModel implements Serializable {
         return user;
     }
 
-    public ZoneModel getZones() {
+    public ZoneCover.Zone getZones() {
         return zones;
     }
 

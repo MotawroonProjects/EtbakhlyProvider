@@ -97,6 +97,7 @@
     <string name="feasts_menu">Feasts menu</string>
     <string name="choose_the_dishes">Choose the dishes</string>
     <string name="no_buffets_to_show">No buffets to show</string>
+    <string name="no_feasts_to_show">No feasts to show</string>
     <string name="no_dishes_to_show">No dishes to show</string>
 
 
@@ -146,6 +147,11 @@
     <string name="terms_and_conditions">Terms and conditions</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="delivery_zones">Delivery Zones</string>
+    <string name="total_balance">Total Balance</string>
+    <string name="suspended_balance">Suspended Balance</string>
+    <string name="retractable">Retractable</string>
+    <string name="balance_withdraw">Balance withdraw</string>
+    <string name="transactions">Transactions</string>
     <string name="discount">Discount</string>
     <string name="customer_service">Customer Service</string>
     <string name="tax">Tax</string>
