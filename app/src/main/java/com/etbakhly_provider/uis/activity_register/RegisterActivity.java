@@ -171,17 +171,18 @@ public class RegisterActivity extends BaseActivity {
         });
 
         mvvm.getUserData().observe(this, userModel -> {
-            setUserModel(userModel);
-            setResult(RESULT_OK);
+            Intent intent=getIntent();
+            intent.putExtra("data",userModel);
+            setResult(RESULT_OK,intent);
             finish();
 
         });
-        binding.cardAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navigateToMapActivity();
-            }
-        });
+//        binding.cardAddress.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                navigateToMapActivity();
+//            }
+//        });
         binding.cardViewImage.setOnClickListener(view -> {
             Common.CloseKeyBoard(this, binding.edtName);
             openSheet();

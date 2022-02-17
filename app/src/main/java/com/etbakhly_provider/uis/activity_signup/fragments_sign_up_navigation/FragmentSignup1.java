@@ -24,6 +24,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.navigation.NavAction;
+import androidx.navigation.Navigation;
 
 import com.etbakhly_provider.R;
 
@@ -69,33 +71,33 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity = (SignupActivity) context;
-        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                if (selectedReq == READ_REQ) {
-
-                    uri = result.getData().getData();
-                    model.setImageUrl(uri.toString());
-
-                    File file = new File(Common.getImagePath(activity, uri));
-                    Picasso.get().load(file).fit().into(binding.image);
-
-                } else if (selectedReq == CAMERA_REQ) {
-                    Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
-                    uri = getUriFromBitmap(bitmap);
-                    if (uri != null) {
-                        String path = Common.getImagePath(activity, uri);
-                        model.setImageUrl(uri.toString());
-                        if (path != null) {
-                            Picasso.get().load(new File(path)).fit().into(binding.image);
-
-                        } else {
-                            Picasso.get().load(uri).fit().into(binding.image);
-
-                        }
-                    }
-                }
-            }
-        });
+//        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+//            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+//                if (selectedReq == READ_REQ) {
+//
+//                    uri = result.getData().getData();
+//                    model.setImageUrl(uri.toString());
+//
+//                    File file = new File(Common.getImagePath(activity, uri));
+//                    Picasso.get().load(file).fit().into(binding.image);
+//
+//                } else if (selectedReq == CAMERA_REQ) {
+//                    Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
+//                    uri = getUriFromBitmap(bitmap);
+//                    if (uri != null) {
+//                        String path = Common.getImagePath(activity, uri);
+//                        model.setImageUrl(uri.toString());
+//                        if (path != null) {
+//                            Picasso.get().load(new File(path)).fit().into(binding.image);
+//
+//                        } else {
+//                            Picasso.get().load(uri).fit().into(binding.image);
+//
+//                        }
+//                    }
+//                }
+//            }
+//        });
 
     }
 
@@ -139,9 +141,9 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
     }
 
     private void initView() {
-        binding.flImage.setOnClickListener(view -> {
-            openSheet();
-        });
+//        binding.flImage.setOnClickListener(view -> {
+//            openSheet();
+//        });
         binding.flGallery.setOnClickListener(view -> {
             closeSheet();
             checkReadPermission();
@@ -181,6 +183,14 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
                 binding.rdDelivery.setChecked(false);
                 binding.rdSurrender.setChecked(true);
                 binding.flarea.setVisibility(View.GONE);
+            }
+        });
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", model);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.signup2,bundle);
             }
         });
         createDateDialog();

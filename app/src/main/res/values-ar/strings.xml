@@ -146,4 +146,10 @@
     <string name="terms_and_conditions">الشروط والاحكام</string>
     <string name="privacy_policy">السياسة والخصوصية</string>
     <string name="delivery_zones">مناطق التوصيل</string>
+    <string name="discount">Discount</string>
+    <string name="customer_service">Customer Service</string>
+    <string name="tax">Tax</string>
+    <string name="note">Note</string>
+    <string name="ch_delivert">Choose Delivery Type</string>
+    <string name="ch_zone">Choose Zone</string>
 </resources>

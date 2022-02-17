@@ -39,8 +39,7 @@ public class RegisterModel extends BaseObservable {
                 !name.isEmpty() &&
                 email != null &&
                 !email.isEmpty() &&
-                address != null &&
-                !address.isEmpty() &&
+
                 service != null &&
                 !service.isEmpty() &&
                 Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -80,12 +79,7 @@ public class RegisterModel extends BaseObservable {
                 Toast.makeText(context, context.getResources().getString(R.string.ch_service), Toast.LENGTH_SHORT).show();
             }
 
-            if (address == null || address.isEmpty()) {
-                error_address.set(context.getResources().getString(R.string.field_required));
 
-            } else {
-                error_address.set(null);
-            }
             return false;
         }
     }

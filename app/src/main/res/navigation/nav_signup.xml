@@ -16,11 +16,7 @@
         android:name="com.etbakhly_provider.uis.activity_signup.fragments_sign_up_navigation.FragmentSignup2"
         android:label=""
         tools:layout="@layout/fragment_sign_up2" />
-    <fragment
-        android:id="@+id/signup3"
-        android:name="com.etbakhly_provider.uis.activity_signup.fragments_sign_up_navigation.FragmentSignup3"
-        android:label=""
-        tools:layout="@layout/fragment_sign_up3" />
+
 
     
 </navigation>

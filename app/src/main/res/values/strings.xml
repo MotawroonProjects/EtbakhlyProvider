@@ -146,5 +146,11 @@
     <string name="terms_and_conditions">Terms and conditions</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="delivery_zones">Delivery Zones</string>
+    <string name="discount">Discount</string>
+    <string name="customer_service">Customer Service</string>
+    <string name="tax">Tax</string>
+    <string name="note">Note</string>
+    <string name="ch_delivert">Choose Delivery Type</string>
+    <string name="ch_zone">Choose Zone</string>
 
 </resources>

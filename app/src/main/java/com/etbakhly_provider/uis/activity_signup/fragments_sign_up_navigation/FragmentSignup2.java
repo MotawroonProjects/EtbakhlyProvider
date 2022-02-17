@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.FragmentSignUp2Binding;
+import com.etbakhly_provider.model.SignUpModel;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
 import com.etbakhly_provider.uis.activity_signup.SignupActivity;
 
@@ -23,16 +24,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-public class FragmentSignup2 extends BaseFragment  {
+
+public class FragmentSignup2 extends BaseFragment {
     private SignupActivity activity;
     private FragmentSignUp2Binding binding;
-
+    private SignUpModel signUpModel;
     private CompositeDisposable disposable = new CompositeDisposable();
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity = (SignupActivity) context;
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            signUpModel = (SignUpModel) bundle.getSerializable("data");
+        }
     }
 
     @Override
@@ -75,13 +81,14 @@ public class FragmentSignup2 extends BaseFragment  {
     }
 
     private void initView() {
-
+        binding.setLang(getLang());
+        binding.setModel(signUpModel);
     }
-
 
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         disposable.clear();
-    }}
+    }
+}

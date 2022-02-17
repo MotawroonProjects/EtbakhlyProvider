@@ -34,7 +34,7 @@ public class SignupActivity extends BaseActivity  {
 
     private void initView() {
         navController = Navigation.findNavController(this, R.id.navHostFragment);
-        NavigationUI.setupActionBarWithNavController(this, navController);
+      //  NavigationUI.setupActionBarWithNavController(this, navController);
 
 
 

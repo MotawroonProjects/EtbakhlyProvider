@@ -238,7 +238,7 @@ public class ActivityVerificationMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-
+Log.e("lllll",e.toString());
                     }
                 });
     }
