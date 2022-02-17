@@ -15,6 +15,7 @@ import com.etbakhly_provider.adapter.KitchenPagerAdapter;
 import com.etbakhly_provider.databinding.ActivityKitchenDetailsBinding;
 
 import com.etbakhly_provider.model.KitchenModel;
+import com.etbakhly_provider.model.ZoneCover;
 import com.etbakhly_provider.mvvm.ActivityKitchenDetailsMvvm;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen.FragmentDeliveryAreas;

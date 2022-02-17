@@ -99,6 +99,7 @@
     <string name="dishes_menu">قائمة الاطباق</string>
     <string name="choose_the_dishes">اختر الاطباق</string>
     <string name="no_buffets_to_show">لا توجد بوفيهات لعرضها</string>
+    <string name="no_feasts_to_show">لا توجد ولائم لعرضها</string>
     <string name="no_dishes_to_show">لا توجد أطباق لعرضها</string>
 
     <string name="sent_delivered_handed">تم التسليم</string>
@@ -146,4 +147,9 @@
     <string name="terms_and_conditions">الشروط والاحكام</string>
     <string name="privacy_policy">السياسة والخصوصية</string>
     <string name="delivery_zones">مناطق التوصيل</string>
+    <string name="total_balance">الرصيد الكلي</string>
+    <string name="suspended_balance">الرصيد المعلق</string>
+    <string name="retractable">القابل للسحب</string>
+    <string name="balance_withdraw">سحب الرصيد</string>
+    <string name="transactions">المعاملات</string>
 </resources>

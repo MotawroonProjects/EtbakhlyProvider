@@ -41,16 +41,26 @@ public class BuffetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
-        myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        myHolder.itemView.setOnClickListener(view -> {
+            if (appCompatActivity instanceof BuffetActivity){
+                BuffetActivity activity=(BuffetActivity) appCompatActivity;
+                activity.setItemData(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
+            }else if (appCompatActivity instanceof FeastsActivity){
+                FeastsActivity activity=(FeastsActivity) appCompatActivity;
+                activity.setItemData(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
+            }
+        });
+        myHolder.binding.llDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (appCompatActivity instanceof BuffetActivity){
                     BuffetActivity activity=(BuffetActivity) appCompatActivity;
-                    activity.setItemData(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
+                    activity.deleteBuffet(list.get(myHolder.getLayoutPosition()));
                 }else if (appCompatActivity instanceof FeastsActivity){
                     FeastsActivity activity=(FeastsActivity) appCompatActivity;
-                    activity.setItemData(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
+                    activity.deleteFeast(list.get(myHolder.getLayoutPosition()));
                 }
+
             }
         });
     }

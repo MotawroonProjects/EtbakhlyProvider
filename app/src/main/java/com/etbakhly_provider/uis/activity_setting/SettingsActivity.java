@@ -11,6 +11,7 @@ import com.etbakhly_provider.databinding.ActivitySettingsBinding;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity;
 import com.etbakhly_provider.uis.activity_setting.setting_details.SettingDetailsActivity;
+import com.etbakhly_provider.uis.activity_setting.wallet_activity.WalletActivity;
 
 public class SettingsActivity extends BaseActivity {
     private ActivitySettingsBinding binding;
@@ -33,6 +34,13 @@ public class SettingsActivity extends BaseActivity {
         binding.llSettings.setOnClickListener(view -> {
             Intent intent=new Intent(SettingsActivity.this, SettingDetailsActivity.class);
             startActivity(intent);
+        });
+        binding.llWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(SettingsActivity.this, WalletActivity.class);
+                startActivity(intent);
+            }
         });
     }
 }

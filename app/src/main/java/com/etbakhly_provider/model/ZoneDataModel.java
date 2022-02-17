@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ZoneDataModel extends StatusResponse implements Serializable {
-    private List<ZoneModel> data;
+    private List<ZoneCover> data;
 
-    public List<ZoneModel> getData() {
+    public List<ZoneCover> getData() {
         return data;
     }
 }

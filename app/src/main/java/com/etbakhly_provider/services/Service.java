@@ -101,4 +101,11 @@ public interface Service {
     @GET("api/Catering/CatererFeasts")
     Single<Response<BuffetsDataModel>> getFeasts(@Query(value = "Caterer_id") String caterer_id);
 
+    @FormUrlEncoded
+    @POST("api/Catering/delete_buffet")
+    Single<Response<StatusResponse>> deleteBuffet(@Field("buffet_id")String buffet_id);
+
+    @FormUrlEncoded
+    @POST("api/Catering/delete_feast")
+    Single<Response<StatusResponse>>  deleteFeasts(@Field("feast_id") String feast_id);
 }
