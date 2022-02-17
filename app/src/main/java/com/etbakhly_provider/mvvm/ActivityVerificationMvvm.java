@@ -207,7 +207,7 @@ public class ActivityVerificationMvvm extends AndroidViewModel {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getResources().getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).login(phone_code,phone,"yes")
+        Api.getService(Tags.base_url).login(phone_code, phone, "yes")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<UserModel>>() {
@@ -238,7 +238,7 @@ public class ActivityVerificationMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-Log.e("lllll",e.toString());
+                        Log.e("lllll", e.toString());
                     }
                 });
     }
