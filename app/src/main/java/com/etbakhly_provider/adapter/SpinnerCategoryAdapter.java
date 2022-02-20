@@ -12,16 +12,16 @@ import androidx.databinding.DataBindingUtil;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.SpinnerRowBinding;
+import com.etbakhly_provider.model.CategoryModel;
 import com.etbakhly_provider.model.CountryModel;
-import com.etbakhly_provider.model.ZoneModel;
 
 import java.util.List;
 
-public class SpinnerZoneAdapter extends BaseAdapter {
-    private List<CountryModel> list;
+public class SpinnerCategoryAdapter extends BaseAdapter {
+    private List<CategoryModel> list;
     private Context context;
 
-    public SpinnerZoneAdapter(Context context) {
+    public SpinnerCategoryAdapter(Context context) {
         this.context = context;
 
     }
@@ -53,7 +53,7 @@ public class SpinnerZoneAdapter extends BaseAdapter {
         return binding.getRoot();
     }
 
-    public void updateData(List<CountryModel> list) {
+    public void updateData(List<CategoryModel> list) {
         this.list = list;
         notifyDataSetChanged();
     }

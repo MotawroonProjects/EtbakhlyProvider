@@ -1,21 +1,37 @@
 package com.etbakhly_provider.uis.activity_signup.fragments_sign_up_navigation;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import com.etbakhly_provider.R;
+import com.etbakhly_provider.adapter.SpinnerDayAdapter;
 import com.etbakhly_provider.databinding.FragmentSignUp2Binding;
+import com.etbakhly_provider.model.SelectedLocation;
 import com.etbakhly_provider.model.SignUpModel;
+import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
+import com.etbakhly_provider.uis.activity_map.MapActivity;
 import com.etbakhly_provider.uis.activity_signup.SignupActivity;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -29,7 +45,10 @@ public class FragmentSignup2 extends BaseFragment {
     private SignupActivity activity;
     private FragmentSignUp2Binding binding;
     private SignUpModel signUpModel;
+    private List<String> daylist;
+    private SpinnerDayAdapter spinnerDayAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
+    private ActivityResultLauncher<Intent> launcher;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -39,6 +58,19 @@ public class FragmentSignup2 extends BaseFragment {
         if (bundle != null) {
             signUpModel = (SignUpModel) bundle.getSerializable("data");
         }
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    SelectedLocation location = (SelectedLocation) result.getData().getSerializableExtra("location");
+                    //  mvvm.setSelectedLocation(location);
+                    signUpModel.setAddress(location.getAddress());
+                    signUpModel.setLat(location.getLat());
+                    signUpModel.setLng(location.getLng());
+                    binding.setModel(signUpModel);
+
+
+            }
+        });
+
     }
 
     @Override
@@ -81,8 +113,41 @@ public class FragmentSignup2 extends BaseFragment {
     }
 
     private void initView() {
+        signUpModel.setSex_type("women");
+        daylist=new ArrayList<>();
+        spinnerDayAdapter=new SpinnerDayAdapter(activity);
+        setday();
+        spinnerDayAdapter.updateData(daylist);
+        binding.spDay.setAdapter(spinnerDayAdapter);
+        binding.spDay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                signUpModel.setBooking_before(daylist.get(i));
+                binding.setModel(signUpModel);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         binding.setLang(getLang());
+
         binding.setModel(signUpModel);
+
+        binding.cardAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToMapActivity();
+            }
+        });
+    }
+
+    private void setday() {
+        daylist.add(getResources().getString(R.string.day1));
+        daylist.add(getResources().getString(R.string.day2));
+        daylist.add(getResources().getString(R.string.day3));
+
     }
 
 
@@ -90,5 +155,9 @@ public class FragmentSignup2 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         disposable.clear();
+    }
+    private void navigateToMapActivity() {
+        Intent intent = new Intent(activity, MapActivity.class);
+        launcher.launch(intent);
     }
 }

@@ -2,6 +2,7 @@ package com.etbakhly_provider.services;
 
 
 import com.etbakhly_provider.model.BuffetsDataModel;
+import com.etbakhly_provider.model.CategoryDataModel;
 import com.etbakhly_provider.model.CountryDataModel;
 import com.etbakhly_provider.model.DishesDataModel;
 import com.etbakhly_provider.model.OrderDataModel;
@@ -50,7 +51,7 @@ public interface Service {
                                                 @Query(value = "is_end") String is_end);
 
     @FormUrlEncoded
-    @POST("api/Catering/login")
+    @POST("api/Catering/provider_login")
     Single<Response<UserModel>> login(@Field("phone_code") String phone_code,
                                       @Field("phone") String phone,
                                       @Field("yes_i_read_it") String yes_i_read_it);
@@ -83,6 +84,9 @@ public interface Service {
 
     @GET("api/Catering/zones")
     Single<Response<CountryDataModel>> getZone(@Query("city_id") String city_id);
+
+    @GET("api/Catering/indexCategory")
+    Single<Response<CategoryDataModel>> getCategories();
 
     @GET("api/Catering/SingelOrder")
     Single<Response<SingleOrderDataModel>> getOrderDetails(@Query("order_id") String order_id);

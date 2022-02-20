@@ -20,13 +20,20 @@ public class SignUpModel extends BaseObservable implements Serializable {
     private String address;
     private String from;
     private String to;
+    private String tax;
+    private String customers_service;
+    private String discount;
     private String licenseNumber;
     private int cat_id;
+    private String sex_type;
     private String deliverytime;
     private String processingtime;
     private String booking_before;
     private String is_delivery;
     private boolean is_valid1;
+    private boolean is_valid2;
+    private double lat;
+    private double lng;
     private List<AddZoneModel> addZoneModels;
     private Context context;
     public ObservableField<String> error_note = new ObservableField<>();
@@ -37,6 +44,9 @@ public class SignUpModel extends BaseObservable implements Serializable {
     public ObservableField<String> error_deliverytime = new ObservableField<>();
     public ObservableField<String> error_processingtime = new ObservableField<>();
 
+    public ObservableField<String> error_tax = new ObservableField<>();
+    public ObservableField<String> error_customerservice = new ObservableField<>();
+    public ObservableField<String> error_discount = new ObservableField<>();
 
     public SignUpModel(Context context) {
         this.to = "";
@@ -49,8 +59,11 @@ public class SignUpModel extends BaseObservable implements Serializable {
         this.deliverytime = "";
         this.processingtime = "";
         this.cat_id = 0;
+        this.tax = "";
+        this.discount = "";
+        this.customers_service = "";
         addZoneModels = new ArrayList<>();
-        is_valid1=false;
+        is_valid1 = false;
         this.context = context;
 
     }
@@ -105,7 +118,7 @@ public class SignUpModel extends BaseObservable implements Serializable {
                 Toast.makeText(context, context.getResources().getString(R.string.ch_cat), Toast.LENGTH_LONG).show();
 
             }
-            if (deliverytime.isEmpty()) {
+            if (is_delivery.isEmpty()) {
                 Toast.makeText(context, context.getResources().getString(R.string.ch_delivert), Toast.LENGTH_LONG).show();
             } else if ((is_delivery.equals("delivry") && addZoneModels.size() == 0)) {
                 Toast.makeText(context, context.getResources().getString(R.string.ch_zone), Toast.LENGTH_LONG).show();
@@ -124,7 +137,7 @@ public class SignUpModel extends BaseObservable implements Serializable {
             error_licenseNumber.set(null);
             error_address.set(null);
 
-
+            setIs_valid2(true);
             return true;
         } else {
             if (licenseNumber.isEmpty()) {
@@ -172,6 +185,7 @@ public class SignUpModel extends BaseObservable implements Serializable {
     public void setAddress(String address) {
         this.address = address;
         notifyPropertyChanged(BR.address);
+        isStep2Valid(context);
     }
 
     public String getBooking_before() {
@@ -195,12 +209,17 @@ public class SignUpModel extends BaseObservable implements Serializable {
 
     }
 
+    @Bindable
     public String getLicenseNumber() {
         return licenseNumber;
     }
 
     public void setLicenseNumber(String licenseNumber) {
         this.licenseNumber = licenseNumber;
+        notifyPropertyChanged(BR.licenseNumber);
+        isStep2Valid(context);
+
+
     }
 
 
@@ -260,11 +279,73 @@ public class SignUpModel extends BaseObservable implements Serializable {
 
     }
 
+    @Bindable
     public boolean isIs_valid1() {
         return is_valid1;
     }
 
     public void setIs_valid1(boolean is_valid1) {
         this.is_valid1 = is_valid1;
+        notifyPropertyChanged(BR.is_valid1);
+
+    }
+
+    @Bindable
+    public String getTax() {
+        return tax;
+    }
+
+    public void setTax(String tax) {
+        this.tax = tax;
+    }
+
+    @Bindable
+    public String getCustomers_service() {
+        return customers_service;
+    }
+
+    public void setCustomers_service(String customers_service) {
+        this.customers_service = customers_service;
+    }
+
+    @Bindable
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public boolean isIs_valid2() {
+        return is_valid2;
+    }
+
+    public void setIs_valid2(boolean is_valid2) {
+        this.is_valid2 = is_valid2;
+    }
+
+    public String getSex_type() {
+        return sex_type;
+    }
+
+    public void setSex_type(String sex_type) {
+        this.sex_type = sex_type;
     }
 }

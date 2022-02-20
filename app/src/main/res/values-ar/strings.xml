@@ -158,4 +158,7 @@
     <string name="note">Note</string>
     <string name="ch_delivert">Choose Delivery Type</string>
     <string name="ch_zone">Choose Zone</string>
+    <string name="day1">1 يوم</string>
+    <string name="day2">2 أيام</string>
+    <string name="day3">3 أيام</string>
 </resources>

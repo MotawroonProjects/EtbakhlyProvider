@@ -78,7 +78,7 @@
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
                                 android:text="@string/from"
-                                android:textColor="@color/gray4"
+                                android:textColor="@color/black"
                                 android:textSize="14sp" />
 
                             <ImageView
@@ -121,7 +121,7 @@
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
                                 android:text="@string/to"
-                                android:textColor="@color/gray4"
+                                android:textColor="@color/black"
                                 android:textSize="14sp" />
 
                             <ImageView
@@ -173,6 +173,7 @@
                             app:tint="@color/gray36" />
 
                         <Spinner
+                            android:id="@+id/spcategory"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -604,11 +605,11 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_gravity="bottom"
-            android:background="@drawable/rounded_primary"
+            android:background="@drawable/btn_enabled"
             android:text="@string/next"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:enabled='@{model.is_valid1,default=false}'
+            android:enabled="@{model.is_valid1,default=false}"
 
             />
 

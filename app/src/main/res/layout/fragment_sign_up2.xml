@@ -14,7 +14,9 @@
             type="String" />
 
     </data>
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -199,7 +201,7 @@
                         app:tint="@color/gray36" />
 
                     <EditText
-                        error="@{model.error_processingtime}"
+                        error="@{model.error_tax}"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
@@ -211,7 +213,7 @@
                         android:lines="1"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:text="@={model.processingtime}"
+                        android:text="@={model.tax}"
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray4"
                         android:textSize="14sp" />
@@ -259,7 +261,7 @@
                         app:tint="@color/gray36" />
 
                     <EditText
-                        error="@{model.error_processingtime}"
+                        error="@{model.error_customerservice}"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
@@ -271,7 +273,7 @@
                         android:lines="1"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:text="@={model.processingtime}"
+                        android:text="@={model.customers_service}"
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray4"
                         android:textSize="14sp" />
@@ -319,7 +321,7 @@
                         app:tint="@color/gray36" />
 
                     <EditText
-                        error="@{model.error_processingtime}"
+                        error="@{model.error_discount}"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
@@ -331,7 +333,7 @@
                         android:lines="1"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:text="@={model.processingtime}"
+                        android:text="@={model.discount}"
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray4"
                         android:textSize="14sp" />
@@ -375,6 +377,7 @@
                         app:tint="@color/gray36" />
 
                     <Spinner
+                        android:id="@+id/spDay"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -397,15 +400,18 @@
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_gravity="center"
+
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/women"
+                    android:checked="true"
                     android:textColor="@color/gray37"
                     android:textSize="10sp" />
 
@@ -432,4 +438,17 @@
             </RadioGroup>
         </LinearLayout>
     </ScrollView>
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/btn_enabled"
+        android:text="@string/next"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:enabled="@{model.is_valid2,default=false}"
+
+        />
+</FrameLayout>
 </layout>

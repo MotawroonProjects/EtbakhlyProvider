@@ -28,6 +28,8 @@ public class ActivityCityMvvm extends AndroidViewModel {
     private Context context;
 
     private MutableLiveData<List<CountryModel>> cityLiveData;
+    private MutableLiveData<List<CountryModel>> zoneLiveData;
+
     private MutableLiveData<Boolean> isLoadingLivData;
 
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -46,7 +48,12 @@ public class ActivityCityMvvm extends AndroidViewModel {
         return cityLiveData;
     }
 
-
+    public MutableLiveData<List<CountryModel>> getZoneLiveData() {
+        if (zoneLiveData == null) {
+            zoneLiveData = new MutableLiveData<>();
+        }
+        return zoneLiveData;
+    }
     public MutableLiveData<Boolean> getIsLoading() {
         if (isLoadingLivData == null) {
             isLoadingLivData = new MutableLiveData<>();

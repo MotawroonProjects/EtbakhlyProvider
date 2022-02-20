@@ -6,7 +6,12 @@ public class CountryModel implements Serializable {
 
     private String id;
     private String governorates_id;
+    private String citie_id;
     private String titel;
+
+    public CountryModel(String titel) {
+        this.titel = titel;
+    }
 
     public String getId() {
         return id;
@@ -20,4 +25,7 @@ public class CountryModel implements Serializable {
         return titel;
     }
 
+    public String getCitie_id() {
+        return citie_id;
+    }
 }

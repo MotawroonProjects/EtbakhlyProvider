@@ -13,17 +13,23 @@ import java.io.Serializable;
 public class AddZoneModel extends BaseObservable implements Serializable {
     private String zone_id;
     private String title;
-    private double zone_cost;
+    private String zone_cost;
     private Context context;
 
 
     public AddZoneModel(Context context) {
         title = "";
-        zone_cost = 0;
+        zone_cost = "";
         this.context= context;
     }
 
+    public String getZone_id() {
+        return zone_id;
+    }
 
+    public void setZone_id(String zone_id) {
+        this.zone_id = zone_id;
+    }
 
     @Bindable
     public String getTitle() {
@@ -36,11 +42,11 @@ public class AddZoneModel extends BaseObservable implements Serializable {
 
 
     @Bindable
-    public double getZone_cost() {
+    public String getZone_cost() {
         return zone_cost;
     }
 
-    public void setZone_cost(double zone_cost) {
+    public void setZone_cost(String zone_cost) {
         this.zone_cost = zone_cost;
         notifyPropertyChanged(BR.zone_cost);
 

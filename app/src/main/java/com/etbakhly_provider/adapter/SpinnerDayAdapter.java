@@ -13,15 +13,14 @@ import androidx.databinding.DataBindingUtil;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.SpinnerRowBinding;
 import com.etbakhly_provider.model.CountryModel;
-import com.etbakhly_provider.model.ZoneModel;
 
 import java.util.List;
 
-public class SpinnerZoneAdapter extends BaseAdapter {
-    private List<CountryModel> list;
+public class SpinnerDayAdapter extends BaseAdapter {
+    private List<String> list;
     private Context context;
 
-    public SpinnerZoneAdapter(Context context) {
+    public SpinnerDayAdapter(Context context) {
         this.context = context;
 
     }
@@ -48,12 +47,12 @@ public class SpinnerZoneAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         @SuppressLint("ViewHolder") SpinnerRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.spinner_row, viewGroup, false);
 
-        binding.setTitle(list.get(i).getTitel());
+        binding.setTitle(list.get(i));
 
         return binding.getRoot();
     }
 
-    public void updateData(List<CountryModel> list) {
+    public void updateData(List<String> list) {
         this.list = list;
         notifyDataSetChanged();
     }

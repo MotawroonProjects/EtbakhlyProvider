@@ -3,6 +3,7 @@ package com.etbakhly_provider.uis.activity_signup.fragments_sign_up_navigation;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,9 +12,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
@@ -24,13 +27,25 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavAction;
 import androidx.navigation.Navigation;
 
 import com.etbakhly_provider.R;
 
+import com.etbakhly_provider.adapter.SpinnerCategoryAdapter;
+import com.etbakhly_provider.adapter.SpinnerCityAdapter;
+import com.etbakhly_provider.adapter.SpinnerCountryAdapter;
+import com.etbakhly_provider.adapter.SpinnerZoneAdapter;
 import com.etbakhly_provider.databinding.FragmentSignUp1Binding;
+import com.etbakhly_provider.databinding.ZoneRowBinding;
+import com.etbakhly_provider.model.AddZoneModel;
+import com.etbakhly_provider.model.CategoryModel;
+import com.etbakhly_provider.model.CountryModel;
 import com.etbakhly_provider.model.SignUpModel;
+import com.etbakhly_provider.mvvm.FragmentSignup1Mvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
 import com.etbakhly_provider.uis.activity_signup.SignupActivity;
@@ -39,7 +54,9 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -54,6 +71,7 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
     private SignupActivity activity;
 
     private FragmentSignUp1Binding binding;
+    private FragmentSignup1Mvvm fragmentSignup1Mvvm;
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -63,9 +81,16 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
     private Uri uri = null;
     private SignUpModel model;
     private TimePickerDialog timePickerDialog;
-
+    private SpinnerCountryAdapter spinnerCountryAdapter;
+    private SpinnerCityAdapter spinnerCityAdapter;
+    private SpinnerZoneAdapter spinnerZoneAdapter;
+    private SpinnerCategoryAdapter spinnerCategoryAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
     private String type;
+    private List<ZoneRowBinding> zoneRowBindingList;
+    private List<AddZoneModel> addZoneModelList;
+
+    private ProgressDialog dialog;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -141,9 +166,134 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
     }
 
     private void initView() {
+        zoneRowBindingList = new ArrayList<>();
+        addZoneModelList = new ArrayList<>();
+        dialog = Common.createProgressDialog(activity, activity.getResources().getString(R.string.wait));
+        dialog.setCancelable(false);
+        model = new SignUpModel(activity);
+        model.setIs_valid1(false);
+        model.setIs_delivery("delivry");
+        binding.setModel(model);
+        spinnerCountryAdapter = new SpinnerCountryAdapter(activity);
+        spinnerCityAdapter = new SpinnerCityAdapter(activity);
+        spinnerZoneAdapter = new SpinnerZoneAdapter(activity);
+        spinnerCategoryAdapter = new SpinnerCategoryAdapter(activity);
+        fragmentSignup1Mvvm = ViewModelProviders.of(this).get(FragmentSignup1Mvvm.class);
+        fragmentSignup1Mvvm.getIsLoading().observe(this, new androidx.lifecycle.Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+
+                if (aBoolean) {
+                    dialog.show();
+                } else {
+                    dialog.dismiss();
+                }
+            }
+        });
+        fragmentSignup1Mvvm.onCategoryDataSuccess().observe(this, new androidx.lifecycle.Observer<List<CategoryModel>>() {
+            @Override
+            public void onChanged(List<CategoryModel> categoryModels) {
+                if (categoryModels != null) {
+                    categoryModels.add(0, new CategoryModel(getResources().getString(R.string.ch_cat)));
+                    spinnerCategoryAdapter.updateData(categoryModels);
+                }
+            }
+        });
+        fragmentSignup1Mvvm.getCountryLiveData().observe(this, new androidx.lifecycle.Observer<List<CountryModel>>() {
+            @Override
+            public void onChanged(List<CountryModel> countryModels) {
+                if (countryModels != null) {
+                    countryModels.add(0, new CountryModel(getResources().getString(R.string.choose_country)));
+                    spinnerCountryAdapter.updateData(countryModels);
+                }
+            }
+        });
+        fragmentSignup1Mvvm.getCityLiveData().observe(this, new androidx.lifecycle.Observer<List<CountryModel>>() {
+            @Override
+            public void onChanged(List<CountryModel> countryModels) {
+                if (countryModels != null) {
+                    countryModels.add(0, new CountryModel(getResources().getString(R.string.ch_city)));
+
+                    spinnerCityAdapter.updateData(countryModels);
+                }
+            }
+        });
+        fragmentSignup1Mvvm.getZoneLiveData().observe(this, new androidx.lifecycle.Observer<List<CountryModel>>() {
+            @Override
+            public void onChanged(List<CountryModel> countryModels) {
+                if (countryModels != null) {
+                    countryModels.add(0, new CountryModel(getResources().getString(R.string.ch_zone)));
+
+                    spinnerZoneAdapter.updateData(countryModels);
+                }
+            }
+        });
+        binding.spCountry.setAdapter(spinnerCountryAdapter);
+        binding.spCity.setAdapter(spinnerCityAdapter);
+        binding.spZone.setAdapter(spinnerZoneAdapter);
+        binding.spcategory.setAdapter(spinnerCategoryAdapter);
+
 //        binding.flImage.setOnClickListener(view -> {
 //            openSheet();
 //        });
+        binding.spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i != 0) {
+                    //Log.e("lkkkk",fragmentSignup1Mvvm.getCountryLiveData().getValue().size()+"");
+                    fragmentSignup1Mvvm.getCity(fragmentSignup1Mvvm.getCountryLiveData().getValue().get(i).getId());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        binding.spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i != 0) {
+                    fragmentSignup1Mvvm.getZone(fragmentSignup1Mvvm.getCityLiveData().getValue().get(i).getId());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        binding.spcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i != 0) {
+                    model.setCat_id(Integer.parseInt(fragmentSignup1Mvvm.onCategoryDataSuccess().getValue().get(i).getId()));
+                } else {
+                    model.setCat_id(0);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        binding.spZone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i != 0) {
+
+                    if (getItemPos(i) == -1) {
+                        addMeterView(fragmentSignup1Mvvm.getZoneLiveData().getValue().get(i), i);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         binding.flGallery.setOnClickListener(view -> {
             closeSheet();
             checkReadPermission();
@@ -172,9 +322,10 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
         binding.rdDelivery.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                binding.rdDelivery.setChecked(true);
                 binding.rdSurrender.setChecked(false);
+                binding.rdDelivery.setChecked(true);
                 binding.flarea.setVisibility(View.VISIBLE);
+                model.setIs_delivery("delivry");
             }
         });
         binding.rdSurrender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -183,6 +334,7 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
                 binding.rdDelivery.setChecked(false);
                 binding.rdSurrender.setChecked(true);
                 binding.flarea.setVisibility(View.GONE);
+                model.setIs_delivery("not_delivry");
             }
         });
         binding.btnNext.setOnClickListener(new View.OnClickListener() {
@@ -190,10 +342,13 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("data", model);
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.signup2,bundle);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.signup2, bundle);
             }
         });
         createDateDialog();
+        fragmentSignup1Mvvm.getCategoryData();
+        fragmentSignup1Mvvm.getCountries();
+
     }
 
 
@@ -298,7 +453,14 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
 
     @Override
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+        if (type.equals("from")) {
+            model.setFrom(hourOfDay + ":" + minute + ":" + second);
+            binding.tvFrom.setText(model.getFrom());
+        } else {
+            model.setTo(hourOfDay + ":" + minute + ":" + second);
+            binding.tvTo.setText(model.getTo());
 
+        }
     }
 
     private void createDateDialog() {
@@ -314,6 +476,43 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
         timePickerDialog.setVersion(TimePickerDialog.Version.VERSION_2);
         //  timePickerDialog.setMinTime(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
 
+    }
+
+    private void addMeterView(CountryModel specialModel, int adapterPosition) {
+        Log.e("llll", adapterPosition + "");
+        ZoneRowBinding rowBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.zone_row, null, false);
+        AddZoneModel addZoneModel = new AddZoneModel(activity);
+        addZoneModel.setTitle(specialModel.getTitel() + "");
+        addZoneModel.setZone_id(specialModel.getId());
+        rowBinding.getRoot().setTag(adapterPosition);
+        rowBinding.setModel(addZoneModel);
+        addZoneModelList.add(addZoneModel);
+        zoneRowBindingList.add(rowBinding);
+        binding.llZone.addView(rowBinding.getRoot());
+        model.setAddZoneModels(addZoneModelList);
+
+    }
+
+    private void removeZoneView(int adapterPosition) {
+        int childPos = getItemPos(adapterPosition);
+        if (childPos != -1) {
+            binding.llZone.removeViewAt(childPos);
+            zoneRowBindingList.remove(childPos);
+            addZoneModelList.remove(childPos);
+
+        }
+    }
+
+    private int getItemPos(int id) {
+        int pos = -1;
+        for (int index = 0; index < zoneRowBindingList.size(); index++) {
+            int tag = (int) binding.llZone.getChildAt(index).getTag();
+            if (tag == id) {
+                pos = index;
+                return pos;
+            }
+        }
+        return pos;
     }
 
 }
