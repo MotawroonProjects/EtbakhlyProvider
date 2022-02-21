@@ -14,7 +14,7 @@ import com.etbakhly_provider.R;
 
 import com.etbakhly_provider.databinding.CompletedOrderItemBinding;
 import com.etbakhly_provider.model.OrderModel;
-import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentCompletedOrders;
+import com.etbakhly_provider.uis.activities_home.fragments.FragmentCompletedOrders;
 
 import java.util.List;
 

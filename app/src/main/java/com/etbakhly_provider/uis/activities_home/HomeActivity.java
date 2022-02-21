@@ -1,22 +1,20 @@
-package com.etbakhly_provider.uis.activities_fragments_home;
+package com.etbakhly_provider.uis.activities_home;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.HomePagerAdapter;
 import com.etbakhly_provider.databinding.ActivityHomeBinding;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
-import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentNewOrders;
-import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentCompletedOrders;
-import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentPendingOrders;
+import com.etbakhly_provider.uis.activities_home.fragments.FragmentNewOrders;
+import com.etbakhly_provider.uis.activities_home.fragments.FragmentCompletedOrders;
+import com.etbakhly_provider.uis.activities_home.fragments.FragmentPendingOrders;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_setting.SettingsActivity;
 

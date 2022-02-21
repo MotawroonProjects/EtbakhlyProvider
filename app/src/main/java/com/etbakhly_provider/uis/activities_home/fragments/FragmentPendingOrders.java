@@ -1,4 +1,4 @@
-package com.etbakhly_provider.uis.activities_fragments_home.fragments;
+package com.etbakhly_provider.uis.activities_home.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +21,7 @@ import com.etbakhly_provider.adapter.PendingOrdersAdapter;
 import com.etbakhly_provider.databinding.FragmentOrderBinding;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.mvvm.FragmentPendingOrdersMvvm;
-import com.etbakhly_provider.uis.activities_fragments_home.HomeActivity;
+import com.etbakhly_provider.uis.activities_home.HomeActivity;
 import com.etbakhly_provider.uis.order_details.OrderDetailsActivity;
 
 

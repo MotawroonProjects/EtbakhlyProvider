@@ -14,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.PendingOrderItemBinding;
 import com.etbakhly_provider.model.OrderModel;
-import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentNewOrders;
-import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentPendingOrders;
+import com.etbakhly_provider.uis.activities_home.fragments.FragmentPendingOrders;
 
 import java.util.List;
 

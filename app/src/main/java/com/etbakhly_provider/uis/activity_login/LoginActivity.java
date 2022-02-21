@@ -18,7 +18,7 @@ import com.etbakhly_provider.databinding.BottomSheetDialogBinding;
 import com.etbakhly_provider.model.LoginModel;
 import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.share.Common;
-import com.etbakhly_provider.uis.activities_fragments_home.HomeActivity;
+import com.etbakhly_provider.uis.activities_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_signup.SignupActivity;
 import com.etbakhly_provider.uis.activity_verification_code.VerificationCodeActivity;

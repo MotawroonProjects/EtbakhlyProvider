@@ -1,9 +1,7 @@
 package com.etbakhly_provider.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -15,7 +13,7 @@ import com.etbakhly_provider.R;
 
 import com.etbakhly_provider.databinding.NewOrderItemBinding;
 import com.etbakhly_provider.model.OrderModel;
-import com.etbakhly_provider.uis.activities_fragments_home.fragments.FragmentNewOrders;
+import com.etbakhly_provider.uis.activities_home.fragments.FragmentNewOrders;
 
 import java.util.List;
 

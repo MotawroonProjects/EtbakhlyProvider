@@ -93,7 +93,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".uis.activities_fragments_home.HomeActivity"
+            android:name=".uis.activities_home.HomeActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>

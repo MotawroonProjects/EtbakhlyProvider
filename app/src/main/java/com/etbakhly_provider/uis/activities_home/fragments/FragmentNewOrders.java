@@ -1,4 +1,4 @@
-package com.etbakhly_provider.uis.activities_fragments_home.fragments;
+package com.etbakhly_provider.uis.activities_home.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +24,7 @@ import com.etbakhly_provider.model.OrderModel;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.mvvm.FragmentNewOrdersMvvm;
 import com.etbakhly_provider.share.Common;
-import com.etbakhly_provider.uis.activities_fragments_home.HomeActivity;
+import com.etbakhly_provider.uis.activities_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
 import com.etbakhly_provider.uis.order_details.OrderDetailsActivity;
 
