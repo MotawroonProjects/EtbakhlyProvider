@@ -55,22 +55,11 @@ public class FragmentSignup2 extends BaseFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity = (SignupActivity) context;
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             signUpModel = (SignUpModel) bundle.getSerializable("data");
         }
-        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    SelectedLocation location = (SelectedLocation) result.getData().getSerializableExtra("location");
-                    //  mvvm.setSelectedLocation(location);
-                    signUpModel.setAddress(location.getAddress());
-                    signUpModel.setLat(location.getLat());
-                    signUpModel.setLng(location.getLng());
-                    binding.setModel(signUpModel);
-
-
-            }
-        });
 
     }
 
@@ -115,9 +104,9 @@ public class FragmentSignup2 extends BaseFragment {
 
     private void initView() {
         signUpModel.setSex_type("women");
-        signUpModel.setIs_valid2(false);
-        daylist=new ArrayList<>();
-        spinnerDayAdapter=new SpinnerDayAdapter(activity);
+       // signUpModel.setIs_valid2(false);
+        daylist = new ArrayList<>();
+        spinnerDayAdapter = new SpinnerDayAdapter(activity);
         setday();
         spinnerDayAdapter.updateData(daylist);
         binding.spDay.setAdapter(spinnerDayAdapter);
@@ -181,10 +170,10 @@ public class FragmentSignup2 extends BaseFragment {
 
             }
         });
-        binding.cardAddress.setOnClickListener(new View.OnClickListener() {
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateToMapActivity();
+                activity.completedata(signUpModel);
             }
         });
     }
@@ -202,8 +191,5 @@ public class FragmentSignup2 extends BaseFragment {
         super.onDestroyView();
         disposable.clear();
     }
-    private void navigateToMapActivity() {
-        Intent intent = new Intent(activity, MapActivity.class);
-        launcher.launch(intent);
-    }
+
 }

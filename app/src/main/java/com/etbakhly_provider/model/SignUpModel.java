@@ -1,6 +1,7 @@
 package com.etbakhly_provider.model;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.util.Patterns;
 import android.widget.Toast;
 
@@ -64,6 +65,7 @@ public class SignUpModel extends BaseObservable implements Serializable {
         this.customers_service = "";
         addZoneModels = new ArrayList<>();
         is_valid1 = false;
+        is_valid2 = false;
         this.context = context;
 
     }
@@ -71,6 +73,7 @@ public class SignUpModel extends BaseObservable implements Serializable {
     public boolean isStep1Valid(Context context) {
         if (!note.isEmpty() &&
                 !from.isEmpty()
+                && !address.isEmpty()
 
                 && !to.isEmpty() && !deliverytime.isEmpty() &&
                 !processingtime.isEmpty() &&
@@ -81,6 +84,7 @@ public class SignUpModel extends BaseObservable implements Serializable {
             error_to.set(null);
             error_deliverytime.set(null);
             error_processingtime.set(null);
+            error_address.set(null);
             setIs_valid1(true);
             return true;
         } else {
@@ -123,7 +127,11 @@ public class SignUpModel extends BaseObservable implements Serializable {
             } else if ((is_delivery.equals("delivry") && addZoneModels.size() == 0)) {
                 Toast.makeText(context, context.getResources().getString(R.string.ch_zone), Toast.LENGTH_LONG).show();
             }
-
+            if (address.isEmpty()) {
+                error_address.set(context.getString(R.string.field_required));
+            } else {
+                error_address.set(null);
+            }
             setIs_valid1(false);
             return false;
         }
@@ -132,10 +140,8 @@ public class SignUpModel extends BaseObservable implements Serializable {
     public boolean isStep2Valid(Context context) {
         if (
                 !licenseNumber.isEmpty()
-                        && !address.isEmpty()
         ) {
             error_licenseNumber.set(null);
-            error_address.set(null);
 
             setIs_valid2(true);
             return true;
@@ -145,11 +151,7 @@ public class SignUpModel extends BaseObservable implements Serializable {
             } else {
                 error_licenseNumber.set(null);
             }
-            if (address.isEmpty()) {
-                error_address.set(context.getString(R.string.field_required));
-            } else {
-                error_address.set(null);
-            }
+
 
             return false;
         }
@@ -185,7 +187,7 @@ public class SignUpModel extends BaseObservable implements Serializable {
     public void setAddress(String address) {
         this.address = address;
         notifyPropertyChanged(BR.address);
-        isStep2Valid(context);
+        isStep1Valid(context);
     }
 
     public String getBooking_before() {
@@ -333,12 +335,14 @@ public class SignUpModel extends BaseObservable implements Serializable {
         this.lng = lng;
     }
 
+    @Bindable
     public boolean isIs_valid2() {
         return is_valid2;
     }
 
     public void setIs_valid2(boolean is_valid2) {
         this.is_valid2 = is_valid2;
+        notifyPropertyChanged(BR.is_valid2);
     }
 
     public String getSex_type() {

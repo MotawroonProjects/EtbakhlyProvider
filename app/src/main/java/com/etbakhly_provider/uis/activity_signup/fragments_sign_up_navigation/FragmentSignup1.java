@@ -44,10 +44,12 @@ import com.etbakhly_provider.databinding.ZoneRowBinding;
 import com.etbakhly_provider.model.AddZoneModel;
 import com.etbakhly_provider.model.CategoryModel;
 import com.etbakhly_provider.model.CountryModel;
+import com.etbakhly_provider.model.SelectedLocation;
 import com.etbakhly_provider.model.SignUpModel;
 import com.etbakhly_provider.mvvm.FragmentSignup1Mvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
+import com.etbakhly_provider.uis.activity_map.MapActivity;
 import com.etbakhly_provider.uis.activity_signup.SignupActivity;
 import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -96,6 +98,19 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity = (SignupActivity) context;
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                SelectedLocation location = (SelectedLocation) result.getData().getSerializableExtra("location");
+                //  mvvm.setSelectedLocation(location);
+                model.setAddress(location.getAddress());
+                model.setLat(location.getLat());
+                model.setLng(location.getLng());
+                binding.setModel(model);
+
+
+            }
+        });
+
 //        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 //            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
 //                if (selectedReq == READ_REQ) {
@@ -129,8 +144,8 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(binding==null){
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up1, container, false);
+        if (binding == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up1, container, false);
             initView();
         }
 
@@ -174,11 +189,13 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
         addZoneModelList = new ArrayList<>();
         dialog = Common.createProgressDialog(activity, activity.getResources().getString(R.string.wait));
         dialog.setCancelable(false);
-        if(model==null){
-        model = new SignUpModel(activity);
-        model.setIs_valid1(false);
-        model.setIs_delivery("delivry");}
+        if (model == null) {
+            model = new SignUpModel(activity);
+            model.setIs_valid1(false);
+            model.setIs_delivery("delivry");
+        }
         binding.setModel(model);
+        binding.setLang(getLang());
         spinnerCountryAdapter = new SpinnerCountryAdapter(activity);
         spinnerCityAdapter = new SpinnerCityAdapter(activity);
         spinnerZoneAdapter = new SpinnerZoneAdapter(activity);
@@ -340,6 +357,12 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
                 binding.rdSurrender.setChecked(true);
                 binding.flarea.setVisibility(View.GONE);
                 model.setIs_delivery("not_delivry");
+            }
+        });
+        binding.cardAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToMapActivity();
             }
         });
         binding.btnNext.setOnClickListener(new View.OnClickListener() {
@@ -519,5 +542,8 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
         }
         return pos;
     }
-
+    private void navigateToMapActivity() {
+        Intent intent = new Intent(activity, MapActivity.class);
+        launcher.launch(intent);
+    }
 }
