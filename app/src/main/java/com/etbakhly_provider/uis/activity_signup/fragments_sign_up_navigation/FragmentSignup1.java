@@ -129,57 +129,62 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(binding==null){
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up1, container, false);
+            initView();
+        }
+
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Observable.timer(130, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Long>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        disposable.add(d);
-
-                    }
-
-                    @Override
-                    public void onNext(@NonNull Long aLong) {
-                        initView();
-
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-    }
+//    @Override
+//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//        Observable.timer(130, TimeUnit.MILLISECONDS)
+//                .subscribeOn(Schedulers.computation())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<Long>() {
+//                    @Override
+//                    public void onSubscribe(@NonNull Disposable d) {
+//                        disposable.add(d);
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(@NonNull Long aLong) {
+//                        initView();
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+//
+//    }
 
     private void initView() {
         zoneRowBindingList = new ArrayList<>();
         addZoneModelList = new ArrayList<>();
         dialog = Common.createProgressDialog(activity, activity.getResources().getString(R.string.wait));
         dialog.setCancelable(false);
+        if(model==null){
         model = new SignUpModel(activity);
         model.setIs_valid1(false);
-        model.setIs_delivery("delivry");
+        model.setIs_delivery("delivry");}
         binding.setModel(model);
         spinnerCountryAdapter = new SpinnerCountryAdapter(activity);
         spinnerCityAdapter = new SpinnerCityAdapter(activity);
         spinnerZoneAdapter = new SpinnerZoneAdapter(activity);
         spinnerCategoryAdapter = new SpinnerCategoryAdapter(activity);
         fragmentSignup1Mvvm = ViewModelProviders.of(this).get(FragmentSignup1Mvvm.class);
-        fragmentSignup1Mvvm.getIsLoading().observe(this, new androidx.lifecycle.Observer<Boolean>() {
+        fragmentSignup1Mvvm.getIsLoading().observe(activity, new androidx.lifecycle.Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
 
@@ -190,7 +195,7 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
                 }
             }
         });
-        fragmentSignup1Mvvm.onCategoryDataSuccess().observe(this, new androidx.lifecycle.Observer<List<CategoryModel>>() {
+        fragmentSignup1Mvvm.onCategoryDataSuccess().observe(activity, new androidx.lifecycle.Observer<List<CategoryModel>>() {
             @Override
             public void onChanged(List<CategoryModel> categoryModels) {
                 if (categoryModels != null) {
@@ -199,7 +204,7 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
                 }
             }
         });
-        fragmentSignup1Mvvm.getCountryLiveData().observe(this, new androidx.lifecycle.Observer<List<CountryModel>>() {
+        fragmentSignup1Mvvm.getCountryLiveData().observe(activity, new androidx.lifecycle.Observer<List<CountryModel>>() {
             @Override
             public void onChanged(List<CountryModel> countryModels) {
                 if (countryModels != null) {
@@ -208,7 +213,7 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
                 }
             }
         });
-        fragmentSignup1Mvvm.getCityLiveData().observe(this, new androidx.lifecycle.Observer<List<CountryModel>>() {
+        fragmentSignup1Mvvm.getCityLiveData().observe(activity, new androidx.lifecycle.Observer<List<CountryModel>>() {
             @Override
             public void onChanged(List<CountryModel> countryModels) {
                 if (countryModels != null) {
@@ -218,7 +223,7 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
                 }
             }
         });
-        fragmentSignup1Mvvm.getZoneLiveData().observe(this, new androidx.lifecycle.Observer<List<CountryModel>>() {
+        fragmentSignup1Mvvm.getZoneLiveData().observe(activity, new androidx.lifecycle.Observer<List<CountryModel>>() {
             @Override
             public void onChanged(List<CountryModel> countryModels) {
                 if (countryModels != null) {

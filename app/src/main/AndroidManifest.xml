@@ -93,7 +93,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".uis.activities_home.HomeActivity"
+            android:name=".uis.activity_splash.SplashActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>
@@ -103,7 +103,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".uis.activity_splash.SplashActivity"
+            android:name=".uis.activities_home.HomeActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
 

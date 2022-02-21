@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -114,11 +115,16 @@ public class FragmentSignup2 extends BaseFragment {
 
     private void initView() {
         signUpModel.setSex_type("women");
+        signUpModel.setIs_valid2(false);
         daylist=new ArrayList<>();
         spinnerDayAdapter=new SpinnerDayAdapter(activity);
         setday();
         spinnerDayAdapter.updateData(daylist);
         binding.spDay.setAdapter(spinnerDayAdapter);
+
+        binding.setLang(getLang());
+
+        binding.setModel(signUpModel);
         binding.spDay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -131,10 +137,50 @@ public class FragmentSignup2 extends BaseFragment {
 
             }
         });
-        binding.setLang(getLang());
+        binding.rdwomen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                binding.rdnothing.setChecked(false);
+                binding.rdmen.setChecked(false);
+                binding.rdboth.setChecked(false);
+                binding.rdwomen.setChecked(true);
+                signUpModel.setSex_type("women");
 
-        binding.setModel(signUpModel);
+            }
+        });
+        binding.rdmen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                binding.rdnothing.setChecked(false);
+                binding.rdboth.setChecked(false);
+                binding.rdwomen.setChecked(false);
+                binding.rdmen.setChecked(true);
+                signUpModel.setSex_type("man");
 
+            }
+        });
+        binding.rdboth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                binding.rdnothing.setChecked(false);
+                binding.rdwomen.setChecked(false);
+                binding.rdmen.setChecked(false);
+                binding.rdboth.setChecked(true);
+                signUpModel.setSex_type("man_and_women");
+
+            }
+        });
+        binding.rdnothing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                binding.rdboth.setChecked(false);
+                binding.rdwomen.setChecked(false);
+                binding.rdmen.setChecked(false);
+                binding.rdnothing.setChecked(true);
+                signUpModel.setSex_type("not_found");
+
+            }
+        });
         binding.cardAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
