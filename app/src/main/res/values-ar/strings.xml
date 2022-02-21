@@ -126,7 +126,7 @@
     <string name="buffet_name">اسم البوفيه</string>
     <string name="feast_name">اسم الوليمة</string>
     <string name="number_of_people">عدد الاشخاص</string>
-    <string name="order2">الطلب</string>
+
     <string name="food_menu">قائمة الطعام</string>
     <string name="number">العدد</string>
     <string name="add_new">+  إضافة جديد</string>
@@ -158,7 +158,4 @@
     <string name="note">Note</string>
     <string name="ch_delivert">Choose Delivery Type</string>
     <string name="ch_zone">Choose Zone</string>
-    <string name="day1">1 يوم</string>
-    <string name="day2">2 أيام</string>
-    <string name="day3">3 أيام</string>
 </resources>

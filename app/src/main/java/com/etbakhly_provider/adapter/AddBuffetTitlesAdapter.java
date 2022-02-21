@@ -44,7 +44,7 @@ public class AddBuffetTitlesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         myHolder.binding.llAddNew.setOnClickListener(view -> {
             AddBuffetActivity addBuffetActivity =(AddBuffetActivity) context;
-            addBuffetActivity.navigateToAddNewDish();
+            addBuffetActivity.navigateToAddNewBuffetDish();
         });
     }
 

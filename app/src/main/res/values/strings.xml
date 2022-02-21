@@ -126,7 +126,7 @@
     <string name="buffet_name">Buffet name</string>
     <string name="feast_name">Feast name</string>
     <string name="number_of_people">Number of people</string>
-    <string name="order2">Order</string>
+
     <string name="food_menu">Food Menu</string>
     <string name="number">Number</string>
     <string name="add_new">+ Add new</string>
@@ -161,5 +161,9 @@
     <string name="day1">1 Day</string>
     <string name="day2">2 Days</string>
     <string name="day3">3 Days</string>
+    <string name="order_time">Order time</string>
+    <string name="choose_image">choose_image</string>
+    <string name="succ">Success</string>
+
 
 </resources>

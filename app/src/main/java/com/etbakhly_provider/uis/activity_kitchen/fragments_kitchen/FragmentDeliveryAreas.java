@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +74,7 @@ public class FragmentDeliveryAreas extends BaseFragment  {
         if (model.getZone_cover().size()>0){
             adapter=new DeliveryDetailsAdapter(activity);
             adapter.updateList(model.getZone_cover());
-            binding.recView.setLayoutManager(new GridLayoutManager(activity,2));
+            binding.recView.setLayoutManager(new LinearLayoutManager(activity));
             binding.recView.setAdapter(adapter);
             binding.tvNoData.setVisibility(View.GONE);
         }else {

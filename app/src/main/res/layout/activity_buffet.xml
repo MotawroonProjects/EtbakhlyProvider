@@ -23,34 +23,33 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                >
+                android:background="@color/colorAccent">
+
                 <LinearLayout
                     android:id="@+id/llBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    >
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:id="@+id/arrow"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_left_arrow"
-                        app:tint="@color/white"
                         android:padding="3dp"
                         android:rotation='@{lang.equals("ar")?180:0}'
-                        />
+                        android:src="@drawable/ic_left_arrow"
+                        app:tint="@color/white" />
+
                     <TextView
                         android:id="@+id/tvTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"
                         android:text="@string/buffets_menu"
-                        />
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
 
@@ -98,7 +97,6 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
                             android:gravity="bottom"
-
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent">
 

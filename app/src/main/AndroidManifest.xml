@@ -25,9 +25,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
         tools:targetApi="q">
-        <activity
-            android:name=".uis.activity_setting.wallet_activity.activity_payment.PaymentActivity"
-            android:exported="false" />
+
         <activity
             android:name=".uis.activity_setting.wallet_activity.WalletActivity"
             android:exported="false" />
@@ -97,16 +95,18 @@
         <activity
             android:name=".uis.activities_fragments_home.HomeActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".uis.activity_splash.SplashActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".uis.activity_splash.SplashActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+
         </activity>
         <activity
             android:name=".uis.activity_buffet_details.BuffetDetailsActivity"

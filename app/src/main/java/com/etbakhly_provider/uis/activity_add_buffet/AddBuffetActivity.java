@@ -3,10 +3,10 @@ package com.etbakhly_provider.uis.activity_add_buffet;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,14 +19,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.AddBuffetTitlesAdapter;
-import com.etbakhly_provider.adapter.OrderTitlesAdapter;
-import com.etbakhly_provider.adapter.SpinnerItemAdapter;
 import com.etbakhly_provider.databinding.ActivityAddBuffetBinding;
+import com.etbakhly_provider.model.AddBuffetModel;
+import com.etbakhly_provider.mvvm.ActivityAddBuffetMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_add_new.AddNewDishActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
@@ -34,13 +33,12 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.List;
 
 public class AddBuffetActivity extends BaseActivity {
     private ActivityAddBuffetBinding binding;
+    private ActivityAddBuffetMvvm mvvm;
     private AddBuffetTitlesAdapter adapter;
-    private SpinnerItemAdapter spinnerAdapter;
-    private List<Object> list;
+    private AddBuffetModel addBuffetModel;
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -57,6 +55,19 @@ public class AddBuffetActivity extends BaseActivity {
     }
 
     private void initView() {
+        mvvm = ViewModelProviders.of(this).get(ActivityAddBuffetMvvm.class);
+
+        mvvm.getAddBuffetMutableLiveData().observe(this, aBoolean -> {
+            if (aBoolean){
+                Toast.makeText(AddBuffetActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+        binding.btnDone.setOnClickListener(view -> {
+            if (addBuffetModel.isDataValid(this)){
+                mvvm.storeBuffet(this,addBuffetModel,uri);
+            }
+        });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 if (selectedReq == READ_REQ) {
@@ -102,19 +113,6 @@ public class AddBuffetActivity extends BaseActivity {
         binding.setLang(getLang());
         binding.llBack.setOnClickListener(view -> finish());
 
-        spinnerAdapter = new SpinnerItemAdapter(list, this);
-        binding.spinner.setAdapter(spinnerAdapter);
-        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         adapter = new AddBuffetTitlesAdapter(this);
         binding.recView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
@@ -191,7 +189,7 @@ public class AddBuffetActivity extends BaseActivity {
         return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
     }
 
-    public void navigateToAddNewDish() {
+    public void navigateToAddNewBuffetDish() {
         Intent intent=new Intent(AddBuffetActivity.this, AddNewDishActivity.class);
         startActivity(intent);
     }

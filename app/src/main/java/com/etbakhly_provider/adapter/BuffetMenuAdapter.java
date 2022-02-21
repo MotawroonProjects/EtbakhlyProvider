@@ -2,6 +2,7 @@ package com.etbakhly_provider.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.BuffetMenuRowBinding;
 import com.etbakhly_provider.model.BuffetModel;
+import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
+import com.etbakhly_provider.uis.activity_buffet_details.BuffetDetailsActivity;
 
 import java.util.List;
 
@@ -40,6 +43,13 @@ public class BuffetMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         MenuDishesAdapter adapter = new MenuDishesAdapter(context);
         adapter.updateList(list.get(position).getDishes_buffet());
         myHolder.binding.recView.setAdapter(adapter);
+        myHolder.binding.llAddNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    BuffetDetailsActivity buffetDetailsActivity =(BuffetDetailsActivity) context;
+                    buffetDetailsActivity.navigateToAddNewBuffetDish();
+            }
+        });
     }
 
     @Override

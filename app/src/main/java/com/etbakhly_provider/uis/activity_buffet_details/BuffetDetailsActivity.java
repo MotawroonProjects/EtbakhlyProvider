@@ -11,6 +11,7 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.BuffetMenuAdapter;
 import com.etbakhly_provider.databinding.ActivityBuffetDetailsBinding;
 import com.etbakhly_provider.model.BuffetModel;
+import com.etbakhly_provider.uis.activity_add_dishes.AddDishesActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 
 public class BuffetDetailsActivity extends BaseActivity {
@@ -42,5 +43,10 @@ public class BuffetDetailsActivity extends BaseActivity {
         binding.llBack.setOnClickListener(v -> {
             finish();
         });
+    }
+
+    public void navigateToAddNewBuffetDish() {
+        Intent intent=new Intent(BuffetDetailsActivity.this, AddDishesActivity.class);
+        startActivity(intent);
     }
 }
