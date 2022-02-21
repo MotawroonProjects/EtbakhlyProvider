@@ -152,10 +152,10 @@
     <string name="retractable">القابل للسحب</string>
     <string name="balance_withdraw">سحب الرصيد</string>
     <string name="transactions">المعاملات</string>
-    <string name="discount">Discount</string>
-    <string name="customer_service">Customer Service</string>
-    <string name="tax">Tax</string>
-    <string name="note">Note</string>
-    <string name="ch_delivert">Choose Delivery Type</string>
-    <string name="ch_zone">Choose Zone</string>
+    <string name="discount">الخصم</string>
+    <string name="customer_service">خدمة العملاء</string>
+    <string name="tax">الضريبه</string>
+    <string name="note">ملاحظات</string>
+    <string name="ch_delivert">اختر نوع التسليم</string>
+    <string name="ch_zone">اختر المنطقه</string>
 </resources>

@@ -48,6 +48,12 @@
                 android:text='@={model.zone_cost}'
                 android:textColor="@color/black"
                 android:textSize="15sp" />
+            <ImageView
+                android:id="@+id/imremove"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_delete_outlined" />
 
 
         </LinearLayout>

@@ -124,8 +124,15 @@
         <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/activity_language_country.xml" value="0.1" />
         <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/activity_register.xml" value="0.21" />
         <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/activity_sign_up.xml" value="0.33" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/delivery_details_row.xml" value="0.14895833333333333" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/delivery_zone_row.xml" value="0.14895833333333333" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/dish_buffet_row.xml" value="0.14895833333333333" />
         <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/fragment_sign_up1.xml" value="0.27388535031847133" />
         <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/fragment_sign_up2.xml" value="0.31676300578034683" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/kitchen_loader.xml" value="0.14895833333333333" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/order_titles_row.xml" value="0.14895833333333333" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/pending_order_item.xml" value="0.14895833333333333" />
+        <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/selected_dish_category.xml" value="0.14895833333333333" />
         <entry key="..\:/EtbakhlyProvider/app/src/main/res/layout/zone_row.xml" value="0.25" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/EtbakhlyProvider/app/src/main/res/drawable/circle_white.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/EtbakhlyProvider/app/src/main/res/drawable/ic_meal_outlined.xml" value="0.125" />

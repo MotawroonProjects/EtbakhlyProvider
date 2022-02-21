@@ -357,6 +357,9 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
                 binding.rdSurrender.setChecked(true);
                 binding.flarea.setVisibility(View.GONE);
                 model.setIs_delivery("not_delivry");
+                model.setAddZoneModels(new ArrayList<>());
+               binding.llZone.removeAllViews();
+               zoneRowBindingList.clear();
             }
         });
         binding.cardAddress.setOnClickListener(new View.OnClickListener() {
@@ -507,13 +510,19 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
     }
 
     private void addMeterView(CountryModel specialModel, int adapterPosition) {
-        Log.e("llll", adapterPosition + "");
+        //Log.e("llll", adapterPosition + "");
         ZoneRowBinding rowBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.zone_row, null, false);
         AddZoneModel addZoneModel = new AddZoneModel(activity);
         addZoneModel.setTitle(specialModel.getTitel() + "");
         addZoneModel.setZone_id(specialModel.getId());
         rowBinding.getRoot().setTag(adapterPosition);
         rowBinding.setModel(addZoneModel);
+        rowBinding.imremove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeZoneView((Integer) rowBinding.getRoot().getTag());
+            }
+        });
         addZoneModelList.add(addZoneModel);
         zoneRowBindingList.add(rowBinding);
         binding.llZone.addView(rowBinding.getRoot());
