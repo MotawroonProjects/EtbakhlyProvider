@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.model.DishModel;
 import com.etbakhly_provider.model.CategoryDataModel;
+import com.etbakhly_provider.model.DishesDataModel;
 import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.tags.Tags;
 
@@ -77,14 +78,14 @@ public class ActivityDishesMvvm extends AndroidViewModel {
         Api.getService(Tags.base_url).getDishes("all", kitchen_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Response<CategoryDataModel>>() {
+                .subscribe(new SingleObserver<Response<DishesDataModel>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         disposable.add(d);
                     }
 
                     @Override
-                    public void onSuccess(@NonNull Response<CategoryDataModel> response) {
+                    public void onSuccess(@NonNull Response<DishesDataModel> response) {
                         getIsDataLoading().setValue(false);
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200 && response.body().getData() != null) {
