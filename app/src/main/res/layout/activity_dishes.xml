@@ -81,7 +81,7 @@
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/llAddDish"
+                    android:id="@+id/fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -94,7 +94,10 @@
                     app:elevation="0dp"
                     app:fabSize="normal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="gone"
+
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView

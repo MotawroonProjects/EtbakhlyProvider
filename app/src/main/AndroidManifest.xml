@@ -25,13 +25,13 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
         tools:targetApi="q">
-
+        <activity
+            android:name=".uis.activity_add_buffet.add_buffet_dish_activity.AddBuffetDishActivity"
+            android:exported="false" />
         <activity
             android:name=".uis.activity_setting.wallet_activity.WalletActivity"
             android:exported="false" />
-        <activity
-            android:name=".uis.activity_add_new.AddNewDishActivity"
-            android:exported="false" />
+
         <activity
             android:name=".uis.activity_add_dishes.AddDishesActivity"
             android:exported="false"
@@ -95,19 +95,13 @@
         <activity
             android:name=".uis.activity_splash.SplashActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:windowSoftInputMode="adjustResize">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".uis.activities_home.HomeActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize">
-
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".uis.activity_buffet_details.BuffetDetailsActivity"
             android:exported="true"
@@ -123,7 +117,14 @@
         <activity
             android:name=".uis.activity_setting.SettingsActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".uis.activity_setting.setting_details.SettingDetailsActivity"
             android:exported="true"

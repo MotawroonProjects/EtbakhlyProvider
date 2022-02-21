@@ -9,9 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-
-import com.etbakhly_provider.model.AddDishDataModel;
-import com.etbakhly_provider.model.AddDishModel;
+import com.etbakhly_provider.model.AddBuffetDishDataModel;
+import com.etbakhly_provider.model.AddBuffetDishModel;
 import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
@@ -25,48 +24,45 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Response;
 
-public class ActivityAddDishMvvm extends AndroidViewModel {
+public class ActivityAddBuffetDishMvvm extends AndroidViewModel {
 
-    private MutableLiveData<Boolean> addDishLiveData;
-
-
+    private MutableLiveData<Boolean> addBuffetDishLiveData;
     private CompositeDisposable disposable = new CompositeDisposable();
-
-    public ActivityAddDishMvvm(@NonNull Application application) {
+    public ActivityAddBuffetDishMvvm(@NonNull Application application) {
         super(application);
     }
 
-    public MutableLiveData<Boolean> getAddDishLiveData() {
-        if (addDishLiveData==null){
-            addDishLiveData=new MutableLiveData<>();
+    public MutableLiveData<Boolean> getAddBuffetDishLiveData() {
+        if (addBuffetDishLiveData==null){
+            addBuffetDishLiveData=new MutableLiveData<>();
         }
-        return addDishLiveData;
+        return addBuffetDishLiveData;
     }
 
-    public void storeDish(Context context, AddDishModel addDishModel, Uri uri){
-        RequestBody titel= Common.getRequestBodyText(addDishModel.getTitel());
-        RequestBody qty= Common.getRequestBodyText(addDishModel.getQty());
-        RequestBody price= Common.getRequestBodyText(addDishModel.getTitel());
-        RequestBody category_dishes_id= Common.getRequestBodyText(addDishModel.getCategory_dishes_id()+"");
-        RequestBody caterer_id= Common.getRequestBodyText("27");
-        RequestBody details=Common.getRequestBodyText(addDishModel.getDetails());
+    public void storeBuffetsDishes(Context context, AddBuffetDishModel addBuffetDishModel, Uri uri){
+        RequestBody titel= Common.getRequestBodyText(addBuffetDishModel.getTitel());
+        RequestBody qty= Common.getRequestBodyText(addBuffetDishModel.getQty());
+        RequestBody price= Common.getRequestBodyText(addBuffetDishModel.getTitel());
+        RequestBody category_dishes_id= Common.getRequestBodyText(addBuffetDishModel.getCategory_dishes_id()+"");
+        RequestBody buffets_id= Common.getRequestBodyText("27");
+        RequestBody details=Common.getRequestBodyText(addBuffetDishModel.getDetails());
 
         MultipartBody.Part image=Common.getMultiPart(context,uri,"photo");
 
-        Api.getService(Tags.base_url).storeDish(titel,category_dishes_id,price,details,image,qty,caterer_id)
+        Api.getService(Tags.base_url).storeBuffetsDishes(titel,category_dishes_id,price,details,image,qty,buffets_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Response<AddDishDataModel>>() {
+                .subscribe(new SingleObserver<Response<AddBuffetDishDataModel>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         disposable.add(d);
                     }
 
                     @Override
-                    public void onSuccess(@NonNull Response<AddDishDataModel> response) {
+                    public void onSuccess(@NonNull Response<AddBuffetDishDataModel> response) {
                         if (response.isSuccessful()){
                             if (response.body().getStatus()==200){
-                                addDishLiveData.postValue(true);
+                                addBuffetDishLiveData.postValue(true);
                             }
                         }
                     }

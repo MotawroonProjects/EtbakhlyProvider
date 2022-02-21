@@ -20,6 +20,7 @@ import com.etbakhly_provider.mvvm.ActivityDishesMvvm;
 import com.etbakhly_provider.uis.activity_add_dishes.AddDishesActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class DishesActivity extends BaseActivity {
         });
         mvvm.onDataSuccess().observe(this, categories -> {
             if (categories.size() > 0) {
+
                 updateUi();
                 binding.tvNoData.setVisibility(View.GONE);
 
@@ -82,16 +84,15 @@ public class DishesActivity extends BaseActivity {
         binding.recViewDishes.setLayoutManager(new LinearLayoutManager(this));
         binding.recViewDishes.setAdapter(dishesAdapter);
         binding.llBack.setOnClickListener(view -> finish());
-        binding.llAddDish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DishesActivity.this, AddDishesActivity.class);
-                startActivity(intent);
-            }
+        binding.fab.setOnClickListener(view -> {
+            Intent intent = new Intent(DishesActivity.this, AddDishesActivity.class);
+            intent.putExtra("data", (Serializable) mvvm.onDataSuccess().getValue());
+            startActivity(intent);
         });
     }
 
     private void updateUi() {
+        binding.fab.setVisibility(View.VISIBLE);
         BuffetModel.Category category = mvvm.onDataSuccess().getValue().get(0);
         category.setSelected(true);
 

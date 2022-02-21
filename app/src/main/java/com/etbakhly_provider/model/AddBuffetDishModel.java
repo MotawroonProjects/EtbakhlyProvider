@@ -8,13 +8,13 @@ import androidx.databinding.ObservableField;
 
 import com.etbakhly_provider.R;
 
-public class AddDishModel extends BaseObservable {
+public class AddBuffetDishModel extends BaseObservable {
     private String titel;
     private String category_dishes_id;
     private String price;
     private String details;
     private String qty;
-    private String caterer_id;
+    private String buffets_id;
     private String photo;
     private String updated_at;
     private String created_at;
@@ -27,10 +27,10 @@ public class AddDishModel extends BaseObservable {
 
     public Boolean isDataValid(Context context){
         if (!titel.isEmpty() &&
-             !price.isEmpty() &&
-             !details.isEmpty() &&
-             !qty.isEmpty() &&
-             !photo.isEmpty()){
+                !price.isEmpty() &&
+                !details.isEmpty() &&
+                !qty.isEmpty() &&
+                !photo.isEmpty()){
             error_title.set(null);
             error_price.set(null);
             error_details.set(null);
@@ -56,24 +56,16 @@ public class AddDishModel extends BaseObservable {
         return false;
     }
 
-    public AddDishModel() {
+    public AddBuffetDishModel() {
         titel="";
         price="";
         details="";
         category_dishes_id="";
         qty="";
         id="";
-        caterer_id="";
+        buffets_id="";
         updated_at="";
         created_at="";
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
     }
 
     public String getTitel() {
@@ -116,12 +108,20 @@ public class AddDishModel extends BaseObservable {
         this.qty = qty;
     }
 
-    public String getCaterer_id() {
-        return caterer_id;
+    public String getBuffets_id() {
+        return buffets_id;
     }
 
-    public void setCaterer_id(String caterer_id) {
-        this.caterer_id = caterer_id;
+    public void setBuffets_id(String buffets_id) {
+        this.buffets_id = buffets_id;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getUpdated_at() {
@@ -147,5 +147,4 @@ public class AddDishModel extends BaseObservable {
     public void setId(String id) {
         this.id = id;
     }
-
 }

@@ -11,30 +11,28 @@ import androidx.databinding.DataBindingUtil;
 
 import com.etbakhly_provider.R;
 
-import com.etbakhly_provider.databinding.SpinnerRowBinding;
-import com.etbakhly_provider.model.CountryModel;
+import com.etbakhly_provider.databinding.SpinnerCategoryDishRowBinding;
+import com.etbakhly_provider.model.BuffetModel;
+
 
 import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
 
-public class SpinnerItemAdapter extends BaseAdapter {
-    private List<Object> dataList;
+public class SpinnerDishCategoryAdapter extends BaseAdapter {
+    private List<BuffetModel.Category> dataList;
     private Context context;
-    private String lang;
 
-    public SpinnerItemAdapter(List<Object> dataList, Context context) {
+    public SpinnerDishCategoryAdapter(List<BuffetModel.Category> dataList, Context context) {
         this.dataList = dataList;
         this.context = context;
-        Paper.init(context);
-        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
     }
 
     @Override
     public int getCount() {
         if (dataList == null)
-            return 4;
+            return 0;
         else
             return dataList.size();
     }
@@ -51,14 +49,10 @@ public class SpinnerItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        @SuppressLint("ViewHolder") SpinnerRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.spinner_row, viewGroup, false);
-        binding.setTitle(lang);
-//        binding.setModel(dataList.get(i));
+        @SuppressLint("ViewHolder") SpinnerCategoryDishRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.spinner_category_dish_row, viewGroup, false);
+        binding.setTitle(dataList.get(i).getTitel());
         return binding.getRoot();
     }
 
-    public void updateData(List<Object> dataList) {
-        this.dataList = dataList;
-        notifyDataSetChanged();
-    }
+
 }

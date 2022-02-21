@@ -1,14 +1,14 @@
-package com.etbakhly_provider.uis.activity_add_buffet;
+package com.etbakhly_provider.uis.activity_add_buffet.add_buffet_dish_activity;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
@@ -22,24 +22,21 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.adapter.AddBuffetTitlesAdapter;
-import com.etbakhly_provider.databinding.ActivityAddBuffetBinding;
-import com.etbakhly_provider.model.AddBuffetModel;
-import com.etbakhly_provider.mvvm.ActivityAddBuffetMvvm;
+import com.etbakhly_provider.databinding.ActivityAddBuffetDishBinding;
+import com.etbakhly_provider.model.AddBuffetDishModel;
+import com.etbakhly_provider.mvvm.ActivityAddBuffetDishMvvm;
 import com.etbakhly_provider.share.Common;
-import com.etbakhly_provider.uis.activity_add_buffet.add_buffet_dish_activity.AddBuffetDishActivity;
-
+import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
-public class AddBuffetActivity extends BaseActivity {
-    private ActivityAddBuffetBinding binding;
-    private ActivityAddBuffetMvvm mvvm;
-    private AddBuffetTitlesAdapter adapter;
-    private AddBuffetModel addBuffetModel;
+public class AddBuffetDishActivity extends BaseActivity {
+    private ActivityAddBuffetDishBinding binding;
+    private ActivityAddBuffetDishMvvm mvvm;
+    private AddBuffetDishModel addBuffetDishModel;
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -47,30 +44,33 @@ public class AddBuffetActivity extends BaseActivity {
     private final int READ_REQ = 1, CAMERA_REQ = 2;
     private int selectedReq = 0;
     private Uri uri = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_buffet);
+        binding= DataBindingUtil.setContentView(this,R.layout.activity_add_buffet_dish);
         initView();
     }
 
     private void initView() {
-        addBuffetModel = new AddBuffetModel();
-        binding.setModel(addBuffetModel);
-        mvvm = ViewModelProviders.of(this).get(ActivityAddBuffetMvvm.class);
-
-        mvvm.getAddBuffetMutableLiveData().observe(this, aBoolean -> {
-            if (aBoolean) {
-                Toast.makeText(AddBuffetActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
-                finish();
+        mvvm= ViewModelProviders.of(this).get(ActivityAddBuffetDishMvvm.class);
+        mvvm.getAddBuffetDishLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean){
+                    Toast.makeText(AddBuffetDishActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
+                    finish();
+                }
             }
         });
         binding.btnDone.setOnClickListener(view -> {
-            if (addBuffetModel.isDataValid(this)) {
-                mvvm.storeBuffet(this, addBuffetModel, uri);
+            if (addBuffetDishModel.isDataValid(this)){
+                mvvm.storeBuffetsDishes(this,addBuffetDishModel,uri);
             }
         });
+        addBuffetDishModel=new AddBuffetDishModel();
+        binding.setModel(addBuffetDishModel);
+        binding.setLang(getLang());
+
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 if (selectedReq == READ_REQ) {
@@ -109,19 +109,15 @@ public class AddBuffetActivity extends BaseActivity {
             closeSheet();
             checkCameraPermission();
         });
+
         binding.btnCancel.setOnClickListener(view -> closeSheet());
 
         binding.image.setOnClickListener(view -> openSheet());
 
-        binding.setLang(getLang());
+
         binding.llBack.setOnClickListener(view -> finish());
 
-
-        adapter = new AddBuffetTitlesAdapter(this);
-        binding.recView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        binding.recView.setAdapter(adapter);
     }
-
     public void checkCameraPermission() {
 
         closeSheet();
@@ -192,12 +188,6 @@ public class AddBuffetActivity extends BaseActivity {
         return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
     }
 
-    public void navigateToAddNewBuffetDish() {
-        Intent intent = new Intent(AddBuffetActivity.this, AddBuffetDishActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == READ_REQ) {
@@ -219,4 +209,5 @@ public class AddBuffetActivity extends BaseActivity {
             }
         }
     }
+
 }

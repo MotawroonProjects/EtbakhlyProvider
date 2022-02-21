@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.content.Intent;
@@ -16,19 +18,32 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.etbakhly_provider.R;
+import com.etbakhly_provider.adapter.SpinnerDishCategoryAdapter;
 import com.etbakhly_provider.databinding.ActivityAddDishesBinding;
+import com.etbakhly_provider.model.AddDishModel;
+import com.etbakhly_provider.model.BuffetModel;
+import com.etbakhly_provider.model.CategoryDishModel;
+import com.etbakhly_provider.mvvm.ActivityAddDishMvvm;
 import com.etbakhly_provider.share.Common;
+import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddDishesActivity extends BaseActivity {
     private ActivityAddDishesBinding binding;
+    private ActivityAddDishMvvm mvvm;
+    private AddDishModel addDishModel;
+    private SpinnerDishCategoryAdapter spinnerDishCategoryAdapter;
+    private List<BuffetModel.Category>categoryList;
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -37,14 +52,56 @@ public class AddDishesActivity extends BaseActivity {
     private int selectedReq = 0;
     private Uri uri = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_dishes);
+        getDataFromIntent();
         initView();
     }
 
+    private void getDataFromIntent() {
+        List<BuffetModel.Category> categories = (List<BuffetModel.Category>) getIntent().getSerializableExtra("data");
+        if (categories!=null){
+            categoryList=new ArrayList<>(categories);
+
+        }else {
+            categoryList = new ArrayList<>();
+        }
+    }
+
     private void initView() {
+
+        spinnerDishCategoryAdapter=new SpinnerDishCategoryAdapter(categoryList,this);
+        binding.spinner.setAdapter(spinnerDishCategoryAdapter);
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                addDishModel.setCategory_dishes_id(categoryList.get(i).getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        addDishModel=new AddDishModel();
+        binding.setModel(addDishModel);
+        mvvm= ViewModelProviders.of(this).get(ActivityAddDishMvvm.class);
+
+        mvvm.getAddDishLiveData().observe(this, aBoolean -> {
+            if (aBoolean){
+                Toast.makeText(AddDishesActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+
+        binding.btnDone.setOnClickListener(view -> {
+            if (addDishModel.isDataValid(this)){
+                mvvm.storeDish(this,addDishModel,uri);
+            }
+        });
         binding.setLang(getLang());
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {

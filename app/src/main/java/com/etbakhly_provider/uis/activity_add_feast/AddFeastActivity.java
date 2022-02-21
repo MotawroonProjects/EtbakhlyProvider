@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.AddBuffetTitlesAdapter;
 import com.etbakhly_provider.adapter.AddFeastsTitlesAdapter;
-import com.etbakhly_provider.adapter.SpinnerItemAdapter;
+
 import com.etbakhly_provider.databinding.ActivityAddFeastBinding;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
@@ -38,7 +38,7 @@ import java.util.List;
 public class AddFeastActivity extends BaseActivity {
     private ActivityAddFeastBinding binding;
     private AddFeastsTitlesAdapter adapter;
-    private SpinnerItemAdapter spinnerAdapter;
+
     private List<Object> list;
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -99,19 +99,19 @@ public class AddFeastActivity extends BaseActivity {
         binding.setLang(getLang());
         binding.llBack.setOnClickListener(view -> finish());
 
-        spinnerAdapter = new SpinnerItemAdapter(list, this);
-        binding.spinner.setAdapter(spinnerAdapter);
-        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        spinnerAdapter = new SpinnerItemAdapter(list, this);
+//        binding.spinner.setAdapter(spinnerAdapter);
+//        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
         adapter = new AddFeastsTitlesAdapter(this);
         binding.recView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));

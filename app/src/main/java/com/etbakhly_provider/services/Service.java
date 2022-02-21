@@ -1,6 +1,7 @@
 package com.etbakhly_provider.services;
 
 
+import com.etbakhly_provider.model.AddBuffetDishDataModel;
 import com.etbakhly_provider.model.AddDishDataModel;
 import com.etbakhly_provider.model.BuffetsDataModel;
 import com.etbakhly_provider.model.CategoryDataModel;
@@ -138,13 +139,13 @@ public interface Service {
     Single<Response<UserModel>> storeCatreer(
                                                @Body StoreCatreerDataModel cartDataModel
     );
-//    @Multipart
-//    @POST("api/Catering/storeBuffetsDishes")
-//    Single<Response<>> storeBuffetsDishes(@Part("titel") RequestBody titel,
-//                                          @Part("category_dishes_id") RequestBody category_dishes_id,
-//                                          @Part("price") RequestBody price,
-//                                          @Part("details") RequestBody details,
-//                                          @Part MultipartBody.Part photo,
-//                                          @Part("qty") RequestBody qty,
-//                                          @Part("buffets_id") RequestBody buffets_id);
+    @Multipart
+    @POST("api/Catering/storeBuffetsDishes")
+    Single<Response<AddBuffetDishDataModel>> storeBuffetsDishes(@Part("titel") RequestBody titel,
+                                                                @Part("category_dishes_id") RequestBody category_dishes_id,
+                                                                @Part("price") RequestBody price,
+                                                                @Part("details") RequestBody details,
+                                                                @Part MultipartBody.Part photo,
+                                                                @Part("qty") RequestBody qty,
+                                                                @Part("buffets_id") RequestBody buffets_id);
 }

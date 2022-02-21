@@ -11,9 +11,11 @@ public class CategoryDishModel implements Serializable {
     public String updated_at;
     public List<Dish> dishes;
 
+
     public String getId() {
         return id;
     }
+
 
     public String getTitel() {
         return titel;
