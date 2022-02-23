@@ -3,6 +3,7 @@ package com.etbakhly_provider.services;
 
 import com.etbakhly_provider.model.AddBuffetDishDataModel;
 import com.etbakhly_provider.model.AddDishDataModel;
+import com.etbakhly_provider.model.AddFeastDishDataModel;
 import com.etbakhly_provider.model.BuffetsDataModel;
 import com.etbakhly_provider.model.CategoryDataModel;
 import com.etbakhly_provider.model.CountryDataModel;
@@ -11,6 +12,7 @@ import com.etbakhly_provider.model.DishesDataModel;
 import com.etbakhly_provider.model.OrderDataModel;
 import com.etbakhly_provider.model.PlaceGeocodeData;
 import com.etbakhly_provider.model.PlaceMapDetailsData;
+import com.etbakhly_provider.model.SingleCategory;
 import com.etbakhly_provider.model.SingleKitchenDataModel;
 import com.etbakhly_provider.model.SingleOrderDataModel;
 import com.etbakhly_provider.model.StatusResponse;
@@ -109,11 +111,11 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("api/Catering/delete_buffet")
-    Single<Response<StatusResponse>> deleteBuffet(@Field("buffet_id")String buffet_id);
+    Single<Response<StatusResponse>> deleteBuffet(@Field("buffet_id") String buffet_id);
 
     @FormUrlEncoded
     @POST("api/Catering/delete_feast")
-    Single<Response<StatusResponse>>  deleteFeasts(@Field("feast_id") String feast_id);
+    Single<Response<StatusResponse>> deleteFeasts(@Field("feast_id") String feast_id);
 
     @Multipart
     @POST("api/Catering/storeBuffets")
@@ -135,10 +137,12 @@ public interface Service {
                                                  @Part MultipartBody.Part photo,
                                                  @Part("qty") RequestBody qty,
                                                  @Part("caterer_id") RequestBody caterer_id);
+
     @POST("api/Service/storeCaterer")
     Single<Response<UserModel>> storeCatreer(
-                                               @Body StoreCatreerDataModel cartDataModel
+            @Body StoreCatreerDataModel cartDataModel
     );
+
     @Multipart
     @POST("api/Catering/storeBuffetsDishes")
     Single<Response<AddBuffetDishDataModel>> storeBuffetsDishes(@Part("titel") RequestBody titel,
@@ -148,4 +152,35 @@ public interface Service {
                                                                 @Part MultipartBody.Part photo,
                                                                 @Part("qty") RequestBody qty,
                                                                 @Part("buffets_id") RequestBody buffets_id);
+
+
+    @FormUrlEncoded
+    @POST("api/Catering/CategoryDishes")
+    Single<Response<SingleCategory>> addCatererDish(@Field("titel") String titel,
+                                                    @Field("caterer_id") String caterer_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Catering/CategoryDishes")
+    Single<Response<SingleCategory>> editCatererDish(@Field("titel") String titel,
+                                                     @Field("caterer_id") String caterer_id,
+                                                     @Field("category_dishes_id") String category_dishes_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Catering/CategoryDishes")
+    Single<Response<StatusResponse>> deleteCatererDish(
+            @Field("caterer_id") String caterer_id,
+            @Field("category_dishes_id") String category_dishes_id
+    );
+    @Multipart
+    @POST("api/Catering/storeFeastDishes")
+    Single<Response<AddFeastDishDataModel>> storeFeastDishes(@Part("titel") RequestBody titel,
+                                                             @Part("category_dishes_id") RequestBody category_dishes_id,
+                                                             @Part("price") RequestBody price,
+                                                             @Part("details") RequestBody details,
+                                                             @Part MultipartBody.Part photo,
+                                                             @Part("qty") RequestBody qty,
+                                                             @Part("feast_id") RequestBody feast_id);
+
 }

@@ -3,7 +3,6 @@ package com.etbakhly_provider.uis.activity_add_feast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -19,11 +18,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.adapter.AddBuffetTitlesAdapter;
 import com.etbakhly_provider.adapter.AddFeastsTitlesAdapter;
 
 import com.etbakhly_provider.databinding.ActivityAddFeastBinding;
@@ -37,8 +34,6 @@ import java.util.List;
 
 public class AddFeastActivity extends BaseActivity {
     private ActivityAddFeastBinding binding;
-    private AddFeastsTitlesAdapter adapter;
-
     private List<Object> list;
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -47,10 +42,11 @@ public class AddFeastActivity extends BaseActivity {
     private final int READ_REQ = 1, CAMERA_REQ = 2;
     private int selectedReq = 0;
     private Uri uri = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_add_feast);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_feast);
         initView();
     }
 
@@ -113,10 +109,8 @@ public class AddFeastActivity extends BaseActivity {
 //            }
 //        });
 
-        adapter = new AddFeastsTitlesAdapter(this);
-        binding.recView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        binding.recView.setAdapter(adapter);
     }
+
     public void checkCameraPermission() {
 
         closeSheet();
@@ -129,6 +123,7 @@ public class AddFeastActivity extends BaseActivity {
             ActivityCompat.requestPermissions(this, new String[]{camera_permission, write_permission}, CAMERA_REQ);
         }
     }
+
     private void SelectImage(int req) {
         selectedReq = req;
         Intent intent = new Intent();
@@ -185,6 +180,7 @@ public class AddFeastActivity extends BaseActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

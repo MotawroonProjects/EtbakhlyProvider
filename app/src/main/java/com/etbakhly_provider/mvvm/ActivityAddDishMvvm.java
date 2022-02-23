@@ -1,6 +1,7 @@
 package com.etbakhly_provider.mvvm;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -10,11 +11,15 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 
+import com.etbakhly_provider.R;
 import com.etbakhly_provider.model.AddDishDataModel;
 import com.etbakhly_provider.model.AddDishModel;
+import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
+
+import java.io.IOException;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -37,23 +42,32 @@ public class ActivityAddDishMvvm extends AndroidViewModel {
     }
 
     public MutableLiveData<Boolean> getAddDishLiveData() {
-        if (addDishLiveData==null){
-            addDishLiveData=new MutableLiveData<>();
+        if (addDishLiveData == null) {
+            addDishLiveData = new MutableLiveData<>();
         }
         return addDishLiveData;
     }
 
-    public void storeDish(Context context, AddDishModel addDishModel, Uri uri){
-        RequestBody titel= Common.getRequestBodyText(addDishModel.getTitel());
-        RequestBody qty= Common.getRequestBodyText(addDishModel.getQty());
-        RequestBody price= Common.getRequestBodyText(addDishModel.getTitel());
-        RequestBody category_dishes_id= Common.getRequestBodyText(addDishModel.getCategory_dishes_id()+"");
-        RequestBody caterer_id= Common.getRequestBodyText("27");
-        RequestBody details=Common.getRequestBodyText(addDishModel.getDetails());
+    public void storeDish(Context context, AddDishModel addDishModel, Uri uri) {
+        ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Log.e("data", addDishModel.getTitel() + "__" + addDishModel.getCategory_dishes_id() + "_" + addDishModel.getPrice() + "_" + addDishModel.getDetails() + "_" + addDishModel.getQty() + "_" + addDishModel.getCaterer_id());
 
-        MultipartBody.Part image=Common.getMultiPart(context,uri,"photo");
+        RequestBody titel = Common.getRequestBodyText(addDishModel.getTitel());
+        RequestBody qty = Common.getRequestBodyText(addDishModel.getQty());
+        RequestBody price = Common.getRequestBodyText(addDishModel.getPrice());
+        RequestBody category_dishes_id = Common.getRequestBodyText(addDishModel.getCategory_dishes_id() + "");
+        RequestBody caterer_id = Common.getRequestBodyText(addDishModel.getCaterer_id());
+        RequestBody details = Common.getRequestBodyText(addDishModel.getDetails());
 
-        Api.getService(Tags.base_url).storeDish(titel,category_dishes_id,price,details,image,qty,caterer_id)
+        MultipartBody.Part image = null;
+        if (addDishModel.getPhoto() != null && !addDishModel.getPhoto().isEmpty()) {
+            image = Common.getMultiPart(context, uri, "photo");
+        }
+
+
+        Api.getService(Tags.base_url).storeDish(titel, category_dishes_id, price, details, image, qty, caterer_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<AddDishDataModel>>() {
@@ -64,16 +78,26 @@ public class ActivityAddDishMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<AddDishDataModel> response) {
-                        if (response.isSuccessful()){
-                            if (response.body().getStatus()==200){
+                        dialog.dismiss();
+                        if (response.isSuccessful()) {
+
+                            if (response.body() != null && response.body().getStatus() == 200) {
                                 addDishLiveData.postValue(true);
+                            }
+                        } else {
+                            try {
+                                Log.e("error", response.code() + "" + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("error", e.getMessage());
+                        dialog.dismiss();
+
+                        Log.e("error", e.getMessage());
                     }
                 });
     }

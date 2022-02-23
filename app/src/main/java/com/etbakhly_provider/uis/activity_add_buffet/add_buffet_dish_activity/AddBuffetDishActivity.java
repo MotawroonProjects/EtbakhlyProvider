@@ -53,13 +53,10 @@ public class AddBuffetDishActivity extends BaseActivity {
 
     private void initView() {
         mvvm= ViewModelProviders.of(this).get(ActivityAddBuffetDishMvvm.class);
-        mvvm.getAddBuffetDishLiveData().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean){
-                    Toast.makeText(AddBuffetDishActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
-                    finish();
-                }
+        mvvm.getAddBuffetDishLiveData().observe(this, aBoolean -> {
+            if (aBoolean){
+                Toast.makeText(AddBuffetDishActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
+                finish();
             }
         });
         binding.btnDone.setOnClickListener(view -> {
@@ -76,7 +73,7 @@ public class AddBuffetDishActivity extends BaseActivity {
                 if (selectedReq == READ_REQ) {
 
                     uri = result.getData().getData();
-
+                    addBuffetDishModel.setPhoto(uri.toString());
 
                     File file = new File(Common.getImagePath(this, uri));
                     Picasso.get().load(file).fit().into(binding.image);
@@ -86,6 +83,7 @@ public class AddBuffetDishActivity extends BaseActivity {
                     Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
                     uri = getUriFromBitmap(bitmap);
                     if (uri != null) {
+                        addBuffetDishModel.setPhoto(uri.toString());
                         String path = Common.getImagePath(this, uri);
                         if (path != null) {
                             Picasso.get().load(new File(path)).fit().into(binding.image);

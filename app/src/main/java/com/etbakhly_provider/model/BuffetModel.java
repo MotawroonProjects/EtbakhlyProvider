@@ -3,6 +3,7 @@ package com.etbakhly_provider.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuffetModel implements Serializable {
@@ -82,13 +83,14 @@ public class BuffetModel implements Serializable {
     public List<Category> getCategor_dishes() {
         return categor_dishes;
     }
+
     public static class Category implements Serializable {
         private String id;
         private String titel;
         private String caterer_id;
         private boolean isSelected = false;
-        @SerializedName(value = "dishes_buffet",alternate = {"dishes","dishes_feast"})
-        private List<DishModel> dishes_buffet;
+        @SerializedName(value = "dishes_buffet", alternate = {"dishes", "dishes_feast"})
+        private List<DishModel> dishes_buffet = new ArrayList<>();
 
         public String getId() {
             return id;

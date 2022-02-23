@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="lang"
             type="String" />
@@ -23,34 +24,33 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                >
+                android:background="@color/colorAccent">
+
                 <LinearLayout
                     android:id="@+id/llBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    >
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:id="@+id/arrow"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_left_arrow"
-                        app:tint="@color/white"
                         android:padding="3dp"
                         android:rotation='@{lang.equals("ar")?180:0}'
-                        />
+                        android:src="@drawable/ic_left_arrow"
+                        app:tint="@color/white" />
+
                     <TextView
                         android:id="@+id/tvTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"
                         android:text="@string/add_feast"
-                        />
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
 
@@ -99,6 +99,24 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
 
+                    <LinearLayout
+                        android:id="@+id/llSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="3dp"
+                        android:background="@drawable/linear_shape"
+                        tools:targetApi="lollipop">
+
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -120,8 +138,9 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="5dp"
                             android:background="@color/transparent"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -157,8 +176,9 @@
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_marginStart="5dp"
                                     android:background="@color/transparent"
+                                    android:paddingStart="8dp"
+                                    android:paddingEnd="8dp"
                                     android:textColor="@color/black"
                                     android:textSize="16sp" />
                             </LinearLayout>
@@ -189,8 +209,9 @@
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_marginStart="5dp"
                                     android:background="@color/transparent"
+                                    android:paddingStart="8dp"
+                                    android:paddingEnd="8dp"
                                     android:textColor="@color/black"
                                     android:textSize="16sp" />
                             </LinearLayout>
@@ -200,37 +221,37 @@
                     </LinearLayout>
 
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="3dp"
+                            android:text="@string/service_provider"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="20dp"
-                            android:orientation="vertical">
+                            android:layout_height="45dp"
+                            android:background="@drawable/linear_shape">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="3dp"
-                                android:text="@string/service_provider"
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/transparent"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="45dp"
-                                android:background="@drawable/linear_shape">
-
-                                <EditText
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="5dp"
-                                    android:background="@color/transparent"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-                            </LinearLayout>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <TextView
@@ -252,37 +273,15 @@
 
                         >
 
-
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="5dp"
                             android:background="@color/transparent"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@color/gray15">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="15dp"
-                            android:text="@string/food_menu"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp" />
 
                     <Button
                         android:id="@+id/btnDone"

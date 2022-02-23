@@ -27,7 +27,7 @@ public class FeastsActivity extends BaseActivity {
     private ActivityFeastsBinding binding;
     private BuffetAdapter adapter;
     private ActivityFeastsMvvm mvvm;
-    private String kitchen_id = "27";
+
     private int req;
     private ActivityResultLauncher<Intent> launcher;
 
@@ -59,7 +59,7 @@ public class FeastsActivity extends BaseActivity {
         });
 
         mvvm.getOnStatusSuccess().observe(this, status -> {
-            mvvm.getFeasts(kitchen_id,this);
+            mvvm.getFeasts(getUserModel().getData().getCaterer().getId(),this);
         });
 
         binding.setLang(getLang());
@@ -67,8 +67,8 @@ public class FeastsActivity extends BaseActivity {
         binding.recViewFeasts.setLayoutManager(new LinearLayoutManager(this));
         binding.recViewFeasts.setAdapter(adapter);
 
-        mvvm.getFeasts(kitchen_id, this);
-        binding.swipeRefresh.setOnRefreshListener(() -> mvvm.getFeasts(kitchen_id, this));
+        mvvm.getFeasts(getUserModel().getData().getCaterer().getId(), this);
+        binding.swipeRefresh.setOnRefreshListener(() -> mvvm.getFeasts(getUserModel().getData().getCaterer().getId(), this));
 
         binding.tvNoData.setVisibility(View.GONE);
         binding.llBack.setOnClickListener(view -> {

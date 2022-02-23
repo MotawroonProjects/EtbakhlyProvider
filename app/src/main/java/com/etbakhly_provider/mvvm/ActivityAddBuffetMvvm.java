@@ -1,6 +1,7 @@
 package com.etbakhly_provider.mvvm;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -9,11 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.etbakhly_provider.R;
 import com.etbakhly_provider.model.AddBuffetModel;
 import com.etbakhly_provider.model.AddBuffetDataModel;
 import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
+
+import java.io.IOException;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,24 +38,32 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
     }
 
     public MutableLiveData<Boolean> getAddBuffetMutableLiveData() {
-        if (addBuffetLiveData==null){
-            addBuffetLiveData=new MutableLiveData<>();
+        if (addBuffetLiveData == null) {
+            addBuffetLiveData = new MutableLiveData<>();
         }
         return addBuffetLiveData;
     }
 
-    public void storeBuffet(Context context, AddBuffetModel addBuffetModel, Uri uri){
-        RequestBody titel= Common.getRequestBodyText(addBuffetModel.getTitel());
-        RequestBody number_people= Common.getRequestBodyText(addBuffetModel.getNumber_people());
-        RequestBody service_provider_type= Common.getRequestBodyText(addBuffetModel.getService_provider_type());
-        RequestBody order_time= Common.getRequestBodyText(addBuffetModel.getOrder_time());
-        RequestBody price= Common.getRequestBodyText(addBuffetModel.getTitel());
-        RequestBody category_dishes_id= Common.getRequestBodyText(addBuffetModel.getCategory_dishes_id()+"");
-        RequestBody caterer_id= Common.getRequestBodyText("27");
+    public void storeBuffet(Context context, AddBuffetModel addBuffetModel, Uri uri) {
+        ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Log.e("data", addBuffetModel.getTitel() + "__" + addBuffetModel.getNumber_people() + "_" + addBuffetModel.getService_provider_type() + "_" + addBuffetModel.getOrder_time() + "_" + addBuffetModel.getPhoto() + "_" + addBuffetModel.getPrice());
 
-        MultipartBody.Part image=Common.getMultiPart(context,uri,"photo");
+        RequestBody titel = Common.getRequestBodyText(addBuffetModel.getTitel());
+        RequestBody number_people = Common.getRequestBodyText(addBuffetModel.getNumber_people());
+        RequestBody service_provider_type = Common.getRequestBodyText(addBuffetModel.getService_provider_type());
+        RequestBody order_time = Common.getRequestBodyText(addBuffetModel.getOrder_time());
+        RequestBody price = Common.getRequestBodyText(addBuffetModel.getPrice());
+        RequestBody category_dishes_id = Common.getRequestBodyText(addBuffetModel.getCategory_dishes_id() + "");
+        RequestBody caterer_id = Common.getRequestBodyText(addBuffetModel.getCaterer_id());
 
-        Api.getService(Tags.base_url).storeBuffet(titel,number_people,service_provider_type,order_time,image,price,category_dishes_id,caterer_id)
+        MultipartBody.Part image = null;
+        if (addBuffetModel.getPhoto() != null && !addBuffetModel.getPhoto().isEmpty()) {
+            image = Common.getMultiPart(context, uri, "photo");
+        }
+
+        Api.getService(Tags.base_url).storeBuffet(titel, number_people, service_provider_type, order_time, image, price, category_dishes_id, caterer_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<AddBuffetDataModel>>() {
@@ -62,15 +74,24 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<AddBuffetDataModel> response) {
-                        if (response.isSuccessful()){
-                            if (response.body().getStatus()==200){
+                        dialog.dismiss();
+                        if (response.isSuccessful()) {
+                            Log.e("status", response.body().getStatus() + "");
+                            if (response.body() != null && response.body().getStatus() == 200) {
                                 addBuffetLiveData.postValue(true);
+                            }
+                        } else {
+                            try {
+                                Log.e("error", response.code() + "" + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        dialog.dismiss();
                         Log.d("error", e.getMessage());
                     }
                 });

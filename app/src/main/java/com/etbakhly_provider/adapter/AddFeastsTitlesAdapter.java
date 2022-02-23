@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.databinding.AddBuffetTitleRowBinding;
-import com.etbakhly_provider.databinding.AddFeastsDetailsRowBinding;
+
+
 import com.etbakhly_provider.databinding.AddFeastsTitleRowBinding;
 
 import java.util.List;
 
-public class AddFeastsTitlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class AddFeastsTitlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Object> list;
     private Context context;
     private LayoutInflater inflater;
@@ -36,7 +36,7 @@ public class AddFeastsTitlesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-       MyHolder myHolder = (MyHolder) holder;
+        MyHolder myHolder = (MyHolder) holder;
         feastsDetailsAdapter = new AddFeastsDetailsAdapter(context);
         myHolder.binding.recAddBuffetDetails.setLayoutManager(new GridLayoutManager(context, 2));
         myHolder.binding.recAddBuffetDetails.setAdapter(feastsDetailsAdapter);
@@ -59,6 +59,7 @@ public class AddFeastsTitlesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             this.binding = binding;
         }
     }
+
     public void updateList(List<Object> list) {
         if (list != null) {
             this.list = list;

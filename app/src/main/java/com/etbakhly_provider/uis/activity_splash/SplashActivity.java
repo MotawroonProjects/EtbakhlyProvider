@@ -49,7 +49,7 @@ public class SplashActivity extends BaseActivity {
             if (req == 1 && result.getResultCode() == RESULT_OK) {
                 if (result.getData() != null) {
                     UserSettingsModel userSettingsModel = getUserSettings();
-                    if (userSettingsModel==null){
+                    if (userSettingsModel == null) {
                         userSettingsModel = new UserSettingsModel();
                     }
                     userSettingsModel.setFirstTime(false);
@@ -59,7 +59,7 @@ public class SplashActivity extends BaseActivity {
                 } else {
                     setUpData();
                 }
-            }else if (req==2&&result.getResultCode()==RESULT_OK){
+            } else if (req == 2 && result.getResultCode() == RESULT_OK) {
                 navigateToHomeActivity();
             }
         });
@@ -104,10 +104,10 @@ public class SplashActivity extends BaseActivity {
             } else {
 
                 if (getUserModel() != null) {
-                    if (getUserModel().getData().getIs_completed().equals("yes")){
+                    if (getUserModel().getData().getIs_completed().equals("yes")) {
                         navigateToHomeActivity();
 
-                    }else {
+                    } else {
                         navigateToCompleteSignUpActivity();
                     }
 
@@ -120,7 +120,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void navigateToCompleteSignUpActivity() {
-        req =2;
+        req = 2;
         Intent intent = new Intent(this, SignupActivity.class);
         launcher.launch(intent);
     }

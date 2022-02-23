@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="model"
+            type="com.etbakhly_provider.model.DishModel" />
     </data>
 
     <LinearLayout
@@ -16,7 +19,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="fitXY"
-            android:src="@drawable/imm"
             app:riv_corner_radius="8dp" />
 
         <LinearLayout

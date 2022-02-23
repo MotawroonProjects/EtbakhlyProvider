@@ -18,7 +18,7 @@ import com.etbakhly_provider.uis.activity_buffet_details.BuffetDetailsActivity;
 
 import java.util.List;
 
-public class BuffetMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class BuffetMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<BuffetModel.Category> list;
     private Context context;
     private LayoutInflater inflater;
@@ -43,12 +43,9 @@ public class BuffetMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         MenuDishesAdapter adapter = new MenuDishesAdapter(context);
         adapter.updateList(list.get(position).getDishes_buffet());
         myHolder.binding.recView.setAdapter(adapter);
-        myHolder.binding.llAddNew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    BuffetDetailsActivity buffetDetailsActivity =(BuffetDetailsActivity) context;
-                    buffetDetailsActivity.navigateToAddNewBuffetDish();
-            }
+        myHolder.binding.llAddNew.setOnClickListener(view -> {
+            BuffetDetailsActivity buffetDetailsActivity = (BuffetDetailsActivity) context;
+            buffetDetailsActivity.navigateToAddNewBuffetDish();
         });
     }
 
@@ -68,6 +65,7 @@ public class BuffetMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
     }
+
     public void updateList(List<BuffetModel.Category> list) {
         if (list != null) {
             this.list = list;

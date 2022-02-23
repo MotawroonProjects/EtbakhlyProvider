@@ -164,6 +164,10 @@
     <string name="order_time">Order time</string>
     <string name="choose_image">choose_image</string>
     <string name="succ">Success</string>
+    <string name="add_category">Add category</string>
+    <string name="category_name">Category name</string>
+    <string name="add">Add</string>
+    <string name="update_cat">Update category</string>
 
 
 </resources>

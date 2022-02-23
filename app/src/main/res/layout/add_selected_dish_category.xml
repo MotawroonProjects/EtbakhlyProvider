@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.etbakhly_provider.model.BuffetModel.Category" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/categoryItem"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        app:cardBackgroundColor="@{model.selected?@color/white:@color/color4}"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="3dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxEms="6"
+                android:padding="5dp"
+                android:text="@{model.titel}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+
+                />
+
+            <ImageView
+                android:id="@+id/imageDelete"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/circle_white"
+                android:padding="5dp"
+                android:src="@drawable/ic_close"
+                app:tint="@color/colorPrimary"
+
+                />
+
+            <androidx.legacy.widget.Space
+                android:layout_width="5dp"
+                android:layout_height="0dp" />
+
+            <ImageView
+                android:id="@+id/imageEdit"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/circle_white"
+                android:padding="3dp"
+                android:src="@drawable/ic_edit"
+                app:tint="@color/colorPrimary" />
+
+
+            <androidx.legacy.widget.Space
+                android:layout_width="5dp"
+                android:layout_height="0dp" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

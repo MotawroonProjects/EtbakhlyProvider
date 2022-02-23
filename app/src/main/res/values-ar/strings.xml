@@ -158,4 +158,14 @@
     <string name="note">ملاحظات</string>
     <string name="ch_delivert">اختر نوع التسليم</string>
     <string name="ch_zone">اختر المنطقه</string>
+    <string name="day1">1 يوم</string>
+    <string name="day2">2 يوم</string>
+    <string name="day3">3 يوم</string>
+    <string name="order_time">Order time</string>
+    <string name="choose_image">اختر صورة</string>
+    <string name="succ">تم</string>
+    <string name="add_category">إضافة قسم</string>
+    <string name="category_name"> اسم القسم</string>
+    <string name="add">إضافة</string>
+    <string name="update_cat">تعديل قسم</string>
 </resources>

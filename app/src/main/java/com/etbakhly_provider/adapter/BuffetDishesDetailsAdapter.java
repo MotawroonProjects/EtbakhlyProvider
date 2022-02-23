@@ -9,17 +9,18 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.databinding.AddBuffetDetailsRowBinding;
+import com.etbakhly_provider.databinding.BuffetDishesDetailsRowBinding;
+import com.etbakhly_provider.model.DishModel;
 
 
 import java.util.List;
 
-public class AddBuffetDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Object> list;
+public class BuffetDishesDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<DishModel> list;
     private Context context;
     private LayoutInflater inflater;
 
-    public AddBuffetDetailsAdapter(Context context) {
+    public BuffetDishesDetailsAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
@@ -27,7 +28,7 @@ public class AddBuffetDetailsAdapter extends RecyclerView.Adapter<RecyclerView.V
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        AddBuffetDetailsRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_buffet_details_row, parent, false);
+        BuffetDishesDetailsRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.buffet_dishes_details_row, parent, false);
         return new MyHolder(binding);
     }
 
@@ -46,15 +47,15 @@ public class AddBuffetDetailsAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        private AddBuffetDetailsRowBinding binding;
+        private BuffetDishesDetailsRowBinding binding;
 
-        public MyHolder(AddBuffetDetailsRowBinding binding) {
+        public MyHolder(BuffetDishesDetailsRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
     }
 
-    public void updateList(List<Object> list) {
+    public void updateList(List<DishModel> list) {
         if (list != null) {
             this.list = list;
         }

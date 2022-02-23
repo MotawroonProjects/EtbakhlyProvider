@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.etbakhly_provider.R;
+import com.etbakhly_provider.databinding.AddCategoryRowBinding;
 import com.etbakhly_provider.databinding.SelectedDishCategoryBinding;
 import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.uis.activity_dishes.DishesActivity;
@@ -18,7 +19,6 @@ import com.etbakhly_provider.uis.activity_dishes.DishesActivity;
 import java.util.List;
 
 public class CategoryDishesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     private List<BuffetModel.Category> list;
     private Context context;
     private LayoutInflater inflater;
@@ -37,7 +37,6 @@ public class CategoryDishesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         SelectedDishCategoryBinding binding = DataBindingUtil.inflate(inflater, R.layout.selected_dish_category, parent, false);
         return new MyHolder(binding);
 
@@ -95,6 +94,18 @@ public class CategoryDishesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
     }
+
+    public static class AddHolder extends RecyclerView.ViewHolder {
+        private AddCategoryRowBinding binding;
+
+        public AddHolder(AddCategoryRowBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+
+        }
+
+    }
+
 
     public void updateList(List<BuffetModel.Category> list) {
         if (list != null) {

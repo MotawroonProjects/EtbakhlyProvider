@@ -1,6 +1,7 @@
 package com.etbakhly_provider.mvvm;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.etbakhly_provider.R;
 import com.etbakhly_provider.model.AddBuffetDishDataModel;
 import com.etbakhly_provider.model.AddBuffetDishModel;
 import com.etbakhly_provider.remote.Api;
@@ -28,28 +30,36 @@ public class ActivityAddBuffetDishMvvm extends AndroidViewModel {
 
     private MutableLiveData<Boolean> addBuffetDishLiveData;
     private CompositeDisposable disposable = new CompositeDisposable();
+
     public ActivityAddBuffetDishMvvm(@NonNull Application application) {
         super(application);
     }
 
     public MutableLiveData<Boolean> getAddBuffetDishLiveData() {
-        if (addBuffetDishLiveData==null){
-            addBuffetDishLiveData=new MutableLiveData<>();
+        if (addBuffetDishLiveData == null) {
+            addBuffetDishLiveData = new MutableLiveData<>();
         }
         return addBuffetDishLiveData;
     }
 
-    public void storeBuffetsDishes(Context context, AddBuffetDishModel addBuffetDishModel, Uri uri){
-        RequestBody titel= Common.getRequestBodyText(addBuffetDishModel.getTitel());
-        RequestBody qty= Common.getRequestBodyText(addBuffetDishModel.getQty());
-        RequestBody price= Common.getRequestBodyText(addBuffetDishModel.getTitel());
-        RequestBody category_dishes_id= Common.getRequestBodyText(addBuffetDishModel.getCategory_dishes_id()+"");
-        RequestBody buffets_id= Common.getRequestBodyText("27");
-        RequestBody details=Common.getRequestBodyText(addBuffetDishModel.getDetails());
+    public void storeBuffetsDishes(Context context, AddBuffetDishModel addBuffetDishModel, Uri uri) {
+        ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
 
-        MultipartBody.Part image=Common.getMultiPart(context,uri,"photo");
+        RequestBody titel = Common.getRequestBodyText(addBuffetDishModel.getTitel());
+        RequestBody qty = Common.getRequestBodyText(addBuffetDishModel.getQty());
+        RequestBody price = Common.getRequestBodyText(addBuffetDishModel.getPrice());
+        RequestBody category_dishes_id = Common.getRequestBodyText(addBuffetDishModel.getCategory_dishes_id() + "");
+        RequestBody buffets_id = Common.getRequestBodyText(addBuffetDishModel.getBuffets_id());
+        RequestBody details = Common.getRequestBodyText(addBuffetDishModel.getDetails());
 
-        Api.getService(Tags.base_url).storeBuffetsDishes(titel,category_dishes_id,price,details,image,qty,buffets_id)
+        MultipartBody.Part image = null;
+        if (addBuffetDishModel.getPhoto() != null && !addBuffetDishModel.getPhoto().isEmpty()) {
+            image = Common.getMultiPart(context, uri, "photo");
+        }
+
+        Api.getService(Tags.base_url).storeBuffetsDishes(titel, category_dishes_id, price, details, image, qty, buffets_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<AddBuffetDishDataModel>>() {
@@ -60,8 +70,8 @@ public class ActivityAddBuffetDishMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<AddBuffetDishDataModel> response) {
-                        if (response.isSuccessful()){
-                            if (response.body().getStatus()==200){
+                        if (response.isSuccessful()) {
+                            if (response.body() != null && response.body().getStatus() == 200) {
                                 addBuffetDishLiveData.postValue(true);
                             }
                         }
@@ -69,7 +79,7 @@ public class ActivityAddBuffetDishMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("error", e.getMessage());
+                        Log.e("error", e.getMessage());
                     }
                 });
     }

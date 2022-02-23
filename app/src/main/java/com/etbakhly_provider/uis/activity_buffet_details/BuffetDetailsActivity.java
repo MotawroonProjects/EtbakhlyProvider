@@ -11,6 +11,7 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.BuffetMenuAdapter;
 import com.etbakhly_provider.databinding.ActivityBuffetDetailsBinding;
 import com.etbakhly_provider.model.BuffetModel;
+import com.etbakhly_provider.uis.activity_add_buffet.add_buffet_dish_activity.AddBuffetDishActivity;
 import com.etbakhly_provider.uis.activity_add_dishes.AddDishesActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 
@@ -46,7 +47,7 @@ public class BuffetDetailsActivity extends BaseActivity {
     }
 
     public void navigateToAddNewBuffetDish() {
-        Intent intent=new Intent(BuffetDetailsActivity.this, AddDishesActivity.class);
+        Intent intent=new Intent(BuffetDetailsActivity.this, AddBuffetDishActivity.class);
         startActivity(intent);
     }
 }

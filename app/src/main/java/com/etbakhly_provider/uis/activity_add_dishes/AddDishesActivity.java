@@ -27,6 +27,7 @@ import com.etbakhly_provider.databinding.ActivityAddDishesBinding;
 import com.etbakhly_provider.model.AddDishModel;
 import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.model.CategoryDishModel;
+import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.mvvm.ActivityAddDishMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
@@ -43,7 +44,7 @@ public class AddDishesActivity extends BaseActivity {
     private ActivityAddDishMvvm mvvm;
     private AddDishModel addDishModel;
     private SpinnerDishCategoryAdapter spinnerDishCategoryAdapter;
-    private List<BuffetModel.Category>categoryList;
+    private List<BuffetModel.Category> categoryList;
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -63,17 +64,20 @@ public class AddDishesActivity extends BaseActivity {
 
     private void getDataFromIntent() {
         List<BuffetModel.Category> categories = (List<BuffetModel.Category>) getIntent().getSerializableExtra("data");
-        if (categories!=null){
-            categoryList=new ArrayList<>(categories);
+        if (categories != null) {
+            categoryList = new ArrayList<>(categories);
 
-        }else {
+        } else {
             categoryList = new ArrayList<>();
         }
     }
 
     private void initView() {
+        addDishModel = new AddDishModel();
+        binding.setModel(addDishModel);
+        mvvm = ViewModelProviders.of(this).get(ActivityAddDishMvvm.class);
 
-        spinnerDishCategoryAdapter=new SpinnerDishCategoryAdapter(categoryList,this);
+        spinnerDishCategoryAdapter = new SpinnerDishCategoryAdapter(categoryList, this);
         binding.spinner.setAdapter(spinnerDishCategoryAdapter);
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -86,20 +90,19 @@ public class AddDishesActivity extends BaseActivity {
 
             }
         });
-        addDishModel=new AddDishModel();
-        binding.setModel(addDishModel);
-        mvvm= ViewModelProviders.of(this).get(ActivityAddDishMvvm.class);
 
         mvvm.getAddDishLiveData().observe(this, aBoolean -> {
-            if (aBoolean){
+            if (aBoolean) {
                 Toast.makeText(AddDishesActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
+                setResult(RESULT_OK);
                 finish();
             }
         });
 
         binding.btnDone.setOnClickListener(view -> {
-            if (addDishModel.isDataValid(this)){
-                mvvm.storeDish(this,addDishModel,uri);
+            if (addDishModel.isDataValid(this)) {
+                addDishModel.setCaterer_id(getUserModel().getData().getCaterer().getId());
+                mvvm.storeDish(this, addDishModel, uri);
             }
         });
         binding.setLang(getLang());
@@ -109,8 +112,7 @@ public class AddDishesActivity extends BaseActivity {
                 if (selectedReq == READ_REQ) {
 
                     uri = result.getData().getData();
-
-
+                    addDishModel.setPhoto(uri.toString());
                     File file = new File(Common.getImagePath(this, uri));
                     Picasso.get().load(file).fit().into(binding.image);
                     binding.icon.setVisibility(View.GONE);
@@ -119,16 +121,17 @@ public class AddDishesActivity extends BaseActivity {
                     Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
                     uri = getUriFromBitmap(bitmap);
                     if (uri != null) {
+                        addDishModel.setPhoto(uri.toString());
+
                         String path = Common.getImagePath(this, uri);
                         if (path != null) {
                             Picasso.get().load(new File(path)).fit().into(binding.image);
-                            binding.icon.setVisibility(View.GONE);
 
                         } else {
                             Picasso.get().load(uri).fit().into(binding.image);
-                            binding.icon.setVisibility(View.GONE);
 
                         }
+                        binding.icon.setVisibility(View.GONE);
                     }
                 }
             }

@@ -55,6 +55,7 @@
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/activity_add_buffet_dish.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/activity_add_dishes.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/activity_add_feast.xml" value="0.24818840579710144" />
+        <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/activity_add_feast_dish.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/activity_add_new_dish.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/activity_buffet.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/activity_buffet_details.xml" value="0.24818840579710144" />
@@ -75,13 +76,18 @@
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/activity_verification_code.xml" value="0.24818840579710144" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/activity_wallet.xml" value="0.2536231884057971" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/add_buffet_details_row.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/add_buffet_dish_row.xml" value="0.24010416666666667" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/add_buffet_row.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/add_buffet_title_row.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/add_category_row.xml" value="0.6" />
+        <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/add_category_sheet.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/add_dish_row.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/add_feasts_details_row.xml" value="0.24818840579710144" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/add_feasts_title_row.xml" value="0.24818840579710144" />
+        <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/add_selected_dish_category.xml" value="0.536" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/awaiting_approval_item.xml" value="0.21603260869565216" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.24818840579710144" />
+        <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/buffet_dishes_details_row.xml" value="0.13020833333333334" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/buffet_menu_row.xml" value="0.24818840579710144" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/buffet_row.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/EtbakhlyProvider/app/src/main/res/layout/choose_dialog.xml" value="0.2463768115942029" />

@@ -33,7 +33,7 @@ public class KitchenDetailsActivity extends BaseActivity {
     private List<Fragment> fragmentList;
     private KitchenPagerAdapter pagerAdapter;
     private ActivityKitchenDetailsMvvm mvvm;
-    private String kitchen_id="27";
+
     private KitchenModel model;
 
     @Override
@@ -54,7 +54,7 @@ public class KitchenDetailsActivity extends BaseActivity {
         binding.setLang(getLang());
 
         mvvm.getIsDataLoading().observe(this, isLoading -> {
-            Log.e("kjjjj",isLoading.toString());
+            Log.e("kjjjj", isLoading.toString());
             if (isLoading) {
                 binding.coordinator.setVisibility(View.GONE);
                 binding.loader.setVisibility(View.VISIBLE);
@@ -75,7 +75,7 @@ public class KitchenDetailsActivity extends BaseActivity {
 //            user_id = getUserModel().getData().getId();
 //        }
 
-        mvvm.getKitchenData(kitchen_id, "13");
+        mvvm.getKitchenData(getUserModel().getData().getCaterer().getId(), "13");
 
         binding.llBack.setOnClickListener(view -> {
             Intent intent = new Intent(KitchenDetailsActivity.this, SettingsActivity.class);
@@ -103,6 +103,7 @@ public class KitchenDetailsActivity extends BaseActivity {
         binding.pager.setOffscreenPageLimit(fragmentList.size());
 
     }
+
     public void updateBlur(float blur) {
         if (blur > 0) {
             binding.blur.setVisibility(View.VISIBLE);

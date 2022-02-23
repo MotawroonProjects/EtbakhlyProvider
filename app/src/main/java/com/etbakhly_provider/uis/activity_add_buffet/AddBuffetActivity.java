@@ -19,12 +19,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.adapter.AddBuffetTitlesAdapter;
+import com.etbakhly_provider.adapter.AddBuffetDishesAdapter;
+import com.etbakhly_provider.adapter.BuffetMenuAdapter;
+import com.etbakhly_provider.adapter.SpinnerDishCategoryAdapter;
 import com.etbakhly_provider.databinding.ActivityAddBuffetBinding;
 import com.etbakhly_provider.model.AddBuffetModel;
+import com.etbakhly_provider.model.AddDishModel;
+import com.etbakhly_provider.model.BuffetModel;
+import com.etbakhly_provider.model.DishModel;
 import com.etbakhly_provider.mvvm.ActivityAddBuffetMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_add_buffet.add_buffet_dish_activity.AddBuffetDishActivity;
@@ -34,12 +40,15 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddBuffetActivity extends BaseActivity {
     private ActivityAddBuffetBinding binding;
     private ActivityAddBuffetMvvm mvvm;
-    private AddBuffetTitlesAdapter adapter;
     private AddBuffetModel addBuffetModel;
+    private SpinnerDishCategoryAdapter spinnerDishCategoryAdapter;
+    private List<BuffetModel.Category> categoryList;
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -48,26 +57,56 @@ public class AddBuffetActivity extends BaseActivity {
     private int selectedReq = 0;
     private Uri uri = null;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_buffet);
+        getDataFromIntent();
         initView();
     }
+    private void getDataFromIntent() {
+        List<BuffetModel.Category> categories = (List<BuffetModel.Category>) getIntent().getSerializableExtra("data");
+        if (categories != null) {
+            categoryList = new ArrayList<>(categories);
+
+        } else {
+            categoryList = new ArrayList<>();
+        }
+    }
+
 
     private void initView() {
+
         addBuffetModel = new AddBuffetModel();
         binding.setModel(addBuffetModel);
+
+        spinnerDishCategoryAdapter = new SpinnerDishCategoryAdapter(categoryList, this);
+        binding.spinner.setAdapter(spinnerDishCategoryAdapter);
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                addBuffetModel.setCategory_dishes_id(categoryList.get(i).getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         mvvm = ViewModelProviders.of(this).get(ActivityAddBuffetMvvm.class);
 
         mvvm.getAddBuffetMutableLiveData().observe(this, aBoolean -> {
             if (aBoolean) {
                 Toast.makeText(AddBuffetActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
+                setResult(RESULT_OK);
                 finish();
             }
         });
         binding.btnDone.setOnClickListener(view -> {
             if (addBuffetModel.isDataValid(this)) {
+                addBuffetModel.setCaterer_id(getUserModel().getData().getCaterer().getId());
                 mvvm.storeBuffet(this, addBuffetModel, uri);
             }
         });
@@ -76,8 +115,7 @@ public class AddBuffetActivity extends BaseActivity {
                 if (selectedReq == READ_REQ) {
 
                     uri = result.getData().getData();
-
-
+                    addBuffetModel.setPhoto(uri.toString());
                     File file = new File(Common.getImagePath(this, uri));
                     Picasso.get().load(file).fit().into(binding.image);
                     binding.icon.setVisibility(View.GONE);
@@ -86,16 +124,17 @@ public class AddBuffetActivity extends BaseActivity {
                     Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
                     uri = getUriFromBitmap(bitmap);
                     if (uri != null) {
+                        addBuffetModel.setPhoto(uri.toString());
+
                         String path = Common.getImagePath(this, uri);
                         if (path != null) {
                             Picasso.get().load(new File(path)).fit().into(binding.image);
-                            binding.icon.setVisibility(View.GONE);
 
                         } else {
                             Picasso.get().load(uri).fit().into(binding.image);
-                            binding.icon.setVisibility(View.GONE);
 
                         }
+                        binding.icon.setVisibility(View.GONE);
                     }
                 }
             }
@@ -116,10 +155,6 @@ public class AddBuffetActivity extends BaseActivity {
         binding.setLang(getLang());
         binding.llBack.setOnClickListener(view -> finish());
 
-
-        adapter = new AddBuffetTitlesAdapter(this);
-        binding.recView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        binding.recView.setAdapter(adapter);
     }
 
     public void checkCameraPermission() {
