@@ -3,6 +3,7 @@ package com.etbakhly_provider.mvvm;
 import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.etbakhly_provider.R;
+import com.etbakhly_provider.model.AddDishModel;
 import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.model.CategoryDishModel;
 import com.etbakhly_provider.model.DishModel;
@@ -29,6 +31,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Response;
 
 public class ActivityDishesMvvm extends AndroidViewModel {
@@ -38,9 +42,10 @@ public class ActivityDishesMvvm extends AndroidViewModel {
     private MutableLiveData<List<DishModel>> onDishesSuccess;
     private MutableLiveData<BuffetModel.Category> onEditSuccess;
     private MutableLiveData<Boolean> onDeleteSuccess;
-
+    private MutableLiveData<Boolean> onDeleteDishSuccess;
 
     private MutableLiveData<Integer> selectedCategoryPos;
+    private MutableLiveData<Integer> selectedDishPos = new MutableLiveData<>(-1);
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -49,6 +54,22 @@ public class ActivityDishesMvvm extends AndroidViewModel {
         super(application);
     }
 
+
+    public MutableLiveData<Integer> getSelectedDishPos() {
+        if (selectedDishPos==null){
+            selectedDishPos=new MutableLiveData<>();
+        }
+        return selectedDishPos;
+    }
+
+
+
+    public MutableLiveData<Boolean> getOnDeleteDishSuccess() {
+        if (onDeleteDishSuccess == null) {
+            onDeleteDishSuccess = new MutableLiveData<>();
+        }
+        return onDeleteDishSuccess;
+    }
 
     public MutableLiveData<Boolean> getIsDataLoading() {
         if (isDataLoading == null) {
@@ -102,7 +123,7 @@ public class ActivityDishesMvvm extends AndroidViewModel {
 
     public void getDishes(String kitchen_id) {
         getIsDataLoading().setValue(true);
-        Api.getService(Tags.base_url).getDishes("all", kitchen_id)
+        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "dishe")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<DishesDataModel>>() {
@@ -125,7 +146,7 @@ public class ActivityDishesMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("error", e.getMessage());
+                        Log.e("error", e.getMessage());
                     }
                 });
     }
@@ -234,5 +255,32 @@ public class ActivityDishesMvvm extends AndroidViewModel {
                     }
                 });
     }
+
+    public void deleteDish(String dishes_id) {
+        Api.getService(Tags.base_url).deleteDish(dishes_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<StatusResponse>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<StatusResponse> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body() != null && response.body().getStatus() == 200) {
+                                getOnDeleteDishSuccess().postValue(true);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("error", e.getMessage());
+                    }
+                });
+    }
+
 
 }

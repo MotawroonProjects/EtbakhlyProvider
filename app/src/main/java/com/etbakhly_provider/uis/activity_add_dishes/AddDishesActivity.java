@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -27,9 +28,12 @@ import com.etbakhly_provider.databinding.ActivityAddDishesBinding;
 import com.etbakhly_provider.model.AddDishModel;
 import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.model.CategoryDishModel;
+import com.etbakhly_provider.model.DishModel;
 import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.mvvm.ActivityAddDishMvvm;
+import com.etbakhly_provider.mvvm.ActivityDishesMvvm;
 import com.etbakhly_provider.share.Common;
+import com.etbakhly_provider.tags.Tags;
 import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.squareup.picasso.Picasso;
@@ -43,6 +47,7 @@ public class AddDishesActivity extends BaseActivity {
     private ActivityAddDishesBinding binding;
     private ActivityAddDishMvvm mvvm;
     private AddDishModel addDishModel;
+    private DishModel dishModel;
     private SpinnerDishCategoryAdapter spinnerDishCategoryAdapter;
     private List<BuffetModel.Category> categoryList;
     private ActivityResultLauncher<Intent> launcher;
@@ -63,6 +68,9 @@ public class AddDishesActivity extends BaseActivity {
     }
 
     private void getDataFromIntent() {
+        Intent intent = getIntent();
+        dishModel = (DishModel) intent.getSerializableExtra("data2");
+
         List<BuffetModel.Category> categories = (List<BuffetModel.Category>) getIntent().getSerializableExtra("data");
         if (categories != null) {
             categoryList = new ArrayList<>(categories);
@@ -70,19 +78,47 @@ public class AddDishesActivity extends BaseActivity {
         } else {
             categoryList = new ArrayList<>();
         }
+
+        Log.e("ph]phyu", categories.size() + "__" + categoryList.size());
     }
 
     private void initView() {
         addDishModel = new AddDishModel();
+
+        if (dishModel != null) {
+            addDishModel.setTitel(dishModel.getTitel());
+            addDishModel.setPhoto(dishModel.getPhoto());
+            addDishModel.setQty(dishModel.getQty());
+            addDishModel.setDetails(dishModel.getDetails());
+            addDishModel.setPrice(dishModel.getPrice());
+            addDishModel.setId(dishModel.getId());
+            addDishModel.setCaterer_id(dishModel.getCaterer_id());
+
+
+            if (dishModel.getPhoto() != null && !dishModel.getPhoto().isEmpty()) {
+                Picasso.get().load(Tags.base_url + dishModel.getPhoto()).fit().into(binding.image);
+                binding.icon.setVisibility(View.GONE);
+                Log.e("photo",dishModel.getPhoto()+"___");
+            }
+
+            int category_pos = getItemPos(dishModel.getCategory_dishes_id());
+            if (category_pos != -1) {
+                binding.spinner.setSelection(category_pos);
+            }
+
+        }
         binding.setModel(addDishModel);
         mvvm = ViewModelProviders.of(this).get(ActivityAddDishMvvm.class);
 
         spinnerDishCategoryAdapter = new SpinnerDishCategoryAdapter(categoryList, this);
         binding.spinner.setAdapter(spinnerDishCategoryAdapter);
+
+
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 addDishModel.setCategory_dishes_id(categoryList.get(i).getId());
+
             }
 
             @Override
@@ -99,10 +135,23 @@ public class AddDishesActivity extends BaseActivity {
             }
         });
 
+        mvvm.getUpdateDishLiveData().observe(this, aBoolean -> {
+            if (aBoolean) {
+                Toast.makeText(AddDishesActivity.this, R.string.updated, Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
         binding.btnDone.setOnClickListener(view -> {
             if (addDishModel.isDataValid(this)) {
                 addDishModel.setCaterer_id(getUserModel().getData().getCaterer().getId());
-                mvvm.storeDish(this, addDishModel, uri);
+                if (dishModel == null) {
+                    mvvm.storeDish(this, addDishModel, uri);
+
+                } else {
+
+                    mvvm.updateDish(this, addDishModel, uri);
+                }
             }
         });
         binding.setLang(getLang());
@@ -222,6 +271,18 @@ public class AddDishesActivity extends BaseActivity {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
+    }
+
+    private int getItemPos(String category_id) {
+        int pos = -1;
+        for (int index = 0; index < categoryList.size(); index++) {
+            if (categoryList.get(index).getCaterer_id().equals(category_id)) {
+                pos = index;
+                return pos;
+            }
+        }
+
+        return pos;
     }
 
 }

@@ -3,6 +3,7 @@ package com.etbakhly_provider.adapter;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.DishBuffetRowBinding;
 import com.etbakhly_provider.model.DishModel;
+import com.etbakhly_provider.uis.activity_dishes.DishesActivity;
 
 import java.util.List;
 
@@ -45,7 +47,20 @@ public class BuffetDishesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
-
+        myHolder.binding.editDish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DishesActivity activity =(DishesActivity) appCompatActivity;
+                activity.editDish(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
+            }
+        });
+        myHolder.binding.deleteDish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DishesActivity activity=(DishesActivity) appCompatActivity;
+                activity.deleteDish(list.get(myHolder.getLayoutPosition()));
+            }
+        });
     }
 
 

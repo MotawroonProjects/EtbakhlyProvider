@@ -18,8 +18,6 @@ public class AddDishModel extends BaseObservable {
     private String qty;
     private String caterer_id;
     private String photo;
-    private String updated_at;
-    private String created_at;
     private String id;
 
     public ObservableField<String> error_title = new ObservableField<>();
@@ -76,8 +74,7 @@ public class AddDishModel extends BaseObservable {
         photo = "";
         id = "";
         caterer_id = "";
-        updated_at = "";
-        created_at = "";
+
     }
 
     public String getPhoto() {
@@ -144,21 +141,6 @@ public class AddDishModel extends BaseObservable {
         this.caterer_id = caterer_id;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
-    }
 
     public String getId() {
         return id;

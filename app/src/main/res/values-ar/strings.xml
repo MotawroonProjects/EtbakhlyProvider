@@ -168,4 +168,6 @@
     <string name="category_name"> اسم القسم</string>
     <string name="add">إضافة</string>
     <string name="update_cat">تعديل قسم</string>
+    <string name="edit_dish">تعديل الطبق</string>
+    <string name="updated">تم التعديل</string>
 </resources>

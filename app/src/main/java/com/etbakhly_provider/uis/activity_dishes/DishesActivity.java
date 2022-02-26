@@ -16,6 +16,7 @@ import com.etbakhly_provider.adapter.AddCategoryDishesAdapter;
 import com.etbakhly_provider.adapter.BuffetDishesAdapter;
 import com.etbakhly_provider.databinding.ActivityDishesBinding;
 import com.etbakhly_provider.model.BuffetModel;
+import com.etbakhly_provider.model.DishModel;
 import com.etbakhly_provider.mvvm.ActivityDishesMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_add_dishes.AddDishesActivity;
@@ -46,6 +47,8 @@ public class DishesActivity extends BaseActivity {
 
     private void initView() {
         mvvm = ViewModelProviders.of(this).get(ActivityDishesMvvm.class);
+        adapter = new AddCategoryDishesAdapter(this);
+        dishesAdapter = new BuffetDishesAdapter(this);
 
         mvvm.getIsDataLoading().observe(this, isLoading -> {
             if (isLoading) {
@@ -71,8 +74,12 @@ public class DishesActivity extends BaseActivity {
         });
         mvvm.onDishSuccess().observe(this, dishesList -> {
             if (dishesList.size() > 0) {
-                dishesAdapter.updateList(dishesList);
+
                 binding.tvNoData.setVisibility(View.GONE);
+
+                if (dishesAdapter != null) {
+                    dishesAdapter.updateList(dishesList);
+                }
             } else {
                 dishesAdapter.updateList(new ArrayList<>());
                 binding.tvNoData.setVisibility(View.VISIBLE);
@@ -90,19 +97,24 @@ public class DishesActivity extends BaseActivity {
         mvvm.getOnDeleteSuccess().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if (aBoolean){
-                    if (adapter!=null){
+                if (aBoolean) {
+                    if (adapter != null) {
                         adapter.deleteItem(selectedCategoryPos);
                     }
-                    selectedCategoryPos=-1;
+                    selectedCategoryPos = -1;
                 }
             }
+        });
+        mvvm.getOnDeleteDishSuccess().observe(this, aBoolean -> {
+            if (aBoolean) {
+                mvvm.getDishes(getUserModel().getData().getCaterer().getId());
+            }
+
         });
 
         behavior = BottomSheetBehavior.from(binding.sheet.root);
         binding.setLang(getLang());
-        adapter = new AddCategoryDishesAdapter(this);
-        dishesAdapter = new BuffetDishesAdapter(this);
+
 
         mvvm.getDishes(getUserModel().getData().getCaterer().getId());
 
@@ -138,10 +150,13 @@ public class DishesActivity extends BaseActivity {
             }
         });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req == 1 && result.getResultCode() == RESULT_OK) {
-                adapter.updateList(new ArrayList<>());
-                dishesAdapter.updateList(new ArrayList<>());
-                mvvm.getDishes(getUserModel().getData().getId());
+            if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
+                DishModel dishModel = (DishModel) result.getData().getSerializableExtra("data");
+                if (mvvm.getSelectedDishPos().getValue()!=1){
+                    mvvm.onDishSuccess().getValue().set(mvvm.getSelectedDishPos().getValue(), dishModel);
+                    adapter.notifyItemChanged(mvvm.getSelectedDishPos().getValue());
+                    mvvm.getSelectedDishPos().setValue(-1);
+                }
             }
         });
     }
@@ -186,7 +201,6 @@ public class DishesActivity extends BaseActivity {
 
     private void updateDishes(BuffetModel.Category category) {
 
-
         if (category.getDishes_buffet().size() > 0) {
             binding.tvNoData.setVisibility(View.GONE);
         } else {
@@ -203,14 +217,34 @@ public class DishesActivity extends BaseActivity {
         mvvm.setSelectedCategoryPos(currentPos);
         updateDishes(category);
     }
-    public void deleteItemCategory(BuffetModel.Category category,int currentPos) {
-        selectedCategoryPos=currentPos;
-        mvvm.deleteCategory(getUserModel().getData().getCaterer().getId(),category.getId(),this,currentPos);
+
+    public void deleteItemCategory(BuffetModel.Category category, int currentPos) {
+        selectedCategoryPos = currentPos;
+        mvvm.deleteCategory(getUserModel().getData().getCaterer().getId(), category.getId(), this, currentPos);
 
 
     }
 
     public void navigateToAddCategory() {
         openSheet(null, -1);
+    }
+
+
+    public void deleteDish(DishModel dishModel) {
+        mvvm.deleteDish(dishModel.getId());
+    }
+
+
+    public void editDish(DishModel dishModel, int adapterPosition) {
+        req=1;
+        mvvm.getSelectedDishPos().setValue(adapterPosition);
+
+        List<BuffetModel.Category> categoryList = new ArrayList<>(mvvm.onDataSuccess().getValue());
+        categoryList.remove(0);
+
+        Intent intent = new Intent(this, AddDishesActivity.class);
+        intent.putExtra("data2", dishModel);
+        intent.putExtra("data", (Serializable) categoryList);
+        launcher.launch(intent);
     }
 }

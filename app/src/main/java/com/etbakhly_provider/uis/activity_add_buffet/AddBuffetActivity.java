@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -33,8 +35,10 @@ import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.model.DishModel;
 import com.etbakhly_provider.mvvm.ActivityAddBuffetMvvm;
 import com.etbakhly_provider.share.Common;
+import com.etbakhly_provider.tags.Tags;
 import com.etbakhly_provider.uis.activity_add_buffet.add_buffet_dish_activity.AddBuffetDishActivity;
 
+import com.etbakhly_provider.uis.activity_add_dishes.AddDishesActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
@@ -46,6 +50,7 @@ import java.util.List;
 public class AddBuffetActivity extends BaseActivity {
     private ActivityAddBuffetBinding binding;
     private ActivityAddBuffetMvvm mvvm;
+    private BuffetModel buffetModel;
     private AddBuffetModel addBuffetModel;
     private SpinnerDishCategoryAdapter spinnerDishCategoryAdapter;
     private List<BuffetModel.Category> categoryList;
@@ -67,7 +72,10 @@ public class AddBuffetActivity extends BaseActivity {
         initView();
     }
     private void getDataFromIntent() {
-        List<BuffetModel.Category> categories = (List<BuffetModel.Category>) getIntent().getSerializableExtra("data");
+        Intent intent=getIntent();
+        buffetModel = (BuffetModel) intent.getSerializableExtra("data2");
+
+        List<BuffetModel.Category> categories = (List<BuffetModel.Category>) getIntent().getSerializableExtra("data3");
         if (categories != null) {
             categoryList = new ArrayList<>(categories);
 
@@ -80,6 +88,26 @@ public class AddBuffetActivity extends BaseActivity {
     private void initView() {
 
         addBuffetModel = new AddBuffetModel();
+        if (buffetModel!=null){
+            addBuffetModel.setTitel(buffetModel.getTitel());
+            addBuffetModel.setNumber_people(buffetModel.getNumber_people());
+            addBuffetModel.setPhoto(buffetModel.getPhoto());
+            addBuffetModel.setPrice(buffetModel.getPrice());
+            addBuffetModel.setService_provider_type(buffetModel.getService_provider_type());
+            addBuffetModel.setOrder_time(buffetModel.getOrder_time());
+            addBuffetModel.setId(buffetModel.getId());
+            addBuffetModel.setCaterer_id(buffetModel.getCaterer_id());
+
+            if (buffetModel.getPhoto() != null && !buffetModel.getPhoto().isEmpty()) {
+                Picasso.get().load(Tags.base_url + buffetModel.getPhoto()).fit().into(binding.image);
+                binding.icon.setVisibility(View.GONE);
+//                Log.e("photo",buffetModel.getPhoto()+"___");
+            }
+            int category_pos = getItemPos(buffetModel.getCategory_dishes_id());
+            if (category_pos != -1) {
+                binding.spinner.setSelection(category_pos);
+            }
+        }
         binding.setModel(addBuffetModel);
 
         spinnerDishCategoryAdapter = new SpinnerDishCategoryAdapter(categoryList, this);
@@ -104,10 +132,22 @@ public class AddBuffetActivity extends BaseActivity {
                 finish();
             }
         });
+        mvvm.getUpdateBuffetLiveData().observe(this, aBoolean -> {
+            if (aBoolean){
+                Toast.makeText(AddBuffetActivity.this, R.string.updated, Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
         binding.btnDone.setOnClickListener(view -> {
             if (addBuffetModel.isDataValid(this)) {
                 addBuffetModel.setCaterer_id(getUserModel().getData().getCaterer().getId());
-                mvvm.storeBuffet(this, addBuffetModel, uri);
+                if (buffetModel==null){
+                    mvvm.storeBuffet(this, addBuffetModel, uri);
+                }else {
+                    mvvm.editBuffet(this,addBuffetModel,uri);
+                }
+
             }
         });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -253,5 +293,16 @@ public class AddBuffetActivity extends BaseActivity {
                 Toast.makeText(this, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    private int getItemPos(String category_id) {
+        int pos = -1;
+        for (int index = 0; index < categoryList.size(); index++) {
+            if (categoryList.get(index).getCaterer_id().equals(category_id)) {
+                pos = index;
+                return pos;
+            }
+        }
+
+        return pos;
     }
 }

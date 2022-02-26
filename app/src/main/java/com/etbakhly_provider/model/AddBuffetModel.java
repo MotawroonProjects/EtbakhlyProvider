@@ -19,8 +19,6 @@ public class AddBuffetModel extends BaseObservable {
     private String category_dishes_id;
     private String caterer_id;
     private String photo;
-    private String updated_at;
-    private String created_at;
     private String id;
 
     public ObservableField<String> error_title = new ObservableField<>();
@@ -85,8 +83,6 @@ public class AddBuffetModel extends BaseObservable {
         category_dishes_id = "";
         caterer_id = "";
         photo = "";
-        updated_at = "";
-        created_at = "";
         id = "";
     }
 
@@ -162,22 +158,6 @@ public class AddBuffetModel extends BaseObservable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-
-    public String getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
     }
 
     public String getId() {

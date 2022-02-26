@@ -19,17 +19,22 @@ import com.etbakhly_provider.databinding.ActivityBuffetBinding;
 import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.model.DishModel;
 import com.etbakhly_provider.mvvm.ActivityBuffetsMvvm;
+import com.etbakhly_provider.mvvm.ActivityDishesMvvm;
 import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
+import com.etbakhly_provider.uis.activity_add_dishes.AddDishesActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_buffet_details.BuffetDetailsActivity;
 import com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BuffetActivity extends BaseActivity {
     private ActivityBuffetBinding binding;
     private BuffetAdapter adapter;
     private ActivityBuffetsMvvm mvvm;
+    private ActivityDishesMvvm dishesMvvm;
 //    private String kitchen_id = "27";
     private int req;
 
@@ -45,6 +50,9 @@ public class BuffetActivity extends BaseActivity {
 
     private void initView() {
         mvvm = ViewModelProviders.of(this).get(ActivityBuffetsMvvm.class);
+        dishesMvvm=ViewModelProviders.of(this).get(ActivityDishesMvvm.class);
+
+
         mvvm.getIsDataLoading().observe(this, isLoading -> {
             binding.swipeRefresh.setRefreshing(isLoading);
         });
@@ -81,8 +89,10 @@ public class BuffetActivity extends BaseActivity {
             finish();
         });
         binding.addBuffet.setOnClickListener(view -> {
+            List<BuffetModel.Category> categoryList = new ArrayList<>(dishesMvvm.onDataSuccess().getValue());
+            categoryList.remove(0);
             Intent intent = new Intent(BuffetActivity.this, AddBuffetActivity.class);
-
+            intent.putExtra("data3", (Serializable) categoryList);
             startActivity(intent);
 
         });
@@ -101,13 +111,26 @@ public class BuffetActivity extends BaseActivity {
     public void setItemData(BuffetModel buffetModel, int adapterPosition) {
         req = 1;
         mvvm.getSelectedPos().setValue(adapterPosition);
+        List<BuffetModel.Category> categoryList = new ArrayList<>(dishesMvvm.onDataSuccess().getValue());
+        categoryList.remove(0);
 
         Intent intent = new Intent(this, BuffetDetailsActivity.class);
         intent.putExtra("data", buffetModel);
         launcher.launch(intent);
     }
-
     public void deleteBuffet(BuffetModel buffetModel) {
         mvvm.deleteBuffet(buffetModel.getId());
+    }
+
+    public void editBuffet(BuffetModel buffetModel, int adapterPosition) {
+        req=1;
+        mvvm.getSelectedPos().setValue(adapterPosition);
+        List<BuffetModel.Category> categoryList = new ArrayList<>(dishesMvvm.onDataSuccess().getValue());
+        categoryList.remove(0);
+
+        Intent intent = new Intent(this, AddBuffetActivity.class);
+        intent.putExtra("data2", buffetModel);
+        intent.putExtra("data3", (Serializable) categoryList);
+        launcher.launch(intent);
     }
 }

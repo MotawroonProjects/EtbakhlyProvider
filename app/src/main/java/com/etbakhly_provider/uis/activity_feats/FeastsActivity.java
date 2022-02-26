@@ -103,4 +103,14 @@ public class FeastsActivity extends BaseActivity {
     public void deleteFeast(BuffetModel buffetModel) {
         mvvm.deleteFeasts(buffetModel.getId());
     }
+
+
+    public void editFeast(BuffetModel feastsModel, int adapterPosition) {
+        req = 1;
+        mvvm.getSelectedPos().setValue(adapterPosition);
+
+        Intent intent = new Intent(this, AddFeastActivity.class);
+        intent.putExtra("data", feastsModel);
+        launcher.launch(intent);
+    }
 }
