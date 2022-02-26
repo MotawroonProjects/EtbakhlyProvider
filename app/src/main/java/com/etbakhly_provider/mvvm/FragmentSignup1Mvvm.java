@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.etbakhly_provider.R;
+import com.etbakhly_provider.model.AddZoneModel;
 import com.etbakhly_provider.model.CategoryDataModel;
 import com.etbakhly_provider.model.CategoryModel;
 import com.etbakhly_provider.model.CountryDataModel;
@@ -16,6 +18,7 @@ import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.tags.Tags;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.SingleObserver;
@@ -27,20 +30,19 @@ import retrofit2.Response;
 
 public class FragmentSignup1Mvvm extends AndroidViewModel {
     private static final String TAG = "FragmentSignup1Mvvm";
-    private Context context;
 
     private MutableLiveData<List<CountryModel>> countryLiveData;
-    private MutableLiveData<Boolean> isLoadingLivData;
-    private MutableLiveData<List<CountryModel>> cityLiveData;
     private MutableLiveData<List<CategoryModel>> onCategorySuccess;
     private MutableLiveData<List<CountryModel>> zoneLiveData;
+    private MutableLiveData<List<AddZoneModel>> onAddZoneSuccess;
+
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
 
     public FragmentSignup1Mvvm(@NonNull Application application) {
         super(application);
-        context = application.getApplicationContext();
+        getOnAddZoneLiveData().setValue(new ArrayList<>());
     }
 
 
@@ -50,12 +52,7 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
         }
         return countryLiveData;
     }
-    public MutableLiveData<List<CountryModel>> getCityLiveData() {
-        if (cityLiveData == null) {
-            cityLiveData = new MutableLiveData<>();
-        }
-        return cityLiveData;
-    }
+
 
     public MutableLiveData<List<CountryModel>> getZoneLiveData() {
         if (zoneLiveData == null) {
@@ -64,17 +61,31 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
         return zoneLiveData;
     }
 
-    public MutableLiveData<Boolean> getIsLoading() {
-        if (isLoadingLivData == null) {
-            isLoadingLivData = new MutableLiveData<>();
+
+    public MutableLiveData<List<CategoryModel>> onCategoryDataSuccess() {
+        if (onCategorySuccess == null) {
+            onCategorySuccess = new MutableLiveData<>();
         }
-        return isLoadingLivData;
+        return onCategorySuccess;
     }
 
-    //_________________________hitting api_________________________________
+    public MutableLiveData<List<AddZoneModel>> getOnAddZoneLiveData() {
+        if (onAddZoneSuccess == null) {
+            onAddZoneSuccess = new MutableLiveData<>();
+            onAddZoneSuccess.setValue(new ArrayList<>());
 
-    public void getCountries() {
-        isLoadingLivData.setValue(true);
+        }
+        return onAddZoneSuccess;
+    }
+
+    public void addZoneLiveData(AddZoneModel addZoneModel) {
+        getOnAddZoneLiveData().getValue().add(addZoneModel);
+        getOnAddZoneLiveData().setValue(getOnAddZoneLiveData().getValue());
+    }
+
+
+    //_________________________hitting api_________________________________
+    public void getCountries(Context context) {
 
         Api.getService(Tags.base_url)
                 .getCountry()
@@ -88,11 +99,15 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<CountryDataModel> response) {
-                        isLoadingLivData.setValue(false);
                         if (response.isSuccessful()) {
-                            Log.d("status",response.body().getStatus()+"__");
                             if (response.body() != null && response.body().getStatus() == 200) {
-                                countryLiveData.setValue(response.body().getData());
+                                List<CountryModel> countryModelList = new ArrayList<>();
+                                countryModelList.add(new CountryModel(context.getString(R.string.choose_country)));
+                                countryModelList.addAll(response.body().getData());
+                                countryLiveData.setValue(countryModelList);
+                                List<CountryModel> zoneList = new ArrayList<>();
+                                zoneList.add(new CountryModel(context.getString(R.string.ch_zone)));
+                                getZoneLiveData().setValue(zoneList);
                             }
                         }
                     }
@@ -105,17 +120,10 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
 
     }
 
-
-
-
-
-    //_________________________hitting api_________________________________
-
-    public void getCity(String country_id) {
-        isLoadingLivData.setValue(true);
+    public void getZone(String country_id, Context context) {
 
         Api.getService(Tags.base_url)
-                .getCityByCountryId(country_id)
+                .getZone(country_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<CountryDataModel>>() {
@@ -126,10 +134,17 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<CountryDataModel> response) {
-                        isLoadingLivData.setValue(false);
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200) {
-                                cityLiveData.setValue(response.body().getData());
+                                List<CountryModel> zoneList = new ArrayList<>();
+                                zoneList.add(new CountryModel(context.getString(R.string.ch_zone)));
+
+                                if (response.body().getData().size() > 0) {
+                                    zoneList.addAll(response.body().getData());
+
+                                }
+
+                                zoneLiveData.setValue(zoneList);
                             }
                         }
                     }
@@ -140,15 +155,6 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
                     }
                 });
 
-    }
-
-
-
-    public MutableLiveData<List<CategoryModel>> onCategoryDataSuccess() {
-        if (onCategorySuccess == null) {
-            onCategorySuccess = new MutableLiveData<>();
-        }
-        return onCategorySuccess;
     }
 
     public void getCategoryData() {
@@ -164,7 +170,7 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<CategoryDataModel> response) {
                         if (response.isSuccessful()) {
-                            if (response.body() != null &&response.body().getStatus()==200&& response.body().getData() != null) {
+                            if (response.body() != null && response.body().getStatus() == 200 && response.body().getData() != null) {
                                 onCategorySuccess.setValue(response.body().getData());
                             }
                         } else {
@@ -182,36 +188,7 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
                     }
                 });
     }
-    public void getZone(String country_id) {
-        isLoadingLivData.setValue(true);
 
-        Api.getService(Tags.base_url)
-                .getZone(country_id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Response<CountryDataModel>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        disposable.add(d);
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull Response<CountryDataModel> response) {
-                        isLoadingLivData.setValue(false);
-                        if (response.isSuccessful()) {
-                            if (response.body() != null && response.body().getStatus() == 200) {
-                                zoneLiveData.setValue(response.body().getData());
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Log.d(TAG, "Error", e);
-                    }
-                });
-
-    }
 
     @Override
     protected void onCleared() {

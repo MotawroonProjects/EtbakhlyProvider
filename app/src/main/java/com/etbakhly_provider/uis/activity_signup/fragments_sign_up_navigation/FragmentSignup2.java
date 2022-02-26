@@ -18,12 +18,15 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.SpinnerDayAdapter;
 import com.etbakhly_provider.databinding.FragmentSignUp2Binding;
 import com.etbakhly_provider.model.SelectedLocation;
 import com.etbakhly_provider.model.SignUpModel;
+import com.etbakhly_provider.mvvm.FragmentSignup1Mvvm;
+import com.etbakhly_provider.mvvm.GeneralSignUpMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
 import com.etbakhly_provider.uis.activity_map.MapActivity;
@@ -46,20 +49,19 @@ public class FragmentSignup2 extends BaseFragment {
     private SignupActivity activity;
     private FragmentSignUp2Binding binding;
     private SignUpModel signUpModel;
-    private List<String> daylist;
-    private SpinnerDayAdapter spinnerDayAdapter;
+    private GeneralSignUpMvvm generalSignUpMvvm;
     private CompositeDisposable disposable = new CompositeDisposable();
-    private ActivityResultLauncher<Intent> launcher;
+
+    public static FragmentSignup2 newInstance() {
+        return new FragmentSignup2();
+    }
+
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity = (SignupActivity) context;
 
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            signUpModel = (SignUpModel) bundle.getSerializable("data");
-        }
 
     }
 
@@ -103,86 +105,54 @@ public class FragmentSignup2 extends BaseFragment {
     }
 
     private void initView() {
-        signUpModel.setSex_type("women");
-       // signUpModel.setIs_valid2(false);
-        daylist = new ArrayList<>();
-        spinnerDayAdapter = new SpinnerDayAdapter(activity);
-        setday();
-        spinnerDayAdapter.updateData(daylist);
-        binding.spDay.setAdapter(spinnerDayAdapter);
 
+        generalSignUpMvvm = ViewModelProviders.of(activity).get(GeneralSignUpMvvm.class);
+
+        generalSignUpMvvm.getSignUpModel().observe(activity, model -> {
+            if (model!=null){
+                this.signUpModel = model;
+                binding.setModel(model);
+            }
+
+        });
         binding.setLang(getLang());
 
-        binding.setModel(signUpModel);
-        binding.spDay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                signUpModel.setBooking_before(daylist.get(i));
-                binding.setModel(signUpModel);
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-        binding.rdwomen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                binding.rdnothing.setChecked(false);
-                binding.rdmen.setChecked(false);
-                binding.rdboth.setChecked(false);
-                binding.rdwomen.setChecked(true);
+        binding.rdwomen.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
                 signUpModel.setSex_type("women");
 
             }
+
+
         });
-        binding.rdmen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                binding.rdnothing.setChecked(false);
-                binding.rdboth.setChecked(false);
-                binding.rdwomen.setChecked(false);
-                binding.rdmen.setChecked(true);
+        binding.rdmen.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
                 signUpModel.setSex_type("man");
 
             }
+
+
         });
-        binding.rdboth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                binding.rdnothing.setChecked(false);
-                binding.rdwomen.setChecked(false);
-                binding.rdmen.setChecked(false);
-                binding.rdboth.setChecked(true);
+        binding.rdboth.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
                 signUpModel.setSex_type("man_and_women");
 
             }
+
+
         });
-        binding.rdnothing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                binding.rdboth.setChecked(false);
-                binding.rdwomen.setChecked(false);
-                binding.rdmen.setChecked(false);
-                binding.rdnothing.setChecked(true);
+        binding.rdnothing.setOnCheckedChangeListener((compoundButton, b) -> {
+
+            if (b) {
                 signUpModel.setSex_type("not_found");
 
             }
-        });
-        binding.btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.completedata(signUpModel);
-            }
-        });
-    }
 
-    private void setday() {
-        daylist.add(getResources().getString(R.string.day1));
-        daylist.add(getResources().getString(R.string.day2));
-        daylist.add(getResources().getString(R.string.day3));
+        });
+        binding.btnNext.setOnClickListener(view ->{
 
+        });
     }
 
 

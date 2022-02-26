@@ -70,18 +70,16 @@ public class LoginActivity extends BaseActivity {
         });
 
 
-
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-           if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
-               UserModel userModel= (UserModel) result.getData().getSerializableExtra("data");
-               if(userModel.getData().getIs_completed()==null||userModel.getData().getIs_completed().equals("yes")){
-                   setUserModel(userModel);
-                   navigateToHomeActivity();
-               }
-               else{
-                   navigateToSignupActivity(userModel);
+            if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
+                UserModel userModel = (UserModel) result.getData().getSerializableExtra("data");
+                if (userModel.getData().getIs_completed() != null || userModel.getData().getIs_completed().equals("yes")) {
+                    setUserModel(userModel);
+                    navigateToHomeActivity();
+                } else {
+                    navigateToSignupActivity(userModel);
 
-               }
+                }
             }
         });
     }
@@ -94,7 +92,6 @@ public class LoginActivity extends BaseActivity {
         }
 
     }
-
 
 
     private void openSheet() {
@@ -128,6 +125,7 @@ public class LoginActivity extends BaseActivity {
         intent.putExtra("phone", model.getPhone());
         launcher.launch(intent);
     }
+
     private void navigateToSignupActivity(UserModel userModel) {
         req = 1;
         Intent intent = new Intent(this, SignupActivity.class);

@@ -32,18 +32,69 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical">
-
+                android:orientation="vertical"
+                android:padding="8dp"
+                >
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:text="@string/complete_profile"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="24dp"
+                    >
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:background="@drawable/circle_primary"
+                        android:text="1"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        />
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="1dp"
+                        android:background="@color/colorPrimary"
+                        android:layout_gravity="center_vertical"
+
+                        />
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:background="@drawable/circle_gray"
+                        android:text="2"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginEnd="8dp"
                     android:text="@string/working_period"
                     android:textColor="@color/gray38"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,7 +105,7 @@
 
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/lltimefrom"
+                        android:id="@+id/cardWorkingTimeFrom"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_marginStart="5dp"
@@ -62,7 +113,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="2dp"
                         android:layout_weight="1"
-                        app:cardCornerRadius="8dp"
+                        app:cardCornerRadius="3dp"
                         app:contentPadding="8dp">
 
                         <LinearLayout
@@ -70,8 +121,7 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/tvFrom"
-                                error="@{model.error_from}"
+                                android:id="@+id/tvWorkingFrom"
                                 android:layout_width="0dp"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center_vertical"
@@ -81,9 +131,12 @@
                                 android:gravity="center_vertical"
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
-                                android:text="@string/from"
+                                android:text="@{model.working_time_from}"
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:hint="@string/from"
+                                android:textColorHint="@color/gray4"
+                                />
 
                             <ImageView
                                 android:layout_width="24dp"
@@ -97,7 +150,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/lltimeto"
+                        android:id="@+id/cardWorkingTimeTo"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_marginStart="5dp"
@@ -105,7 +158,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="2dp"
                         android:layout_weight="1"
-                        app:cardCornerRadius="8dp"
+                        app:cardCornerRadius="3dp"
                         app:contentPadding="8dp">
 
                         <LinearLayout
@@ -113,8 +166,7 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/tvTo"
-                                error="@{model.error_to}"
+                                android:id="@+id/tvWorkingTimeTo"
                                 android:layout_width="0dp"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center_vertical"
@@ -124,7 +176,9 @@
                                 android:gravity="center_vertical"
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
-                                android:text="@string/to"
+                                android:hint="@string/to"
+                                android:text="@{model.working_time_to}"
+                                android:textColorHint="@color/gray4"
                                 android:textColor="@color/black"
                                 android:textSize="14sp" />
 
@@ -188,7 +242,6 @@
 
                         <TextView
 
-                            error="@{model.error_address}"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -198,7 +251,10 @@
                             android:paddingEnd="8dp"
                             android:text="@{model.address}"
                             android:textColor="@color/gray38"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:hint="@string/address"
+                            android:textColorHint="@color/gray4"
+                            />
 
                         <ImageView
                             android:layout_width="24dp"
@@ -212,7 +268,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="5dp"
@@ -229,7 +285,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="2dp"
                     app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
+                    app:cardCornerRadius="3dp"
                     app:cardElevation="3dp">
 
                     <LinearLayout
@@ -258,7 +314,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -267,57 +323,111 @@
                     android:textColor="@color/gray38"
                     android:textSize="14sp" />
 
-                <androidx.cardview.widget.CardView
-
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="2dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="3dp"
+                    android:orientation="horizontal">
 
 
-                    >
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardDeliveryTimeFrom"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="3dp"
+                        app:contentPadding="8dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/car"
-                            app:tint="@color/gray36" />
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:hint="@string/from"
+                                android:textColorHint="@color/gray4"
+                                android:text="@={model.delivery_time_from}"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:background="@color/transparent"
+                                android:inputType="datetime"
+                                />
 
-                        <EditText
-                            error="@{model.error_deliverytime}"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:background="@color/transparent"
-                            android:hint="@string/_3_hour"
-                            android:lines="1"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:text="@={model.deliverytime}"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/gray4"
-                            android:textSize="14sp" />
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/clock"
+                                app:tint="@color/gray36" />
 
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardDeliveryTimeTo"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="3dp"
+                        app:contentPadding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:hint="@string/to"
+                                android:textColorHint="@color/gray4"
+                                android:text="@={model.delivery_time_to}"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:inputType="datetime"
+                                android:background="@color/transparent"
+                                />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/clock"
+                                app:tint="@color/gray36" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -326,58 +436,115 @@
                     android:textColor="@color/gray38"
                     android:textSize="14sp" />
 
-                <androidx.cardview.widget.CardView
-
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="2dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="3dp"
+                    android:orientation="horizontal">
 
 
-                    >
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardProcessTimeFrom"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="3dp"
+                        app:contentPadding="8dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/clock"
-                            app:tint="@color/gray36" />
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:hint="@string/from"
+                                android:textColorHint="@color/gray4"
+                                android:text="@={model.process_time_from}"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:inputType="datetime"
+                                android:background="@color/transparent"
 
-                        <EditText
-                            error="@{model.error_processingtime}"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:background="@color/transparent"
-                            android:hint="@string/_15_20_m"
-                            android:lines="1"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:text="@={model.processingtime}"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/gray4"
-                            android:textSize="14sp" />
 
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                                />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/clock"
+                                app:tint="@color/gray36" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardProcessTimeTo"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="3dp"
+                        app:contentPadding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:hint="@string/to"
+                                android:textColorHint="@color/gray4"
+                                android:text="@={model.process_time_to}"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:inputType="datetime"
+                                android:background="@color/transparent"
+
+
+                                />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/clock"
+                                app:tint="@color/gray36" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
 
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -395,7 +562,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="2dp"
                     app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
+                    app:cardCornerRadius="5dp"
                     app:cardElevation="3dp"
 
 
@@ -418,7 +585,6 @@
                             app:tint="@color/gray36" />
 
                         <EditText
-                            error="@{model.error_note}"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
@@ -439,7 +605,7 @@
 
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="5dp"
@@ -483,12 +649,13 @@
                     >
 
                     <LinearLayout
+                        android:id="@+id/llZones"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="5dp"
@@ -506,7 +673,7 @@
                             android:layout_marginEnd="8dp"
                             android:orientation="vertical"
                             app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="10dp"
+                            app:cardCornerRadius="3dp"
                             app:contentPadding="16dp"
 
                             >
@@ -518,25 +685,6 @@
                                 android:spinnerMode="dialog" />
                         </androidx.cardview.widget.CardView>
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="8dp"
-                            android:orientation="vertical"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="10dp"
-                            app:contentPadding="16dp"
-
-                            >
-
-                            <Spinner
-                                android:id="@+id/spCity"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:spinnerMode="dialog" />
-                        </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -546,7 +694,7 @@
                             android:layout_marginEnd="8dp"
                             android:orientation="vertical"
                             app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="10dp"
+                            app:cardCornerRadius="3dp"
                             app:contentPadding="16dp"
 
                             >
@@ -558,121 +706,18 @@
                                 android:spinnerMode="dialog" />
                         </androidx.cardview.widget.CardView>
 
-                        <LinearLayout
-                            android:id="@+id/llZone"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_marginTop="8dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="8dp"
-                            android:orientation="vertical">
-
-                        </LinearLayout>
+                            />
                     </LinearLayout>
                 </FrameLayout>
 
             </LinearLayout>
         </ScrollView>
 
-        <net.cachapa.expandablelayout.ExpandableLayout
-            android:id="@+id/expandLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:background="@color/black_trans"
-            android:padding="16dp"
-            app:el_duration="800"
-            app:el_expanded="false"
-            app:el_parallax=".5">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:id="@+id/flGallery"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/white"
-
-                    >
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:clickable="false"
-                        android:longClickable="false"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:padding="12dp"
-                            android:src="@drawable/ic_gallery"
-                            app:tint="@color/colorPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/gallery"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/flCamera"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-
-                    >
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:clickable="false"
-                        android:longClickable="false"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:padding="12dp"
-                            android:src="@drawable/ic_camera"
-                            app:tint="@color/colorPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/camera"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                </FrameLayout>
-
-                <Button
-                    android:id="@+id/btnCancel"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="25dp"
-                    android:background="@color/colorPrimary"
-                    android:text="@string/cancel"
-                    android:textColor="@color/white"
-                    android:textSize="8sp" />
-            </LinearLayout>
-
-
-        </net.cachapa.expandablelayout.ExpandableLayout>
 
         <Button
             android:id="@+id/btnNext"

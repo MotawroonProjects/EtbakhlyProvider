@@ -29,6 +29,7 @@
             android:fillViewport="true"
             android:fitsSystemWindows="true"
             tools:context=".ui.activity_sign_up.SignUpActivity"
+            android:padding="8dp"
 
             >
 
@@ -39,13 +40,64 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:text="@string/complete_profile"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="24dp"
+                    >
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:background="@drawable/circle_primary"
+                        android:text="1"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        />
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="1dp"
+                        android:background="@color/colorPrimary"
+                        android:layout_gravity="center_vertical"
+
+                        />
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:background="@drawable/circle_primary"
+                        android:text="2"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:text="@string/commercial_registration_no"
                     android:textColor="@color/gray38"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:layout_marginTop="16dp"
+                    />
 
                 <androidx.cardview.widget.CardView
 
@@ -56,7 +108,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
+                    app:cardCornerRadius="3dp"
                     app:cardElevation="3dp"
 
 
@@ -77,7 +129,6 @@
                             app:tint="@color/gray36" />
 
                         <EditText
-                            error="@{model.error_licenseNumber}"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
@@ -98,7 +149,7 @@
 
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
@@ -116,7 +167,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
+                    app:cardCornerRadius="3dp"
                     app:cardElevation="3dp"
 
 
@@ -137,7 +188,6 @@
                             app:tint="@color/gray36" />
 
                         <EditText
-                            error="@{model.error_tax}"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
@@ -154,11 +204,20 @@
                             android:textColorHint="@color/gray4"
                             android:textSize="14sp" />
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:text="%"
+                            />
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
@@ -176,7 +235,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
+                    app:cardCornerRadius="3dp"
                     app:cardElevation="3dp"
 
 
@@ -197,7 +256,6 @@
                             app:tint="@color/gray36" />
 
                         <EditText
-                            error="@{model.error_customerservice}"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
@@ -214,11 +272,20 @@
                             android:textColorHint="@color/gray4"
                             android:textSize="14sp" />
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:text="%"
+                            />
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
@@ -236,7 +303,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
+                    app:cardCornerRadius="3dp"
                     app:cardElevation="3dp"
 
 
@@ -257,7 +324,6 @@
                             app:tint="@color/gray36" />
 
                         <EditText
-                            error="@{model.error_discount}"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
@@ -274,11 +340,20 @@
                             android:textColorHint="@color/gray4"
                             android:textSize="14sp" />
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:text="%"
+                            />
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
@@ -295,7 +370,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="2dp"
                     app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
+                    app:cardCornerRadius="3dp"
                     app:cardElevation="3dp">
 
                     <LinearLayout
@@ -312,14 +387,22 @@
                             android:src="@drawable/clock"
                             app:tint="@color/gray36" />
 
-                        <Spinner
-                            android:id="@+id/spDay"
+                        <EditText
+                            android:id="@+id/edtBookingBefore"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
                             android:layout_weight="1"
-                            app:backgroundTint="@color/gray36"
-
-                            />
+                            android:background="@color/transparent"
+                            android:hint="@string/booking_before"
+                            android:lines="1"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:text="@={model.booking_before}"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray4"
+                            android:textSize="14sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -362,15 +445,17 @@
 
                     <RadioButton
                         android:id="@+id/rdboth"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/women_and_men"
                         android:textColor="@color/gray37"
-                        android:textSize="12sp" />
+                        android:textSize="10sp" />
 
                     <RadioButton
                         android:id="@+id/rdnothing"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/there_is_no"
                         android:textColor="@color/gray37"

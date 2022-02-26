@@ -138,7 +138,6 @@ public class RegisterActivity extends BaseActivity {
                     uri = result.getData().getData();
                     model.setPhotoUrl(uri.toString());
                     File file = new File(Common.getImagePath(this, uri));
-                    Log.e("lllll",file.toString());
 
                     Picasso.get().load(file).fit().into(binding.image);
 
@@ -177,6 +176,7 @@ public class RegisterActivity extends BaseActivity {
             finish();
 
         });
+
 //        binding.cardAddress.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

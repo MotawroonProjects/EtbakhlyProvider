@@ -14,7 +14,7 @@
     <string name="service">Service</string>
     <string name="from">From</string>
     <string name="to">To</string>
-    <string name="working_period">working period</string>
+    <string name="working_period">Working period</string>
     <string name="delivery">Delivery</string>
     <string name="surrender">Surrender</string>
     <string name="areas_covered_by_delivery">Areas covered by delivery</string>
@@ -23,13 +23,13 @@
     <string name="delivery_time">Delivery time</string>
     <string name="deliv_time2">Delivery time</string>
     <string name="_15_20_m">15-20 M</string>
-    <string name="processing_time">processing time</string>
+    <string name="processing_time">Processing time</string>
     <string name="_3_hour">3 Hour</string>
-    <string name="booking_before">booking before</string>
-    <string name="service_provider">service provider</string>
-    <string name="women">women</string>
+    <string name="booking_before">Booking before</string>
+    <string name="service_provider">Service provider</string>
+    <string name="women">Women</string>
     <string name="men">Men</string>
-    <string name="women_and_men">women and men</string>
+    <string name="women_and_men">Women and Men</string>
     <string name="there_is_no">There is no</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="password_short">Password Short</string>
@@ -168,6 +168,11 @@
     <string name="category_name">Category name</string>
     <string name="add">Add</string>
     <string name="update_cat">Update category</string>
+    <string name="hour">Hour</string>
+    <string name="complete_profile">Complete profile</string>
+    <string name="add_zone_cost">Add zone cost</string>
+    <string name="enter_zone_cost">Enter zone cost...</string>
+    <string name="already_added">Sorry! you have already added</string>
     <string name="edit_dish">Edit Dish</string>
     <string name="updated">Updated</string>
 
