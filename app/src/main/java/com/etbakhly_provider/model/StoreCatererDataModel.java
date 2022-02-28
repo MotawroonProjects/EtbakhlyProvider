@@ -7,11 +7,11 @@ import android.widget.Toast;
 import java.io.Serializable;
 import java.util.List;
 
-public class StoreCatreerDataModel implements Serializable {
+public class StoreCatererDataModel implements Serializable {
     private String user_id;
     private String notes;
-    private int option_id;
-    private int category_id;
+    private String  option_id;
+    private String category_id;
     private String sex_type;
     private String is_delivry;
     private String  delivry_time;
@@ -29,6 +29,29 @@ public class StoreCatreerDataModel implements Serializable {
     private String address;
     private List<DeliveryModel> delivry;
 
+    public StoreCatererDataModel(String user_id, String notes, String option_id, String category_id, String sex_type, String is_delivry, String delivry_time, String processing_time, String free_delivery, String longitude, String latitude, String start_work, String end_work, String tax, String customers_service, String discount, String number_of_reservation_days, String commercial_register, String address, List<DeliveryModel> delivry) {
+        this.user_id = user_id;
+        this.notes = notes;
+        this.option_id = option_id;
+        this.category_id = category_id;
+        this.sex_type = sex_type;
+        this.is_delivry = is_delivry;
+        this.delivry_time = delivry_time;
+        this.processing_time = processing_time;
+        this.free_delivery = free_delivery;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.start_work = start_work;
+        this.end_work = end_work;
+        this.tax = tax;
+        this.customers_service = customers_service;
+        this.discount = discount;
+        Number_of_reservation_days = number_of_reservation_days;
+        this.commercial_register = commercial_register;
+        this.address = address;
+        this.delivry = delivry;
+    }
+
     public String getUser_id() {
         return user_id;
     }
@@ -45,19 +68,19 @@ public class StoreCatreerDataModel implements Serializable {
         this.notes = notes;
     }
 
-    public int getOption_id() {
+    public String getOption_id() {
         return option_id;
     }
 
-    public void setOption_id(int option_id) {
+    public void setOption_id(String option_id) {
         this.option_id = option_id;
     }
 
-    public int getCategory_id() {
+    public String getCategory_id() {
         return category_id;
     }
 
-    public void setCategory_id(int category_id) {
+    public void setCategory_id(String category_id) {
         this.category_id = category_id;
     }
 

@@ -11,10 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.MyPagerAdapter;
 import com.etbakhly_provider.databinding.ActivitySignUpBinding;
-import com.etbakhly_provider.model.AddZoneModel;
-import com.etbakhly_provider.model.DeliveryModel;
 import com.etbakhly_provider.model.SignUpModel;
-import com.etbakhly_provider.model.StoreCatreerDataModel;
 import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.mvvm.ActivitySignupMvvm;
 import com.etbakhly_provider.mvvm.GeneralSignUpMvvm;
@@ -29,7 +26,6 @@ public class SignupActivity extends BaseActivity {
     private ActivitySignUpBinding binding;
     private UserModel userModel;
     private GeneralSignUpMvvm generalSignUpMvvm;
-    private ActivitySignupMvvm mvvm;
     private List<Fragment> fragments;
     private MyPagerAdapter adapter;
 
@@ -54,15 +50,9 @@ public class SignupActivity extends BaseActivity {
         fragments = new ArrayList<>();
         generalSignUpMvvm = ViewModelProviders.of(this).get(GeneralSignUpMvvm.class);
 
-        mvvm = ViewModelProviders.of(this).get(ActivitySignupMvvm.class);
-        mvvm.getUserData().observe(this, userModel -> {
-            Intent intent = getIntent();
-            intent.putExtra("data", userModel);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        fragments.add(FragmentSignup1.newInstance());
-        fragments.add(FragmentSignup2.newInstance());
+
+        fragments.add(FragmentSignup1.newInstance(userModel));
+        fragments.add(FragmentSignup2.newInstance(userModel));
 
         adapter = new MyPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, fragments, new ArrayList<>());
         binding.pager.setAdapter(adapter);

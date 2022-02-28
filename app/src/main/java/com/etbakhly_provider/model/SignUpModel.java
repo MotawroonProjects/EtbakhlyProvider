@@ -18,7 +18,6 @@ import java.util.List;
 public class SignUpModel extends BaseObservable implements Serializable {
     private String working_time_from;
     private String working_time_to;
-    private String address;
     private int cat_id;
     private String delivery_time_from;
     private String delivery_time_to;
@@ -26,6 +25,9 @@ public class SignUpModel extends BaseObservable implements Serializable {
     private String process_time_to;
     private String note;
     private String is_delivery;
+    private String address;
+    private String lat;
+    private String lng;
     private List<AddZoneModel> addZoneModels;
 
 
@@ -42,7 +44,6 @@ public class SignUpModel extends BaseObservable implements Serializable {
     public SignUpModel() {
         this.working_time_to = "";
         this.working_time_from = "";
-        this.address = "";
         this.cat_id = 0;
         this.delivery_time_from = "";
         this.delivery_time_to = "";
@@ -51,13 +52,13 @@ public class SignUpModel extends BaseObservable implements Serializable {
         this.note = "";
         this.is_delivery = "delivry";
         addZoneModels = new ArrayList<>();
-
+        this.address = "";
         this.licenseNumber = "";
         this.booking_before = "";
-        this.tax = "";
-        this.discount = "";
-        sex_type = "women";
-        this.customers_service = "";
+        this.tax = "0";
+        this.discount = "0";
+        this.sex_type = "women";
+        this.customers_service = "0";
         is_valid1 = false;
         is_valid2 = false;
 
@@ -66,7 +67,6 @@ public class SignUpModel extends BaseObservable implements Serializable {
     public void isStep1Valid() {
         if (!working_time_from.isEmpty()
                 && !working_time_to.isEmpty()
-                && !address.isEmpty()
                 && cat_id != 0
                 && !delivery_time_from.isEmpty()
                 && !delivery_time_to.isEmpty()
@@ -97,9 +97,6 @@ public class SignUpModel extends BaseObservable implements Serializable {
 
     public void isStep2Valid() {
         if (!licenseNumber.isEmpty()
-                && !tax.isEmpty()
-                && !customers_service.isEmpty()
-                && !discount.isEmpty()
                 && !booking_before.isEmpty()
         ) {
             setIs_valid2(true);
@@ -119,16 +116,6 @@ public class SignUpModel extends BaseObservable implements Serializable {
         isStep1Valid();
     }
 
-    @Bindable
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-        notifyPropertyChanged(BR.address);
-        isStep1Valid();
-    }
 
     public int getCat_id() {
         return cat_id;
@@ -191,7 +178,6 @@ public class SignUpModel extends BaseObservable implements Serializable {
     }
 
 
-
     @Bindable
     public String getWorking_time_to() {
         return working_time_to;
@@ -205,8 +191,7 @@ public class SignUpModel extends BaseObservable implements Serializable {
     }
 
 
-
-
+    @Bindable
     public String getIs_delivery() {
         return is_delivery;
 
@@ -319,18 +304,43 @@ public class SignUpModel extends BaseObservable implements Serializable {
         isStep2Valid();
     }
 
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
 
 
-    public void addZone(AddZoneModel model){
-        if (addZoneModels==null){
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void addZone(AddZoneModel model) {
+        if (addZoneModels == null) {
             addZoneModels = new ArrayList<>();
         }
         addZoneModels.add(model);
         isStep1Valid();
     }
 
-    public void removeZone(int pos){
-        if (addZoneModels!=null&&addZoneModels.size()>0){
+    public void removeZone(int pos) {
+        if (addZoneModels != null && addZoneModels.size() > 0) {
             addZoneModels.remove(pos);
             isStep1Valid();
 

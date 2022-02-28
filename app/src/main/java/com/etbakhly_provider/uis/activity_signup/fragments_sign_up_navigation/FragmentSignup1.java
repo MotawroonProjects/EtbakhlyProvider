@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -32,17 +33,20 @@ import com.etbakhly_provider.adapter.SpinnerCountryAdapter;
 import com.etbakhly_provider.adapter.SpinnerZoneAdapter;
 import com.etbakhly_provider.databinding.AddZoneCostSheetBinding;
 import com.etbakhly_provider.databinding.FragmentSignUp1Binding;
+import com.etbakhly_provider.databinding.TimeSheetBinding;
 import com.etbakhly_provider.model.AddZoneModel;
 import com.etbakhly_provider.model.CategoryModel;
 import com.etbakhly_provider.model.CountryModel;
 import com.etbakhly_provider.model.SelectedLocation;
 import com.etbakhly_provider.model.SignUpModel;
+import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.mvvm.FragmentSignup1Mvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
 import com.etbakhly_provider.uis.activity_map.MapActivity;
 import com.etbakhly_provider.uis.activity_signup.SignupActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.shawnlin.numberpicker.NumberPicker;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.text.SimpleDateFormat;
@@ -56,17 +60,22 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
     private SignupActivity activity;
     private FragmentSignUp1Binding binding;
     private FragmentSignup1Mvvm fragmentSignup1Mvvm;
-    private ActivityResultLauncher<Intent> launcher;
     private SignUpModel model;
     private TimePickerDialog timePickerDialog;
     private SpinnerCountryAdapter spinnerCountryAdapter;
     private SpinnerZoneAdapter spinnerZoneAdapter;
+    private SpinnerCityAdapter spinnerCityAdapter;
     private SpinnerCategoryAdapter spinnerCategoryAdapter;
     private AddZoneAdapter addZoneAdapter;
     private String type;
+    private UserModel userModel;
 
-    public static FragmentSignup1 newInstance() {
-        return new FragmentSignup1();
+    public static FragmentSignup1 newInstance(UserModel userModel) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("data", userModel);
+        FragmentSignup1 fragmentSignup1 = new FragmentSignup1();
+        fragmentSignup1.setArguments(bundle);
+        return fragmentSignup1;
     }
 
 
@@ -74,15 +83,6 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity = (SignupActivity) context;
-        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                SelectedLocation location = (SelectedLocation) result.getData().getSerializableExtra("location");
-                model.setAddress(location.getAddress());
-                binding.setModel(model);
-
-
-            }
-        });
 
 
     }
@@ -98,30 +98,45 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
         return binding.getRoot();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            userModel = (UserModel) bundle.getSerializable("data");
+        }
+    }
 
     private void initView() {
 
         if (model == null) {
             model = new SignUpModel();
         }
+
+        if (userModel != null) {
+            model.setAddress(userModel.getData().getAddress());
+            model.setLat(userModel.getData().getLatitude());
+            model.setLng(userModel.getData().getLongitude());
+        }
         binding.setModel(model);
         binding.setLang(getLang());
         spinnerCountryAdapter = new SpinnerCountryAdapter(activity);
         spinnerZoneAdapter = new SpinnerZoneAdapter(activity);
         spinnerCategoryAdapter = new SpinnerCategoryAdapter(activity);
+        spinnerCityAdapter = new SpinnerCityAdapter(activity);
+
         fragmentSignup1Mvvm = ViewModelProviders.of(this).get(FragmentSignup1Mvvm.class);
         addZoneAdapter = new AddZoneAdapter(activity, this);
         binding.recView.setLayoutManager(new GridLayoutManager(activity, 2));
         binding.recView.setAdapter(addZoneAdapter);
 
         fragmentSignup1Mvvm.getOnAddZoneLiveData().observe(activity, addZoneModels -> {
-            if (addZoneAdapter!=null){
+            if (addZoneAdapter != null) {
 
                 addZoneAdapter.updateList(addZoneModels);
             }
 
         });
-
 
 
         fragmentSignup1Mvvm.onCategoryDataSuccess().observe(activity, categoryModels -> {
@@ -137,15 +152,23 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
             }
         });
 
-        fragmentSignup1Mvvm.getZoneLiveData().observe(activity, countryModels -> {
+        fragmentSignup1Mvvm.getCityLiveData().observe(activity, cityModels -> {
 
-            if (countryModels != null) {
-                spinnerZoneAdapter.updateData(countryModels);
+            if (cityModels != null) {
+                spinnerCityAdapter.updateData(cityModels);
             }
         });
+        fragmentSignup1Mvvm.getZoneLiveData().observe(activity, zoneList -> {
+            if (zoneList != null) {
+                spinnerZoneAdapter.updateData(zoneList);
+            }
+        });
+
+
         binding.spCountry.setAdapter(spinnerCountryAdapter);
         binding.spZone.setAdapter(spinnerZoneAdapter);
         binding.spcategory.setAdapter(spinnerCategoryAdapter);
+        binding.spCity.setAdapter(spinnerCityAdapter);
 
         binding.spcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -167,7 +190,24 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i != 0) {
-                    fragmentSignup1Mvvm.getZone(fragmentSignup1Mvvm.getCountryLiveData().getValue().get(i).getId(), activity);
+                    fragmentSignup1Mvvm.getCity(activity, fragmentSignup1Mvvm.getCountryLiveData().getValue().get(i).getId());
+                } else {
+
+                    binding.spCity.setSelection(0);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        binding.spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i != 0) {
+                    fragmentSignup1Mvvm.getZone(fragmentSignup1Mvvm.getCityLiveData().getValue().get(i).getId(), activity);
                 } else {
 
                     binding.spZone.setSelection(0);
@@ -195,27 +235,28 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
         });
 
         binding.rdDelivery.setOnCheckedChangeListener((compoundButton, b) -> {
-            binding.rdSurrender.setChecked(false);
-            binding.rdDelivery.setChecked(true);
-            model.setIs_delivery("delivry");
-            binding.spCountry.setSelection(0);
-            binding.llZones.setVisibility(View.VISIBLE);
+            if (b) {
+                model.setIs_delivery("delivry");
+                binding.spCountry.setSelection(0);
+                binding.llZones.setVisibility(View.VISIBLE);
+            }
+
 
         });
 
         binding.rdSurrender.setOnCheckedChangeListener((compoundButton, b) -> {
-            binding.rdDelivery.setChecked(false);
-            binding.rdSurrender.setChecked(true);
-            model.setIs_delivery("not_delivry");
-            model.setAddZoneModels(new ArrayList<>());
-            fragmentSignup1Mvvm.getOnAddZoneLiveData().setValue(new ArrayList<>());
-            binding.llZones.setVisibility(View.GONE);
-            binding.spCountry.setSelection(0);
+
+            if (b) {
+                model.setIs_delivery("not_delivry");
+                model.setAddZoneModels(new ArrayList<>());
+                fragmentSignup1Mvvm.getOnAddZoneLiveData().setValue(new ArrayList<>());
+                binding.llZones.setVisibility(View.GONE);
+                binding.spCountry.setSelection(0);
+            }
 
 
         });
 
-        binding.cardAddress.setOnClickListener(view -> navigateToMapActivity());
         binding.btnNext.setOnClickListener(view -> {
             activity.nextStep(model);
         });
@@ -240,7 +281,40 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
 
         });
 
+        binding.cardDeliveryTimeFrom.setOnClickListener(v -> {
+            try {
+                type = "3";
+                createTimeSheet();
+            } catch (Exception e) {
+            }
 
+        });
+
+        binding.cardDeliveryTimeTo.setOnClickListener(v -> {
+            try {
+                type = "4";
+                createTimeSheet();
+            } catch (Exception e) {
+            }
+
+        });
+
+        binding.cardProcessTimeFrom.setOnClickListener(v -> {
+            try {
+                type = "5";
+                createTimeSheet();
+            } catch (Exception e) {
+            }
+
+        });
+        binding.cardProcessTimeTo.setOnClickListener(v -> {
+            try {
+                type = "6";
+                createTimeSheet();
+            } catch (Exception e) {
+            }
+
+        });
 
 
     }
@@ -266,7 +340,7 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, second);
 
-        String time = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(calendar.getTime());
+        String time = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(calendar.getTime());
         switch (type) {
             case "1":
                 model.setWorking_time_from(time);
@@ -275,7 +349,6 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
                 model.setWorking_time_to(time);
 
                 break;
-
 
 
         }
@@ -295,11 +368,6 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
         return pos;
     }
 
-
-    private void navigateToMapActivity() {
-        Intent intent = new Intent(activity, MapActivity.class);
-        launcher.launch(intent);
-    }
 
     public void deleteItem(int adapterPosition) {
         model.removeZone(adapterPosition);
@@ -343,4 +411,55 @@ public class FragmentSignup1 extends BaseFragment implements TimePickerDialog.On
         });
         dialog.show();
     }
+
+    private void createTimeSheet() {
+        BottomSheetDialog dialog = new BottomSheetDialog(activity);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(true);
+        TimeSheetBinding sheetBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.time_sheet, null, false);
+        dialog.setContentView(sheetBinding.getRoot());
+
+        sheetBinding.pickerHour.setFadingEdgeEnabled(true);
+        sheetBinding.pickerMinute.setFadingEdgeEnabled(true);
+        NumberPicker.Formatter formatter = value -> String.format(Locale.ENGLISH, "%02d", value);
+        sheetBinding.pickerHour.setFormatter(formatter);
+        sheetBinding.pickerMinute.setFormatter(formatter);
+        sheetBinding.pickerHour.setWrapSelectorWheel(true);
+        sheetBinding.pickerMinute.setWrapSelectorWheel(true);
+
+
+        sheetBinding.btnAdd.setOnClickListener(v -> {
+            String time = "";
+            switch (type) {
+                case "3":
+                    time = String.format(Locale.ENGLISH, "%02d", sheetBinding.pickerHour.getValue()) + ":" + String.format(Locale.ENGLISH, "%02d", sheetBinding.pickerMinute.getValue());
+                    model.setDelivery_time_from(time);
+                    break;
+                case "4":
+                    time = String.format(Locale.ENGLISH, "%02d", sheetBinding.pickerHour.getValue()) + ":" + String.format(Locale.ENGLISH, "%02d", sheetBinding.pickerMinute.getValue());
+                    model.setDelivery_time_to(time);
+
+                    break;
+                case "5":
+                    time = String.format(Locale.ENGLISH, "%02d", sheetBinding.pickerHour.getValue()) + ":" + String.format(Locale.ENGLISH, "%02d", sheetBinding.pickerMinute.getValue());
+                    model.setProcess_time_from(time);
+
+                    break;
+                case "6":
+                    time = String.format(Locale.ENGLISH, "%02d", sheetBinding.pickerHour.getValue()) + ":" + String.format(Locale.ENGLISH, "%02d", sheetBinding.pickerMinute.getValue());
+                    model.setProcess_time_to(time);
+
+                    break;
+            }
+
+            binding.setModel(model);
+            dialog.dismiss();
+        });
+        sheetBinding.llClose.setOnClickListener(v -> {
+            dialog.dismiss();
+
+        });
+        dialog.show();
+    }
+
 }

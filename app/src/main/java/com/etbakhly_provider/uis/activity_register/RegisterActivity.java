@@ -53,7 +53,7 @@ public class RegisterActivity extends BaseActivity {
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final String camera_permission = Manifest.permission.CAMERA;
-    private final int READ_REQ = 1, CAMERA_REQ = 2, ADDRESS_REQ = 3;
+    private final int READ_REQ = 1, CAMERA_REQ = 2;
     private int selectedReq = 0;
     private Uri uri = null;
 
@@ -74,8 +74,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void initView() {
         mvvm = ViewModelProviders.of(this).get(ActivityRegisterMvvm.class);
-        model = new RegisterModel(phone_code, phone, this);
-        //model.setContext(this);
+        model = new RegisterModel(phone_code, phone);
         binding.setLang(getLang());
         model.setValid(false);
 
@@ -132,57 +131,55 @@ public class RegisterActivity extends BaseActivity {
         binding.setModel(model);
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                if (selectedReq == READ_REQ) {
+            if (selectedReq == 3 && result.getResultCode() == RESULT_OK && result.getData() != null) {
+                SelectedLocation location = (SelectedLocation) result.getData().getSerializableExtra("location");
+                model.setAddress(location.getAddress());
+                model.setLat(location.getLat());
+                model.setLng(location.getLng());
+                binding.setModel(model);
 
-                    uri = result.getData().getData();
-                    model.setPhotoUrl(uri.toString());
-                    File file = new File(Common.getImagePath(this, uri));
 
-                    Picasso.get().load(file).fit().into(binding.image);
+            } else {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    if (selectedReq == READ_REQ) {
 
-                }
-                else if (selectedReq == CAMERA_REQ) {
-                    Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
-                    uri = getUriFromBitmap(bitmap);
-                    if (uri != null) {
-                        String path = Common.getImagePath(this, uri);
+                        uri = result.getData().getData();
                         model.setPhotoUrl(uri.toString());
-                        if (path != null) {
-                            Picasso.get().load(new File(path)).fit().into(binding.image);
+                        File file = new File(Common.getImagePath(this, uri));
 
-                        } else {
-                            Picasso.get().load(uri).fit().into(binding.image);
+                        Picasso.get().load(file).fit().into(binding.image);
 
+                    } else if (selectedReq == CAMERA_REQ) {
+                        Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
+                        uri = getUriFromBitmap(bitmap);
+                        if (uri != null) {
+                            String path = Common.getImagePath(this, uri);
+                            model.setPhotoUrl(uri.toString());
+                            if (path != null) {
+                                Picasso.get().load(new File(path)).fit().into(binding.image);
+
+                            } else {
+                                Picasso.get().load(uri).fit().into(binding.image);
+
+                            }
                         }
                     }
-                }
-                else if (selectedReq == ADDRESS_REQ && result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    SelectedLocation location = (SelectedLocation) result.getData().getSerializableExtra("location");
-                  //  mvvm.setSelectedLocation(location);
-                    model.setAddress(location.getAddress());
-                    model.setLat(location.getLat());
-                    model.setLng(location.getLng());
-                    binding.setModel(model);
-                }
 
+                }
             }
+
         });
 
+
         mvvm.getUserData().observe(this, userModel -> {
-            Intent intent=getIntent();
-            intent.putExtra("data",userModel);
-            setResult(RESULT_OK,intent);
+            Intent intent = getIntent();
+            intent.putExtra("data", userModel);
+            setResult(RESULT_OK, intent);
             finish();
 
         });
 
-//        binding.cardAddress.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                navigateToMapActivity();
-//            }
-//        });
+
         binding.cardViewImage.setOnClickListener(view -> {
             Common.CloseKeyBoard(this, binding.edtName);
             openSheet();
@@ -199,6 +196,8 @@ public class RegisterActivity extends BaseActivity {
 
         binding.btnCancel.setOnClickListener(view -> closeSheet());
 
+        binding.cardAddress.setOnClickListener(view -> navigateToMapActivity());
+
 
         binding.btnNext.setOnClickListener(view -> {
             if (getUserModel() == null) {
@@ -209,6 +208,12 @@ public class RegisterActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private void navigateToMapActivity() {
+        selectedReq = 3;
+        Intent intent = new Intent(this, MapActivity.class);
+        launcher.launch(intent);
     }
 
     private void setOptionData() {
@@ -314,9 +319,5 @@ public class RegisterActivity extends BaseActivity {
         return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
     }
 
-    private void navigateToMapActivity() {
-        selectedReq = 3;
-        Intent intent = new Intent(this, MapActivity.class);
-        launcher.launch(intent);
-    }
+
 }

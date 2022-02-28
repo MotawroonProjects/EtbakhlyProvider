@@ -18,6 +18,7 @@ public class UserModel extends StatusResponse {
         private String email;
         private String photo;
         private String yes_i_read_it;
+        private String address;
         private String longitude;
         private String latitude;
         private String type;
@@ -61,6 +62,10 @@ public class UserModel extends StatusResponse {
 
         public String getEmail() {
             return email;
+        }
+
+        public String getAddress() {
+            return address;
         }
 
         public void setEmail(String email) {

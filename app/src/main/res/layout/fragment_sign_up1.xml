@@ -33,57 +33,55 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="8dp"
-                >
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="@string/complete_profile"
                     android:textColor="@color/black"
                     android:textSize="22sp"
-                    android:text="@string/complete_profile"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_horizontal"
-                    />
+                    android:textStyle="bold" />
 
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="24dp"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
+                        android:background="@drawable/circle_primary"
+                        android:gravity="center"
+                        android:text="1"
                         android:textColor="@color/white"
                         android:textSize="22sp"
-                        android:background="@drawable/circle_primary"
-                        android:text="1"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="50dp"
                         android:layout_height="1dp"
-                        android:background="@color/colorPrimary"
                         android:layout_gravity="center_vertical"
+                        android:background="@color/colorPrimary"
 
                         />
+
                     <TextView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
+                        android:background="@drawable/circle_gray"
+                        android:gravity="center"
+                        android:text="2"
                         android:textColor="@color/white"
                         android:textSize="22sp"
-                        android:background="@drawable/circle_gray"
-                        android:text="2"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
                 </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,14 +127,13 @@
                                 android:layout_marginEnd="8dp"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
+                                android:hint="@string/from"
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
                                 android:text="@{model.working_time_from}"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:hint="@string/from"
                                 android:textColorHint="@color/gray4"
-                                />
+                                android:textSize="14sp" />
 
                             <ImageView
                                 android:layout_width="24dp"
@@ -174,12 +171,12 @@
                                 android:layout_marginEnd="8dp"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
+                                android:hint="@string/to"
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
-                                android:hint="@string/to"
                                 android:text="@{model.working_time_to}"
-                                android:textColorHint="@color/gray4"
                                 android:textColor="@color/black"
+                                android:textColorHint="@color/gray4"
                                 android:textSize="14sp" />
 
                             <ImageView
@@ -195,77 +192,6 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/address"
-                    android:textColor="@color/gray31"
-                    android:textSize="14sp" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="3dp"
-                    app:cardCornerRadius="3dp"
-
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp">
-
-                        <androidx.legacy.widget.Space
-                            android:layout_width="8dp"
-                            android:layout_height="0dp" />
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_pin"
-                            app:tint="@color/gray36" />
-
-                        <androidx.legacy.widget.Space
-                            android:layout_width="8dp"
-                            android:layout_height="0dp" />
-
-                        <TextView
-
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:lines="1"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:text="@{model.address}"
-                            android:textColor="@color/gray38"
-                            android:textSize="14sp"
-                            android:hint="@string/address"
-                            android:textColorHint="@color/gray4"
-                            />
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:rotation='@{lang.equals("ar")?180:0}'
-                            android:src="@drawable/ic_arrow_right"
-                            app:tint="@color/black" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -347,24 +273,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <EditText
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginEnd="8dp"
                                 android:layout_weight="1"
+                                android:background="@color/transparent"
                                 android:gravity="center_vertical"
+                                android:hint="@string/from"
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
-                                android:hint="@string/from"
-                                android:textColorHint="@color/gray4"
-                                android:text="@={model.delivery_time_from}"
+                                android:text="@{model.delivery_time_from}"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:background="@color/transparent"
-                                android:inputType="datetime"
-                                />
+                                android:textColorHint="@color/gray4"
+                                android:textSize="14sp" />
 
                             <ImageView
                                 android:layout_width="24dp"
@@ -393,24 +317,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <EditText
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginEnd="8dp"
                                 android:layout_weight="1"
+                                android:background="@color/transparent"
                                 android:gravity="center_vertical"
+                                android:hint="@string/to"
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
-                                android:hint="@string/to"
-                                android:textColorHint="@color/gray4"
-                                android:text="@={model.delivery_time_to}"
+                                android:text="@{model.delivery_time_to}"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:inputType="datetime"
-                                android:background="@color/transparent"
-                                />
+                                android:textColorHint="@color/gray4"
+                                android:textSize="14sp" />
 
                             <ImageView
                                 android:layout_width="24dp"
@@ -460,23 +382,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <EditText
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginEnd="8dp"
                                 android:layout_weight="1"
+                                android:background="@color/transparent"
                                 android:gravity="center_vertical"
+                                android:hint="@string/from"
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
-                                android:hint="@string/from"
-                                android:textColorHint="@color/gray4"
                                 android:text="@={model.process_time_from}"
                                 android:textColor="@color/black"
+                                android:textColorHint="@color/gray4"
                                 android:textSize="14sp"
-                                android:inputType="datetime"
-                                android:background="@color/transparent"
 
 
                                 />
@@ -508,23 +429,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <EditText
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginEnd="8dp"
                                 android:layout_weight="1"
+                                android:background="@color/transparent"
                                 android:gravity="center_vertical"
+                                android:hint="@string/to"
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
-                                android:hint="@string/to"
-                                android:textColorHint="@color/gray4"
                                 android:text="@={model.process_time_to}"
                                 android:textColor="@color/black"
+                                android:textColorHint="@color/gray4"
                                 android:textSize="14sp"
-                                android:inputType="datetime"
-                                android:background="@color/transparent"
 
 
                                 />
@@ -685,6 +605,26 @@
                                 android:spinnerMode="dialog" />
                         </androidx.cardview.widget.CardView>
 
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="8dp"
+                            android:orientation="vertical"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="3dp"
+                            app:contentPadding="16dp"
+
+                            >
+
+                            <Spinner
+                                android:id="@+id/spCity"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dialog" />
+                        </androidx.cardview.widget.CardView>
+
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -706,12 +646,12 @@
                                 android:spinnerMode="dialog" />
                         </androidx.cardview.widget.CardView>
 
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            />
+                            android:layout_marginTop="8dp" />
                     </LinearLayout>
                 </FrameLayout>
 

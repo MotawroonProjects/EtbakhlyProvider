@@ -25,7 +25,6 @@ import io.paperdb.Paper;
 
 public class HomeActivity extends BaseActivity {
     private ActivityHomeBinding binding;
-    private String lang;
     private HomePagerAdapter pagerAdapter;
     private List<String> titles;
     private List<Fragment> fragmentList;
@@ -46,11 +45,11 @@ public class HomeActivity extends BaseActivity {
     private void initView() {
         activityHomeGeneralMvvm = ViewModelProviders.of(this).get(ActivityHomeGeneralMvvm.class);
 
-
+        binding.setModel(getUserModel());
         titles = new ArrayList<>();
         fragmentList = new ArrayList<>();
         Paper.init(this);
-        binding.setLang(lang);
+        binding.setLang(getLang());
 
         titles.add(getString(R.string.new_orders));
         titles.add(getString(R.string.pending));
@@ -60,17 +59,12 @@ public class HomeActivity extends BaseActivity {
         fragmentList.add(FragmentPendingOrders.newInstance());
         fragmentList.add(FragmentCompletedOrders.newInstance());
 
+        binding.pager.setOffscreenPageLimit(fragmentList.size());
+
         pagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), PagerAdapter.POSITION_UNCHANGED, fragmentList, titles);
         binding.tab.setupWithViewPager(binding.pager);
         binding.pager.setAdapter(pagerAdapter);
-//activityHomeGeneralMvvm.getOnStatusSuccess().observe(this, new Observer<String>() {
-//    @Override
-//    public void onChanged(String s) {
-//        if(s.equals("approval")){
-//            setItemPos(1);
-//        }
-//    }
-//});
+
 
         binding.llMenu.setOnClickListener(view -> {
             Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);

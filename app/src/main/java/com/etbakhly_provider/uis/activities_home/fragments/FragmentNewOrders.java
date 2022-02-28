@@ -36,7 +36,6 @@ public class FragmentNewOrders extends BaseFragment {
     private HomeActivity activity;
     private FragmentNewOrdersMvvm mvvm;
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
-    private String caterer_id = "27";
     private String reason = "";
 
     public static FragmentNewOrders newInstance() {
@@ -68,7 +67,6 @@ public class FragmentNewOrders extends BaseFragment {
 
     private void initView() {
 
-        Log.e("eeee","juuihiuhi");
         activityHomeGeneralMvvm = ViewModelProviders.of(this).get(ActivityHomeGeneralMvvm.class);
 
 
@@ -94,22 +92,22 @@ public class FragmentNewOrders extends BaseFragment {
             if (status == 1) {
                 activityHomeGeneralMvvm.getOnStatusSuccess().setValue("approval");
                 activity.setItemPos(1);
-                mvvm.getNewOrders(caterer_id);
+                mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
             } else if (status == 2) {
-                mvvm.getNewOrders(caterer_id);
+                mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
             }
         });
 
 
         binding.swipeRefresh.setOnRefreshListener(() -> {
-            mvvm.getNewOrders(caterer_id);
+            mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
         });
 
         adapter = new NewOrdersAdapter(activity, this);
         binding.recyclerOrder.setAdapter(adapter);
         binding.recyclerOrder.setLayoutManager(new LinearLayoutManager(activity));
 
-        mvvm.getNewOrders(caterer_id);
+        mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
 
     }
 

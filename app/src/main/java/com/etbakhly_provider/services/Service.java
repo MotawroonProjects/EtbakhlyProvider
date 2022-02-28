@@ -7,7 +7,6 @@ import com.etbakhly_provider.model.AddFeastDishDataModel;
 import com.etbakhly_provider.model.BuffetsDataModel;
 import com.etbakhly_provider.model.CategoryDataModel;
 import com.etbakhly_provider.model.CountryDataModel;
-import com.etbakhly_provider.model.CategoryDataModel;
 import com.etbakhly_provider.model.DishesDataModel;
 import com.etbakhly_provider.model.OrderDataModel;
 import com.etbakhly_provider.model.PlaceGeocodeData;
@@ -17,7 +16,7 @@ import com.etbakhly_provider.model.SingleKitchenDataModel;
 import com.etbakhly_provider.model.SingleOrderDataModel;
 import com.etbakhly_provider.model.StatusResponse;
 import com.etbakhly_provider.model.AddBuffetDataModel;
-import com.etbakhly_provider.model.StoreCatreerDataModel;
+import com.etbakhly_provider.model.StoreCatererDataModel;
 import com.etbakhly_provider.model.UserModel;
 
 import io.reactivex.Single;
@@ -29,7 +28,6 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -72,6 +70,7 @@ public interface Service {
                                        @Field("phone_code") String phone_code,
                                        @Field("phone") String phone,
                                        @Field("email") String email,
+                                       @Field("address") String address,
                                        @Field("longitude") String longitude,
                                        @Field("latitude") String latitude,
                                        @Field("type") String type,
@@ -128,6 +127,7 @@ public interface Service {
                                                      @Part("price") RequestBody price,
                                                      @Part("category_dishes_id") RequestBody category_dishes_id,
                                                      @Part("caterer_id") RequestBody caterer_id);
+
     @Multipart
     @POST("api/Catering/updateBuffet")
     Single<Response<StatusResponse>> updateBuffet(@Part("titel") RequestBody titel,
@@ -165,8 +165,7 @@ public interface Service {
 
 
     @POST("api/Service/storeCaterer")
-    Single<Response<UserModel>> storeCatreer(
-            @Body StoreCatreerDataModel cartDataModel
+    Single<Response<UserModel>> storeCaterer(@Body StoreCatererDataModel model
     );
 
     @Multipart

@@ -73,7 +73,7 @@ public class LoginActivity extends BaseActivity {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
                 UserModel userModel = (UserModel) result.getData().getSerializableExtra("data");
-                if (userModel.getData().getIs_completed() != null || userModel.getData().getIs_completed().equals("yes")) {
+                if (userModel.getData().getIs_completed() != null && userModel.getData().getIs_completed().equals("yes")) {
                     setUserModel(userModel);
                     navigateToHomeActivity();
                 } else {

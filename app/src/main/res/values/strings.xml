@@ -16,7 +16,7 @@
     <string name="to">To</string>
     <string name="working_period">Working period</string>
     <string name="delivery">Delivery</string>
-    <string name="surrender">Surrender</string>
+    <string name="surrender">Not delivery</string>
     <string name="areas_covered_by_delivery">Areas covered by delivery</string>
     <string name="commercial_registration_no">Commercial Registration No</string>
     <string name="category">Category</string>
@@ -62,7 +62,7 @@
     <string name="resend">Resend</string>
     <string name="wait">Wait</string>
     <string name="yes_i_have_read_it_and_agree_to_it">Yes, I have read it and agree to it</string>
-    <string name="do_read_our_terms_of_use_and_privacy_policy"><![CDATA[Do read our <font color ="#4D94BE"><a href="https://www.google.com">Terms of Use</a></font> and <font color ="#4D94BE"><a href="https://www.google.com">Privacy Policy</a></font>]]></string>
+    <string name="do_read_our_terms_of_use_and_privacy_policy"><![CDATA[Do read our <font color ="#4D94BE"><a href="http://etbo5ly.coopq8.com/terms#1">Terms of Use</a></font> and <font color ="#4D94BE"><a href="http://etbo5ly.coopq8.com/terms#2">Privacy Policy</a></font>]]></string>
     <string name="cnt_login">You cannot log in without agreeing to the Terms of Use</string>
     <string name="choose_language">Change language</string>
     <string name="choose_country">Choose country</string>
@@ -102,7 +102,7 @@
 
 
     <string name="sent_delivered_handed">sent delivered handed</string>
-    <string name="ph_em_found">phone number or email already exists</string>
+    <string name="ph_em_found">phone number already exists</string>
     <string name="ch_city">Choose City</string>
     <string name="plz_ch_country">Please Choose Country</string>
     <string name="select_location_on_map">Select Location on Map</string>
@@ -175,6 +175,9 @@
     <string name="already_added">Sorry! you have already added</string>
     <string name="edit_dish">Edit Dish</string>
     <string name="updated">Updated</string>
+    <string name="add_time">Add time</string>
+    <string name="minute">Minute</string>
+    <string name="em_exist">email already exists</string>
 
 
 </resources>

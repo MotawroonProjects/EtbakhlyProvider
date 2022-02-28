@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,7 +54,7 @@ public class ActivityRegisterMvvm extends AndroidViewModel {
         dialog.show();
 
 
-        Api.getService(Tags.base_url).signUp(model.getName(), model.getPhone_code(), model.getPhone(), model.getEmail(), model.getLng() + "", model.getLat() + "", model.getService(), "android")
+        Api.getService(Tags.base_url).signUp(model.getName(), model.getPhone_code(), model.getPhone(), model.getEmail(), model.getAddress(),model.getLng() + "", model.getLat() + "", model.getService(), "android")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<UserModel>>() {
@@ -65,6 +66,7 @@ public class ActivityRegisterMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<UserModel> userModelResponse) {
                         dialog.dismiss();
+                        Log.e("res",userModelResponse.code()+"__"+userModelResponse.toString());
                         if (userModelResponse.isSuccessful()) {
 
                             if (userModelResponse.body() != null) {
@@ -73,6 +75,8 @@ public class ActivityRegisterMvvm extends AndroidViewModel {
                                     getUserData().setValue(userModelResponse.body());
                                 } else if (userModelResponse.body().getStatus() == 404) {
                                     Toast.makeText(context, R.string.ph_em_found, Toast.LENGTH_LONG).show();
+                                } else if (userModelResponse.body().getStatus() == 405) {
+                                    Toast.makeText(context, R.string.em_exist, Toast.LENGTH_LONG).show();
                                 }
                             }
 

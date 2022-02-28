@@ -32,7 +32,6 @@ public class FragmentCompletedOrders extends BaseFragment {
     private FragmentCompletedOrdersMvvm mvvm;
 
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
-    private String caterer_id = "27";
 
     public static FragmentCompletedOrders newInstance() {
         FragmentCompletedOrders fragment = new FragmentCompletedOrders();
@@ -66,7 +65,7 @@ public class FragmentCompletedOrders extends BaseFragment {
 
         activityHomeGeneralMvvm.getOnStatusSuccess().observe(activity, status -> {
             if (status.equals("completed")) {
-                mvvm.getCompletedOrders(caterer_id);
+                mvvm.getCompletedOrders(getUserModel().getData().getCaterer().getId());
 
             }
         });
@@ -88,11 +87,11 @@ public class FragmentCompletedOrders extends BaseFragment {
         });
 
         binding.swipeRefresh.setOnRefreshListener(() -> {
-            mvvm.getCompletedOrders(caterer_id);
+            mvvm.getCompletedOrders(getUserModel().getData().getCaterer().getId());
         });
         binding.recyclerOrder.setAdapter(adapter);
         binding.recyclerOrder.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.VERTICAL, false));
-        mvvm.getCompletedOrders(caterer_id);
+        mvvm.getCompletedOrders(getUserModel().getData().getCaterer().getId());
 
     }
 

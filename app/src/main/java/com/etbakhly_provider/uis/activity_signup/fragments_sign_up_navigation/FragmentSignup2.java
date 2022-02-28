@@ -25,7 +25,10 @@ import com.etbakhly_provider.adapter.SpinnerDayAdapter;
 import com.etbakhly_provider.databinding.FragmentSignUp2Binding;
 import com.etbakhly_provider.model.SelectedLocation;
 import com.etbakhly_provider.model.SignUpModel;
+import com.etbakhly_provider.model.UserModel;
+import com.etbakhly_provider.mvvm.ActivitySignupMvvm;
 import com.etbakhly_provider.mvvm.FragmentSignup1Mvvm;
+import com.etbakhly_provider.mvvm.FragmentSignup2Mvvm;
 import com.etbakhly_provider.mvvm.GeneralSignUpMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
@@ -50,12 +53,18 @@ public class FragmentSignup2 extends BaseFragment {
     private FragmentSignUp2Binding binding;
     private SignUpModel signUpModel;
     private GeneralSignUpMvvm generalSignUpMvvm;
+    private FragmentSignup2Mvvm mvvm;
     private CompositeDisposable disposable = new CompositeDisposable();
+    private UserModel userModel;
 
-    public static FragmentSignup2 newInstance() {
-        return new FragmentSignup2();
+
+    public static FragmentSignup2 newInstance(UserModel userModel) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("data", userModel);
+        FragmentSignup2 fragmentSignup2 = new FragmentSignup2();
+        fragmentSignup2.setArguments(bundle);
+        return fragmentSignup2;
     }
-
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -63,6 +72,15 @@ public class FragmentSignup2 extends BaseFragment {
         activity = (SignupActivity) context;
 
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            userModel = (UserModel) bundle.getSerializable("data");
+        }
     }
 
     @Override
@@ -107,9 +125,16 @@ public class FragmentSignup2 extends BaseFragment {
     private void initView() {
 
         generalSignUpMvvm = ViewModelProviders.of(activity).get(GeneralSignUpMvvm.class);
+        mvvm = ViewModelProviders.of(this).get(FragmentSignup2Mvvm.class);
+        mvvm.getUserData().observe(this, userModel -> {
+            Intent intent = activity.getIntent();
+            intent.putExtra("data",userModel);
+            activity.setResult(RESULT_OK,intent);
+            activity.finish();
 
+        });
         generalSignUpMvvm.getSignUpModel().observe(activity, model -> {
-            if (model!=null){
+            if (model != null) {
                 this.signUpModel = model;
                 binding.setModel(model);
             }
@@ -150,8 +175,19 @@ public class FragmentSignup2 extends BaseFragment {
             }
 
         });
-        binding.btnNext.setOnClickListener(view ->{
+        binding.btnNext.setOnClickListener(view -> {
+            String type = userModel.getData().getType();
+            String option_id = "";
+            if (type.equals("service")) {
+                option_id = "1";
+            } else if (type.equals("chef")) {
+                option_id = "2";
 
+            } else {
+                option_id = "3";
+
+            }
+            mvvm.completeRegister(signUpModel,userModel.getData().getId(), option_id, activity);
         });
     }
 

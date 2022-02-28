@@ -22,16 +22,16 @@ import com.etbakhly_provider.databinding.FragmentOrderBinding;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.mvvm.FragmentPendingOrdersMvvm;
 import com.etbakhly_provider.uis.activities_home.HomeActivity;
+import com.etbakhly_provider.uis.activity_base.BaseFragment;
 import com.etbakhly_provider.uis.order_details.OrderDetailsActivity;
 
 
-public class FragmentPendingOrders extends Fragment {
+public class FragmentPendingOrders extends BaseFragment {
     private FragmentOrderBinding binding;
     private PendingOrdersAdapter adapter;
     private HomeActivity activity;
     private FragmentPendingOrdersMvvm mvvm;
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
-    private String caterer_id = "27";
 
     public static FragmentPendingOrders newInstance() {
         FragmentPendingOrders fragment = new FragmentPendingOrders();
@@ -64,9 +64,9 @@ public class FragmentPendingOrders extends Fragment {
         activityHomeGeneralMvvm = ViewModelProviders.of(activity).get(ActivityHomeGeneralMvvm.class);
         mvvm.getOnStatusSuccess().observe(activity, status -> {
             if (status == 1) {
-                mvvm.getPendingOrder(caterer_id);
+                mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
             } else if (status == 2) {
-                mvvm.getPendingOrder(caterer_id);
+                mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
                 activityHomeGeneralMvvm.getOnStatusSuccess().setValue("completed");
             }
         });
@@ -76,16 +76,7 @@ public class FragmentPendingOrders extends Fragment {
             binding.swipeRefresh.setRefreshing(isLoading);
         });
 
-//        mvvm.getOnDataSuccess().observe(activity, orderList -> {
-//            if (orderList.size() > 0) {
-//                if (adapter != null) {
-//                    adapter.updateList(orderList);
-//                    binding.tvNoData.setVisibility(View.GONE);
-//                }
-//            } else {
-//                binding.tvNoData.setVisibility(View.VISIBLE);
-//            }
-//        });
+
         mvvm.getOnDataSuccess().observe(activity, orderModelList -> {
             if (orderModelList.size() > 0) {
                 if (adapter != null) {
@@ -99,11 +90,11 @@ public class FragmentPendingOrders extends Fragment {
         });
 
         binding.swipeRefresh.setOnRefreshListener(() -> {
-            mvvm.getPendingOrder(caterer_id);
+            mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
         });
         binding.recyclerOrder.setAdapter(adapter);
         binding.recyclerOrder.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.VERTICAL, false));
-        mvvm.getPendingOrder(caterer_id);
+        mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
 
     }
 
@@ -113,7 +104,7 @@ public class FragmentPendingOrders extends Fragment {
     }
 
     public void navigateToDetails() {
-        Intent intent=new Intent(activity, OrderDetailsActivity.class);
+        Intent intent = new Intent(activity, OrderDetailsActivity.class);
         startActivity(intent);
     }
 

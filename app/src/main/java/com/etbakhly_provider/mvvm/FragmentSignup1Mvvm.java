@@ -32,8 +32,10 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
     private static final String TAG = "FragmentSignup1Mvvm";
 
     private MutableLiveData<List<CountryModel>> countryLiveData;
-    private MutableLiveData<List<CategoryModel>> onCategorySuccess;
+    private MutableLiveData<List<CountryModel>> cityLiveData;
     private MutableLiveData<List<CountryModel>> zoneLiveData;
+
+    private MutableLiveData<List<CategoryModel>> onCategorySuccess;
     private MutableLiveData<List<AddZoneModel>> onAddZoneSuccess;
 
 
@@ -59,6 +61,14 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
             zoneLiveData = new MutableLiveData<>();
         }
         return zoneLiveData;
+    }
+
+
+    public MutableLiveData<List<CountryModel>> getCityLiveData() {
+        if (cityLiveData == null) {
+            cityLiveData = new MutableLiveData<>();
+        }
+        return cityLiveData;
     }
 
 
@@ -104,7 +114,13 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
                                 List<CountryModel> countryModelList = new ArrayList<>();
                                 countryModelList.add(new CountryModel(context.getString(R.string.choose_country)));
                                 countryModelList.addAll(response.body().getData());
-                                countryLiveData.setValue(countryModelList);
+                                getCountryLiveData().setValue(countryModelList);
+
+
+                                List<CountryModel> cityList = new ArrayList<>();
+                                cityList.add(new CountryModel(context.getString(R.string.ch_city)));
+                                getCityLiveData().setValue(cityList);
+
                                 List<CountryModel> zoneList = new ArrayList<>();
                                 zoneList.add(new CountryModel(context.getString(R.string.ch_zone)));
                                 getZoneLiveData().setValue(zoneList);
@@ -120,10 +136,48 @@ public class FragmentSignup1Mvvm extends AndroidViewModel {
 
     }
 
-    public void getZone(String country_id, Context context) {
+    public void getCity(Context context, String country_id) {
 
         Api.getService(Tags.base_url)
-                .getZone(country_id)
+                .getCityByCountryId(country_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<CountryDataModel>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<CountryDataModel> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body() != null && response.body().getStatus() == 200) {
+                                List<CountryModel> cityList = new ArrayList<>();
+                                cityList.add(new CountryModel(context.getString(R.string.ch_city)));
+                                cityList.addAll(response.body().getData());
+                                getCityLiveData().setValue(cityList);
+
+                                List<CountryModel> zoneList = new ArrayList<>();
+                                zoneList.add(new CountryModel(context.getString(R.string.ch_zone)));
+                                getZoneLiveData().setValue(zoneList);
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.d(TAG, "Error", e);
+                    }
+                });
+
+    }
+
+
+    public void getZone(String city_id, Context context) {
+
+        Api.getService(Tags.base_url)
+                .getZone(city_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<CountryDataModel>>() {

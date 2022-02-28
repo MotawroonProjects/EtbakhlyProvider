@@ -17,7 +17,7 @@
     <string name="to">الى</string>
     <string name="working_period">فترة العمل</string>
     <string name="delivery">توصيل</string>
-    <string name="surrender">يستسلم</string>
+    <string name="surrender">تسليم</string>
     <string name="areas_covered_by_delivery">المناطق المشمولة بالتسليم</string>
     <string name="commercial_registration_no">رقم السجل التجاري</string>
     <string name="category">الفئة</string>
@@ -63,7 +63,7 @@
     <string name="resend">أعد إرسال</string>
     <string name="wait">إنتطر قليلا...</string>
     <string name="yes_i_have_read_it_and_agree_to_it">نعم قراتها و أوافق عليها</string>
-    <string name="do_read_our_terms_of_use_and_privacy_policy"><![CDATA[هل قرأت <font color ="#4D94BE"><a href="https://www.google.com">شروط الاستخدام</a></font> و <font color ="#4D94BE"><a href="https://www.google.com">سياسة الخصوصية</a></font>]]></string>
+    <string name="do_read_our_terms_of_use_and_privacy_policy"><![CDATA[هل قرأت <font color ="#4D94BE"><a href="http://etbo5ly.coopq8.com/terms#1">شروط الاستخدام</a></font> و <font color ="#4D94BE"><a href="http://etbo5ly.coopq8.com/terms#2">سياسة الخصوصية</a></font>]]></string>
     <string name="cnt_login">لا يمكنك تسجيل الدخول دون الموافقة على شروط الاستخدام</string>
     <string name="choose_language">تغيير اللغة</string>
     <string name="choose_country">إختر الدولة</string>
@@ -104,9 +104,9 @@
 
     <string name="sent_delivered_handed">تم التسليم</string>
     <string name="ph_em_found">رقم الجوال او البريد الالكترونى موجود مسبقا</string>
-    <string name="ch_city">اختر المدينه</string>
-    <string name="plz_ch_country">من فضلك اختر الدوله</string>
-    <string name="select_location_on_map">حدد موقعك على الخريطه</string>
+    <string name="ch_city">اختر المدينة</string>
+    <string name="plz_ch_country">من فضلك اختر الدولة</string>
+    <string name="select_location_on_map">حدد موقعك على الخريطة</string>
     <string name="chef">شيف</string>
     <string name="food_truck">عربة طعام</string>
     <string name="delivery_type">نوع التوصيل</string>
@@ -129,7 +129,7 @@
 
     <string name="food_menu">قائمة الطعام</string>
     <string name="number">العدد</string>
-    <string name="add_new">+  إضافة جديد</string>
+    <string name="add_new">إضافة جديد</string>
     <string name="add_dishes">إضافة طبق</string>
     <string name="dish_name">اسم الطبق</string>
     <string name="calories">السعرات الحرارية</string>
@@ -157,7 +157,7 @@
     <string name="tax">الضريبه</string>
     <string name="note">ملاحظات</string>
     <string name="ch_delivert">اختر نوع التسليم</string>
-    <string name="ch_zone">اختر المنطقه</string>
+    <string name="ch_zone">اختر المنطقة</string>
     <string name="day1">1 يوم</string>
     <string name="day2">2 يوم</string>
     <string name="day3">3 يوم</string>
@@ -175,4 +175,7 @@
     <string name="already_added">عفوا! لقد تم إضافة المنطقة بالفعل من قبل</string>
     <string name="edit_dish">تعديل الطبق</string>
     <string name="updated">تم التعديل</string>
+    <string name="add_time">إضافة الوقت</string>
+    <string name="minute">دقيقة</string>
+    <string name="em_exist">البريد الالكتروني موجود مسبقا</string>
 </resources>

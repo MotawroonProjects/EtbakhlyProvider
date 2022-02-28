@@ -6,6 +6,11 @@ public class DeliveryModel implements Serializable {
     private int zone_id;
     private double zone_cost;
 
+    public DeliveryModel(int zone_id, double zone_cost) {
+        this.zone_id = zone_id;
+        this.zone_cost = zone_cost;
+    }
+
     public int getZone_id() {
         return zone_id;
     }
