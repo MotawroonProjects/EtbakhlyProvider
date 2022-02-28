@@ -50,30 +50,24 @@ public class BuffetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 activity.setItemData(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
             }
         });
-        myHolder.binding.llEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (appCompatActivity instanceof BuffetActivity){
-                    BuffetActivity activity=(BuffetActivity) appCompatActivity;
-                    activity.editBuffet(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
-                }else if (appCompatActivity instanceof FeastsActivity){
-                    FeastsActivity activity=(FeastsActivity) appCompatActivity;
-                    activity.editFeast(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
-                }
+        myHolder.binding.llEdit.setOnClickListener(view -> {
+            if (appCompatActivity instanceof BuffetActivity){
+                BuffetActivity activity=(BuffetActivity) appCompatActivity;
+                activity.editBuffet(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
+            }else if (appCompatActivity instanceof FeastsActivity){
+                FeastsActivity activity=(FeastsActivity) appCompatActivity;
+                activity.editFeast(list.get(myHolder.getAbsoluteAdapterPosition()),myHolder.getAdapterPosition());
             }
         });
-        myHolder.binding.llDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (appCompatActivity instanceof BuffetActivity){
-                    BuffetActivity activity=(BuffetActivity) appCompatActivity;
-                    activity.deleteBuffet(list.get(myHolder.getLayoutPosition()));
-                }else if (appCompatActivity instanceof FeastsActivity){
-                    FeastsActivity activity=(FeastsActivity) appCompatActivity;
-                    activity.deleteFeast(list.get(myHolder.getLayoutPosition()));
-                }
-
+        myHolder.binding.llDelete.setOnClickListener(view -> {
+            if (appCompatActivity instanceof BuffetActivity){
+                BuffetActivity activity=(BuffetActivity) appCompatActivity;
+                activity.deleteBuffet(list.get(myHolder.getLayoutPosition()));
+            }else if (appCompatActivity instanceof FeastsActivity){
+                FeastsActivity activity=(FeastsActivity) appCompatActivity;
+                activity.deleteFeast(list.get(myHolder.getLayoutPosition()));
             }
+
         });
     }
 

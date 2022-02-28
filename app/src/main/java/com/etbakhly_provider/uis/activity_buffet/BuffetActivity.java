@@ -35,7 +35,6 @@ public class BuffetActivity extends BaseActivity {
     private BuffetAdapter adapter;
     private ActivityBuffetsMvvm mvvm;
     private ActivityDishesMvvm dishesMvvm;
-//    private String kitchen_id = "27";
     private int req;
 
     private ActivityResultLauncher<Intent> launcher;

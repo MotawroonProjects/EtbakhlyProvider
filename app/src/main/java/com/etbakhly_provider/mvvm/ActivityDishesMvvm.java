@@ -56,12 +56,11 @@ public class ActivityDishesMvvm extends AndroidViewModel {
 
 
     public MutableLiveData<Integer> getSelectedDishPos() {
-        if (selectedDishPos==null){
-            selectedDishPos=new MutableLiveData<>();
+        if (selectedDishPos == null) {
+            selectedDishPos = new MutableLiveData<>();
         }
         return selectedDishPos;
     }
-
 
 
     public MutableLiveData<Boolean> getOnDeleteDishSuccess() {
@@ -155,7 +154,7 @@ public class ActivityDishesMvvm extends AndroidViewModel {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).addCatererDish(name, caterer_id)
+        Api.getService(Tags.base_url).addCatererDish(name, caterer_id, "dishe")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleCategory>>() {
@@ -174,6 +173,7 @@ public class ActivityDishesMvvm extends AndroidViewModel {
                                 list.add(response.body().getData());
                                 onDataSuccess().setValue(list);
 
+
                             }
                         }
                     }
@@ -187,11 +187,11 @@ public class ActivityDishesMvvm extends AndroidViewModel {
                 });
     }
 
-    public void editCategory(String name, String caterer_id, String category_id, Context context, int pos) {
+    public void editCategory(String name, String Category_Dishes_id, Context context, int pos) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).editCatererDish(name, caterer_id, category_id)
+        Api.getService(Tags.base_url).editCatererDish(name, Category_Dishes_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleCategory>>() {
@@ -208,6 +208,7 @@ public class ActivityDishesMvvm extends AndroidViewModel {
                                 onDataSuccess().getValue().set(pos, response.body().getData());
                                 onEditSuccess().setValue(response.body().getData());
 
+
                             }
                         }
                     }
@@ -222,11 +223,11 @@ public class ActivityDishesMvvm extends AndroidViewModel {
     }
 
 
-    public void deleteCategory(String caterer_id, String category_id, Context context, int pos) {
+    public void deleteCategory(String Category_Dishes_id, Context context, int pos) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).deleteCatererDish(caterer_id, category_id)
+        Api.getService(Tags.base_url).deleteCatererDish(Category_Dishes_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<StatusResponse>>() {

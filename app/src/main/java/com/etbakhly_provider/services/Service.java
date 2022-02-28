@@ -183,21 +183,20 @@ public interface Service {
     @FormUrlEncoded
     @POST("api/Catering/CategoryDishes")
     Single<Response<SingleCategory>> addCatererDish(@Field("titel") String titel,
-                                                    @Field("caterer_id") String caterer_id
+                                                    @Field("caterer_id") String caterer_id,
+                                                    @Field("type") String type
     );
 
     @FormUrlEncoded
     @POST("api/Catering/CategoryDishes")
     Single<Response<SingleCategory>> editCatererDish(@Field("titel") String titel,
-                                                     @Field("caterer_id") String caterer_id,
-                                                     @Field("category_dishes_id") String category_dishes_id
+                                                     @Field("Category_Dishes_id") String Category_Dishes_id
     );
 
     @FormUrlEncoded
     @POST("api/Catering/CategoryDishes")
     Single<Response<StatusResponse>> deleteCatererDish(
-            @Field("caterer_id") String caterer_id,
-            @Field("category_dishes_id") String category_dishes_id
+            @Field("Category_Dishes_id") String Category_Dishes_id
     );
 
     @Multipart

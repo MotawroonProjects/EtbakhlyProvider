@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.etbakhly_provider.R;
@@ -142,7 +143,8 @@ public class DishesActivity extends BaseActivity {
 
                 } else {
 
-                    mvvm.editCategory(category_name, getUserModel().getData().getCaterer().getCategory_id(), selectedCategory.getId(), this, selectedCategoryPos);
+                    mvvm.editCategory(category_name,selectedCategory.getId(), this, selectedCategoryPos);
+                    Log.e("id",selectedCategory.getId().toString());
                 }
 
             } else {
@@ -220,7 +222,7 @@ public class DishesActivity extends BaseActivity {
 
     public void deleteItemCategory(BuffetModel.Category category, int currentPos) {
         selectedCategoryPos = currentPos;
-        mvvm.deleteCategory(getUserModel().getData().getCaterer().getId(), category.getId(), this, currentPos);
+        mvvm.deleteCategory(category.getId(), this, currentPos);
 
 
     }

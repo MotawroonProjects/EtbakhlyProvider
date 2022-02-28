@@ -39,41 +39,43 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <FrameLayout
-                    android:id="@+id/llDelete"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+                    <FrameLayout
+                        android:id="@+id/llDelete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/circle_white"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_delete_outlined" />
-                </FrameLayout>
-                <FrameLayout
-                    android:id="@+id/llEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="60dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                   >
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/circle_white"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_delete_outlined" />
+                    </FrameLayout>
+                    <FrameLayout
+                        android:id="@+id/llEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/circle_white"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_edit"
-                        app:tint="@color/gray14" />
-                </FrameLayout>
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/circle_white"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_edit"
+                            app:tint="@color/gray14" />
+                    </FrameLayout>
 
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
