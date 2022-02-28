@@ -53,8 +53,21 @@ public class ActivityRegisterMvvm extends AndroidViewModel {
         dialog.setCancelable(false);
         dialog.show();
 
+        RequestBody name_part = Common.getRequestBodyText(model.getName());
+        RequestBody phone_code_part = Common.getRequestBodyText(model.getPhone_code());
+        RequestBody phone_part = Common.getRequestBodyText(model.getPhone());
+        RequestBody email_part = Common.getRequestBodyText(model.getEmail());
+        RequestBody address_part = Common.getRequestBodyText(model.getAddress());
+        RequestBody lat_part = Common.getRequestBodyText(model.getLat() + "");
+        RequestBody lng_part = Common.getRequestBodyText(model.getLng() + "");
+        RequestBody service_part = Common.getRequestBodyText(model.getService());
+        RequestBody software_part = Common.getRequestBodyText("android");
 
-        Api.getService(Tags.base_url).signUp(model.getName(), model.getPhone_code(), model.getPhone(), model.getEmail(), model.getAddress(),model.getLng() + "", model.getLat() + "", model.getService(), "android")
+        MultipartBody.Part image = null;
+        if (model.getPhotoUrl() != null && !model.getPhotoUrl().isEmpty()) {
+            image = Common.getMultiPart(context, Uri.parse(model.getPhotoUrl()), "photo");
+        }
+        Api.getService(Tags.base_url).signUp(name_part, phone_code_part, phone_part, email_part, address_part, lng_part, lat_part, service_part, software_part, image)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<UserModel>>() {
@@ -66,7 +79,7 @@ public class ActivityRegisterMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<UserModel> userModelResponse) {
                         dialog.dismiss();
-                        Log.e("res",userModelResponse.code()+"__"+userModelResponse.toString());
+                        Log.e("res", userModelResponse.code() + "__" + userModelResponse.toString());
                         if (userModelResponse.isSuccessful()) {
 
                             if (userModelResponse.body() != null) {

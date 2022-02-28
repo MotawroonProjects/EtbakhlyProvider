@@ -128,8 +128,8 @@ public class FragmentSignup2 extends BaseFragment {
         mvvm = ViewModelProviders.of(this).get(FragmentSignup2Mvvm.class);
         mvvm.getUserData().observe(this, userModel -> {
             Intent intent = activity.getIntent();
-            intent.putExtra("data",userModel);
-            activity.setResult(RESULT_OK,intent);
+            intent.putExtra("data", userModel);
+            activity.setResult(RESULT_OK, intent);
             activity.finish();
 
         });
@@ -187,7 +187,7 @@ public class FragmentSignup2 extends BaseFragment {
                 option_id = "3";
 
             }
-            mvvm.completeRegister(signUpModel,userModel.getData().getId(), option_id, activity);
+            mvvm.completeRegister(signUpModel, userModel.getData().getId(), option_id, activity);
         });
     }
 

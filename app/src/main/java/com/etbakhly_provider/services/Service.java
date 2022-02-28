@@ -64,17 +64,18 @@ public interface Service {
                                                        @Field("status_order") String status_order,
                                                        @Field("why_cancel") String why_cancel);
 
-    @FormUrlEncoded
+    @Multipart
     @POST("api/Catering/signup")
-    Single<Response<UserModel>> signUp(@Field("name") String name,
-                                       @Field("phone_code") String phone_code,
-                                       @Field("phone") String phone,
-                                       @Field("email") String email,
-                                       @Field("address") String address,
-                                       @Field("longitude") String longitude,
-                                       @Field("latitude") String latitude,
-                                       @Field("type") String type,
-                                       @Field("software_type") String software_type
+    Single<Response<UserModel>> signUp(@Part("name") RequestBody name,
+                                       @Part("phone_code") RequestBody phone_code,
+                                       @Part("phone") RequestBody phone,
+                                       @Part("email") RequestBody email,
+                                       @Part("address") RequestBody address,
+                                       @Part("longitude") RequestBody longitude,
+                                       @Part("latitude") RequestBody latitude,
+                                       @Part("type") RequestBody type,
+                                       @Part("software_type") RequestBody software_type,
+                                       @Part MultipartBody.Part part
 
 
     );
