@@ -188,13 +188,13 @@ public interface Service {
     );
 
     @FormUrlEncoded
-    @POST("api/Catering/CategoryDishes")
-    Single<Response<SingleCategory>> editCatererDish(@Field("titel") String titel,
+    @POST("api/Catering/CategoryDishesUpdate")
+    Single<Response<StatusResponse>> editCatererDish(@Field("titel") String titel,
                                                      @Field("Category_Dishes_id") String Category_Dishes_id
     );
 
     @FormUrlEncoded
-    @POST("api/Catering/CategoryDishes")
+    @POST("api/Catering/CategoryDishesDelete")
     Single<Response<StatusResponse>> deleteCatererDish(
             @Field("Category_Dishes_id") String Category_Dishes_id
     );

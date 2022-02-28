@@ -108,62 +108,6 @@ public class GeneralMethod {
 
     }
 
-    @BindingAdapter("image2")
-    public static void image2(View view, String imageUrl) {
-        if (imageUrl != null) {
-            String imageUrl1 = Tags.IMAGE_Maincategory_URL + imageUrl;
-
-            view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-
-                    if (view instanceof CircleImageView) {
-                        CircleImageView imageView = (CircleImageView) view;
-                        if (imageUrl1 != null) {
-                            RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
-                            Glide.with(view.getContext()).asBitmap()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .load(imageUrl1)
-                                    //.centerCrop()
-                                    .apply(options)
-                                    .into(imageView);
-                        }
-                    } else if (view instanceof RoundedImageView) {
-                        RoundedImageView imageView = (RoundedImageView) view;
-
-                        if (imageUrl1 != null) {
-
-                            RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
-                            Glide.with(view.getContext()).asBitmap()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .load(imageUrl1)
-                                    //.centerCrop()
-                                    .apply(options)
-                                    .into(imageView);
-
-                        }
-                    } else if (view instanceof ImageView) {
-                        ImageView imageView = (ImageView) view;
-
-                        if (imageUrl1 != null) {
-
-                            RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
-                            Glide.with(view.getContext()).asBitmap()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .load(imageUrl1)
-                                    //.centerCrop()
-                                    .apply(options)
-                                    .into(imageView);
-                        }
-                    }
-
-                }
-            });
-        }
-
-    }
 
 
     @BindingAdapter("image")
@@ -226,71 +170,29 @@ public class GeneralMethod {
     @BindingAdapter("user_image")
     public static void user_image(View view, String imageUrl) {
 
-//
-//        if (view instanceof CircleImageView) {
-//            CircleImageView imageView = (CircleImageView) view;
-//            if (imageUrl != null) {
-//
-//                Glide.with(view.getContext()).asBitmap()
-//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                        .placeholder(R.drawable.circle_avatar)
-//                        .load(imageUrl)
-//                        .centerCrop()
-//                        .into(imageView);
-//
-//            }
-//        } else if (view instanceof RoundedImageView) {
-//            RoundedImageView imageView = (RoundedImageView) view;
-//
-//            if (imageUrl != null) {
-//
-//                Glide.with(view.getContext()).asBitmap()
-//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                        .placeholder(R.drawable.circle_avatar)
-//                        .load(imageUrl)
-//                        .centerCrop()
-//                        .into(imageView);
-//
-//            }
-//        } else if (view instanceof ImageView) {
-//            ImageView imageView = (ImageView) view;
-//
-//            if (imageUrl != null) {
-//
-//                Glide.with(view.getContext()).asBitmap()
-//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                        .placeholder(R.drawable.circle_avatar)
-//                        .load(imageUrl)
-//                        .centerCrop()
-//                        .into(imageView);
-//            }
-//        }
-
-    }
-
-    @BindingAdapter("qr_image")
-    public static void qr_image(View view, String imageUrl) {
 
         if (view instanceof CircleImageView) {
             CircleImageView imageView = (CircleImageView) view;
             if (imageUrl != null) {
-                RequestOptions options = new RequestOptions();
+
                 Glide.with(view.getContext()).asBitmap()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .load(imageUrl)
-                        .apply(options)
+                        .placeholder(R.drawable.circle_avatar)
+                        .load(Tags.base_url+imageUrl)
+                        .centerCrop()
                         .into(imageView);
+
             }
         } else if (view instanceof RoundedImageView) {
             RoundedImageView imageView = (RoundedImageView) view;
 
             if (imageUrl != null) {
 
-                RequestOptions options = new RequestOptions();
                 Glide.with(view.getContext()).asBitmap()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .load(imageUrl)
-                        .apply(options)
+                        .placeholder(R.drawable.circle_avatar)
+                        .load(Tags.base_url+imageUrl)
+                        .centerCrop()
                         .into(imageView);
 
             }
@@ -299,47 +201,17 @@ public class GeneralMethod {
 
             if (imageUrl != null) {
 
-                RequestOptions options = new RequestOptions();
                 Glide.with(view.getContext()).asBitmap()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .load(imageUrl)
-                        .apply(options)
+                        .placeholder(R.drawable.circle_avatar)
+                        .load(Tags.base_url+imageUrl)
+                        .centerCrop()
                         .into(imageView);
             }
         }
 
-
     }
 
-    @BindingAdapter("departmentImage")
-    public static void department_image(View view, String imageUrl) {
-        if (view instanceof CircleImageView) {
-            CircleImageView imageView = (CircleImageView) view;
-            if (imageUrl != null && !imageUrl.isEmpty()) {
-                Picasso.get().load(Uri.parse(imageUrl)).into(imageView);
-
-            } else {
-            }
-
-        } else if (view instanceof RoundedImageView) {
-            RoundedImageView imageView = (RoundedImageView) view;
-
-            if (imageUrl != null && !imageUrl.isEmpty()) {
-                Picasso.get().load(Uri.parse(imageUrl)).into(imageView);
-
-            } else {
-            }
-        } else if (view instanceof ImageView) {
-            ImageView imageView = (ImageView) view;
-
-            if (imageUrl != null && !imageUrl.isEmpty()) {
-                Picasso.get().load(Uri.parse(imageUrl)).into(imageView);
-
-            } else {
-            }
-        }
-
-    }
 
 
     @BindingAdapter("createAt")

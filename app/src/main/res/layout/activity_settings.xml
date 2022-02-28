@@ -8,6 +8,9 @@
         <variable
             name="lang"
             type="String" />
+        <variable
+            name="model"
+            type="com.etbakhly_provider.model.UserModel" />
     </data>
 
     <FrameLayout
@@ -66,6 +69,8 @@
                         android:id="@+id/image"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        user_image="@{model.data.photo}"
+                        android:src="@drawable/circle_avatar"
                         android:layout_marginTop="5dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +84,7 @@
                         android:layout_marginEnd="16dp"
                         android:ellipsize="end"
                         android:lines="1"
-                        android:text="@string/amana_kitchen"
+                        android:text="@{model.data.name}"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold"

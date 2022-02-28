@@ -119,6 +119,10 @@ public class ActivityDishesMvvm extends AndroidViewModel {
         return onEditSuccess;
     }
 
+    public void updateCategory(BuffetModel.Category category ,int pos){
+        onDataSuccess().getValue().set(pos,category);
+    }
+
 
     public void getDishes(String kitchen_id) {
         getIsDataLoading().setValue(true);
@@ -187,26 +191,28 @@ public class ActivityDishesMvvm extends AndroidViewModel {
                 });
     }
 
-    public void editCategory(String name, String Category_Dishes_id, Context context, int pos) {
+    public void editCategory(BuffetModel.Category category,String name, String Category_Dishes_id, Context context, int pos) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
+
         Api.getService(Tags.base_url).editCatererDish(name, Category_Dishes_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Response<SingleCategory>>() {
+                .subscribe(new SingleObserver<Response<StatusResponse>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         disposable.add(d);
                     }
 
                     @Override
-                    public void onSuccess(@NonNull Response<SingleCategory> response) {
+                    public void onSuccess(@NonNull Response<StatusResponse> response) {
                         dialog.dismiss();
+                        Log.e("status2", response.body().getStatus() + "__");
                         if (response.isSuccessful()) {
-                            if (response.body() != null && response.body().getStatus() == 200 && response.body().getData() != null) {
-                                onDataSuccess().getValue().set(pos, response.body().getData());
-                                onEditSuccess().setValue(response.body().getData());
+                            if (response.body() != null && response.body().getStatus() == 200) {
+                                category.setTitel(name);
+                                onEditSuccess().setValue(category);
 
 
                             }
@@ -239,6 +245,8 @@ public class ActivityDishesMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<StatusResponse> response) {
                         dialog.dismiss();
+                        Log.e("status", response.body().getStatus() + "__");
+
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200) {
                                 onDataSuccess().getValue().remove(pos);

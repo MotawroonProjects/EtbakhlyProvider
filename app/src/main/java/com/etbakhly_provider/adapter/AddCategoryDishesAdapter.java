@@ -1,6 +1,7 @@
 package com.etbakhly_provider.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -63,6 +64,7 @@ public class AddCategoryDishesAdapter extends RecyclerView.Adapter<RecyclerView.
             }
             myHolder.itemView.setOnClickListener(view -> {
                 if (oldHolder != null) {
+
                     BuffetModel.Category oldCategory = list.get(oldPos);
                     oldCategory.setSelected(false);
                     list.set(oldPos, oldCategory);
@@ -175,9 +177,10 @@ public class AddCategoryDishesAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public void deleteItem(int pos) {
         if (list != null && pos != -1) {
-            list.remove(pos);
             notifyItemRemoved(pos);
+
         }
     }
+
 
 }

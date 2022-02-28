@@ -53,6 +53,16 @@ public class DishesActivity extends BaseActivity {
 
         mvvm.getIsDataLoading().observe(this, isLoading -> {
             if (isLoading) {
+
+                binding.tvNoData.setVisibility(View.GONE);
+                if (adapter!=null){
+                    if (mvvm.onDataSuccess().getValue()!=null){
+                        mvvm.onDataSuccess().getValue().clear();
+                        adapter.notifyDataSetChanged();
+                    }
+
+                }
+
                 binding.progBar.setVisibility(View.VISIBLE);
             } else {
                 binding.progBar.setVisibility(View.GONE);
@@ -61,10 +71,14 @@ public class DishesActivity extends BaseActivity {
         });
         mvvm.onDataSuccess().observe(this, categories -> {
             if (categories.size() > 1) {
+                if (behavior.getState()==BottomSheetBehavior.STATE_EXPANDED){
+                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
 
                 binding.tvNoData.setVisibility(View.GONE);
 
                 updateUi();
+                adapter.updateList(mvvm.onDataSuccess().getValue());
 
             } else {
                 adapter.updateList(mvvm.onDataSuccess().getValue());
@@ -88,27 +102,30 @@ public class DishesActivity extends BaseActivity {
         });
 
         mvvm.onEditSuccess().observe(this, category -> {
+            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
             if (adapter != null) {
+                mvvm.updateCategory(category,selectedCategoryPos);
                 adapter.updateItem(category, selectedCategoryPos);
+
             }
             selectedCategory = null;
             selectedCategoryPos = -1;
 
         });
-        mvvm.getOnDeleteSuccess().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
-                    if (adapter != null) {
-                        adapter.deleteItem(selectedCategoryPos);
-                    }
-                    selectedCategoryPos = -1;
+        mvvm.getOnDeleteSuccess().observe(this, aBoolean -> {
+            if (aBoolean) {
+                if (adapter != null) {
+                    adapter.deleteItem(selectedCategoryPos);
+                    mvvm.getDishes(getUserModel().getData().getCaterer().getId());
                 }
+                selectedCategoryPos = -1;
             }
         });
         mvvm.getOnDeleteDishSuccess().observe(this, aBoolean -> {
             if (aBoolean) {
                 mvvm.getDishes(getUserModel().getData().getCaterer().getId());
+
             }
 
         });
@@ -118,6 +135,7 @@ public class DishesActivity extends BaseActivity {
 
 
         mvvm.getDishes(getUserModel().getData().getCaterer().getId());
+
 
         binding.recViewCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.recViewCategory.setAdapter(adapter);
@@ -143,8 +161,7 @@ public class DishesActivity extends BaseActivity {
 
                 } else {
 
-                    mvvm.editCategory(category_name,selectedCategory.getId(), this, selectedCategoryPos);
-                    Log.e("id",selectedCategory.getId().toString());
+                    mvvm.editCategory(selectedCategory,category_name,selectedCategory.getId(), this, selectedCategoryPos);
                 }
 
             } else {
@@ -166,6 +183,7 @@ public class DishesActivity extends BaseActivity {
     public void openSheet(BuffetModel.Category category, int currentPos) {
         selectedCategory = category;
         selectedCategoryPos = currentPos;
+
         if (category != null) {
             binding.sheet.edtName.setText(category.getTitel());
             binding.sheet.btnAdd.setText(R.string.update);

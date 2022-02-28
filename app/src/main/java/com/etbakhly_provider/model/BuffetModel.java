@@ -119,5 +119,9 @@ public class BuffetModel implements Serializable {
         public void setDishes_buffet(List<DishModel> dishes_buffet) {
             this.dishes_buffet = dishes_buffet;
         }
+
+        public void setTitel(String titel) {
+            this.titel = titel;
+        }
     }
 }
