@@ -1,8 +1,13 @@
 package com.etbakhly_provider.uis.activities_home;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.PagerAdapter;
 
 import android.content.Intent;
@@ -25,10 +30,7 @@ import io.paperdb.Paper;
 
 public class HomeActivity extends BaseActivity {
     private ActivityHomeBinding binding;
-    private HomePagerAdapter pagerAdapter;
-    private List<String> titles;
-    private List<Fragment> fragmentList;
-    private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,38 +40,33 @@ public class HomeActivity extends BaseActivity {
 
     }
 
-    public void setItemPos(int pos) {
-        binding.pager.setCurrentItem(pos);
-    }
 
     private void initView() {
-        activityHomeGeneralMvvm = ViewModelProviders.of(this).get(ActivityHomeGeneralMvvm.class);
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         binding.setModel(getUserModel());
-        titles = new ArrayList<>();
-        fragmentList = new ArrayList<>();
-        Paper.init(this);
         binding.setLang(getLang());
 
-        titles.add(getString(R.string.new_orders));
-        titles.add(getString(R.string.pending));
-        titles.add(getString(R.string.completed));
-
-        fragmentList.add(FragmentNewOrders.newInstance());
-        fragmentList.add(FragmentPendingOrders.newInstance());
-        fragmentList.add(FragmentCompletedOrders.newInstance());
-
-        binding.pager.setOffscreenPageLimit(fragmentList.size());
-
-        pagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), PagerAdapter.POSITION_UNCHANGED, fragmentList, titles);
-        binding.tab.setupWithViewPager(binding.pager);
-        binding.pager.setAdapter(pagerAdapter);
+        navController = Navigation.findNavController(this, R.id.navHostFragment);
+        NavigationUI.setupWithNavController(binding.navView, navController);
+        NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerView);
 
 
-        binding.llMenu.setOnClickListener(view -> {
-            Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
-            startActivity(intent);
+    }
 
-        });
+    @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(navController, binding.drawerView);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (binding.drawerView.isDrawerOpen(GravityCompat.START)){
+            binding.drawerView.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+
+        }
     }
 }

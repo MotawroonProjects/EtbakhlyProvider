@@ -67,7 +67,7 @@ public class FragmentNewOrders extends BaseFragment {
 
     private void initView() {
 
-        activityHomeGeneralMvvm = ViewModelProviders.of(this).get(ActivityHomeGeneralMvvm.class);
+        activityHomeGeneralMvvm = ViewModelProviders.of(activity).get(ActivityHomeGeneralMvvm.class);
 
 
         mvvm = ViewModelProviders.of(this).get(FragmentNewOrdersMvvm.class);
@@ -91,7 +91,7 @@ public class FragmentNewOrders extends BaseFragment {
         mvvm.getOnOrderStatusSuccess().observe(activity, status -> {
             if (status == 1) {
                 activityHomeGeneralMvvm.getOnStatusSuccess().setValue("approval");
-                activity.setItemPos(1);
+                activityHomeGeneralMvvm.getPosChangedSuccess().setValue(1);
                 mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
             } else if (status == 2) {
                 mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());

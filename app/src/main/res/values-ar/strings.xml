@@ -177,4 +177,10 @@
     <string name="add_time">إضافة الوقت</string>
     <string name="minute">دقيقة</string>
     <string name="em_exist">البريد الالكتروني موجود مسبقا</string>
+    <string name="home">الرئيسية</string>
+    <string name="update_profile">تعديل حسابي</string>
+    <string name="buffets">البوفيهات</string>
+    <string name="banquets">الولائم</string>
+    <string name="offers">العروض</string>
+    <string name="more">المزيد</string>
 </resources>

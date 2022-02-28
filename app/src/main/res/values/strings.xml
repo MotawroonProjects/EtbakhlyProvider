@@ -177,6 +177,12 @@
     <string name="add_time">Add time</string>
     <string name="minute">Minute</string>
     <string name="em_exist">email already exists</string>
+    <string name="home">Home</string>
+    <string name="update_profile">Update profile</string>
+    <string name="buffets">Buffets</string>
+    <string name="banquets">Banquets</string>
+    <string name="offers">Offers</string>
+    <string name="more">More</string>
 
 
 </resources>

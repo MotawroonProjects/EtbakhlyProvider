@@ -59,6 +59,7 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
 
     public void getNewOrders(String caterer_id) {
 
+        Log.e("cat_id",caterer_id);
         getIsDataLoading().setValue(true);
         Api.getService(Tags.base_url).getMyOrder(caterer_id, "new")
                 .subscribeOn(Schedulers.io())

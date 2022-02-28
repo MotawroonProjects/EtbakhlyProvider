@@ -24,6 +24,7 @@ public class ActivityHomeGeneralMvvm extends AndroidViewModel {
 
 
     private MutableLiveData<String> onStatusSuccess;
+    private MutableLiveData<Integer> onPositionScreenChanged;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -37,6 +38,13 @@ public class ActivityHomeGeneralMvvm extends AndroidViewModel {
             onStatusSuccess = new MutableLiveData<>();
         }
         return onStatusSuccess;
+    }
+
+    public MutableLiveData<Integer> getPosChangedSuccess() {
+        if (onPositionScreenChanged == null) {
+            onPositionScreenChanged = new MutableLiveData<>();
+        }
+        return onPositionScreenChanged;
     }
 
 
