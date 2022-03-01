@@ -3,6 +3,7 @@ package com.etbakhly_provider.uis.activity_setting;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.Activity;
@@ -24,7 +25,6 @@ public class SettingsActivity extends BaseActivity {
     private ActivitySettingsBinding binding;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,24 +33,18 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void initView() {
+        setUpToolbar(binding.toolbarLayout, getString(R.string.settings), R.color.colorPrimary, R.color.white);
         binding.setLang(getLang());
         binding.setModel(getUserModel());
-        binding.btnBack.setOnClickListener(view -> finish());
         binding.llKitchenDetails.setOnClickListener(view -> {
             Intent intent = new Intent(SettingsActivity.this, KitchenDetailsActivity.class);
             startActivity(intent);
             finish();
         });
         binding.llSettings.setOnClickListener(view -> {
-            Intent intent=new Intent(SettingsActivity.this, SettingDetailsActivity.class);
+            Intent intent = new Intent(SettingsActivity.this, SettingDetailsActivity.class);
             startActivity(intent);
         });
-        binding.llWallet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(SettingsActivity.this, WalletActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 }

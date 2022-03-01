@@ -1,21 +1,25 @@
 package com.etbakhly_provider.uis.activities_home;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.PagerAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.HomePagerAdapter;
 import com.etbakhly_provider.databinding.ActivityHomeBinding;
+import com.etbakhly_provider.databinding.DrawerHeaderBinding;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.uis.activities_home.fragments.FragmentNewOrders;
 import com.etbakhly_provider.uis.activities_home.fragments.FragmentCompletedOrders;
@@ -47,10 +51,14 @@ public class HomeActivity extends BaseActivity {
 
         binding.setModel(getUserModel());
         binding.setLang(getLang());
+        DrawerHeaderBinding drawerHeaderBinding = DataBindingUtil.inflate(LayoutInflater.from(this),R.layout.drawer_header,null,false);
+        drawerHeaderBinding.setModel(getUserModel());
+        binding.navView.addHeaderView(drawerHeaderBinding.getRoot());
 
         navController = Navigation.findNavController(this, R.id.navHostFragment);
         NavigationUI.setupWithNavController(binding.navView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerView);
+
 
 
     }

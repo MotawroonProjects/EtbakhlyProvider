@@ -27,7 +27,6 @@ public class FeastsActivity extends BaseActivity {
     private ActivityFeastsBinding binding;
     private BuffetAdapter adapter;
     private ActivityFeastsMvvm mvvm;
-
     private int req;
     private ActivityResultLauncher<Intent> launcher;
 
@@ -75,8 +74,9 @@ public class FeastsActivity extends BaseActivity {
             finish();
         });
         binding.addFeast.setOnClickListener(view -> {
+            req = 1;
             Intent intent=new Intent(FeastsActivity.this, AddFeastActivity.class);
-            startActivity(intent);
+            launcher.launch(intent);
         });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {

@@ -8,8 +8,6 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
@@ -25,20 +23,15 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.adapter.AddBuffetDishesAdapter;
-import com.etbakhly_provider.adapter.BuffetMenuAdapter;
 import com.etbakhly_provider.adapter.SpinnerDishCategoryAdapter;
 import com.etbakhly_provider.databinding.ActivityAddBuffetBinding;
 import com.etbakhly_provider.model.AddBuffetModel;
-import com.etbakhly_provider.model.AddDishModel;
 import com.etbakhly_provider.model.BuffetModel;
-import com.etbakhly_provider.model.DishModel;
 import com.etbakhly_provider.mvvm.ActivityAddBuffetMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
 import com.etbakhly_provider.uis.activity_add_buffet.add_buffet_dish_activity.AddBuffetDishActivity;
 
-import com.etbakhly_provider.uis.activity_add_dishes.AddDishesActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
@@ -53,7 +46,6 @@ public class AddBuffetActivity extends BaseActivity {
     private BuffetModel buffetModel;
     private AddBuffetModel addBuffetModel;
     private SpinnerDishCategoryAdapter spinnerDishCategoryAdapter;
-    private List<BuffetModel.Category> categoryList;
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -73,19 +65,15 @@ public class AddBuffetActivity extends BaseActivity {
     }
     private void getDataFromIntent() {
         Intent intent=getIntent();
-        buffetModel = (BuffetModel) intent.getSerializableExtra("data2");
+        if (intent.hasExtra("data")){
+            buffetModel = (BuffetModel) intent.getSerializableExtra("data");
 
-        List<BuffetModel.Category> categories = (List<BuffetModel.Category>) getIntent().getSerializableExtra("data3");
-        if (categories != null) {
-            categoryList = new ArrayList<>(categories);
-
-        } else {
-            categoryList = new ArrayList<>();
         }
     }
 
 
     private void initView() {
+        mvvm = ViewModelProviders.of(this).get(ActivityAddBuffetMvvm.class);
 
         addBuffetModel = new AddBuffetModel();
         if (buffetModel!=null){
@@ -101,21 +89,27 @@ public class AddBuffetActivity extends BaseActivity {
             if (buffetModel.getPhoto() != null && !buffetModel.getPhoto().isEmpty()) {
                 Picasso.get().load(Tags.base_url + buffetModel.getPhoto()).fit().into(binding.image);
                 binding.icon.setVisibility(View.GONE);
-//                Log.e("photo",buffetModel.getPhoto()+"___");
             }
-            int category_pos = getItemPos(buffetModel.getCategory_dishes_id());
-            if (category_pos != -1) {
-                binding.spinner.setSelection(category_pos);
-            }
+
         }
         binding.setModel(addBuffetModel);
 
-        spinnerDishCategoryAdapter = new SpinnerDishCategoryAdapter(categoryList, this);
+
+        BuffetModel.Category category = new BuffetModel.Category();
+        category.setTitel(getString(R.string.ch_cat));
+        List<BuffetModel.Category> categoryList = new ArrayList<>();
+        categoryList.add(category);
+
+        spinnerDishCategoryAdapter = new SpinnerDishCategoryAdapter(new ArrayList<>(), this);
+
         binding.spinner.setAdapter(spinnerDishCategoryAdapter);
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                addBuffetModel.setCategory_dishes_id(categoryList.get(i).getId());
+                if (mvvm.onCategoryDataSuccess().getValue()!=null){
+                    addBuffetModel.setCategory_dishes_id(mvvm.onCategoryDataSuccess().getValue().get(i).getId());
+
+                }
             }
 
             @Override
@@ -123,8 +117,17 @@ public class AddBuffetActivity extends BaseActivity {
 
             }
         });
-        mvvm = ViewModelProviders.of(this).get(ActivityAddBuffetMvvm.class);
 
+
+        mvvm.onCategoryDataSuccess().observe(this, categories -> {
+            if (spinnerDishCategoryAdapter!=null){
+                spinnerDishCategoryAdapter.updateList(categories);
+
+            }
+        });
+
+
+        mvvm.onCategoryDataSuccess().setValue(categoryList);
         mvvm.getAddBuffetMutableLiveData().observe(this, aBoolean -> {
             if (aBoolean) {
                 Toast.makeText(AddBuffetActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
@@ -139,6 +142,9 @@ public class AddBuffetActivity extends BaseActivity {
                 finish();
             }
         });
+
+        mvvm.getCategoryDishes(getUserModel().getData().getCaterer().getId(),this);
+
         binding.btnDone.setOnClickListener(view -> {
             if (addBuffetModel.isDataValid(this)) {
                 addBuffetModel.setCaterer_id(getUserModel().getData().getCaterer().getId());
@@ -294,15 +300,5 @@ public class AddBuffetActivity extends BaseActivity {
             }
         }
     }
-    private int getItemPos(String category_id) {
-        int pos = -1;
-        for (int index = 0; index < categoryList.size(); index++) {
-            if (categoryList.get(index).getCaterer_id().equals(category_id)) {
-                pos = index;
-                return pos;
-            }
-        }
 
-        return pos;
-    }
 }

@@ -34,7 +34,6 @@ public class BuffetActivity extends BaseActivity {
     private ActivityBuffetBinding binding;
     private BuffetAdapter adapter;
     private ActivityBuffetsMvvm mvvm;
-    private ActivityDishesMvvm dishesMvvm;
     private int req;
 
     private ActivityResultLauncher<Intent> launcher;
@@ -49,7 +48,6 @@ public class BuffetActivity extends BaseActivity {
 
     private void initView() {
         mvvm = ViewModelProviders.of(this).get(ActivityBuffetsMvvm.class);
-        dishesMvvm=ViewModelProviders.of(this).get(ActivityDishesMvvm.class);
 
 
         mvvm.getIsDataLoading().observe(this, isLoading -> {
@@ -88,31 +86,22 @@ public class BuffetActivity extends BaseActivity {
             finish();
         });
         binding.addBuffet.setOnClickListener(view -> {
-            List<BuffetModel.Category> categoryList = new ArrayList<>(dishesMvvm.onDataSuccess().getValue());
-            categoryList.remove(0);
+            req = 1;
             Intent intent = new Intent(BuffetActivity.this, AddBuffetActivity.class);
-            intent.putExtra("data3", (Serializable) categoryList);
-            startActivity(intent);
+            launcher.launch(intent);
 
         });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
                 BuffetModel buffetModel = (BuffetModel) result.getData().getSerializableExtra("data");
-                if (mvvm.getSelectedPos().getValue() != -1) {
-                    mvvm.onDataSuccess().getValue().set(mvvm.getSelectedPos().getValue(), buffetModel);
-                    adapter.notifyItemChanged(mvvm.getSelectedPos().getValue());
-                    mvvm.getSelectedPos().setValue(-1);
-                }
+                mvvm.onDataSuccess().getValue().add(buffetModel);
+                adapter.notifyItemInserted(mvvm.onDataSuccess().getValue().size()-1);
 
             }
         });
     }
     public void setItemData(BuffetModel buffetModel, int adapterPosition) {
         req = 1;
-        mvvm.getSelectedPos().setValue(adapterPosition);
-        List<BuffetModel.Category> categoryList = new ArrayList<>(dishesMvvm.onDataSuccess().getValue());
-        categoryList.remove(0);
-
         Intent intent = new Intent(this, BuffetDetailsActivity.class);
         intent.putExtra("data", buffetModel);
         launcher.launch(intent);
@@ -122,14 +111,10 @@ public class BuffetActivity extends BaseActivity {
     }
 
     public void editBuffet(BuffetModel buffetModel, int adapterPosition) {
-        req=1;
-        mvvm.getSelectedPos().setValue(adapterPosition);
-        List<BuffetModel.Category> categoryList = new ArrayList<>(dishesMvvm.onDataSuccess().getValue());
-        categoryList.remove(0);
-
+       /* req=1;
         Intent intent = new Intent(this, AddBuffetActivity.class);
         intent.putExtra("data2", buffetModel);
         intent.putExtra("data3", (Serializable) categoryList);
-        launcher.launch(intent);
+        launcher.launch(intent);*/
     }
 }

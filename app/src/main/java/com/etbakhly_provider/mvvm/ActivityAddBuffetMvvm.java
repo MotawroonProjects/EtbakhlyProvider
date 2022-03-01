@@ -13,12 +13,15 @@ import androidx.lifecycle.MutableLiveData;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.model.AddBuffetModel;
 import com.etbakhly_provider.model.AddBuffetDataModel;
+import com.etbakhly_provider.model.BuffetModel;
+import com.etbakhly_provider.model.DishesDataModel;
 import com.etbakhly_provider.model.StatusResponse;
 import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
 
 import java.io.IOException;
+import java.util.List;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,6 +36,7 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
 
     private MutableLiveData<Boolean> addBuffetLiveData;
     private MutableLiveData<Boolean> updateBuffetLiveData;
+    private MutableLiveData<List<BuffetModel.Category>> onCategoryDataSuccess;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -54,11 +58,17 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
         return updateBuffetLiveData;
     }
 
+    public MutableLiveData<List<BuffetModel.Category>> onCategoryDataSuccess() {
+        if (onCategoryDataSuccess == null) {
+            onCategoryDataSuccess = new MutableLiveData<>();
+        }
+        return onCategoryDataSuccess;
+    }
+
     public void storeBuffet(Context context, AddBuffetModel addBuffetModel, Uri uri) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Log.e("data", addBuffetModel.getTitel() + "__" + addBuffetModel.getNumber_people() + "_" + addBuffetModel.getService_provider_type() + "_" + addBuffetModel.getOrder_time() + "_" + addBuffetModel.getPhoto() + "_" + addBuffetModel.getPrice());
 
         RequestBody titel = Common.getRequestBodyText(addBuffetModel.getTitel());
         RequestBody number_people = Common.getRequestBodyText(addBuffetModel.getNumber_people());
@@ -160,4 +170,39 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
                 });
 
     }
+
+    public void getCategoryDishes(String kitchen_id,Context context) {
+        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "buffet")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<DishesDataModel>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<DishesDataModel> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body() != null && response.body().getStatus() == 200 && response.body().getData() != null) {
+                                List<BuffetModel.Category> categoryList = response.body().getData();
+                                if (categoryList.size()==0){
+                                    BuffetModel.Category categoryModel = new BuffetModel.Category();
+                                    categoryModel.setTitel(context.getString(R.string.ch_cat));
+                                    categoryList.add(categoryModel);
+                                }
+
+
+                                onCategoryDataSuccess().setValue(categoryList);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("error", e.getMessage());
+                    }
+                });
+    }
+
 }

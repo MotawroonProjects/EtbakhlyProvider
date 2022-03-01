@@ -2,6 +2,7 @@ package com.etbakhly_provider.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +51,16 @@ public class SpinnerDishCategoryAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         @SuppressLint("ViewHolder") SpinnerCategoryDishRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.spinner_category_dish_row, viewGroup, false);
-        binding.setTitle(dataList.get(i).getTitel());
+         binding.setTitle(dataList.get(i).getTitel());
         return binding.getRoot();
+    }
+
+    public void updateList(List<BuffetModel.Category> dataList){
+        if (dataList!=null){
+            this.dataList = dataList;
+            Log.e("sda",this.dataList.size()+"");
+        }
+        notifyDataSetChanged();
     }
 
 

@@ -10,5 +10,21 @@
         android:label="@string/home"
         tools:layout="@layout/fragment_home" />
 
+    <activity
+        android:id="@+id/activityBuffets"
+        android:name="com.etbakhly_provider.uis.activity_buffet.BuffetActivity"
+        android:label=""
+        tools:layout="@layout/activity_buffet" />
+    <activity
+        android:id="@+id/activityBanquet"
+        android:name="com.etbakhly_provider.uis.activity_feats.FeastsActivity"
+        android:label=""
+        tools:layout="@layout/activity_feasts" />
+    <activity
+        android:id="@+id/activityMore"
+        android:name="com.etbakhly_provider.uis.activity_setting.SettingsActivity"
+        android:label=""
+        tools:layout="@layout/activity_settings"
 
+        />
 </navigation>

@@ -123,5 +123,6 @@ public class BuffetModel implements Serializable {
         public void setTitel(String titel) {
             this.titel = titel;
         }
+
     }
 }

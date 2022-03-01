@@ -34,7 +34,6 @@ import java.util.List;
 
 public class AddFeastActivity extends BaseActivity {
     private ActivityAddFeastBinding binding;
-    private List<Object> list;
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
