@@ -128,16 +128,14 @@ public class ActivityRegisterMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<UserModel> userModelResponse) {
                         dialog.dismiss();
-                        // Log.e("res", userModelResponse.code() + "__" + userModelResponse.toString());
+                        Log.e("res", userModelResponse.code() + "__" + userModelResponse.toString());
                         if (userModelResponse.isSuccessful()) {
-                           // Log.e("llll", userModelResponse.body().getStatus() + "");
+                            Log.e("llll", userModelResponse.body().getStatus() + "");
                             if (userModelResponse.body() != null) {
                                 if (userModelResponse.body().getStatus() == 200) {
 
                                     getUserData().setValue(userModelResponse.body());
-                                } else if (userModelResponse.body().getStatus() == 404) {
-                                    Toast.makeText(context, R.string.ph_em_found, Toast.LENGTH_LONG).show();
-                                } else if (userModelResponse.body().getStatus() == 405) {
+                                }  else if (userModelResponse.body().getStatus() == 403) {
                                     Toast.makeText(context, R.string.em_exist, Toast.LENGTH_LONG).show();
                                 }
                             }
@@ -147,7 +145,10 @@ public class ActivityRegisterMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        Log.e("hhhh",e.toString());
                         dialog.dismiss();
+
+
                     }
                 });
     }
