@@ -45,7 +45,7 @@ public class RegisterActivity extends BaseActivity {
     private ActivityRegisterBinding binding;
     private RegisterModel model;
     private ActivityRegisterMvvm mvvm;
-    private String phone_code, phone;
+    private String phone_code="", phone="";
     private UserModel userModel;
     private SpinnerServiceAdapter spinnerServiceAdapter;
     private List<String> optionsList;
@@ -67,9 +67,10 @@ public class RegisterActivity extends BaseActivity {
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
-        phone_code = intent.getStringExtra("phone_code");
-        phone = intent.getStringExtra("phone");
-
+        if(intent.getStringExtra("phone")!=null) {
+            phone_code = intent.getStringExtra("phone_code");
+            phone = intent.getStringExtra("phone");
+        }
     }
 
     private void initView() {
@@ -77,7 +78,20 @@ public class RegisterActivity extends BaseActivity {
         model = new RegisterModel(phone_code, phone);
         binding.setLang(getLang());
         model.setValid(false);
-
+//        if (getUserModel() != null) {
+//            if (getUserModel().getData().getPhoto() != null) {
+//                Picasso.get().load(getUserModel().getData().getPhoto()).into(binding.image);}
+//                model.setEmail(getUserModel().getData().getEmail());
+//                model.setName(getUserModel().getData().getName());
+//                model.setService(getUserModel().getData().getType());
+//                model.setAddress(getUserModel().getData().getAddress());
+//                model.setLat(Double.parseDouble(getUserModel().getData().getLatitude()));
+//                model.setLng(Double.parseDouble(getUserModel().getData().getLongitude()));
+//                model.setPhone(getUserModel().getData().getPhone());
+//                model.setPhone_code(getUserModel().getData().getPhone_code());
+//                model.setValid(true);
+//
+//        }
         optionsList = new ArrayList<>();
         spinnerServiceAdapter = new SpinnerServiceAdapter(this);
         binding.spinnerServices.setAdapter(spinnerServiceAdapter);
@@ -115,7 +129,13 @@ public class RegisterActivity extends BaseActivity {
 
             model.setPhone_code(phone_code);
             model.setPhone(phone);
-            binding.llPhone.setVisibility(View.GONE);
+            binding.setUserModel(userModel);
+            model.setAddress(userModel.getData().getAddress());
+            model.setService(userModel.getData().getType());
+
+
+            model.setValid(true);
+         //   binding.llPhone.setVisibility(View.GONE);
 
             if (userModel.getData().getPhoto() != null) {
                 String url = Tags.base_url + userModel.getData().getPhoto();
@@ -204,6 +224,7 @@ public class RegisterActivity extends BaseActivity {
                 mvvm.signUp(model, this);
 
             } else {
+                mvvm.update(model,userModel, this);
 
             }
         });

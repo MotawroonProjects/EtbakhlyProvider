@@ -183,4 +183,8 @@
     <string name="banquets">الولائم</string>
     <string name="offers">العروض</string>
     <string name="more">المزيد</string>
+    <string name="subject">الموضوع</string>
+    <string name="message">الرسالة</string>
+    <string name="send">ارسال</string>
+    <string name="suc">تم بنجاح</string>
 </resources>

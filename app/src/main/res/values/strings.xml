@@ -183,6 +183,10 @@
     <string name="banquets">Banquets</string>
     <string name="offers">Offers</string>
     <string name="more">More</string>
+    <string name="subject">Subject</string>
+    <string name="message">Message</string>
+    <string name="send">Send</string>
+    <string name="suc">Sucess</string>
 
 
 </resources>

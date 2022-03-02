@@ -103,6 +103,55 @@ public class ActivityRegisterMvvm extends AndroidViewModel {
                 });
     }
 
+    public void update(RegisterModel model, UserModel userModel, Context context) {
+
+        ProgressDialog dialog = Common.createProgressDialog(context, context.getResources().getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        RequestBody user_part = Common.getRequestBodyText(userModel.getData().getId());
+        RequestBody name_part = Common.getRequestBodyText(model.getName());
+        RequestBody email_part = Common.getRequestBodyText(model.getEmail());
+
+        MultipartBody.Part image = null;
+        if (model.getPhotoUrl() != null && !model.getPhotoUrl().isEmpty()&&!model.getPhotoUrl().contains(Tags.base_url)) {
+            image = Common.getMultiPart(context, Uri.parse(model.getPhotoUrl()), "photo");
+        }
+        Api.getService(Tags.base_url).updateProfile(user_part, name_part, email_part, image)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<UserModel>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<UserModel> userModelResponse) {
+                        dialog.dismiss();
+                        // Log.e("res", userModelResponse.code() + "__" + userModelResponse.toString());
+                        if (userModelResponse.isSuccessful()) {
+                           // Log.e("llll", userModelResponse.body().getStatus() + "");
+                            if (userModelResponse.body() != null) {
+                                if (userModelResponse.body().getStatus() == 200) {
+
+                                    getUserData().setValue(userModelResponse.body());
+                                } else if (userModelResponse.body().getStatus() == 404) {
+                                    Toast.makeText(context, R.string.ph_em_found, Toast.LENGTH_LONG).show();
+                                } else if (userModelResponse.body().getStatus() == 405) {
+                                    Toast.makeText(context, R.string.em_exist, Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        dialog.dismiss();
+                    }
+                });
+    }
+
 //    public void update(SignUpModel model, String user_id, Context context) {
 //        ProgressDialog dialog = Common.createProgressDialog(context, context.getResources().getString(R.string.wait));
 //        dialog.setCancelable(false);

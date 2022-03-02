@@ -11,9 +11,15 @@
             name="model"
             type="com.etbakhly_provider.model.RegisterModel" />
 
+        <import type="android.view.View" />
+
         <variable
             name="lang"
             type="String" />
+
+        <variable
+            name="userModel"
+            type="com.etbakhly_provider.model.UserModel" />
 
     </data>
 
@@ -187,6 +193,7 @@
                     android:id="@+id/llPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility='@{userModel!=null?View.GONE:View.VISIBLE,default=gone}'
                     android:orientation="vertical">
 
                     <TextView
@@ -276,12 +283,15 @@
 
 
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="8dp"
                     android:text="@string/address"
+                    android:visibility='@{userModel!=null?View.GONE:View.VISIBLE,default=gone}'
+
                     android:textColor="@color/gray31"
                     android:textSize="14sp" />
 
@@ -294,6 +304,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="3dp"
                     app:cardCornerRadius="3dp"
+                    android:visibility='@{userModel!=null?View.GONE:View.VISIBLE,default=gone}'
 
                     >
 
@@ -345,6 +356,7 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -352,6 +364,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="8dp"
                     android:text="@string/service"
+                    android:visibility='@{userModel!=null?View.GONE:View.VISIBLE,default=gone}'
+
                     android:textColor="@color/gray31"
                     android:textSize="14sp" />
 
@@ -364,6 +378,7 @@
                     android:layout_marginBottom="8dp"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="3dp"
+                    android:visibility='@{userModel!=null?View.GONE:View.VISIBLE,default=gone}'
                     app:cardElevation="3dp">
 
                     <LinearLayout

@@ -128,7 +128,10 @@
             android:name=".uis.activity_setting.setting_details.SettingDetailsActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
-
+        <activity
+            android:name=".uis.activity_contact_us.ContactUsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_api_key" />

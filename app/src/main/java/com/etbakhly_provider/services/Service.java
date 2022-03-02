@@ -80,6 +80,16 @@ public interface Service {
 
     );
 
+    @Multipart
+    @POST("api/Service/update_profile_Provider")
+    Single<Response<UserModel>> updateProfile(@Part("provider_id") RequestBody provider_id,
+                                              @Part("name") RequestBody name,
+                                              @Part("email") RequestBody email,
+                                              @Part MultipartBody.Part part
+
+
+    );
+
     @GET("api/Catering/governorates")
     Single<Response<CountryDataModel>> getCountry();
 
@@ -208,5 +218,29 @@ public interface Service {
                                                              @Part MultipartBody.Part photo,
                                                              @Part("qty") RequestBody qty,
                                                              @Part("feast_id") RequestBody feast_id);
+    @FormUrlEncoded
+    @POST("api/Catering/logout")
+    Single<Response<StatusResponse>> logout(@Field("user_id") String user_id,
+                                            @Field("token") String phone_token
+
+
+    );
+    @FormUrlEncoded
+    @POST("api/Catering/firebaseTokens")
+    Single<Response<StatusResponse>> updateFireBaseToken(@Field("token") String token,
+                                                         @Field("user_id") String user_id,
+                                                         @Field("type") String type
+
+
+    );
+    @FormUrlEncoded
+    @POST("api/Catering/CountactUs")
+    Single<Response<StatusResponse>> contactUs(@Field("name") String name,
+                                               @Field("email") String email,
+                                               @Field("subject") String subject,
+                                               @Field("message") String message
+
+
+    );
 
 }

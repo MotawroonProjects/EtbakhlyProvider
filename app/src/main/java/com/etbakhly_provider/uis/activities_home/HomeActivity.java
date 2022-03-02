@@ -15,16 +15,19 @@ import androidx.viewpager.widget.PagerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.HomePagerAdapter;
 import com.etbakhly_provider.databinding.ActivityHomeBinding;
 import com.etbakhly_provider.databinding.DrawerHeaderBinding;
+import com.etbakhly_provider.model.UserSettingsModel;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.uis.activities_home.fragments.FragmentNewOrders;
 import com.etbakhly_provider.uis.activities_home.fragments.FragmentCompletedOrders;
 import com.etbakhly_provider.uis.activities_home.fragments.FragmentPendingOrders;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
+import com.etbakhly_provider.uis.activity_login.LoginActivity;
 import com.etbakhly_provider.uis.activity_setting.SettingsActivity;
 
 import java.util.ArrayList;
@@ -35,6 +38,7 @@ import io.paperdb.Paper;
 public class HomeActivity extends BaseActivity {
     private ActivityHomeBinding binding;
     private NavController navController;
+    private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +50,36 @@ public class HomeActivity extends BaseActivity {
 
 
     private void initView() {
+        activityHomeGeneralMvvm = ViewModelProviders.of(this).get(ActivityHomeGeneralMvvm.class);
+        activityHomeGeneralMvvm.onLoggedOutSuccess().observe(this, isLoggedOut -> {
+            if (isLoggedOut) {
+
+                clearUserData();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        activityHomeGeneralMvvm.onTokenSuccess().observe(this, this::setUserModel);
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         binding.setModel(getUserModel());
         binding.setLang(getLang());
-        DrawerHeaderBinding drawerHeaderBinding = DataBindingUtil.inflate(LayoutInflater.from(this),R.layout.drawer_header,null,false);
+        DrawerHeaderBinding drawerHeaderBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.drawer_header, null, false);
         drawerHeaderBinding.setModel(getUserModel());
         binding.navView.addHeaderView(drawerHeaderBinding.getRoot());
 
         navController = Navigation.findNavController(this, R.id.navHostFragment);
         NavigationUI.setupWithNavController(binding.navView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerView);
-
-
+        binding.llLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activityHomeGeneralMvvm.logout(getUserModel(), HomeActivity.this);
+            }
+        });
+        activityHomeGeneralMvvm.updateToken(getUserModel());
 
     }
 
@@ -70,9 +90,9 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (binding.drawerView.isDrawerOpen(GravityCompat.START)){
+        if (binding.drawerView.isDrawerOpen(GravityCompat.START)) {
             binding.drawerView.closeDrawer(GravityCompat.START);
-        }else {
+        } else {
             super.onBackPressed();
 
         }
