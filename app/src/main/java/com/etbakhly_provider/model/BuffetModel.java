@@ -124,5 +124,8 @@ public class BuffetModel implements Serializable {
             this.titel = titel;
         }
 
+        public void setId(String id) {
+            this.id = id;
+        }
     }
 }

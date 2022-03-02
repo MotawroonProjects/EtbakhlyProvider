@@ -11,8 +11,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.model.AddBuffetModel;
 import com.etbakhly_provider.model.AddBuffetDataModel;
+import com.etbakhly_provider.model.AddBuffetModel;
 import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.model.DishesDataModel;
 import com.etbakhly_provider.model.StatusResponse;
@@ -32,30 +32,30 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Response;
 
-public class ActivityAddBuffetMvvm extends AndroidViewModel {
+public class ActivityAddFeastMvvm extends AndroidViewModel {
 
-    private MutableLiveData<Boolean> addBuffetLiveData;
-    private MutableLiveData<Boolean> updateBuffetLiveData;
+    private MutableLiveData<Boolean> onAddedSuccess;
+    private MutableLiveData<Boolean> onUpdatedSuccess;
     private MutableLiveData<List<BuffetModel.Category>> onCategoryDataSuccess;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    public ActivityAddBuffetMvvm(@NonNull Application application) {
+    public ActivityAddFeastMvvm(@NonNull Application application) {
         super(application);
     }
 
-    public MutableLiveData<Boolean> getAddBuffetMutableLiveData() {
-        if (addBuffetLiveData == null) {
-            addBuffetLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getOnAddedSuccess() {
+        if (onAddedSuccess == null) {
+            onAddedSuccess = new MutableLiveData<>();
         }
-        return addBuffetLiveData;
+        return onAddedSuccess;
     }
 
-    public MutableLiveData<Boolean> getUpdateBuffetLiveData() {
-        if (updateBuffetLiveData == null) {
-            updateBuffetLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getOnUpdatedSuccess() {
+        if (onUpdatedSuccess == null) {
+            onUpdatedSuccess = new MutableLiveData<>();
         }
-        return updateBuffetLiveData;
+        return onUpdatedSuccess;
     }
 
     public MutableLiveData<List<BuffetModel.Category>> onCategoryDataSuccess() {
@@ -65,7 +65,7 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
         return onCategoryDataSuccess;
     }
 
-    public void storeBuffet(Context context, AddBuffetModel addBuffetModel, Uri uri) {
+    public void storeFeast(Context context, AddBuffetModel addBuffetModel, Uri uri) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -84,7 +84,7 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
         }
         Log.e("id", addBuffetModel.getCategory_dishes_id() + "__" + addBuffetModel.getCaterer_id());
 
-        Api.getService(Tags.base_url).storeBuffet(titel, number_people, service_provider_type, order_time, image, price, category_dishes_id, caterer_id)
+        Api.getService(Tags.base_url).storeFeast(titel, number_people, service_provider_type, order_time, image, price, category_dishes_id, caterer_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<StatusResponse>>() {
@@ -99,7 +99,7 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
                         if (response.isSuccessful()) {
                             Log.e("status", response.body().getStatus() + "");
                             if (response.body() != null && response.body().getStatus() == 200) {
-                                addBuffetLiveData.postValue(true);
+                                getOnAddedSuccess().postValue(true);
                             }
                         } else {
                             try {
@@ -119,7 +119,7 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
 
     }
 
-    public void editBuffet(Context context, AddBuffetModel addBuffetModel, Uri uri) {
+    public void editFeast(Context context, AddBuffetModel addBuffetModel, Uri uri) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -130,14 +130,14 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
         RequestBody order_time = Common.getRequestBodyText(addBuffetModel.getOrder_time());
         RequestBody price = Common.getRequestBodyText(addBuffetModel.getPrice());
         RequestBody category_dishes_id = Common.getRequestBodyText(addBuffetModel.getCategory_dishes_id() + "");
-        RequestBody Buffet_id = Common.getRequestBodyText(addBuffetModel.getId());
+        RequestBody feast_id = Common.getRequestBodyText(addBuffetModel.getId());
 
         MultipartBody.Part image = null;
         if (!addBuffetModel.getPhoto().contains("storage")) {
             image = Common.getMultiPart(context, uri, "photo");
         }
 
-        Api.getService(Tags.base_url).updateBuffet(titel, number_people, service_provider_type, order_time, image, price, category_dishes_id, Buffet_id)
+        Api.getService(Tags.base_url).updateFeast(titel, number_people, service_provider_type, order_time, image, price, category_dishes_id, feast_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<StatusResponse>>() {
@@ -151,7 +151,7 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
                         dialog.dismiss();
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200) {
-                                updateBuffetLiveData.postValue(true);
+                                getOnUpdatedSuccess().postValue(true);
                             }
                         } else {
                             try {
@@ -172,7 +172,7 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
     }
 
     public void getCategoryDishes(String kitchen_id, Context context) {
-        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "buffet")
+        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "feast")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<DishesDataModel>>() {

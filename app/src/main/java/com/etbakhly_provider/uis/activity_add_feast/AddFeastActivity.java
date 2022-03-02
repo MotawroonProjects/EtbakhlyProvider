@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,23 +19,37 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.AddFeastsTitlesAdapter;
 
+import com.etbakhly_provider.adapter.SpinnerDishCategoryAdapter;
 import com.etbakhly_provider.databinding.ActivityAddFeastBinding;
+import com.etbakhly_provider.model.AddBuffetModel;
+import com.etbakhly_provider.model.BuffetModel;
+import com.etbakhly_provider.mvvm.ActivityAddBuffetMvvm;
+import com.etbakhly_provider.mvvm.ActivityAddFeastMvvm;
 import com.etbakhly_provider.share.Common;
+import com.etbakhly_provider.tags.Tags;
+import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddFeastActivity extends BaseActivity {
     private ActivityAddFeastBinding binding;
     private ActivityResultLauncher<Intent> launcher;
+    private ActivityAddFeastMvvm mvvm;
+    private BuffetModel feastModel;
+    private AddBuffetModel addFeastModel;
+    private SpinnerDishCategoryAdapter spinnerDishCategoryAdapter;
+
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final String camera_permission = Manifest.permission.CAMERA;
@@ -46,10 +61,117 @@ public class AddFeastActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_feast);
+        getDataFromIntent();
         initView();
     }
 
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("data")) {
+            feastModel = (BuffetModel) intent.getSerializableExtra("data");
+
+        }
+    }
+
     private void initView() {
+
+        mvvm = ViewModelProviders.of(this).get(ActivityAddFeastMvvm.class);
+
+        if (addFeastModel != null) {
+            addFeastModel.setTitel(addFeastModel.getTitel());
+            addFeastModel.setNumber_people(addFeastModel.getNumber_people());
+            addFeastModel.setPhoto(addFeastModel.getPhoto());
+            addFeastModel.setPrice(addFeastModel.getPrice());
+            addFeastModel.setService_provider_type(addFeastModel.getService_provider_type());
+            addFeastModel.setOrder_time(addFeastModel.getOrder_time());
+            addFeastModel.setId(addFeastModel.getId());
+            addFeastModel.setCaterer_id(addFeastModel.getCaterer_id());
+
+            if (addFeastModel.getPhoto() != null && !addFeastModel.getPhoto().isEmpty()) {
+                Picasso.get().load(Tags.base_url + addFeastModel.getPhoto()).fit().into(binding.image);
+                binding.icon.setVisibility(View.GONE);
+            }
+
+        } else {
+            addFeastModel = new AddBuffetModel();
+
+        }
+        binding.setModel(addFeastModel);
+
+
+        BuffetModel.Category category = new BuffetModel.Category();
+        category.setTitel(getString(R.string.ch_cat));
+        List<BuffetModel.Category> categoryList = new ArrayList<>();
+        categoryList.add(category);
+
+        spinnerDishCategoryAdapter = new SpinnerDishCategoryAdapter(new ArrayList<>(), this);
+
+        binding.spinner.setAdapter(spinnerDishCategoryAdapter);
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (mvvm.onCategoryDataSuccess().getValue() != null) {
+                    addFeastModel.setCategory_dishes_id(mvvm.onCategoryDataSuccess().getValue().get(i).getId());
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        mvvm.onCategoryDataSuccess().observe(this, categories -> {
+            if (spinnerDishCategoryAdapter != null) {
+                if (categories.size()>1){
+                    binding.tvNote.setVisibility(View.GONE);
+                }else {
+                    if (categories.get(0).getId()==null||categories.get(0).getId().isEmpty()){
+                        binding.tvNote.setVisibility(View.VISIBLE);
+
+                    }else {
+                        binding.tvNote.setVisibility(View.GONE);
+
+                    }
+                }
+                spinnerDishCategoryAdapter.updateList(categories);
+
+            }
+        });
+
+
+        mvvm.onCategoryDataSuccess().setValue(categoryList);
+        mvvm.getOnAddedSuccess().observe(this, aBoolean -> {
+            if (aBoolean) {
+                Toast.makeText(this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+        mvvm.getOnUpdatedSuccess().observe(this, aBoolean -> {
+            if (aBoolean) {
+                Toast.makeText(this, R.string.updated, Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+
+        mvvm.getCategoryDishes(getUserModel().getData().getCaterer().getId(), this);
+
+        binding.btnDone.setOnClickListener(view -> {
+            if (addFeastModel.isDataValid(this)) {
+                addFeastModel.setCaterer_id(getUserModel().getData().getCaterer().getId());
+                if (addFeastModel == null) {
+                    mvvm.storeFeast(this, addFeastModel, uri);
+                } else {
+                    mvvm.editFeast(this, addFeastModel, uri);
+                }
+
+            }
+        });
+
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 if (selectedReq == READ_REQ) {
@@ -94,19 +216,6 @@ public class AddFeastActivity extends BaseActivity {
         binding.setLang(getLang());
         binding.llBack.setOnClickListener(view -> finish());
 
-//        spinnerAdapter = new SpinnerItemAdapter(list, this);
-//        binding.spinner.setAdapter(spinnerAdapter);
-//        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
 
     }
 

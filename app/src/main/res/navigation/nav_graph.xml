@@ -10,6 +10,19 @@
         android:label="@string/home"
         tools:layout="@layout/fragment_home" />
 
+
+    <dialog
+        android:id="@+id/fragmentAddCategory"
+        android:name="com.etbakhly_provider.uis.activities_home.FragmentDialogAddCategory"
+        android:label=""
+        tools:layout="@layout/add_category_dialog_fragment" />
+    <activity
+        android:id="@+id/activityKitchenDetails"
+        android:name="com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity"
+        android:label=""
+        tools:layout="@layout/activity_kitchen_details"
+
+        />
     <activity
         android:id="@+id/activityBuffets"
         android:name="com.etbakhly_provider.uis.activity_buffet.BuffetActivity"

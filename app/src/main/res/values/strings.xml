@@ -183,6 +183,8 @@
     <string name="banquets">Banquets</string>
     <string name="offers">Offers</string>
     <string name="more">More</string>
+    <string name="please_you_have_to_add_category_from_main_page">Please you have to add category from main page</string>
+    <string name="booking_in_advance">Booking in advance</string>
     <string name="subject">Subject</string>
     <string name="message">Message</string>
     <string name="send">Send</string>

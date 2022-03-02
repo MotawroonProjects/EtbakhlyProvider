@@ -77,7 +77,7 @@ public class AddBuffetModel extends BaseObservable {
     public AddBuffetModel() {
         titel = "";
         number_people = "";
-        service_provider_type = "";
+        service_provider_type = "women";
         order_time = "";
         price = "";
         category_dishes_id = "";

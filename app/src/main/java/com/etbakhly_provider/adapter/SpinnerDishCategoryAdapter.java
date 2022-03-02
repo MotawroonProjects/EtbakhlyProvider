@@ -58,7 +58,6 @@ public class SpinnerDishCategoryAdapter extends BaseAdapter {
     public void updateList(List<BuffetModel.Category> dataList){
         if (dataList!=null){
             this.dataList = dataList;
-            Log.e("sda",this.dataList.size()+"");
         }
         notifyDataSetChanged();
     }

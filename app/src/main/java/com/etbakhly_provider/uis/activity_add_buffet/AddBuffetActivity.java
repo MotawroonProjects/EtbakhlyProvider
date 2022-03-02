@@ -75,7 +75,6 @@ public class AddBuffetActivity extends BaseActivity {
     private void initView() {
         mvvm = ViewModelProviders.of(this).get(ActivityAddBuffetMvvm.class);
 
-        addBuffetModel = new AddBuffetModel();
         if (buffetModel!=null){
             addBuffetModel.setTitel(buffetModel.getTitel());
             addBuffetModel.setNumber_people(buffetModel.getNumber_people());
@@ -90,6 +89,9 @@ public class AddBuffetActivity extends BaseActivity {
                 Picasso.get().load(Tags.base_url + buffetModel.getPhoto()).fit().into(binding.image);
                 binding.icon.setVisibility(View.GONE);
             }
+
+        }else {
+            addBuffetModel = new AddBuffetModel();
 
         }
         binding.setModel(addBuffetModel);
@@ -186,6 +188,39 @@ public class AddBuffetActivity extends BaseActivity {
             }
         });
 
+
+        binding.rdwomen.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                addBuffetModel.setService_provider_type("women");
+
+            }
+
+
+        });
+        binding.rdmen.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                addBuffetModel.setService_provider_type("man");
+
+            }
+
+
+        });
+        binding.rdboth.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                addBuffetModel.setService_provider_type("man_and_women");
+
+            }
+
+
+        });
+        binding.rdnothing.setOnCheckedChangeListener((compoundButton, b) -> {
+
+            if (b) {
+                addBuffetModel.setService_provider_type("not_found");
+
+            }
+
+        });
         binding.flGallery.setOnClickListener(view -> {
             closeSheet();
             checkReadPermission();

@@ -183,6 +183,8 @@
     <string name="banquets">الولائم</string>
     <string name="offers">العروض</string>
     <string name="more">المزيد</string>
+    <string name="please_you_have_to_add_category_from_main_page">من فضلك قم بإضافة قسم من الصفحة الرئيسية.</string>
+    <string name="booking_in_advance">الحجز قبل</string>
     <string name="subject">الموضوع</string>
     <string name="message">الرسالة</string>
     <string name="send">ارسال</string>

@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/activityRegister"
-        android:title="@string/profile"
+    <item
+        android:id="@+id/activityKitchenDetails"
         android:icon="@drawable/ic_user"
-        />
-    <item android:id="@+id/activityBuffets"
-        android:title="@string/buffets"
+        android:title="@string/profile" />
+    <item
+        android:id="@+id/fragmentAddCategory"
+        android:icon="@drawable/ic_add"
+        android:title="@string/add_category" />
+    <item
+        android:id="@+id/activityBuffets"
         android:icon="@drawable/ic_table"
-        />
-    <item android:id="@+id/activityBanquet"
-        android:title="@string/banquets"
+        android:title="@string/buffets" />
+    <item
+        android:id="@+id/activityBanquet"
         android:icon="@drawable/ic_table"
-        />
+        android:title="@string/banquets" />
 
-    <item android:id="@+id/activityOffers"
-        android:title="@string/offers"
+    <item
+        android:id="@+id/activityOffers"
         android:icon="@drawable/ic_offer"
-        />
-    <item android:id="@+id/activityMore"
-        android:title="@string/more"
+        android:title="@string/offers" />
+    <item
+        android:id="@+id/activityMore"
         android:icon="@drawable/ic_more"
-        />
+        android:title="@string/more" />
 </menu>

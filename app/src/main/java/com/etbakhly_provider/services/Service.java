@@ -115,10 +115,16 @@ public interface Service {
                                                 @Query("type") String type);
 
     @GET("api/Catering/CatererBuffets")
-    Single<Response<BuffetsDataModel>> getBuffets(@Query(value = "Caterer_id") String Caterer_id);
+    Single<Response<BuffetsDataModel>> getBuffets(@Query(value = "Caterer_id") String Caterer_id,
+                                                  @Query(value = "user_type") String user_type
+
+    );
 
     @GET("api/Catering/CatererFeasts")
-    Single<Response<BuffetsDataModel>> getFeasts(@Query(value = "Caterer_id") String caterer_id);
+    Single<Response<BuffetsDataModel>> getFeasts(@Query(value = "Caterer_id") String caterer_id,
+                                                 @Query(value = "user_type") String user_type
+
+    );
 
     @FormUrlEncoded
     @POST("api/Catering/delete_buffet")
@@ -130,14 +136,14 @@ public interface Service {
 
     @Multipart
     @POST("api/Catering/storeBuffets")
-    Single<Response<AddBuffetDataModel>> storeBuffet(@Part("titel") RequestBody titel,
-                                                     @Part("number_people") RequestBody number_people,
-                                                     @Part("service_provider_type") RequestBody service_provider_type,
-                                                     @Part("order_time") RequestBody order_time,
-                                                     @Part MultipartBody.Part photo,
-                                                     @Part("price") RequestBody price,
-                                                     @Part("category_dishes_id") RequestBody category_dishes_id,
-                                                     @Part("caterer_id") RequestBody caterer_id);
+    Single<Response<StatusResponse>> storeBuffet(@Part("titel") RequestBody titel,
+                                                 @Part("number_people") RequestBody number_people,
+                                                 @Part("service_provider_type") RequestBody service_provider_type,
+                                                 @Part("order_time") RequestBody order_time,
+                                                 @Part MultipartBody.Part photo,
+                                                 @Part("price") RequestBody price,
+                                                 @Part("category_dishes_id") RequestBody category_dishes_id,
+                                                 @Part("caterer_id") RequestBody caterer_id);
 
     @Multipart
     @POST("api/Catering/updateBuffet")
@@ -242,5 +248,27 @@ public interface Service {
 
 
     );
+
+    @Multipart
+    @POST("api/Catering/storeFeast")
+    Single<Response<StatusResponse>> storeFeast(@Part("titel") RequestBody titel,
+                                                @Part("number_people") RequestBody number_people,
+                                                @Part("service_provider_type") RequestBody service_provider_type,
+                                                @Part("order_time") RequestBody order_time,
+                                                @Part MultipartBody.Part photo,
+                                                @Part("price") RequestBody price,
+                                                @Part("category_dishes_id") RequestBody category_dishes_id,
+                                                @Part("caterer_id") RequestBody caterer_id);
+
+    @Multipart
+    @POST("api/Catering/updateFeast")
+    Single<Response<StatusResponse>> updateFeast(@Part("titel") RequestBody titel,
+                                                 @Part("number_people") RequestBody number_people,
+                                                 @Part("service_provider_type") RequestBody service_provider_type,
+                                                 @Part("order_time") RequestBody order_time,
+                                                 @Part MultipartBody.Part photo,
+                                                 @Part("price") RequestBody price,
+                                                 @Part("category_dishes_id") RequestBody category_dishes_id,
+                                                 @Part("feast_id") RequestBody feast_id);
 
 }

@@ -11,10 +11,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.AddCategoryDishesAdapter;
 import com.etbakhly_provider.adapter.BuffetDishesAdapter;
+import com.etbakhly_provider.adapter.SpinnerCategoryAdapter;
 import com.etbakhly_provider.databinding.ActivityDishesBinding;
 import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.model.DishModel;
@@ -55,8 +57,8 @@ public class DishesActivity extends BaseActivity {
             if (isLoading) {
 
                 binding.tvNoData.setVisibility(View.GONE);
-                if (adapter!=null){
-                    if (mvvm.onDataSuccess().getValue()!=null){
+                if (adapter != null) {
+                    if (mvvm.onDataSuccess().getValue() != null) {
                         mvvm.onDataSuccess().getValue().clear();
                         adapter.notifyDataSetChanged();
                     }
@@ -69,9 +71,10 @@ public class DishesActivity extends BaseActivity {
 
             }
         });
+
         mvvm.onDataSuccess().observe(this, categories -> {
             if (categories.size() > 1) {
-                if (behavior.getState()==BottomSheetBehavior.STATE_EXPANDED){
+                if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
                     behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
 
@@ -105,7 +108,7 @@ public class DishesActivity extends BaseActivity {
             behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
             if (adapter != null) {
-                mvvm.updateCategory(category,selectedCategoryPos);
+                mvvm.updateCategory(category, selectedCategoryPos);
                 adapter.updateItem(category, selectedCategoryPos);
 
             }
@@ -130,6 +133,7 @@ public class DishesActivity extends BaseActivity {
 
         });
 
+
         behavior = BottomSheetBehavior.from(binding.sheet.root);
         binding.setLang(getLang());
 
@@ -147,6 +151,7 @@ public class DishesActivity extends BaseActivity {
             navigateToAddDishActivity();
         });
 
+
         binding.sheet.llClose.setOnClickListener(view -> {
             behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         });
@@ -161,7 +166,7 @@ public class DishesActivity extends BaseActivity {
 
                 } else {
 
-                    mvvm.editCategory(selectedCategory,category_name,selectedCategory.getId(), this, selectedCategoryPos);
+                    mvvm.editCategory(selectedCategory, category_name, selectedCategory.getId(), this, selectedCategoryPos);
                 }
 
             } else {
@@ -171,7 +176,7 @@ public class DishesActivity extends BaseActivity {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
                 DishModel dishModel = (DishModel) result.getData().getSerializableExtra("data");
-                if (mvvm.getSelectedDishPos().getValue()!=1){
+                if (mvvm.getSelectedDishPos().getValue() != 1) {
                     mvvm.onDishSuccess().getValue().set(mvvm.getSelectedDishPos().getValue(), dishModel);
                     adapter.notifyItemChanged(mvvm.getSelectedDishPos().getValue());
                     mvvm.getSelectedDishPos().setValue(-1);
@@ -256,7 +261,7 @@ public class DishesActivity extends BaseActivity {
 
 
     public void editDish(DishModel dishModel, int adapterPosition) {
-        req=1;
+        req = 1;
         mvvm.getSelectedDishPos().setValue(adapterPosition);
 
         List<BuffetModel.Category> categoryList = new ArrayList<>(mvvm.onDataSuccess().getValue());
