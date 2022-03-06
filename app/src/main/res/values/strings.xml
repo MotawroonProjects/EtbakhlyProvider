@@ -189,6 +189,7 @@
     <string name="message">Message</string>
     <string name="send">Send</string>
     <string name="suc">Sucess</string>
+    <string name="add_department">Add department</string>
 
 
 </resources>

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.etbakhly_provider.R;
@@ -43,12 +44,13 @@ public class FeastsActivity extends BaseActivity {
         mvvm.getIsDataLoading().observe(this, isLoading -> {
             binding.swipeRefresh.setRefreshing(isLoading);
         });
-        mvvm.onDataSuccess().observe(this, buffetsList -> {
-            if (buffetsList.size() > 0) {
+
+        mvvm.onDataSuccess().observe(this, feastsList -> {
+            if (feastsList.size() > 0) {
                 binding.tvNoData.setVisibility(View.GONE);
 
                 if (adapter != null) {
-                    adapter.updateList(buffetsList);
+                    adapter.updateList(feastsList);
                 }
             } else {
                 adapter.updateList(new ArrayList<>());
@@ -79,13 +81,8 @@ public class FeastsActivity extends BaseActivity {
             launcher.launch(intent);
         });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
-                BuffetModel buffetModel = (BuffetModel) result.getData().getSerializableExtra("data");
-                if (mvvm.getSelectedPos().getValue() != -1) {
-                    mvvm.onDataSuccess().getValue().set(mvvm.getSelectedPos().getValue(), buffetModel);
-                    adapter.notifyItemChanged(mvvm.getSelectedPos().getValue());
-                    mvvm.getSelectedPos().setValue(-1);
-                }
+            if (req == 1 && result.getResultCode() == RESULT_OK ) {
+                mvvm.getFeasts(getUserModel().getData().getCaterer().getId(),this);
 
             }
         });
@@ -107,7 +104,6 @@ public class FeastsActivity extends BaseActivity {
 
     public void editFeast(BuffetModel feastsModel, int adapterPosition) {
         req = 1;
-        mvvm.getSelectedPos().setValue(adapterPosition);
 
         Intent intent = new Intent(this, AddFeastActivity.class);
         intent.putExtra("data", feastsModel);

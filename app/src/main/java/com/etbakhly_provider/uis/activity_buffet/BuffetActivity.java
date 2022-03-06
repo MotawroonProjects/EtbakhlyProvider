@@ -69,7 +69,7 @@ public class BuffetActivity extends BaseActivity {
         });
         mvvm.getOnStatusSuccess().observe(this, status -> {
 
-            mvvm.getBuffets(getUserModel().getData().getCaterer().getId(),this);
+            mvvm.getBuffets(getUserModel().getData().getCaterer().getId(), this);
         });
 
         binding.setLang(getLang());
@@ -92,29 +92,29 @@ public class BuffetActivity extends BaseActivity {
 
         });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
-                BuffetModel buffetModel = (BuffetModel) result.getData().getSerializableExtra("data");
-                mvvm.onDataSuccess().getValue().add(buffetModel);
-                adapter.notifyItemInserted(mvvm.onDataSuccess().getValue().size()-1);
+            if (req == 1 && result.getResultCode() == RESULT_OK) {
+                mvvm.getBuffets(getUserModel().getData().getCaterer().getId(), this);
+
 
             }
         });
     }
+
     public void setItemData(BuffetModel buffetModel, int adapterPosition) {
         req = 1;
         Intent intent = new Intent(this, BuffetDetailsActivity.class);
         intent.putExtra("data", buffetModel);
         launcher.launch(intent);
     }
+
     public void deleteBuffet(BuffetModel buffetModel) {
         mvvm.deleteBuffet(buffetModel.getId());
     }
 
     public void editBuffet(BuffetModel buffetModel, int adapterPosition) {
-       /* req=1;
+        req = 1;
         Intent intent = new Intent(this, AddBuffetActivity.class);
-        intent.putExtra("data2", buffetModel);
-        intent.putExtra("data3", (Serializable) categoryList);
-        launcher.launch(intent);*/
+        intent.putExtra("data", buffetModel);
+        launcher.launch(intent);
     }
 }

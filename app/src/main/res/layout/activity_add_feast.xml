@@ -130,8 +130,7 @@
                         android:text="@string/please_you_have_to_add_category_from_main_page"
                         android:textColor="@color/colorPrimary"
                         android:textSize="11sp"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -235,7 +234,10 @@
                                     android:paddingStart="8dp"
                                     android:paddingEnd="8dp"
                                     android:textColor="@color/black"
-                                    android:textSize="16sp" />
+                                    android:textSize="16sp"
+                                    android:text="@={model.price}"
+                                    error="@{model.error_price}"
+                                    />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -288,8 +290,8 @@
                             <RadioButton
                                 android:id="@+id/rdboth"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="@string/women_and_men"
                                 android:textColor="@color/gray37"
                                 android:textSize="10sp" />
@@ -297,8 +299,8 @@
                             <RadioButton
                                 android:id="@+id/rdnothing"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="@string/there_is_no"
                                 android:textColor="@color/gray37"
                                 android:textSize="10sp" />
@@ -313,7 +315,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="3dp"
-                        android:text="@string/order_time"
+                        android:text="@string/booking_in_advance"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -326,14 +328,30 @@
 
                         >
 
+
                         <EditText
-                            android:layout_width="match_parent"
+                            error="@{model.error_order_time}"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="match_parent"
                             android:background="@color/transparent"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:text="@={model.order_time}"
+                            android:inputType="number"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="@string/day"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            />
                     </LinearLayout>
 
                     <Button

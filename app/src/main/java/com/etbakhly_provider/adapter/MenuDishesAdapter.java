@@ -11,16 +11,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.DishBuffetRow2Binding;
 import com.etbakhly_provider.model.DishModel;
+import com.etbakhly_provider.uis.activity_buffet_details.BuffetDetailsActivity;
 
 import java.util.List;
 
 public class MenuDishesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<DishModel> list;
     private Context context;
+    private BuffetDetailsActivity activity;
+    private int mainCategoryPos;
 
-    public MenuDishesAdapter(Context context) {
+    public MenuDishesAdapter(Context context,int mainCategoryPos) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+        activity = (BuffetDetailsActivity) context;
+        this.mainCategoryPos = mainCategoryPos;
     }
 
     @NonNull
@@ -34,6 +39,13 @@ public class MenuDishesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
+        myHolder.itemView.setOnClickListener(v -> {
+            activity.navigateToUpdateDish(list.get(myHolder.getAdapterPosition()),mainCategoryPos);
+        });
+
+        myHolder.binding.imageDelete.setOnClickListener(v -> {
+            activity.deleteDish(list.get(myHolder.getAdapterPosition()),mainCategoryPos,myHolder.getAdapterPosition());
+        });
     }
 
     @Override

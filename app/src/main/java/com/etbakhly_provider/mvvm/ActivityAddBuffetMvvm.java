@@ -21,6 +21,7 @@ import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.SingleObserver;
@@ -42,6 +43,11 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
 
     public ActivityAddBuffetMvvm(@NonNull Application application) {
         super(application);
+        List<BuffetModel.Category> categoryList = new ArrayList<>();
+        BuffetModel.Category categoryModel = new BuffetModel.Category();
+        categoryModel.setTitel(application.getApplicationContext().getString(R.string.ch_cat));
+        categoryList.add(categoryModel);
+        onCategoryDataSuccess().setValue(categoryList);
     }
 
     public MutableLiveData<Boolean> getAddBuffetMutableLiveData() {
@@ -185,15 +191,13 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<DishesDataModel> response) {
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200 && response.body().getData() != null) {
-                                List<BuffetModel.Category> categoryList = response.body().getData();
-                                if (categoryList.size() == 0) {
-                                    BuffetModel.Category categoryModel = new BuffetModel.Category();
-                                    categoryModel.setTitel(context.getString(R.string.ch_cat));
-                                    categoryList.add(categoryModel);
+
+                                if (response.body().getData().size() > 0) {
+                                    onCategoryDataSuccess().setValue(response.body().getData());
+
                                 }
 
 
-                                onCategoryDataSuccess().setValue(categoryList);
                             }
                         }
                     }

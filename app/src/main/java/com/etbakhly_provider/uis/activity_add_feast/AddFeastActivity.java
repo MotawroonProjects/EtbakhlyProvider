@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -76,33 +77,41 @@ public class AddFeastActivity extends BaseActivity {
     private void initView() {
 
         mvvm = ViewModelProviders.of(this).get(ActivityAddFeastMvvm.class);
+        addFeastModel = new AddBuffetModel();
 
-        if (addFeastModel != null) {
-            addFeastModel.setTitel(addFeastModel.getTitel());
-            addFeastModel.setNumber_people(addFeastModel.getNumber_people());
-            addFeastModel.setPhoto(addFeastModel.getPhoto());
-            addFeastModel.setPrice(addFeastModel.getPrice());
-            addFeastModel.setService_provider_type(addFeastModel.getService_provider_type());
-            addFeastModel.setOrder_time(addFeastModel.getOrder_time());
-            addFeastModel.setId(addFeastModel.getId());
-            addFeastModel.setCaterer_id(addFeastModel.getCaterer_id());
+        if (feastModel != null) {
 
-            if (addFeastModel.getPhoto() != null && !addFeastModel.getPhoto().isEmpty()) {
-                Picasso.get().load(Tags.base_url + addFeastModel.getPhoto()).fit().into(binding.image);
+            addFeastModel.setTitel(feastModel.getTitel());
+            addFeastModel.setNumber_people(feastModel.getNumber_people());
+            addFeastModel.setPhoto(feastModel.getPhoto());
+            addFeastModel.setPrice(feastModel.getPrice());
+            addFeastModel.setService_provider_type(feastModel.getService_provider_type());
+            addFeastModel.setOrder_time(feastModel.getOrder_time());
+            addFeastModel.setId(feastModel.getId());
+            addFeastModel.setCaterer_id(feastModel.getCaterer_id());
+            if (feastModel.getService_provider_type().equals("man")) {
+                binding.rdmen.setChecked(true);
+            } else if (feastModel.getService_provider_type().equals("women")) {
+                binding.rdwomen.setChecked(true);
+
+            } else if (feastModel.getService_provider_type().equals("man_and_women")) {
+                binding.rdboth.setChecked(true);
+
+            } else if (feastModel.getService_provider_type().equals("not_found")) {
+                binding.rdnothing.setChecked(true);
+
+            }
+            if (feastModel.getPhoto() != null && !feastModel.getPhoto().isEmpty()) {
+                Picasso.get().load(Tags.base_url + feastModel.getPhoto()).into(binding.image);
                 binding.icon.setVisibility(View.GONE);
+
             }
 
-        } else {
-            addFeastModel = new AddBuffetModel();
+
 
         }
         binding.setModel(addFeastModel);
 
-
-        BuffetModel.Category category = new BuffetModel.Category();
-        category.setTitel(getString(R.string.ch_cat));
-        List<BuffetModel.Category> categoryList = new ArrayList<>();
-        categoryList.add(category);
 
         spinnerDishCategoryAdapter = new SpinnerDishCategoryAdapter(new ArrayList<>(), this);
 
@@ -125,13 +134,13 @@ public class AddFeastActivity extends BaseActivity {
 
         mvvm.onCategoryDataSuccess().observe(this, categories -> {
             if (spinnerDishCategoryAdapter != null) {
-                if (categories.size()>1){
+                if (categories.size() > 1) {
                     binding.tvNote.setVisibility(View.GONE);
-                }else {
-                    if (categories.get(0).getId()==null||categories.get(0).getId().isEmpty()){
+                } else {
+                    if (categories.get(0).getId() == null || categories.get(0).getId().isEmpty()) {
                         binding.tvNote.setVisibility(View.VISIBLE);
 
-                    }else {
+                    } else {
                         binding.tvNote.setVisibility(View.GONE);
 
                     }
@@ -139,10 +148,12 @@ public class AddFeastActivity extends BaseActivity {
                 spinnerDishCategoryAdapter.updateList(categories);
 
             }
+
+            addFeastModel.setCategory_dishes_id(categories.get(0).getId());
+
         });
 
 
-        mvvm.onCategoryDataSuccess().setValue(categoryList);
         mvvm.getOnAddedSuccess().observe(this, aBoolean -> {
             if (aBoolean) {
                 Toast.makeText(this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
@@ -163,7 +174,7 @@ public class AddFeastActivity extends BaseActivity {
         binding.btnDone.setOnClickListener(view -> {
             if (addFeastModel.isDataValid(this)) {
                 addFeastModel.setCaterer_id(getUserModel().getData().getCaterer().getId());
-                if (addFeastModel == null) {
+                if (feastModel == null) {
                     mvvm.storeFeast(this, addFeastModel, uri);
                 } else {
                     mvvm.editFeast(this, addFeastModel, uri);
@@ -178,25 +189,26 @@ public class AddFeastActivity extends BaseActivity {
 
                     uri = result.getData().getData();
 
-
                     File file = new File(Common.getImagePath(this, uri));
                     Picasso.get().load(file).fit().into(binding.image);
                     binding.icon.setVisibility(View.GONE);
+                    addFeastModel.setPhoto(uri.toString());
 
                 } else if (selectedReq == CAMERA_REQ) {
                     Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
                     uri = getUriFromBitmap(bitmap);
                     if (uri != null) {
+                        addFeastModel.setPhoto(uri.toString());
+
                         String path = Common.getImagePath(this, uri);
                         if (path != null) {
-                            Picasso.get().load(new File(path)).fit().into(binding.image);
-                            binding.icon.setVisibility(View.GONE);
+                            Picasso.get().load(new File(path)).into(binding.image);
 
                         } else {
-                            Picasso.get().load(uri).fit().into(binding.image);
-                            binding.icon.setVisibility(View.GONE);
+                            Picasso.get().load(uri).into(binding.image);
 
                         }
+                        binding.icon.setVisibility(View.GONE);
                     }
                 }
             }

@@ -128,7 +128,10 @@
                             android:background="@color/transparent"
                             android:textColor="@color/black"
                             android:text="@={model.titel}"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            />
                     </LinearLayout>
 
                     <TextView
@@ -159,7 +162,11 @@
                             android:text="@={model.qty}"
                             android:background="@color/transparent"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:inputType="number"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -199,7 +206,11 @@
                                     android:text="@={model.price}"
                                     android:background="@color/transparent"
                                     android:textColor="@color/black"
-                                    android:textSize="16sp" />
+                                    android:textSize="16sp"
+                                    android:inputType="numberDecimal"
+                                    android:paddingStart="8dp"
+                                    android:paddingEnd="8dp"
+                                    />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -235,7 +246,9 @@
                             android:gravity="top"
                             android:text="@={model.details}"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:padding="8dp"
+                            />
                     </LinearLayout>
 
 

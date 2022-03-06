@@ -123,42 +123,33 @@ public class GeneralMethod {
 
                     if (view instanceof CircleImageView) {
                         CircleImageView imageView = (CircleImageView) view;
-                        if (imageUrl1 != null) {
-                            RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
-                            Glide.with(view.getContext()).asBitmap()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .load(imageUrl1)
-                                    //.centerCrop()
-                                    .apply(options)
-                                    .into(imageView);
-                        }
+                        RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
+                        Glide.with(view.getContext()).asBitmap()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .load(imageUrl1)
+                                .centerCrop()
+                                .apply(options)
+                                .into(imageView);
                     } else if (view instanceof RoundedImageView) {
                         RoundedImageView imageView = (RoundedImageView) view;
 
-                        if (imageUrl1 != null) {
-
-                            RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
-                            Glide.with(view.getContext()).asBitmap()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .load(imageUrl1)
-                                    //.centerCrop()
-                                    .apply(options)
-                                    .into(imageView);
-
-                        }
+                        RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
+                        Glide.with(view.getContext()).asBitmap()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .load(imageUrl1)
+                                .centerCrop()
+                                .apply(options)
+                                .into(imageView);
                     } else if (view instanceof ImageView) {
                         ImageView imageView = (ImageView) view;
 
-                        if (imageUrl1 != null) {
-
-                            RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
-                            Glide.with(view.getContext()).asBitmap()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .load(imageUrl1)
-                                    //.centerCrop()
-                                    .apply(options)
-                                    .into(imageView);
-                        }
+                        RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
+                        Glide.with(view.getContext()).asBitmap()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .load(imageUrl1)
+                                .centerCrop()
+                                .apply(options)
+                                .into(imageView);
                     }
 
                 }

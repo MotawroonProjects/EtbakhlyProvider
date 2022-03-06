@@ -15,7 +15,6 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.model.AddDishDataModel;
 import com.etbakhly_provider.model.AddDishModel;
 import com.etbakhly_provider.model.StatusResponse;
-import com.etbakhly_provider.model.UserModel;
 import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
@@ -33,8 +32,8 @@ import retrofit2.Response;
 
 public class ActivityAddDishMvvm extends AndroidViewModel {
 
-    private MutableLiveData<Boolean> addDishLiveData;
-    private MutableLiveData<Boolean> updateDishLiveData;
+    private MutableLiveData<Boolean> onAddedSuccess;
+    private MutableLiveData<Boolean> onUpdateSuccess;
 
 
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -43,21 +42,21 @@ public class ActivityAddDishMvvm extends AndroidViewModel {
         super(application);
     }
 
-    public MutableLiveData<Boolean> getAddDishLiveData() {
-        if (addDishLiveData == null) {
-            addDishLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getOnAddedSuccess() {
+        if (onAddedSuccess == null) {
+            onAddedSuccess = new MutableLiveData<>();
         }
-        return addDishLiveData;
+        return onAddedSuccess;
     }
 
-    public MutableLiveData<Boolean> getUpdateDishLiveData() {
-        if (updateDishLiveData == null) {
-            updateDishLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getOnUpdateSuccess() {
+        if (onUpdateSuccess == null) {
+            onUpdateSuccess = new MutableLiveData<>();
         }
-        return updateDishLiveData;
+        return onUpdateSuccess;
     }
 
-    public void storeDish(Context context, AddDishModel addDishModel, Uri uri) {
+    public void storeDish(Context context, AddDishModel addDishModel) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -70,10 +69,8 @@ public class ActivityAddDishMvvm extends AndroidViewModel {
         RequestBody caterer_id = Common.getRequestBodyText(addDishModel.getCaterer_id());
         RequestBody details = Common.getRequestBodyText(addDishModel.getDetails());
 
-        MultipartBody.Part image = null;
-        if (addDishModel.getPhoto() != null && !addDishModel.getPhoto().isEmpty()) {
-            image = Common.getMultiPart(context, uri, "photo");
-        }
+        MultipartBody.Part image = Common.getMultiPart(context, Uri.parse(addDishModel.getPhoto()), "photo");
+
 
 
         Api.getService(Tags.base_url).storeDish(titel, category_dishes_id, price, details, image, qty, caterer_id)
@@ -91,7 +88,7 @@ public class ActivityAddDishMvvm extends AndroidViewModel {
                         if (response.isSuccessful()) {
 
                             if (response.body() != null && response.body().getStatus() == 200) {
-                                addDishLiveData.postValue(true);
+                                onAddedSuccess.postValue(true);
                             }
                         } else {
                             try {
@@ -111,7 +108,7 @@ public class ActivityAddDishMvvm extends AndroidViewModel {
                 });
     }
 
-    public void updateDish(Context context, AddDishModel addDishModel, Uri uri) {
+    public void updateDish(Context context, AddDishModel addDishModel) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -119,17 +116,17 @@ public class ActivityAddDishMvvm extends AndroidViewModel {
         RequestBody titel = Common.getRequestBodyText(addDishModel.getTitel());
         RequestBody category_dishes_id = Common.getRequestBodyText(addDishModel.getCategory_dishes_id() + "");
         RequestBody price = Common.getRequestBodyText(addDishModel.getPrice());
-        RequestBody details=Common.getRequestBodyText(addDishModel.getDetails());
+        RequestBody details = Common.getRequestBodyText(addDishModel.getDetails());
         RequestBody qty = Common.getRequestBodyText(addDishModel.getQty());
         RequestBody dishes_id = Common.getRequestBodyText(addDishModel.getId());
-        MultipartBody.Part image=null;
-        if (!addDishModel.getPhoto().contains("storage")){
-            image= Common.getMultiPart(context, uri, "photo");
+        MultipartBody.Part image = null;
+        if (!addDishModel.getPhoto().contains("storage")) {
+            image = Common.getMultiPart(context, Uri.parse(addDishModel.getPhoto()), "photo");
         }
 
 
-        Log.e("data",addDishModel.getCategory_dishes_id()+"___"+addDishModel.getId());
-        Api.getService(Tags.base_url).updateDish(titel, category_dishes_id, price,details, image, qty, dishes_id)
+        Log.e("data", addDishModel.getCategory_dishes_id() + "___" + addDishModel.getId());
+        Api.getService(Tags.base_url).updateDish(titel, category_dishes_id, price, details, image, qty, dishes_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<StatusResponse>>() {
@@ -141,15 +138,14 @@ public class ActivityAddDishMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<StatusResponse> response) {
                         dialog.dismiss();
-                        Log.e("code",response.body().getStatus()+"__");
-                        if (response.isSuccessful()){
-                            if (response.body()!=null && response.body().getStatus()==200){
-                                updateDishLiveData.postValue(true);
+                        Log.e("code", response.body().getStatus() + "__");
+                        if (response.isSuccessful()) {
+                            if (response.body() != null && response.body().getStatus() == 200) {
+                                onUpdateSuccess.postValue(true);
                             }
-                        }
-                        else {
+                        } else {
                             try {
-                                Log.e("error",response.errorBody().string());
+                                Log.e("error", response.errorBody().string());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

@@ -3,11 +3,9 @@ package com.etbakhly_provider.uis.activity_add_buffet.add_buffet_dish_activity;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
@@ -24,9 +22,10 @@ import android.widget.Toast;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.ActivityAddBuffetDishBinding;
 import com.etbakhly_provider.model.AddBuffetDishModel;
+import com.etbakhly_provider.model.DishModel;
 import com.etbakhly_provider.mvvm.ActivityAddBuffetDishMvvm;
 import com.etbakhly_provider.share.Common;
-import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
+import com.etbakhly_provider.tags.Tags;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
@@ -44,27 +43,50 @@ public class AddBuffetDishActivity extends BaseActivity {
     private final int READ_REQ = 1, CAMERA_REQ = 2;
     private int selectedReq = 0;
     private Uri uri = null;
+    private String category_dish_id = "";
+    private DishModel dishModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_add_buffet_dish);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_buffet_dish);
+        getDataFromIntent();
         initView();
     }
 
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        category_dish_id = intent.getStringExtra("data");
+        if (intent.hasExtra("data2")) {
+            dishModel = (DishModel) intent.getSerializableExtra("data2");
+        }
+    }
+
     private void initView() {
-        mvvm= ViewModelProviders.of(this).get(ActivityAddBuffetDishMvvm.class);
-        mvvm.getAddBuffetDishLiveData().observe(this, aBoolean -> {
-            if (aBoolean){
-                Toast.makeText(AddBuffetDishActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
-                finish();
-            }
+        mvvm = ViewModelProviders.of(this).get(ActivityAddBuffetDishMvvm.class);
+        mvvm.getOnDishUpdatedSuccess().observe(this, dishModel -> {
+            Toast.makeText(AddBuffetDishActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
+            Intent intent = getIntent();
+            intent.putExtra("data", dishModel);
+            setResult(RESULT_OK, intent);
+            finish();
         });
-        binding.btnDone.setOnClickListener(view -> {
-            if (addBuffetDishModel.isDataValid(this)){
-                mvvm.storeBuffetsDishes(this,addBuffetDishModel,uri);
+
+        addBuffetDishModel = new AddBuffetDishModel();
+        addBuffetDishModel.setCategory_dishes_id(category_dish_id);
+        if (dishModel != null) {
+            addBuffetDishModel.setId(dishModel.getId());
+            addBuffetDishModel.setTitel(dishModel.getTitel());
+            addBuffetDishModel.setPrice(dishModel.getPrice());
+            addBuffetDishModel.setQty(dishModel.getQty());
+            addBuffetDishModel.setDetails(dishModel.getDetails());
+            if (dishModel.getPhoto() != null && !dishModel.getPhoto().isEmpty()) {
+                if (dishModel.getPhoto() != null && !dishModel.getPhoto().isEmpty()) {
+                    Picasso.get().load(Tags.base_url + dishModel.getPhoto()).fit().into(binding.image);
+                    binding.icon.setVisibility(View.GONE);
+                }
             }
-        });
-        addBuffetDishModel=new AddBuffetDishModel();
+        }
         binding.setModel(addBuffetDishModel);
         binding.setLang(getLang());
 
@@ -115,7 +137,19 @@ public class AddBuffetDishActivity extends BaseActivity {
 
         binding.llBack.setOnClickListener(view -> finish());
 
+        binding.btnDone.setOnClickListener(view -> {
+            if (addBuffetDishModel.isDataValid(this)) {
+                if (dishModel == null) {
+                    mvvm.storeBuffetsDishes(this, addBuffetDishModel);
+
+                } else {
+                    mvvm.updateBuffetsDishes(this, addBuffetDishModel);
+
+                }
+            }
+        });
     }
+
     public void checkCameraPermission() {
 
         closeSheet();

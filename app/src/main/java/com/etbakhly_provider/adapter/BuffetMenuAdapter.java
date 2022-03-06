@@ -40,12 +40,19 @@ public class BuffetMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
         myHolder.binding.recView.setLayoutManager(new GridLayoutManager(context, 2));
-        MenuDishesAdapter adapter = new MenuDishesAdapter(context);
+        MenuDishesAdapter adapter = new MenuDishesAdapter(context, myHolder.getAdapterPosition());
         adapter.updateList(list.get(position).getDishes_buffet());
         myHolder.binding.recView.setAdapter(adapter);
+
+
         myHolder.binding.llAddNew.setOnClickListener(view -> {
             BuffetDetailsActivity buffetDetailsActivity = (BuffetDetailsActivity) context;
-            buffetDetailsActivity.navigateToAddNewBuffetDish();
+            buffetDetailsActivity.navigateToAddNewBuffetDish(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+        });
+
+        myHolder.binding.imageDelete.setOnClickListener(view -> {
+            BuffetDetailsActivity buffetDetailsActivity = (BuffetDetailsActivity) context;
+            buffetDetailsActivity.deleteCategory(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
         });
     }
 

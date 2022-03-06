@@ -189,4 +189,5 @@
     <string name="message">الرسالة</string>
     <string name="send">ارسال</string>
     <string name="suc">تم بنجاح</string>
+    <string name="add_department">Add department</string>
 </resources>

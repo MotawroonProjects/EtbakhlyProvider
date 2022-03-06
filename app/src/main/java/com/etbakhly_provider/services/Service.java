@@ -12,6 +12,7 @@ import com.etbakhly_provider.model.OrderDataModel;
 import com.etbakhly_provider.model.PlaceGeocodeData;
 import com.etbakhly_provider.model.PlaceMapDetailsData;
 import com.etbakhly_provider.model.SingleCategory;
+import com.etbakhly_provider.model.SingleDishModel;
 import com.etbakhly_provider.model.SingleKitchenDataModel;
 import com.etbakhly_provider.model.SingleOrderDataModel;
 import com.etbakhly_provider.model.StatusResponse;
@@ -187,13 +188,25 @@ public interface Service {
 
     @Multipart
     @POST("api/Catering/storeBuffetsDishes")
-    Single<Response<AddBuffetDishDataModel>> storeBuffetsDishes(@Part("titel") RequestBody titel,
-                                                                @Part("category_dishes_id") RequestBody category_dishes_id,
-                                                                @Part("price") RequestBody price,
-                                                                @Part("details") RequestBody details,
-                                                                @Part MultipartBody.Part photo,
-                                                                @Part("qty") RequestBody qty,
-                                                                @Part("buffets_id") RequestBody buffets_id);
+    Single<Response<SingleDishModel>> storeBuffetsDishes(@Part("titel") RequestBody titel,
+                                                         @Part("category_dishes_id") RequestBody category_dishes_id,
+                                                         @Part("price") RequestBody price,
+                                                         @Part("details") RequestBody details,
+                                                         @Part MultipartBody.Part photo,
+                                                         @Part("qty") RequestBody qty);
+
+    @Multipart
+    @POST("api/Catering/updateDishes")
+    Single<Response<SingleDishModel>> updateBuffetsDishes(@Part("titel") RequestBody titel,
+                                                                 @Part("category_dishes_id") RequestBody category_dishes_id,
+                                                                 @Part("price") RequestBody price,
+                                                                 @Part("details") RequestBody details,
+                                                                 @Part MultipartBody.Part photo,
+                                                                 @Part("qty") RequestBody qty,
+                                                                 @Part("dishes_id") RequestBody dishes_id
+
+
+    );
 
 
     @FormUrlEncoded
@@ -211,8 +224,7 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("api/Catering/CategoryDishesDelete")
-    Single<Response<StatusResponse>> deleteCatererDish(
-            @Field("Category_Dishes_id") String Category_Dishes_id
+    Single<Response<StatusResponse>> deleteCatererDish(@Field("Category_Dishes_id") String Category_Dishes_id
     );
 
     @Multipart
@@ -224,6 +236,7 @@ public interface Service {
                                                              @Part MultipartBody.Part photo,
                                                              @Part("qty") RequestBody qty,
                                                              @Part("feast_id") RequestBody feast_id);
+
     @FormUrlEncoded
     @POST("api/Catering/logout")
     Single<Response<StatusResponse>> logout(@Field("user_id") String user_id,
@@ -231,6 +244,7 @@ public interface Service {
 
 
     );
+
     @FormUrlEncoded
     @POST("api/Catering/firebaseTokens")
     Single<Response<StatusResponse>> updateFireBaseToken(@Field("token") String token,
@@ -239,6 +253,7 @@ public interface Service {
 
 
     );
+
     @FormUrlEncoded
     @POST("api/Catering/CountactUs")
     Single<Response<StatusResponse>> contactUs(@Field("name") String name,

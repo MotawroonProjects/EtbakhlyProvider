@@ -141,7 +141,12 @@ public class AddBuffetModel extends BaseObservable {
     }
 
     public void setCategory_dishes_id(String category_dishes_id) {
-        this.category_dishes_id = category_dishes_id;
+        if (category_dishes_id == null) {
+            this.category_dishes_id = "";
+        } else {
+            this.category_dishes_id = category_dishes_id;
+
+        }
     }
 
     public String getCaterer_id() {
