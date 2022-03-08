@@ -200,16 +200,30 @@ public interface Service {
                                                          @Part("qty") RequestBody qty,
                                                          @Part("buffets_id") RequestBody buffets_id);
 
+
     @Multipart
-    @POST("api/Catering/updateDishes")
+    @POST("api/Catering/updateBuffetsDishes")
     Single<Response<SingleDishModel>> updateBuffetsDishes(@Part("titel") RequestBody titel,
                                                           @Part("category_dishes_id") RequestBody category_dishes_id,
                                                           @Part("price") RequestBody price,
                                                           @Part("details") RequestBody details,
                                                           @Part MultipartBody.Part photo,
                                                           @Part("qty") RequestBody qty,
-                                                          @Part("dishes_id") RequestBody dishes_id,
-                                                          @Part("buffets_id") RequestBody buffets_id
+                                                          @Part("BuffetsDishes_id") RequestBody dishes_id
+
+
+    );
+
+    @Multipart
+    @POST("api/Catering/updateDishes")
+    Single<Response<SingleDishModel>> updateDishes(@Part("titel") RequestBody titel,
+                                                   @Part("category_dishes_id") RequestBody category_dishes_id,
+                                                   @Part("price") RequestBody price,
+                                                   @Part("details") RequestBody details,
+                                                   @Part MultipartBody.Part photo,
+                                                   @Part("qty") RequestBody qty,
+                                                   @Part("dishes_id") RequestBody dishes_id,
+                                                   @Part("buffets_id") RequestBody buffets_id
 
 
     );

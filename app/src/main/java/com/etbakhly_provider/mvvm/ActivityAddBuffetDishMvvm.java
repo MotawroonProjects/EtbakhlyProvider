@@ -113,7 +113,7 @@ public class ActivityAddBuffetDishMvvm extends AndroidViewModel {
             image = Common.getMultiPart(context, Uri.parse(addBuffetDishModel.getPhoto()), "photo");
         }
 
-        Api.getService(Tags.base_url).updateBuffetsDishes(titel, category_dishes_id, price, details, image, qty, dish_id,buffet_id)
+        Api.getService(Tags.base_url).updateBuffetsDishes(titel, category_dishes_id, price, details, image, qty, dish_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleDishModel>>() {

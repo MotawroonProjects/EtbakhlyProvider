@@ -64,6 +64,8 @@ public class FragmentSignup2Mvvm extends AndroidViewModel {
         Log.e("dis", model.getDiscount());
         Log.e("book", model.getBooking_before());
         Log.e("sertyp", model.getSex_type());
+        Log.e("lat", model.getLat());
+        Log.e("lng", model.getLng());
 
 
         List<DeliveryModel> list = new ArrayList<>();
