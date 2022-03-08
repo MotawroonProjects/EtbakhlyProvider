@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class AddBuffetDishActivity extends BaseActivity {
     private int selectedReq = 0;
     private Uri uri = null;
     private String category_dish_id = "";
+    private String buffet_id ="";
     private DishModel dishModel;
 
     @Override
@@ -57,6 +59,8 @@ public class AddBuffetDishActivity extends BaseActivity {
     private void getDataFromIntent() {
         Intent intent = getIntent();
         category_dish_id = intent.getStringExtra("data");
+        buffet_id = intent.getStringExtra("data3");
+
         if (intent.hasExtra("data2")) {
             dishModel = (DishModel) intent.getSerializableExtra("data2");
         }
@@ -73,8 +77,10 @@ public class AddBuffetDishActivity extends BaseActivity {
         });
 
         addBuffetDishModel = new AddBuffetDishModel();
+        addBuffetDishModel.setBuffets_id(buffet_id);
         addBuffetDishModel.setCategory_dishes_id(category_dish_id);
         if (dishModel != null) {
+            binding.tvTitle.setText(getString(R.string.update));
             addBuffetDishModel.setId(dishModel.getId());
             addBuffetDishModel.setTitel(dishModel.getTitel());
             addBuffetDishModel.setPrice(dishModel.getPrice());
@@ -84,6 +90,7 @@ public class AddBuffetDishActivity extends BaseActivity {
                 if (dishModel.getPhoto() != null && !dishModel.getPhoto().isEmpty()) {
                     Picasso.get().load(Tags.base_url + dishModel.getPhoto()).fit().into(binding.image);
                     binding.icon.setVisibility(View.GONE);
+                    addBuffetDishModel.setPhoto(dishModel.getPhoto());
                 }
             }
         }

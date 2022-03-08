@@ -56,8 +56,6 @@ public class AddBuffetActivity extends BaseActivity {
     private Uri uri = null;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +63,10 @@ public class AddBuffetActivity extends BaseActivity {
         getDataFromIntent();
         initView();
     }
+
     private void getDataFromIntent() {
-        Intent intent=getIntent();
-        if (intent.hasExtra("data")){
+        Intent intent = getIntent();
+        if (intent.hasExtra("data")) {
             buffetModel = (BuffetModel) intent.getSerializableExtra("data");
 
         }
@@ -78,7 +77,7 @@ public class AddBuffetActivity extends BaseActivity {
         mvvm = ViewModelProviders.of(this).get(ActivityAddBuffetMvvm.class);
         addBuffetModel = new AddBuffetModel();
 
-        if (buffetModel!=null){
+        if (buffetModel != null) {
 
             addBuffetModel.setTitel(buffetModel.getTitel());
             addBuffetModel.setNumber_people(buffetModel.getNumber_people());
@@ -89,15 +88,15 @@ public class AddBuffetActivity extends BaseActivity {
             addBuffetModel.setId(buffetModel.getId());
             addBuffetModel.setCaterer_id(buffetModel.getCaterer_id());
 
-            if (buffetModel.getService_provider_type().equals("man")){
+            if (buffetModel.getService_provider_type().equals("man")) {
                 binding.rdmen.setChecked(true);
-            }else if (buffetModel.getService_provider_type().equals("women")){
+            } else if (buffetModel.getService_provider_type().equals("women")) {
                 binding.rdwomen.setChecked(true);
 
-            }else if (buffetModel.getService_provider_type().equals("man_and_women")){
+            } else if (buffetModel.getService_provider_type().equals("man_and_women")) {
                 binding.rdboth.setChecked(true);
 
-            }else if (buffetModel.getService_provider_type().equals("not_found")){
+            } else if (buffetModel.getService_provider_type().equals("not_found")) {
                 binding.rdnothing.setChecked(true);
 
             }
@@ -117,7 +116,7 @@ public class AddBuffetActivity extends BaseActivity {
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (mvvm.onCategoryDataSuccess().getValue()!=null){
+                if (mvvm.onCategoryDataSuccess().getValue() != null) {
                     addBuffetModel.setCategory_dishes_id(mvvm.onCategoryDataSuccess().getValue().get(i).getId());
 
                 }
@@ -131,24 +130,24 @@ public class AddBuffetActivity extends BaseActivity {
 
 
         mvvm.onCategoryDataSuccess().observe(this, categories -> {
-            if (spinnerDishCategoryAdapter!=null){
+            if (spinnerDishCategoryAdapter != null) {
                 spinnerDishCategoryAdapter.updateList(categories);
-                if (categories.size()>1){
+                if (categories.size() > 1) {
                     binding.tvNote.setVisibility(View.GONE);
-                }else {
-                    if (categories.get(0).getId()==null||categories.get(0).getId().isEmpty()){
+                } else {
+                    if (categories.get(0).getId() == null || categories.get(0).getId().isEmpty()) {
                         binding.tvNote.setVisibility(View.VISIBLE);
 
-                    }else {
+                    } else {
                         binding.tvNote.setVisibility(View.GONE);
 
                     }
                 }
 
 
-                if (buffetModel!=null){
-                    int pos = getCategoryItemPos(categories,buffetModel.getCategory_dishes_id());
-                    if (pos!=-1){
+                if (buffetModel != null) {
+                    int pos = getCategoryItemPos(categories, buffetModel.getCategory_dishes_id());
+                    if (pos != -1) {
                         binding.spinner.setSelection(pos);
 
                     }
@@ -166,22 +165,22 @@ public class AddBuffetActivity extends BaseActivity {
             }
         });
         mvvm.getUpdateBuffetLiveData().observe(this, aBoolean -> {
-            if (aBoolean){
+            if (aBoolean) {
                 Toast.makeText(AddBuffetActivity.this, R.string.updated, Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
                 finish();
             }
         });
 
-        mvvm.getCategoryDishes(getUserModel().getData().getCaterer().getId(),this);
+        mvvm.getCategoryDishes(getUserModel().getData().getCaterer().getId(), this);
 
         binding.btnDone.setOnClickListener(view -> {
             if (addBuffetModel.isDataValid(this)) {
                 addBuffetModel.setCaterer_id(getUserModel().getData().getCaterer().getId());
-                if (buffetModel==null){
+                if (buffetModel == null) {
                     mvvm.storeBuffet(this, addBuffetModel, uri);
-                }else {
-                    mvvm.editBuffet(this,addBuffetModel,uri);
+                } else {
+                    mvvm.editBuffet(this, addBuffetModel, uri);
                 }
 
             }
@@ -268,10 +267,10 @@ public class AddBuffetActivity extends BaseActivity {
 
     private int getCategoryItemPos(List<BuffetModel.Category> categories, String category_dishes_id) {
         int pos = -1;
-        if (categories!=null){
-            for (int index =0;index<categories.size();index++){
+        if (categories != null) {
+            for (int index = 0; index < categories.size(); index++) {
                 BuffetModel.Category category = categories.get(index);
-                if (category.getId()!=null&&category.getId().equals(category_dishes_id)){
+                if (category.getId() != null && category.getId().equals(category_dishes_id)) {
                     pos = index;
                     return pos;
                 }
@@ -351,10 +350,12 @@ public class AddBuffetActivity extends BaseActivity {
         return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
     }
 
-    public void navigateToAddNewBuffetDish(DishModel model,String category_id) {
+    public void navigateToAddNewBuffetDish(DishModel model, String category_id) {
         Intent intent = new Intent(AddBuffetActivity.this, AddBuffetDishActivity.class);
-        intent.putExtra("data",category_id);
-        intent.putExtra("data2",model);
+        intent.putExtra("data", category_id);
+        intent.putExtra("data3", buffetModel.getId());
+
+        intent.putExtra("data2", model);
         launcher.launch(intent);
 
     }

@@ -55,10 +55,12 @@ public class ActivityAddBuffetDishMvvm extends AndroidViewModel {
         RequestBody price = Common.getRequestBodyText(addBuffetDishModel.getPrice());
         RequestBody category_dishes_id = Common.getRequestBodyText(addBuffetDishModel.getCategory_dishes_id() + "");
         RequestBody details = Common.getRequestBodyText(addBuffetDishModel.getDetails());
+        RequestBody buffet_id = Common.getRequestBodyText(addBuffetDishModel.getBuffets_id());
 
         MultipartBody.Part image = Common.getMultiPart(context, Uri.parse(addBuffetDishModel.getPhoto()), "photo");
 
-        Api.getService(Tags.base_url).storeBuffetsDishes(titel, category_dishes_id, price, details, image, qty)
+        Log.e("dd",addBuffetDishModel.getCategory_dishes_id());
+        Api.getService(Tags.base_url).storeBuffetsDishes(titel, category_dishes_id, price, details, image, qty,buffet_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleDishModel>>() {
@@ -73,6 +75,8 @@ public class ActivityAddBuffetDishMvvm extends AndroidViewModel {
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200) {
                                 onDishUpdatedSuccess.setValue(response.body().getData());
+                            }else {
+                                Log.e("error",response.body().getStatus()+"__"+response.body().getMessage().toString());
                             }
                         } else {
                             try {
@@ -102,12 +106,14 @@ public class ActivityAddBuffetDishMvvm extends AndroidViewModel {
         RequestBody price = Common.getRequestBodyText(addBuffetDishModel.getPrice());
         RequestBody category_dishes_id = Common.getRequestBodyText(addBuffetDishModel.getCategory_dishes_id() + "");
         RequestBody details = Common.getRequestBodyText(addBuffetDishModel.getDetails());
+        RequestBody buffet_id = Common.getRequestBodyText(addBuffetDishModel.getBuffets_id());
+
         MultipartBody.Part image = null;
         if (!addBuffetDishModel.getPhoto().contains("storage")) {
             image = Common.getMultiPart(context, Uri.parse(addBuffetDishModel.getPhoto()), "photo");
         }
 
-        Api.getService(Tags.base_url).updateBuffetsDishes(titel, category_dishes_id, price, details, image, qty, dish_id)
+        Api.getService(Tags.base_url).updateBuffetsDishes(titel, category_dishes_id, price, details, image, qty, dish_id,buffet_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleDishModel>>() {

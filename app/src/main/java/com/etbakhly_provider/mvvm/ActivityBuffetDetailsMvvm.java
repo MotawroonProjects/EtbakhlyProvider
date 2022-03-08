@@ -19,6 +19,7 @@ import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
 
+import java.io.IOException;
 import java.util.List;
 
 import io.reactivex.SingleObserver;
@@ -89,9 +90,11 @@ public class ActivityBuffetDetailsMvvm extends AndroidViewModel {
     }
 
 
-    public void getCategoryDishes(String kitchen_id, Context context) {
+    public void getCategoryDishes(String kitchen_id,String buffet_id, Context context) {
+        Log.e("ddd",kitchen_id+"__"+buffet_id);
+
         getIsDataLoading().setValue(true);
-        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "dishe")
+        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "dishe","buffet",buffet_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<DishesDataModel>>() {
@@ -107,12 +110,17 @@ public class ActivityBuffetDetailsMvvm extends AndroidViewModel {
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200 && response.body().getData() != null) {
 
-                                if (response.body().getData().size() > 0) {
-                                    onCategoryDataSuccess().setValue(response.body().getData());
-
-                                }
+                                onCategoryDataSuccess().setValue(response.body().getData());
 
 
+                            }else {
+                                Log.e("error",response.body().getMessage().toString());
+                            }
+                        }else {
+                            try {
+                                Log.e("error",response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
                     }
@@ -124,11 +132,11 @@ public class ActivityBuffetDetailsMvvm extends AndroidViewModel {
                 });
     }
 
-    public void addCategory(String name, String caterer_id, Context context) {
+    public void addCategory(String name, String caterer_id,String buffet_id, Context context) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).addCatererDish(name, caterer_id, "dishe")
+        Api.getService(Tags.base_url).addCatererDish(name, caterer_id, "dishe","buffet",buffet_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleCategory>>() {

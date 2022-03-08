@@ -179,7 +179,7 @@ public class ActivityAddFeastMvvm extends AndroidViewModel {
     }
 
     public void getCategoryDishes(String kitchen_id, Context context) {
-        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "feast")
+        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "feast","all",null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<DishesDataModel>>() {

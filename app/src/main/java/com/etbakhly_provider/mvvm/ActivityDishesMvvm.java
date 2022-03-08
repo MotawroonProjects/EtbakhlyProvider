@@ -122,14 +122,14 @@ public class ActivityDishesMvvm extends AndroidViewModel {
         return onEditSuccess;
     }
 
-    public void updateCategory(BuffetModel.Category category ,int pos){
-        onDataSuccess().getValue().set(pos,category);
+    public void updateCategory(BuffetModel.Category category, int pos) {
+        onDataSuccess().getValue().set(pos, category);
     }
 
 
     public void getDishes(String kitchen_id) {
         getIsDataLoading().setValue(true);
-        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "dishe")
+        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "dishe","all",null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<DishesDataModel>>() {
@@ -161,7 +161,7 @@ public class ActivityDishesMvvm extends AndroidViewModel {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).addCatererDish(name, caterer_id, "dishe")
+        Api.getService(Tags.base_url).addCatererDish(name, caterer_id, "dishe", "all", null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleCategory>>() {
@@ -194,7 +194,7 @@ public class ActivityDishesMvvm extends AndroidViewModel {
                 });
     }
 
-    public void editCategory(BuffetModel.Category category,String name, String Category_Dishes_id, Context context, int pos) {
+    public void editCategory(BuffetModel.Category category, String name, String Category_Dishes_id, Context context, int pos) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();

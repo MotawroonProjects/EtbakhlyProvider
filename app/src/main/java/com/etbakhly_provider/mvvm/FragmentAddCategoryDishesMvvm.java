@@ -95,7 +95,7 @@ public class FragmentAddCategoryDishesMvvm extends AndroidViewModel {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).addCatererDish(name, caterer_id, getOnSelectedCategorySuccess().getValue().getId())
+        Api.getService(Tags.base_url).addCatererDish(name, caterer_id, getOnSelectedCategorySuccess().getValue().getId(),"all",null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleCategory>>() {

@@ -178,7 +178,7 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
     }
 
     public void getCategoryDishes(String kitchen_id, Context context) {
-        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "buffet")
+        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "buffet","all",null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<DishesDataModel>>() {

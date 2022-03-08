@@ -113,7 +113,11 @@ public interface Service {
     @GET("api/Catering/indexCategoryDishes")
     Single<Response<DishesDataModel>> getDishes(@Query("category_dishes_id") String category_dishes_id,
                                                 @Query("Caterer_id") String Caterer_id,
-                                                @Query("type") String type);
+                                                @Query("type") String type,
+                                                @Query(value = "category_type") String category_type,
+                                                @Query(value = "category_type_id") String category_type_id
+
+    );
 
     @GET("api/Catering/CatererBuffets")
     Single<Response<BuffetsDataModel>> getBuffets(@Query(value = "Caterer_id") String Caterer_id,
@@ -193,17 +197,19 @@ public interface Service {
                                                          @Part("price") RequestBody price,
                                                          @Part("details") RequestBody details,
                                                          @Part MultipartBody.Part photo,
-                                                         @Part("qty") RequestBody qty);
+                                                         @Part("qty") RequestBody qty,
+                                                         @Part("buffets_id") RequestBody buffets_id);
 
     @Multipart
     @POST("api/Catering/updateDishes")
     Single<Response<SingleDishModel>> updateBuffetsDishes(@Part("titel") RequestBody titel,
-                                                                 @Part("category_dishes_id") RequestBody category_dishes_id,
-                                                                 @Part("price") RequestBody price,
-                                                                 @Part("details") RequestBody details,
-                                                                 @Part MultipartBody.Part photo,
-                                                                 @Part("qty") RequestBody qty,
-                                                                 @Part("dishes_id") RequestBody dishes_id
+                                                          @Part("category_dishes_id") RequestBody category_dishes_id,
+                                                          @Part("price") RequestBody price,
+                                                          @Part("details") RequestBody details,
+                                                          @Part MultipartBody.Part photo,
+                                                          @Part("qty") RequestBody qty,
+                                                          @Part("dishes_id") RequestBody dishes_id,
+                                                          @Part("buffets_id") RequestBody buffets_id
 
 
     );
@@ -213,7 +219,10 @@ public interface Service {
     @POST("api/Catering/CategoryDishes")
     Single<Response<SingleCategory>> addCatererDish(@Field("titel") String titel,
                                                     @Field("caterer_id") String caterer_id,
-                                                    @Field("type") String type
+                                                    @Field("type") String type,
+                                                    @Field("category_type") String category_type,
+                                                    @Field("category_type_id") String category_type_id
+
     );
 
     @FormUrlEncoded

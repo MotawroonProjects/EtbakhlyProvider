@@ -75,7 +75,7 @@ public class BuffetDetailsActivity extends BaseActivity {
         });
 
 
-        mvvm.getCategoryDishes(getUserModel().getData().getCaterer().getId(), this);
+        mvvm.getCategoryDishes(getUserModel().getData().getCaterer().getId(), model.getId(),this);
 
         mvvm.getOnCategoryDeletedSuccess().observe(this, pos -> {
             if (adapter != null) {
@@ -125,7 +125,7 @@ public class BuffetDetailsActivity extends BaseActivity {
             if (!name.isEmpty()) {
                 fragmentBinding.edtName.setError(null);
                 Common.CloseKeyBoard(this, fragmentBinding.edtName);
-                mvvm.addCategory(name, getUserModel().getData().getCaterer().getId(), this);
+                mvvm.addCategory(name, getUserModel().getData().getCaterer().getId(),model.getId(),this);
                 dialog.dismiss();
 
             } else {
@@ -151,6 +151,7 @@ public class BuffetDetailsActivity extends BaseActivity {
         mvvm.getOnItemSelected().setValue(adapterPosition);
         req = 1;
         Intent intent = new Intent(BuffetDetailsActivity.this, AddBuffetDishActivity.class);
+        intent.putExtra("data3", model.getId());
         intent.putExtra("data", category.getId());
         launcher.launch(intent);
     }
@@ -161,6 +162,7 @@ public class BuffetDetailsActivity extends BaseActivity {
         req = 1;
         Intent intent = new Intent(BuffetDetailsActivity.this, AddBuffetDishActivity.class);
         intent.putExtra("data", dishModel.getCategory_dishes_id());
+        intent.putExtra("data3", model.getId());
         intent.putExtra("data2", dishModel);
         launcher.launch(intent);
 
