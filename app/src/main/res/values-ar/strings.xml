@@ -190,4 +190,6 @@
     <string name="send">ارسال</string>
     <string name="suc">تم بنجاح</string>
     <string name="add_department">إضافة قسم</string>
+    <string name="select_photo">إختر صورة</string>
+    <string name="upload">رفع الصور</string>
 </resources>

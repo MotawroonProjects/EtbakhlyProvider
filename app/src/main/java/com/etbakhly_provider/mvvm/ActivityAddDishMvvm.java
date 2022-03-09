@@ -14,6 +14,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.model.AddDishDataModel;
 import com.etbakhly_provider.model.AddDishModel;
+import com.etbakhly_provider.model.DishNoteDetailsModel;
 import com.etbakhly_provider.model.StatusResponse;
 import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.share.Common;
@@ -34,7 +35,6 @@ public class ActivityAddDishMvvm extends AndroidViewModel {
 
     private MutableLiveData<Boolean> onAddedSuccess;
     private MutableLiveData<Boolean> onUpdateSuccess;
-
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -61,6 +61,19 @@ public class ActivityAddDishMvvm extends AndroidViewModel {
         dialog.setCancelable(false);
         dialog.show();
         Log.e("data", addDishModel.getTitel() + "__" + addDishModel.getCategory_dishes_id() + "_" + addDishModel.getPrice() + "_" + addDishModel.getDetails() + "_" + addDishModel.getQty() + "_" + addDishModel.getCaterer_id());
+        StringBuilder builder = new StringBuilder();
+      /*  String additionalNotes = "";
+        for (DishNoteDetailsModel model : addDishModel.getDishNoteDetailsModelList()) {
+            builder.append(model.getTitle());
+            builder.append("-");
+        }
+
+        if (builder.length() > 0 && builder.lastIndexOf("-") == builder.length() - 1) {
+            additionalNotes = builder.toString();
+            additionalNotes = additionalNotes.substring(0, additionalNotes.length() - 1);
+
+        }*/
+
 
         RequestBody titel = Common.getRequestBodyText(addDishModel.getTitel());
         RequestBody qty = Common.getRequestBodyText(addDishModel.getQty());
@@ -69,8 +82,8 @@ public class ActivityAddDishMvvm extends AndroidViewModel {
         RequestBody caterer_id = Common.getRequestBodyText(addDishModel.getCaterer_id());
         RequestBody details = Common.getRequestBodyText(addDishModel.getDetails());
 
-        MultipartBody.Part image = Common.getMultiPart(context, Uri.parse(addDishModel.getPhoto()), "photo");
 
+        MultipartBody.Part image = Common.getMultiPart(context, Uri.parse(addDishModel.getPhoto()), "photo");
 
 
         Api.getService(Tags.base_url).storeDish(titel, category_dishes_id, price, details, image, qty, caterer_id)

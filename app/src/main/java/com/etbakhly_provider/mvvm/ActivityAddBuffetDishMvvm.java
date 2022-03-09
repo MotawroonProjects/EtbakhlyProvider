@@ -31,7 +31,9 @@ import retrofit2.Response;
 
 public class ActivityAddBuffetDishMvvm extends AndroidViewModel {
 
+    private MutableLiveData<DishModel> onDishAddedSuccess;
     private MutableLiveData<DishModel> onDishUpdatedSuccess;
+
     private CompositeDisposable disposable = new CompositeDisposable();
 
     public ActivityAddBuffetDishMvvm(@NonNull Application application) {
@@ -43,6 +45,13 @@ public class ActivityAddBuffetDishMvvm extends AndroidViewModel {
             onDishUpdatedSuccess = new MutableLiveData<>();
         }
         return onDishUpdatedSuccess;
+    }
+
+    public MutableLiveData<DishModel> getOnDishAddedSuccess() {
+        if (onDishAddedSuccess == null) {
+            onDishAddedSuccess = new MutableLiveData<>();
+        }
+        return onDishAddedSuccess;
     }
 
     public void storeBuffetsDishes(Context context, AddBuffetDishModel addBuffetDishModel) {
@@ -74,7 +83,7 @@ public class ActivityAddBuffetDishMvvm extends AndroidViewModel {
                         dialog.dismiss();
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200) {
-                                onDishUpdatedSuccess.setValue(response.body().getData());
+                                onDishAddedSuccess.setValue(response.body().getData());
                             }else {
                                 Log.e("error",response.body().getStatus()+"__"+response.body().getMessage().toString());
                             }

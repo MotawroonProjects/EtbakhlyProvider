@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.etbakhly_provider.R;
@@ -26,6 +27,7 @@ import com.etbakhly_provider.databinding.ActivityAddDishesBinding;
 import com.etbakhly_provider.model.AddDishModel;
 import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.model.DishModel;
+import com.etbakhly_provider.model.DishNoteDetailsModel;
 import com.etbakhly_provider.mvvm.ActivityAddDishMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
@@ -42,7 +44,6 @@ public class AddDishesActivity extends BaseActivity {
     private ActivityAddDishMvvm mvvm;
     private AddDishModel addDishModel;
     private DishModel dishModel;
-    private String category_id ="";
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -50,6 +51,10 @@ public class AddDishesActivity extends BaseActivity {
     private final int READ_REQ = 1, CAMERA_REQ = 2;
     private int selectedReq = 0;
     private Uri uri = null;
+    private SpinnerDishCategoryAdapter spinnerDishCategoryAdapter;
+    private List<BuffetModel.Category> categoryList = new ArrayList<>();
+    private List<DishNoteDetailsModel> dishNoteDetailsModelList = new ArrayList<>();
+
 
 
     @Override
@@ -61,9 +66,10 @@ public class AddDishesActivity extends BaseActivity {
     }
 
     private void getDataFromIntent() {
+
         Intent intent = getIntent();
-        category_id = intent.getStringExtra("data");
-        if (intent.hasExtra("data2")){
+        categoryList = (List<BuffetModel.Category>) intent.getSerializableExtra("data");
+        if (intent.hasExtra("data2")) {
             dishModel = (DishModel) intent.getSerializableExtra("data2");
 
         }
@@ -72,8 +78,14 @@ public class AddDishesActivity extends BaseActivity {
     }
 
     private void initView() {
+        mvvm = ViewModelProviders.of(this).get(ActivityAddDishMvvm.class);
         addDishModel = new AddDishModel();
-        addDishModel.setCategory_dishes_id(category_id);
+        if (categoryList != null && categoryList.size() > 0) {
+            addDishModel.setCategory_dishes_id(categoryList.get(0).getId());
+            binding.tvNote.setVisibility(View.GONE);
+        } else {
+            binding.tvNote.setVisibility(View.VISIBLE);
+        }
         if (dishModel != null) {
             addDishModel.setTitel(dishModel.getTitel());
             addDishModel.setPhoto(dishModel.getPhoto());
@@ -90,10 +102,25 @@ public class AddDishesActivity extends BaseActivity {
             }
 
 
-
         }
         binding.setModel(addDishModel);
-        mvvm = ViewModelProviders.of(this).get(ActivityAddDishMvvm.class);
+
+
+        spinnerDishCategoryAdapter = new SpinnerDishCategoryAdapter(categoryList, this);
+
+        binding.spinner.setAdapter(spinnerDishCategoryAdapter);
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                addDishModel.setCategory_dishes_id(categoryList.get(i).getId());
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         mvvm.getOnAddedSuccess().observe(this, aBoolean -> {
             if (aBoolean) {
@@ -158,6 +185,7 @@ public class AddDishesActivity extends BaseActivity {
             closeSheet();
             checkReadPermission();
         });
+
         binding.flCamera.setOnClickListener(view -> {
             closeSheet();
             checkCameraPermission();
@@ -167,8 +195,71 @@ public class AddDishesActivity extends BaseActivity {
 
         binding.image.setOnClickListener(view -> openSheet());
 
-
         binding.llBack.setOnClickListener(view -> finish());
+
+
+        binding.checkbox1.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                dishNoteDetailsModelList.add(new DishNoteDetailsModel("1", binding.checkbox1.getText().toString()));
+            } else {
+                int pos = getNotePos("1");
+                if (pos != -1) {
+                    dishNoteDetailsModelList.remove(pos);
+                }
+            }
+
+            addDishModel.setDishNoteDetailsModelList(dishNoteDetailsModelList);
+        });
+        binding.checkbox2.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                dishNoteDetailsModelList.add(new DishNoteDetailsModel("2", binding.checkbox2.getText().toString()));
+            } else {
+                int pos = getNotePos("2");
+                if (pos != -1) {
+                    dishNoteDetailsModelList.remove(pos);
+                }
+            }
+            addDishModel.setDishNoteDetailsModelList(dishNoteDetailsModelList);
+
+        });
+        binding.checkbox3.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                dishNoteDetailsModelList.add(new DishNoteDetailsModel("3", binding.checkbox3.getText().toString()));
+            } else {
+                int pos = getNotePos("3");
+                if (pos != -1) {
+                    dishNoteDetailsModelList.remove(pos);
+                }
+            }
+            addDishModel.setDishNoteDetailsModelList(dishNoteDetailsModelList);
+
+        });
+        binding.checkbox4.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                dishNoteDetailsModelList.add(new DishNoteDetailsModel("4", binding.checkbox4.getText().toString()));
+            } else {
+                int pos = getNotePos("4");
+                if (pos != -1) {
+                    dishNoteDetailsModelList.remove(pos);
+                }
+            }
+            addDishModel.setDishNoteDetailsModelList(dishNoteDetailsModelList);
+
+        });
+
+    }
+
+    private int getNotePos(String id) {
+        int pos = -1;
+        for (int index = 0; index < dishNoteDetailsModelList.size(); index++) {
+            DishNoteDetailsModel model = dishNoteDetailsModelList.get(index);
+            if (model.getId().equals(id)) {
+                pos = index;
+                return pos;
+            }
+        }
+
+        return pos;
     }
 
     public void checkCameraPermission() {
@@ -240,7 +331,6 @@ public class AddDishesActivity extends BaseActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
     }
-
 
 
 }

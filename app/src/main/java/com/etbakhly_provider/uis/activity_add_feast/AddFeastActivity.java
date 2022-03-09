@@ -7,8 +7,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
@@ -18,23 +16,22 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.adapter.AddFeastsTitlesAdapter;
 
 import com.etbakhly_provider.adapter.SpinnerDishCategoryAdapter;
 import com.etbakhly_provider.databinding.ActivityAddFeastBinding;
 import com.etbakhly_provider.model.AddBuffetModel;
 import com.etbakhly_provider.model.BuffetModel;
-import com.etbakhly_provider.mvvm.ActivityAddBuffetMvvm;
+import com.etbakhly_provider.model.DishModel;
 import com.etbakhly_provider.mvvm.ActivityAddFeastMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
-import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
+import com.etbakhly_provider.uis.activity_add_buffet.add_buffet_dish_activity.AddBuffetDishActivity;
+import com.etbakhly_provider.uis.activity_add_feast.activity_add_feast_dish.AddFeastDishActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
@@ -45,18 +42,18 @@ import java.util.List;
 
 public class AddFeastActivity extends BaseActivity {
     private ActivityAddFeastBinding binding;
-    private ActivityResultLauncher<Intent> launcher;
     private ActivityAddFeastMvvm mvvm;
     private BuffetModel feastModel;
     private AddBuffetModel addFeastModel;
     private SpinnerDishCategoryAdapter spinnerDishCategoryAdapter;
-
+    private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final String camera_permission = Manifest.permission.CAMERA;
     private final int READ_REQ = 1, CAMERA_REQ = 2;
     private int selectedReq = 0;
     private Uri uri = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +71,8 @@ public class AddFeastActivity extends BaseActivity {
         }
     }
 
-    private void initView() {
 
+    private void initView() {
         mvvm = ViewModelProviders.of(this).get(ActivityAddFeastMvvm.class);
         addFeastModel = new AddBuffetModel();
 
@@ -89,6 +86,7 @@ public class AddFeastActivity extends BaseActivity {
             addFeastModel.setOrder_time(feastModel.getOrder_time());
             addFeastModel.setId(feastModel.getId());
             addFeastModel.setCaterer_id(feastModel.getCaterer_id());
+
             if (feastModel.getService_provider_type().equals("man")) {
                 binding.rdmen.setChecked(true);
             } else if (feastModel.getService_provider_type().equals("women")) {
@@ -101,13 +99,11 @@ public class AddFeastActivity extends BaseActivity {
                 binding.rdnothing.setChecked(true);
 
             }
+
             if (feastModel.getPhoto() != null && !feastModel.getPhoto().isEmpty()) {
-                Picasso.get().load(Tags.base_url + feastModel.getPhoto()).into(binding.image);
+                Picasso.get().load(Tags.base_url + feastModel.getPhoto()).fit().into(binding.image);
                 binding.icon.setVisibility(View.GONE);
-
             }
-
-
 
         }
         binding.setModel(addFeastModel);
@@ -134,6 +130,7 @@ public class AddFeastActivity extends BaseActivity {
 
         mvvm.onCategoryDataSuccess().observe(this, categories -> {
             if (spinnerDishCategoryAdapter != null) {
+                spinnerDishCategoryAdapter.updateList(categories);
                 if (categories.size() > 1) {
                     binding.tvNote.setVisibility(View.GONE);
                 } else {
@@ -145,23 +142,28 @@ public class AddFeastActivity extends BaseActivity {
 
                     }
                 }
-                spinnerDishCategoryAdapter.updateList(categories);
+
+
+                if (feastModel != null) {
+                    int pos = getCategoryItemPos(categories, feastModel.getCategory_dishes_id());
+                    if (pos != -1) {
+                        binding.spinner.setSelection(pos);
+
+                    }
+                }
+                addFeastModel.setCategory_dishes_id(categories.get(0).getId());
 
             }
-
-            addFeastModel.setCategory_dishes_id(categories.get(0).getId());
-
         });
 
-
-        mvvm.getOnAddedSuccess().observe(this, aBoolean -> {
+        mvvm.getAddFeastMutableLiveData().observe(this, aBoolean -> {
             if (aBoolean) {
                 Toast.makeText(this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
                 setResult(RESULT_OK);
                 finish();
             }
         });
-        mvvm.getOnUpdatedSuccess().observe(this, aBoolean -> {
+        mvvm.getUpdateFeastLiveData().observe(this, aBoolean -> {
             if (aBoolean) {
                 Toast.makeText(this, R.string.updated, Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
@@ -177,22 +179,20 @@ public class AddFeastActivity extends BaseActivity {
                 if (feastModel == null) {
                     mvvm.storeFeast(this, addFeastModel, uri);
                 } else {
-                    mvvm.editFeast(this, addFeastModel, uri);
+                    mvvm.editBuffet(this, addFeastModel, uri);
                 }
 
             }
         });
-
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 if (selectedReq == READ_REQ) {
 
                     uri = result.getData().getData();
-
+                    addFeastModel.setPhoto(uri.toString());
                     File file = new File(Common.getImagePath(this, uri));
                     Picasso.get().load(file).fit().into(binding.image);
                     binding.icon.setVisibility(View.GONE);
-                    addFeastModel.setPhoto(uri.toString());
 
                 } else if (selectedReq == CAMERA_REQ) {
                     Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
@@ -202,16 +202,50 @@ public class AddFeastActivity extends BaseActivity {
 
                         String path = Common.getImagePath(this, uri);
                         if (path != null) {
-                            Picasso.get().load(new File(path)).into(binding.image);
+                            Picasso.get().load(new File(path)).fit().into(binding.image);
 
                         } else {
-                            Picasso.get().load(uri).into(binding.image);
+                            Picasso.get().load(uri).fit().into(binding.image);
 
                         }
                         binding.icon.setVisibility(View.GONE);
                     }
                 }
             }
+        });
+
+
+        binding.rdwomen.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                addFeastModel.setService_provider_type("women");
+
+            }
+
+
+        });
+        binding.rdmen.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                addFeastModel.setService_provider_type("man");
+
+            }
+
+
+        });
+        binding.rdboth.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                addFeastModel.setService_provider_type("man_and_women");
+
+            }
+
+
+        });
+        binding.rdnothing.setOnCheckedChangeListener((compoundButton, b) -> {
+
+            if (b) {
+                addFeastModel.setService_provider_type("not_found");
+
+            }
+
         });
         binding.flGallery.setOnClickListener(view -> {
             closeSheet();
@@ -228,6 +262,20 @@ public class AddFeastActivity extends BaseActivity {
         binding.setLang(getLang());
         binding.llBack.setOnClickListener(view -> finish());
 
+    }
+
+    private int getCategoryItemPos(List<BuffetModel.Category> categories, String category_dishes_id) {
+        int pos = -1;
+        if (categories != null) {
+            for (int index = 0; index < categories.size(); index++) {
+                BuffetModel.Category category = categories.get(index);
+                if (category.getId() != null && category.getId().equals(category_dishes_id)) {
+                    pos = index;
+                    return pos;
+                }
+            }
+        }
+        return pos;
 
     }
 
@@ -301,6 +349,8 @@ public class AddFeastActivity extends BaseActivity {
         return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
     }
 
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -323,4 +373,5 @@ public class AddFeastActivity extends BaseActivity {
             }
         }
     }
+
 }

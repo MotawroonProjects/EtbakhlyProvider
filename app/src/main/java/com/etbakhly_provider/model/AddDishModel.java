@@ -10,6 +10,9 @@ import androidx.databinding.ObservableField;
 import com.etbakhly_provider.BR;
 import com.etbakhly_provider.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddDishModel extends BaseObservable {
     private String titel;
     private String category_dishes_id;
@@ -19,6 +22,7 @@ public class AddDishModel extends BaseObservable {
     private String caterer_id;
     private String photo;
     private String id;
+    private List<DishNoteDetailsModel> dishNoteDetailsModelList;
 
     public ObservableField<String> error_title = new ObservableField<>();
     public ObservableField<String> error_price = new ObservableField<>();
@@ -30,6 +34,7 @@ public class AddDishModel extends BaseObservable {
                 !price.isEmpty() &&
                 !details.isEmpty() &&
                 !qty.isEmpty() &&
+                !category_dishes_id.isEmpty()&&
                 !photo.isEmpty()) {
 
             error_title.set(null);
@@ -61,6 +66,10 @@ public class AddDishModel extends BaseObservable {
             } else {
                 error_qty.set(null);
             }
+
+            if (category_dishes_id.isEmpty()) {
+                Toast.makeText(context, R.string.ch_cat, Toast.LENGTH_SHORT).show();
+            }
         }
         return false;
     }
@@ -74,6 +83,7 @@ public class AddDishModel extends BaseObservable {
         photo = "";
         id = "";
         caterer_id = "";
+        dishNoteDetailsModelList = new ArrayList<>();
 
     }
 
@@ -150,4 +160,11 @@ public class AddDishModel extends BaseObservable {
         this.id = id;
     }
 
+    public List<DishNoteDetailsModel> getDishNoteDetailsModelList() {
+        return dishNoteDetailsModelList;
+    }
+
+    public void setDishNoteDetailsModelList(List<DishNoteDetailsModel> dishNoteDetailsModelList) {
+        this.dishNoteDetailsModelList = dishNoteDetailsModelList;
+    }
 }

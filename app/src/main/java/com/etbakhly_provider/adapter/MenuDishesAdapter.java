@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,19 +13,20 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.DishBuffetRow2Binding;
 import com.etbakhly_provider.model.DishModel;
 import com.etbakhly_provider.uis.activity_buffet_details.BuffetDetailsActivity;
+import com.etbakhly_provider.uis.activity_feasts_details.FeastsDetailsActivity;
 
 import java.util.List;
 
 public class MenuDishesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<DishModel> list;
     private Context context;
-    private BuffetDetailsActivity activity;
+    private AppCompatActivity appCompatActivity;
     private int mainCategoryPos;
 
     public MenuDishesAdapter(Context context,int mainCategoryPos) {
         this.context = context;
         inflater = LayoutInflater.from(context);
-        activity = (BuffetDetailsActivity) context;
+        appCompatActivity = (AppCompatActivity) context;
         this.mainCategoryPos = mainCategoryPos;
     }
 
@@ -40,11 +42,29 @@ public class MenuDishesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
         myHolder.itemView.setOnClickListener(v -> {
-            activity.navigateToUpdateDish(list.get(myHolder.getAdapterPosition()),mainCategoryPos);
+            if (appCompatActivity instanceof BuffetDetailsActivity){
+                BuffetDetailsActivity activity = (BuffetDetailsActivity) appCompatActivity;
+                activity.navigateToUpdateDish(list.get(myHolder.getAdapterPosition()),mainCategoryPos,myHolder.getAdapterPosition());
+
+            }else if (appCompatActivity instanceof FeastsDetailsActivity){
+                FeastsDetailsActivity activity = (FeastsDetailsActivity) appCompatActivity;
+                activity.navigateToUpdateDish(list.get(myHolder.getAdapterPosition()),mainCategoryPos,myHolder.getAdapterPosition());
+
+            }
         });
 
         myHolder.binding.imageDelete.setOnClickListener(v -> {
-            activity.deleteDish(list.get(myHolder.getAdapterPosition()),mainCategoryPos,myHolder.getAdapterPosition());
+
+            if (appCompatActivity instanceof BuffetDetailsActivity){
+                BuffetDetailsActivity activity = (BuffetDetailsActivity) appCompatActivity;
+                activity.deleteDish(list.get(myHolder.getAdapterPosition()),mainCategoryPos,myHolder.getAdapterPosition());
+
+            }else if (appCompatActivity instanceof FeastsDetailsActivity){
+                FeastsDetailsActivity activity = (FeastsDetailsActivity) appCompatActivity;
+                activity.deleteDish(list.get(myHolder.getAdapterPosition()),mainCategoryPos,myHolder.getAdapterPosition());
+
+            }
+
         });
     }
 

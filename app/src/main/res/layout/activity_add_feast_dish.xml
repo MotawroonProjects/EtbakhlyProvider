@@ -7,6 +7,9 @@
         <variable
             name="lang"
             type="String" />
+        <variable
+            name="model"
+            type="com.etbakhly_provider.model.AddBuffetDishModel" />
     </data>
 
     <FrameLayout
@@ -118,12 +121,17 @@
                         >
 
                         <EditText
+                            error="@{model.error_title}"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
                             android:background="@color/transparent"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:text="@={model.titel}"
+                            android:textSize="16sp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            />
                     </LinearLayout>
 
                     <TextView
@@ -147,12 +155,18 @@
                         >
 
                         <EditText
+                            error="@{model.error_qty}"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
+                            android:text="@={model.qty}"
                             android:background="@color/transparent"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:inputType="number"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -185,12 +199,18 @@
                                 android:orientation="horizontal">
 
                                 <EditText
+                                    error="@{model.error_price}"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="5dp"
+                                    android:text="@={model.price}"
                                     android:background="@color/transparent"
                                     android:textColor="@color/black"
-                                    android:textSize="16sp" />
+                                    android:textSize="16sp"
+                                    android:inputType="numberDecimal"
+                                    android:paddingStart="8dp"
+                                    android:paddingEnd="8dp"
+                                    />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -218,13 +238,17 @@
                         >
 
                         <EditText
+                            error="@{model.error_details}"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
                             android:background="@color/transparent"
                             android:gravity="top"
+                            android:text="@={model.details}"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:padding="8dp"
+                            />
                     </LinearLayout>
 
 

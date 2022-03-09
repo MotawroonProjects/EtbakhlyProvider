@@ -40,4 +40,10 @@
         tools:layout="@layout/activity_settings"
 
         />
+
+    <activity
+        android:id="@+id/activityDishes"
+        android:name="com.etbakhly_provider.uis.activity_dishes.DishesActivity"
+        android:label=""
+        tools:layout="@layout/activity_dishes" />
 </navigation>

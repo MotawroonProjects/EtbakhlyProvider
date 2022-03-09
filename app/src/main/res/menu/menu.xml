@@ -10,6 +10,10 @@
         android:icon="@drawable/ic_add"
         android:title="@string/add_category" />
     <item
+        android:id="@+id/activityDishes"
+        android:icon="@drawable/ic_dish"
+        android:title="@string/dishes" />
+    <item
         android:id="@+id/activityBuffets"
         android:icon="@drawable/ic_table"
         android:title="@string/buffets" />

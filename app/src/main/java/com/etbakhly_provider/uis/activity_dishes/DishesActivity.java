@@ -174,13 +174,19 @@ public class DishesActivity extends BaseActivity {
             }
         });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
-                DishModel dishModel = (DishModel) result.getData().getSerializableExtra("data");
-                if (mvvm.getSelectedDishPos().getValue() != 1) {
-                    mvvm.onDishSuccess().getValue().set(mvvm.getSelectedDishPos().getValue(), dishModel);
-                    adapter.notifyItemChanged(mvvm.getSelectedDishPos().getValue());
-                    mvvm.getSelectedDishPos().setValue(-1);
+            if (req == 1 && result.getResultCode() == RESULT_OK) {
+                if (result.getData() != null) {
+                    DishModel dishModel = (DishModel) result.getData().getSerializableExtra("data");
+                    if (mvvm.getSelectedDishPos().getValue() != 1) {
+                        mvvm.onDishSuccess().getValue().set(mvvm.getSelectedDishPos().getValue(), dishModel);
+                        adapter.notifyItemChanged(mvvm.getSelectedDishPos().getValue());
+                        mvvm.getSelectedDishPos().setValue(-1);
+                    }
+                } else {
+                    mvvm.getDishes(getUserModel().getData().getCaterer().getId());
+
                 }
+
             }
         });
     }

@@ -45,7 +45,7 @@ public class AddBuffetDishActivity extends BaseActivity {
     private int selectedReq = 0;
     private Uri uri = null;
     private String category_dish_id = "";
-    private String buffet_id ="";
+    private String buffet_id = "";
     private DishModel dishModel;
 
     @Override
@@ -68,9 +68,19 @@ public class AddBuffetDishActivity extends BaseActivity {
 
     private void initView() {
         mvvm = ViewModelProviders.of(this).get(ActivityAddBuffetDishMvvm.class);
+        mvvm.getOnDishAddedSuccess().observe(this, dishModel -> {
+            Toast.makeText(AddBuffetDishActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
+            Intent intent = getIntent();
+            intent.putExtra("action", "add");
+            intent.putExtra("data", dishModel);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+
         mvvm.getOnDishUpdatedSuccess().observe(this, dishModel -> {
             Toast.makeText(AddBuffetDishActivity.this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
             Intent intent = getIntent();
+            intent.putExtra("action", "update");
             intent.putExtra("data", dishModel);
             setResult(RESULT_OK, intent);
             finish();

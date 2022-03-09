@@ -29,7 +29,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class ActivityBuffetDetailsMvvm extends AndroidViewModel {
+public class ActivityFeastDetailsMvvm extends AndroidViewModel {
 
     private MutableLiveData<Integer> onDishUpdatedSuccess;
     private MutableLiveData<Boolean> isLoading;
@@ -42,7 +42,7 @@ public class ActivityBuffetDetailsMvvm extends AndroidViewModel {
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    public ActivityBuffetDetailsMvvm(@NonNull Application application) {
+    public ActivityFeastDetailsMvvm(@NonNull Application application) {
         super(application);
 
     }
@@ -99,11 +99,11 @@ public class ActivityBuffetDetailsMvvm extends AndroidViewModel {
     }
 
 
-    public void getCategoryDishes(String kitchen_id,String buffet_id, Context context) {
-        Log.e("ddd",kitchen_id+"__"+buffet_id);
+    public void getCategoryDishes(String kitchen_id,String feast_id, Context context) {
+        Log.e("ddd",kitchen_id+"__"+feast_id);
 
         getIsDataLoading().setValue(true);
-        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "dishe","buffet",buffet_id)
+        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "dishe","feast",feast_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<DishesDataModel>>() {
@@ -141,11 +141,11 @@ public class ActivityBuffetDetailsMvvm extends AndroidViewModel {
                 });
     }
 
-    public void addCategory(String name, String caterer_id,String buffet_id, Context context) {
+    public void addCategory(String name, String caterer_id,String feast_id, Context context) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).addCatererDish(name, caterer_id, "dishe","buffet",buffet_id)
+        Api.getService(Tags.base_url).addCatererDish(name, caterer_id, "dishe","feast",feast_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleCategory>>() {

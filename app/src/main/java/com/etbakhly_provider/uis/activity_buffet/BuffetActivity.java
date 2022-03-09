@@ -17,14 +17,10 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.BuffetAdapter;
 import com.etbakhly_provider.databinding.ActivityBuffetBinding;
 import com.etbakhly_provider.model.BuffetModel;
-import com.etbakhly_provider.model.DishModel;
 import com.etbakhly_provider.mvvm.ActivityBuffetsMvvm;
-import com.etbakhly_provider.mvvm.ActivityDishesMvvm;
 import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
-import com.etbakhly_provider.uis.activity_add_dishes.AddDishesActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_buffet_details.BuffetDetailsActivity;
-import com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;

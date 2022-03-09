@@ -104,12 +104,26 @@ public class BuffetDetailsActivity extends BaseActivity {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
                 DishModel dishModel = (DishModel) result.getData().getSerializableExtra("data");
-                if (mvvm.onCategoryDataSuccess().getValue() != null && mvvm.getOnItemSelected().getValue() != null && adapter != null) {
-                    List<DishModel> list = mvvm.onCategoryDataSuccess().getValue().get(mvvm.getOnItemSelected().getValue()).getDishes_buffet();
-                    list.add(dishModel);
-                    mvvm.getOnDishUpdatedSuccess().setValue(mvvm.getOnItemSelected().getValue());
+                String action = result.getData().getStringExtra("action");
+                if (action!=null){
+                    if(action.equals("add")){
+                        if (mvvm.onCategoryDataSuccess().getValue() != null && mvvm.getOnItemSelected().getValue() != null && adapter != null) {
+                            List<DishModel> list = mvvm.onCategoryDataSuccess().getValue().get(mvvm.getOnItemSelected().getValue()).getDishes_buffet();
+                            list.add(dishModel);
+                            mvvm.getOnDishUpdatedSuccess().setValue(mvvm.getOnItemSelected().getValue());
+
+                        }
+                    }else {
+                        if (mvvm.onCategoryDataSuccess().getValue() != null && mvvm.getOnItemSelected().getValue() != null && mvvm.getOnChildItemSelected().getValue() != null && adapter != null) {
+                            List<DishModel> list = mvvm.onCategoryDataSuccess().getValue().get(mvvm.getOnItemSelected().getValue()).getDishes_buffet();
+                            list.set(mvvm.getOnChildItemSelected().getValue(),dishModel);
+                            mvvm.getOnDishUpdatedSuccess().setValue(mvvm.getOnItemSelected().getValue());
+
+                        }
+                    }
 
                 }
+
 
             }
         });
@@ -157,8 +171,9 @@ public class BuffetDetailsActivity extends BaseActivity {
     }
 
 
-    public void navigateToUpdateDish(DishModel dishModel, int mainCategoryPos) {
+    public void navigateToUpdateDish(DishModel dishModel, int mainCategoryPos, int adapterPosition) {
         mvvm.getOnItemSelected().setValue(mainCategoryPos);
+        mvvm.getOnChildItemSelected().setValue(adapterPosition);
         req = 1;
         Intent intent = new Intent(BuffetDetailsActivity.this, AddBuffetDishActivity.class);
         intent.putExtra("data", dishModel.getCategory_dishes_id());

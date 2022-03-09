@@ -41,5 +41,20 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_gallery"
+            android:tint="@color/white"
+            app:backgroundTint="@color/colorAccent"
+            app:elevation="0dp"
+            app:fabSize="normal"
+            android:layout_margin="16dp"
+
+            />
+
     </FrameLayout>
 </layout>

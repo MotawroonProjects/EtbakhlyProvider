@@ -11,7 +11,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.model.AddBuffetDataModel;
 import com.etbakhly_provider.model.AddBuffetModel;
 import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.model.DishesDataModel;
@@ -35,8 +34,8 @@ import retrofit2.Response;
 
 public class ActivityAddFeastMvvm extends AndroidViewModel {
 
-    private MutableLiveData<Boolean> onAddedSuccess;
-    private MutableLiveData<Boolean> onUpdatedSuccess;
+    private MutableLiveData<Boolean> addFeastLiveData;
+    private MutableLiveData<Boolean> updateFeastLiveData;
     private MutableLiveData<List<BuffetModel.Category>> onCategoryDataSuccess;
 
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -50,18 +49,18 @@ public class ActivityAddFeastMvvm extends AndroidViewModel {
         onCategoryDataSuccess().setValue(categoryList);
     }
 
-    public MutableLiveData<Boolean> getOnAddedSuccess() {
-        if (onAddedSuccess == null) {
-            onAddedSuccess = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getAddFeastMutableLiveData() {
+        if (addFeastLiveData == null) {
+            addFeastLiveData = new MutableLiveData<>();
         }
-        return onAddedSuccess;
+        return addFeastLiveData;
     }
 
-    public MutableLiveData<Boolean> getOnUpdatedSuccess() {
-        if (onUpdatedSuccess == null) {
-            onUpdatedSuccess = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getUpdateFeastLiveData() {
+        if (updateFeastLiveData == null) {
+            updateFeastLiveData = new MutableLiveData<>();
         }
-        return onUpdatedSuccess;
+        return updateFeastLiveData;
     }
 
     public MutableLiveData<List<BuffetModel.Category>> onCategoryDataSuccess() {
@@ -72,7 +71,6 @@ public class ActivityAddFeastMvvm extends AndroidViewModel {
     }
 
     public void storeFeast(Context context, AddBuffetModel addBuffetModel, Uri uri) {
-        Log.e("sda","sda");
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -106,7 +104,7 @@ public class ActivityAddFeastMvvm extends AndroidViewModel {
                         if (response.isSuccessful()) {
                             Log.e("status", response.body().getStatus() + "");
                             if (response.body() != null && response.body().getStatus() == 200) {
-                                getOnAddedSuccess().postValue(true);
+                                addFeastLiveData.postValue(true);
                             }
                         } else {
                             try {
@@ -126,7 +124,7 @@ public class ActivityAddFeastMvvm extends AndroidViewModel {
 
     }
 
-    public void editFeast(Context context, AddBuffetModel addBuffetModel, Uri uri) {
+    public void editBuffet(Context context, AddBuffetModel addBuffetModel, Uri uri) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -137,14 +135,14 @@ public class ActivityAddFeastMvvm extends AndroidViewModel {
         RequestBody order_time = Common.getRequestBodyText(addBuffetModel.getOrder_time());
         RequestBody price = Common.getRequestBodyText(addBuffetModel.getPrice());
         RequestBody category_dishes_id = Common.getRequestBodyText(addBuffetModel.getCategory_dishes_id() + "");
-        RequestBody feast_id = Common.getRequestBodyText(addBuffetModel.getId());
+        RequestBody Buffet_id = Common.getRequestBodyText(addBuffetModel.getId());
 
         MultipartBody.Part image = null;
         if (!addBuffetModel.getPhoto().contains("storage")) {
             image = Common.getMultiPart(context, uri, "photo");
         }
 
-        Api.getService(Tags.base_url).updateFeast(titel, number_people, service_provider_type, order_time, image, price, category_dishes_id, feast_id)
+        Api.getService(Tags.base_url).updateFeast(titel, number_people, service_provider_type, order_time, image, price, category_dishes_id, Buffet_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<StatusResponse>>() {
@@ -158,7 +156,7 @@ public class ActivityAddFeastMvvm extends AndroidViewModel {
                         dialog.dismiss();
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200) {
-                                getOnUpdatedSuccess().postValue(true);
+                                updateFeastLiveData.postValue(true);
                             }
                         } else {
                             try {
@@ -192,10 +190,13 @@ public class ActivityAddFeastMvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<DishesDataModel> response) {
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200 && response.body().getData() != null) {
+
                                 if (response.body().getData().size() > 0) {
                                     onCategoryDataSuccess().setValue(response.body().getData());
 
                                 }
+
+
                             }
                         }
                     }

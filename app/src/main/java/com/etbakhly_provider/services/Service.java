@@ -161,6 +161,7 @@ public interface Service {
                                                   @Part("category_dishes_id") RequestBody category_dishes_id,
                                                   @Part("Buffet_id") RequestBody Buffet_id);
 
+
     @Multipart
     @POST("api/Catering/storeDishes")
     Single<Response<AddDishDataModel>> storeDish(@Part("titel") RequestBody titel,
@@ -214,16 +215,27 @@ public interface Service {
 
     );
 
+
     @Multipart
-    @POST("api/Catering/updateDishes")
-    Single<Response<SingleDishModel>> updateDishes(@Part("titel") RequestBody titel,
-                                                   @Part("category_dishes_id") RequestBody category_dishes_id,
-                                                   @Part("price") RequestBody price,
-                                                   @Part("details") RequestBody details,
-                                                   @Part MultipartBody.Part photo,
-                                                   @Part("qty") RequestBody qty,
-                                                   @Part("dishes_id") RequestBody dishes_id,
-                                                   @Part("buffets_id") RequestBody buffets_id
+    @POST("api/Catering/storeFeastDishes")
+    Single<Response<SingleDishModel>> storeFeastDishes(@Part("titel") RequestBody titel,
+                                                       @Part("category_dishes_id") RequestBody category_dishes_id,
+                                                       @Part("price") RequestBody price,
+                                                       @Part("details") RequestBody details,
+                                                       @Part MultipartBody.Part photo,
+                                                       @Part("qty") RequestBody qty,
+                                                       @Part("feast_id") RequestBody feast_id);
+
+
+    @Multipart
+    @POST("api/Catering/updateFeastDishes")
+    Single<Response<SingleDishModel>> updateFeastDishes(@Part("titel") RequestBody titel,
+                                                        @Part("category_dishes_id") RequestBody category_dishes_id,
+                                                        @Part("price") RequestBody price,
+                                                        @Part("details") RequestBody details,
+                                                        @Part MultipartBody.Part photo,
+                                                        @Part("qty") RequestBody qty,
+                                                        @Part("FeastDishes_id") RequestBody dishes_id
 
 
     );
@@ -250,15 +262,8 @@ public interface Service {
     Single<Response<StatusResponse>> deleteCatererDish(@Field("Category_Dishes_id") String Category_Dishes_id
     );
 
-    @Multipart
-    @POST("api/Catering/storeFeastDishes")
-    Single<Response<AddFeastDishDataModel>> storeFeastDishes(@Part("titel") RequestBody titel,
-                                                             @Part("category_dishes_id") RequestBody category_dishes_id,
-                                                             @Part("price") RequestBody price,
-                                                             @Part("details") RequestBody details,
-                                                             @Part MultipartBody.Part photo,
-                                                             @Part("qty") RequestBody qty,
-                                                             @Part("feast_id") RequestBody feast_id);
+
+
 
     @FormUrlEncoded
     @POST("api/Catering/logout")

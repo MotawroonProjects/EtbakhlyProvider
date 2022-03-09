@@ -108,9 +108,49 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="3dp"
+                        android:text="@string/category"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:id="@+id/llSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="3dp"
+                        android:background="@drawable/linear_shape"
+                        tools:targetApi="lollipop">
+
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvNote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="3dp"
+                        android:text="@string/please_you_have_to_add_category_from_main_page"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="11sp"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="3dp"
                         android:text="@string/dish_name"
-                        android:layout_marginTop="5dp"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -250,7 +290,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        >
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -259,6 +301,7 @@
                             android:orientation="vertical">
 
                             <CheckBox
+                                android:id="@+id/checkbox1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/vegan_meal"
@@ -266,6 +309,8 @@
                                 android:textSize="15sp" />
 
                             <CheckBox
+                                android:id="@+id/checkbox2"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/does_not_contain_trans_fats"
@@ -280,6 +325,7 @@
                             android:orientation="vertical">
 
                             <CheckBox
+                                android:id="@+id/checkbox3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/gluten_free"
@@ -287,6 +333,8 @@
                                 android:textSize="15sp" />
 
                             <CheckBox
+                                android:id="@+id/checkbox4"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/sugar_free"

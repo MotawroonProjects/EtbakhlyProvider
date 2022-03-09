@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.etbakhly_provider.databinding.BuffetMenuRowBinding;
 import com.etbakhly_provider.model.BuffetModel;
 import com.etbakhly_provider.uis.activity_add_buffet.AddBuffetActivity;
 import com.etbakhly_provider.uis.activity_buffet_details.BuffetDetailsActivity;
+import com.etbakhly_provider.uis.activity_feasts_details.FeastsDetailsActivity;
 
 import java.util.List;
 
@@ -22,10 +24,12 @@ public class BuffetMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private List<BuffetModel.Category> list;
     private Context context;
     private LayoutInflater inflater;
+    private AppCompatActivity appCompatActivity;
 
     public BuffetMenuAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+        appCompatActivity = (AppCompatActivity) context;
     }
 
     @NonNull
@@ -46,13 +50,28 @@ public class BuffetMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
         myHolder.binding.llAddNew.setOnClickListener(view -> {
-            BuffetDetailsActivity buffetDetailsActivity = (BuffetDetailsActivity) context;
-            buffetDetailsActivity.navigateToAddNewBuffetDish(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+            if (appCompatActivity instanceof BuffetDetailsActivity){
+                BuffetDetailsActivity activity = (BuffetDetailsActivity) appCompatActivity;
+                activity.navigateToAddNewBuffetDish(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+            }else if (appCompatActivity instanceof FeastsDetailsActivity){
+                FeastsDetailsActivity activity = (FeastsDetailsActivity) appCompatActivity;
+                activity.navigateToAddNewBuffetDish(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+
+            }
+
         });
 
         myHolder.binding.imageDelete.setOnClickListener(view -> {
-            BuffetDetailsActivity buffetDetailsActivity = (BuffetDetailsActivity) context;
-            buffetDetailsActivity.deleteCategory(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+
+            if (appCompatActivity instanceof BuffetDetailsActivity){
+                BuffetDetailsActivity activity = (BuffetDetailsActivity) appCompatActivity;
+                activity.deleteCategory(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+            }else if (appCompatActivity instanceof FeastsDetailsActivity){
+                FeastsDetailsActivity activity = (FeastsDetailsActivity) appCompatActivity;
+                activity.deleteCategory(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+
+            }
+
         });
     }
 
