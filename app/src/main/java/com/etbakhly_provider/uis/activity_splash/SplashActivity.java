@@ -19,6 +19,7 @@ import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_language_country.LanguageCountryActivity;
 import com.etbakhly_provider.uis.activity_login.LoginActivity;
 import com.etbakhly_provider.uis.activity_signup.SignupActivity;
+import com.google.common.eventbus.EventBus;
 
 import java.util.concurrent.TimeUnit;
 
@@ -87,6 +88,7 @@ public class SplashActivity extends BaseActivity {
 
                     }
                 });
+
 
 
     }

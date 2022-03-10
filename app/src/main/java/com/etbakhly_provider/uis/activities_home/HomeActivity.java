@@ -1,5 +1,9 @@
 package com.etbakhly_provider.uis.activities_home;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
@@ -14,6 +18,8 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -21,6 +27,8 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.HomePagerAdapter;
 import com.etbakhly_provider.databinding.ActivityHomeBinding;
 import com.etbakhly_provider.databinding.DrawerHeaderBinding;
+import com.etbakhly_provider.language.Language;
+import com.etbakhly_provider.model.NotResponse;
 import com.etbakhly_provider.model.UserSettingsModel;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.uis.activities_home.fragments.FragmentNewOrders;
@@ -29,6 +37,10 @@ import com.etbakhly_provider.uis.activities_home.fragments.FragmentPendingOrders
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_login.LoginActivity;
 import com.etbakhly_provider.uis.activity_setting.SettingsActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +51,8 @@ public class HomeActivity extends BaseActivity {
     private ActivityHomeBinding binding;
     private NavController navController;
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
+    private ActivityResultLauncher<Intent> launcher;
+    private int req;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,20 +87,41 @@ public class HomeActivity extends BaseActivity {
         navController = Navigation.findNavController(this, R.id.navHostFragment);
         NavigationUI.setupWithNavController(binding.navView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerView);
-        binding.llLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activityHomeGeneralMvvm.logout(getUserModel(), HomeActivity.this);
-            }
-        });
+        binding.llLogout.setOnClickListener(view -> activityHomeGeneralMvvm.logout(getUserModel(), HomeActivity.this));
         activityHomeGeneralMvvm.updateToken(getUserModel());
 
+
+
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (req==1&&result.getResultCode()==RESULT_OK&&result.getData()!=null){
+                String lang = result.getData().getStringExtra("lang");
+                refreshActivity(lang);
+            }
+        });
     }
+
+
+
 
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(navController, binding.drawerView);
     }
+
+    public void refreshActivity(String lang) {
+        Paper.book().write("lang", lang);
+        Language.setNewLocale(this, lang);
+        new Handler()
+                .postDelayed(() -> {
+
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }, 500);
+
+
+    }
+
 
     @Override
     public void onBackPressed() {

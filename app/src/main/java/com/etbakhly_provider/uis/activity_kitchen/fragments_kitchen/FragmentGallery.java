@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.provider.MediaStore;
@@ -36,6 +37,9 @@ import com.etbakhly_provider.databinding.FragmentGalleryBinding;
 import com.etbakhly_provider.databinding.LocalImageDialogBinding;
 import com.etbakhly_provider.databinding.SelectImageDialogBinding;
 import com.etbakhly_provider.model.KitchenModel;
+import com.etbakhly_provider.mvvm.ActivityBuffetsMvvm;
+import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
+import com.etbakhly_provider.mvvm.FragmentGalleryMvvm;
 import com.etbakhly_provider.service_uploading_images.ServiceUploadImages;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
@@ -52,6 +56,9 @@ import java.util.List;
 
 public class FragmentGallery extends BaseFragment {
     private FragmentGalleryBinding binding;
+    private FragmentGalleryMvvm mvvm;
+    private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
+
     private GalleryAdapter adapter;
     private KitchenModel model;
     private KitchenDetailsActivity activity;
@@ -133,19 +140,50 @@ public class FragmentGallery extends BaseFragment {
     }
 
     private void initView() {
+        activityHomeGeneralMvvm = ViewModelProviders.of(activity).get(ActivityHomeGeneralMvvm.class);
+
+        mvvm = ViewModelProviders.of(this).get(FragmentGalleryMvvm.class);
+
         uris = new ArrayList<>();
-        if (model.getPhotos().size() > 0) {
-            adapter = new GalleryAdapter(activity);
+        adapter = new GalleryAdapter(activity, this);
+        binding.recViewGallery.setLayoutManager(new GridLayoutManager(activity, 4));
+        binding.recViewGallery.setAdapter(adapter);
 
-            adapter.updateList(model.getPhotos());
-            binding.recViewGallery.setLayoutManager(new GridLayoutManager(activity, 3));
-            binding.recViewGallery.setAdapter(adapter);
-            binding.tvNoData.setVisibility(View.GONE);
-        } else {
-            binding.tvNoData.setVisibility(View.VISIBLE);
+        activityHomeGeneralMvvm.onGallerySuccess().observe(activity, refresh -> {
+            mvvm.getGallery(getUserModel().getData().getCaterer().getId());
 
-        }
+        });
+        mvvm.getIsLoading().observe(activity, isLoading -> {
+            if (isLoading) {
+                binding.progBar.setVisibility(View.VISIBLE);
+            } else {
+                binding.progBar.setVisibility(View.GONE);
+
+            }
+        });
+        mvvm.getOnDeleteSuccess().observe(activity, pos -> {
+            if (mvvm.getGalleryLiveData().getValue() != null) {
+                if (mvvm.getGalleryLiveData().getValue().size() == 0) {
+                    binding.tvNoData.setVisibility(View.VISIBLE);
+                }
+            }
+            if (adapter != null) {
+                adapter.notifyItemRemoved(pos);
+            }
+        });
+        mvvm.getGalleryLiveData().observe(activity, list -> {
+            if (list.size() > 0) {
+                if (adapter != null) {
+                    adapter.updateList(list);
+                }
+                binding.tvNoData.setVisibility(View.GONE);
+            } else {
+                binding.tvNoData.setVisibility(View.VISIBLE);
+
+            }
+        });
         binding.addImage.setOnClickListener(v -> checkReadPermission());
+        mvvm.getGallery(getUserModel().getData().getCaterer().getId());
 
     }
 
@@ -159,10 +197,12 @@ public class FragmentGallery extends BaseFragment {
         localImageDialogBinding.recView.setAdapter(localGalleryAdapter);
 
         localImageDialogBinding.btnUpload.setOnClickListener(v -> {
+            Toast.makeText(activity, getString(R.string.uploading), Toast.LENGTH_LONG).show();
             Intent intent = new Intent(activity, ServiceUploadImages.class);
             intent.putExtra("data", (Serializable) uris);
             activity.startService(intent);
             localImageDialog.dismiss();
+            uris.clear();
         });
         localImageDialogBinding.btnCancel.setOnClickListener(v -> {
             localImageDialog.dismiss();
@@ -265,5 +305,9 @@ public class FragmentGallery extends BaseFragment {
         if (localGalleryAdapter != null) {
             localGalleryAdapter.notifyItemRemoved(adapterPosition);
         }
+    }
+
+    public void deleteImage(KitchenModel.Photo photo, int adapterPosition) {
+        mvvm.deleteImage(photo.getId(), adapterPosition, activity);
     }
 }

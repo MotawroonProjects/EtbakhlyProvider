@@ -15,14 +15,19 @@ import com.etbakhly_provider.adapter.KitchenPagerAdapter;
 import com.etbakhly_provider.databinding.ActivityKitchenDetailsBinding;
 
 import com.etbakhly_provider.model.KitchenModel;
+import com.etbakhly_provider.model.NotResponse;
 import com.etbakhly_provider.model.ZoneCover;
+import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.mvvm.ActivityKitchenDetailsMvvm;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen.FragmentDeliveryAreas;
 import com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen.FragmentGallery;
 import com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen.FragmentRatings;
 import com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen.FragmentServices;
-import com.etbakhly_provider.uis.activity_setting.SettingsActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +38,7 @@ public class KitchenDetailsActivity extends BaseActivity {
     private List<Fragment> fragmentList;
     private KitchenPagerAdapter pagerAdapter;
     private ActivityKitchenDetailsMvvm mvvm;
+    private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
 
     private KitchenModel model;
 
@@ -54,7 +60,6 @@ public class KitchenDetailsActivity extends BaseActivity {
         binding.setLang(getLang());
 
         mvvm.getIsDataLoading().observe(this, isLoading -> {
-            Log.e("kjjjj", isLoading.toString());
             if (isLoading) {
                 binding.coordinator.setVisibility(View.GONE);
                 binding.loader.setVisibility(View.VISIBLE);
@@ -78,13 +83,13 @@ public class KitchenDetailsActivity extends BaseActivity {
         mvvm.getKitchenData(getUserModel().getData().getCaterer().getId(), "13");
 
         binding.llBack.setOnClickListener(view -> {
-            Intent intent = new Intent(KitchenDetailsActivity.this, SettingsActivity.class);
-            startActivity(intent);
             finish();
         });
     }
 
     private void updateUi() {
+        activityHomeGeneralMvvm = ViewModelProviders.of(this).get(ActivityHomeGeneralMvvm.class);
+
         binding.setModel(model);
 
         titles.add(getString(R.string.services));
@@ -102,6 +107,9 @@ public class KitchenDetailsActivity extends BaseActivity {
         binding.pager.setAdapter(pagerAdapter);
         binding.pager.setOffscreenPageLimit(fragmentList.size());
 
+        if (!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
     }
 
     public void updateBlur(float blur) {
@@ -113,5 +121,19 @@ public class KitchenDetailsActivity extends BaseActivity {
         }
         binding.blur.setBlurRadius(blur);
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGalleryUploaded(NotResponse response){
+        Log.e("ss","ss");
+        activityHomeGeneralMvvm.onGallerySuccess().setValue(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

@@ -35,6 +35,8 @@ public class ActivityHomeGeneralMvvm extends AndroidViewModel {
     private MutableLiveData<Integer> onPositionScreenChanged;
     private MutableLiveData<UserModel> onTokenSuccess;
     private MutableLiveData<Boolean> onLoggedOutSuccess;
+    private MutableLiveData<Boolean> onGallerySuccess;
+
     private CompositeDisposable disposable = new CompositeDisposable();
 
     public ActivityHomeGeneralMvvm(@NonNull Application application) {
@@ -71,6 +73,14 @@ public class ActivityHomeGeneralMvvm extends AndroidViewModel {
         }
 
         return onLoggedOutSuccess;
+    }
+
+    public MutableLiveData<Boolean> onGallerySuccess() {
+        if (onGallerySuccess == null) {
+            onGallerySuccess = new MutableLiveData<>();
+        }
+
+        return onGallerySuccess;
     }
 
     public void updateToken(UserModel userModel) {

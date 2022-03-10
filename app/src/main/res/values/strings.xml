@@ -188,10 +188,22 @@
     <string name="subject">Subject</string>
     <string name="message">Message</string>
     <string name="send">Send</string>
-    <string name="suc">Sucess</string>
+    <string name="suc">Success</string>
     <string name="add_department">Add department</string>
     <string name="select_photo">Select photo</string>
-    <string name="upload">Upload</string>
+    <string name="upload">Upload images</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="uploading">Uploading...</string>
+    <string name="failed">Failed</string>
 
+    <string name="order_approved">Your order has been approved from</string>
+    <string name="order_refused">Your order has been refused</string>
+    <string name="your_order_from">Your order from</string>
+    <string name="order_num">Order Num :</string>
+    <string name="status_pending">Pending</string>
+    <string name="delivering">Delivering</string>
+    <string name="delivered2">delivered</string>
+    <string name="no_not_to_show">No notifications to show</string>
+    <string name="change_language">Change language</string>
 
 </resources>

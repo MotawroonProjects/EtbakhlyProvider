@@ -10,6 +10,8 @@ public class UserSettingsModel implements Serializable {
     private CountryModel countryModel;
     private CountryModel cityModel;
     private SelectedLocation location;
+    private boolean canSendNotifications = true;
+
 
     public boolean isLanguageSelected() {
         return isLanguageSelected;
@@ -65,5 +67,13 @@ public class UserSettingsModel implements Serializable {
 
     public void setLocation(SelectedLocation location) {
         this.location = location;
+    }
+
+    public boolean isCanSendNotifications() {
+        return canSendNotifications;
+    }
+
+    public void setCanSendNotifications(boolean canSendNotifications) {
+        this.canSendNotifications = canSendNotifications;
     }
 }

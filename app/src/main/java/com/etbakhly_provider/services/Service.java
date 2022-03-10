@@ -8,6 +8,8 @@ import com.etbakhly_provider.model.BuffetsDataModel;
 import com.etbakhly_provider.model.CategoryDataModel;
 import com.etbakhly_provider.model.CountryDataModel;
 import com.etbakhly_provider.model.DishesDataModel;
+import com.etbakhly_provider.model.GalleryDataModel;
+import com.etbakhly_provider.model.NotificationDataModel;
 import com.etbakhly_provider.model.OrderDataModel;
 import com.etbakhly_provider.model.PlaceGeocodeData;
 import com.etbakhly_provider.model.PlaceMapDetailsData;
@@ -19,6 +21,8 @@ import com.etbakhly_provider.model.StatusResponse;
 import com.etbakhly_provider.model.AddBuffetDataModel;
 import com.etbakhly_provider.model.StoreCatererDataModel;
 import com.etbakhly_provider.model.UserModel;
+
+import java.util.List;
 
 import io.reactivex.Single;
 import okhttp3.MultipartBody;
@@ -263,8 +267,6 @@ public interface Service {
     );
 
 
-
-
     @FormUrlEncoded
     @POST("api/Catering/logout")
     Single<Response<StatusResponse>> logout(@Field("user_id") String user_id,
@@ -313,5 +315,29 @@ public interface Service {
                                                  @Part("price") RequestBody price,
                                                  @Part("category_dishes_id") RequestBody category_dishes_id,
                                                  @Part("feast_id") RequestBody feast_id);
+
+    @Multipart
+    @POST("api/Service/store_photo_gallary")
+    Single<Response<StatusResponse>> uploadGalleryImages(@Part("Caterer_id") RequestBody Caterer_id,
+                                                         @Part List<MultipartBody.Part> photos
+
+
+    );
+
+    @GET("api/Service/photo_gallary")
+    Single<Response<GalleryDataModel>> getCatererGallery(@Query(value = "Caterer_id") String caterer_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Service/delete_photo_gallary")
+    Single<Response<StatusResponse>> deleteGalleryImage(@Field("photo_id") String photo_id
+
+
+    );
+
+    @GET("api/Catering/notifications")
+    Single<Response<NotificationDataModel>> getNotifications(@Query("option_id") String option_id,
+                                                             @Query(value = "user_id") String user_id
+    );
 
 }

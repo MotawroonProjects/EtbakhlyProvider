@@ -192,4 +192,18 @@
     <string name="add_department">إضافة قسم</string>
     <string name="select_photo">إختر صورة</string>
     <string name="upload">رفع الصور</string>
+    <string name="dismiss">إلغاء</string>
+    <string name="uploading">جار رفع الصور...</string>
+    <string name="failed">فشل</string>
+
+    <string name="order_approved">تم قبول طلبكم من </string>
+    <string name="order_refused">تم رفض طلبكم من </string>
+    <string name="your_order_from">طلبكم من </string>
+    <string name="order_num">رقم طلبك :</string>
+    <string name="status_pending">قيد التنفيذ</string>
+    <string name="delivering">طلبك بالطريق</string>
+    <string name="delivered2">تم التسليم</string>
+    <string name="no_not_to_show">لا توجد إشعارات لعرضها</string>
+    <string name="change_language">تغيير اللغة</string>
+
 </resources>

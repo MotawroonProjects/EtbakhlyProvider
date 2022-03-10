@@ -16,6 +16,7 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.databinding.GalleryRowBinding;
 import com.etbakhly_provider.model.KitchenModel;
 import com.etbakhly_provider.tags.Tags;
+import com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen.FragmentGallery;
 
 import java.util.List;
 
@@ -23,12 +24,14 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<KitchenModel.Photo> list;
     private Context context;
     private LayoutInflater inflater;
+    private Fragment fragment;
 
 
 
-    public GalleryAdapter(Context context) {
+    public GalleryAdapter(Context context,Fragment fragment) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+        this.fragment = fragment;
 
     }
 
@@ -50,6 +53,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .load(Tags.base_url+list.get(position).getPhoto())
                 .apply(options)
                 .into(myHolder.binding.image);
+
+        myHolder.binding.cardViewDelete.setOnClickListener(v -> {
+            if (fragment instanceof FragmentGallery){
+                FragmentGallery fragmentGallery = (FragmentGallery) fragment;
+                fragmentGallery.deleteImage(list.get(myHolder.getAdapterPosition()),myHolder.getAdapterPosition());
+            }
+        });
     }
 
     @Override

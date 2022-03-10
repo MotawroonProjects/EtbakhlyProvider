@@ -74,7 +74,7 @@ public class FragmentDeliveryAreas extends BaseFragment  {
         if (model.getZone_cover().size()>0){
             adapter=new DeliveryDetailsAdapter(activity);
             adapter.updateList(model.getZone_cover());
-            binding.recView.setLayoutManager(new LinearLayoutManager(activity));
+            binding.recView.setLayoutManager(new GridLayoutManager(activity,2));
             binding.recView.setAdapter(adapter);
             binding.tvNoData.setVisibility(View.GONE);
         }else {

@@ -99,6 +99,7 @@
 
 
                             <LinearLayout
+                                android:id="@+id/llNotifications"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -268,6 +269,7 @@
                                 android:layout_marginTop="12dp"
                                 android:layout_marginBottom="12dp"
                                 android:background="@color/gray4" />
+
 
 
                             <LinearLayout
