@@ -10,12 +10,14 @@ import com.etbakhly_provider.model.CountryDataModel;
 import com.etbakhly_provider.model.DishesDataModel;
 import com.etbakhly_provider.model.GalleryDataModel;
 import com.etbakhly_provider.model.NotificationDataModel;
+import com.etbakhly_provider.model.OfferDataModel;
 import com.etbakhly_provider.model.OrderDataModel;
 import com.etbakhly_provider.model.PlaceGeocodeData;
 import com.etbakhly_provider.model.PlaceMapDetailsData;
 import com.etbakhly_provider.model.SingleCategory;
 import com.etbakhly_provider.model.SingleDishModel;
 import com.etbakhly_provider.model.SingleKitchenDataModel;
+import com.etbakhly_provider.model.SingleOfferDataModel;
 import com.etbakhly_provider.model.SingleOrderDataModel;
 import com.etbakhly_provider.model.StatusResponse;
 import com.etbakhly_provider.model.AddBuffetDataModel;
@@ -338,6 +340,46 @@ public interface Service {
     @GET("api/Catering/notifications")
     Single<Response<NotificationDataModel>> getNotifications(@Query("option_id") String option_id,
                                                              @Query(value = "user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Service/statusCaterer")
+    Single<Response<StatusResponse>> updateStatus(@Field("Caterer_id") String Caterer_id
+
+
+    );
+
+    @GET("api/Service/Offers_Caterer")
+    Single<Response<OfferDataModel>> getOffers(@Query("Caterer_id") String Caterer_id);
+
+    @FormUrlEncoded
+    @POST("api/Service/deleteOffer")
+    Single<Response<StatusResponse>> deleteOffer(@Field("offer_id") String offer_id);
+
+
+    @Multipart
+    @POST("api/Service/storeOffer")
+    Single<Response<SingleOfferDataModel>> storeOffer(@Part("name") RequestBody name,
+                                                      @Part("option_id") RequestBody option_id,
+                                                      @Part("title") RequestBody title,
+                                                      @Part("sub_titel") RequestBody sub_titel,
+                                                      @Part MultipartBody.Part photo,
+                                                      @Part("price") RequestBody price,
+                                                      @Part("end_date") RequestBody end_date,
+                                                      @Part("caterer_id") RequestBody caterer_id);
+
+
+    @Multipart
+    @POST("api/Service/updateOffer")
+    Single<Response<SingleOfferDataModel>> updateOffer(@Part("name") RequestBody name,
+                                                       @Part("option_id") RequestBody option_id,
+                                                       @Part("title") RequestBody title,
+                                                       @Part("sub_titel") RequestBody sub_titel,
+                                                       @Part MultipartBody.Part photo,
+                                                       @Part("price") RequestBody price,
+                                                       @Part("end_date") RequestBody end_date,
+                                                       @Part("caterer_id") RequestBody caterer_id,
+                                                       @Part("offer_id") RequestBody offer_id
     );
 
 }

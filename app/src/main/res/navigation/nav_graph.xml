@@ -60,4 +60,10 @@
         android:name="com.etbakhly_provider.uis.activity_notifications.NotificationsActivity"
         android:label=""
         tools:layout="@layout/activity_notifications" />
+
+    <activity
+        android:id="@+id/activityOffers"
+        android:name="com.etbakhly_provider.uis.activity_offers.OffersActivity"
+        android:label=""
+        tools:layout="@layout/activity_offers" />
 </navigation>

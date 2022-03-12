@@ -26,6 +26,15 @@
         tools:ignore="AllowBackup"
         tools:targetApi="q">
         <activity
+            android:name=".uis.activity_add_offer.AddOfferActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uis.activity_offers.OffersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uis.activity_web_view.WebViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".uis.activity_notifications.NotificationsActivity"
             android:exported="false" />
         <activity
@@ -59,7 +68,7 @@
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".uis.order_details.OrderDetailsActivity"
+            android:name=".uis.activity_order_details.OrderDetailsActivity"
             android:exported="true" />
         <activity
             android:name=".uis.activity_map.MapActivity"

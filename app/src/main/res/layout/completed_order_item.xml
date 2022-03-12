@@ -16,6 +16,7 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="3dp"
         android:layout_margin="5dp"
+        app:contentPadding="10dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,9 +27,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -44,49 +44,33 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="3dp"
-                    android:text="@{model.id}"
+                    android:text='@{"#"+model.id}'
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="5:30"
-                    android:textColor="@color/gray21"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="4dp"
-                    android:text="@string/a_m"
-                    android:textColor="@color/gray21"
-                    android:textSize="18sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_date" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/booking_date"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,25 +80,9 @@
                     android:textColor="@color/gray21"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
-                    android:text="9:25"
-                    android:textColor="@color/gray21"
-                    android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="4dp"
-                    android:text="@string/a_m"
-                    android:textColor="@color/gray21"
-                    android:textSize="15sp" />
 
-                <Space
+                <androidx.legacy.widget.Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -124,40 +92,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="@{model.total}"
+                    android:text='@{model.total+" "+@string/sar}'
                     android:textColor="@color/price_color"
                     android:textSize="15sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/r_s"
-                    android:textSize="15sp"
-                    android:textColor="@color/price_color"
-                    android:layout_marginStart="4dp"/>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginStart="15sp"
-                android:layout_marginEnd="15dp"
+                android:gravity="center_vertical"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="3dp">
+               >
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_location"/>
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_location"
+                    android:layout_gravity="center_vertical"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="@{model.addressModel.address}"
-                    android:textSize="15sp"
+                    android:text='@{model.zone_cover!=null?model.zone_cover.zone.titel+" "+model.address:model.address}'
+                    android:textSize="13sp"
                     android:textColor="@color/gray21"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:lines="1"
+                    android:ellipsize="end"
+
+                    />
             </LinearLayout>
 
         </LinearLayout>

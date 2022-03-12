@@ -4,25 +4,26 @@ import java.io.Serializable;
 import java.util.List;
 
 public class OrderModel implements Serializable {
-    public String id;
-    public String user_id;
-    public String caterer_id;
-    public String option_id;
-    public String total;
-    public String address_id;
-    public String notes;
-    public String booking_date;
-    public String status_order;
-    public String is_end;
-    public String cancel_by;
-    public String is_pay;
-    public String created_at;
-    public String updated_at;
-    public UserModel.Data user;
-    public AddressModel addressModel;
-    public CatererModel catererModel;
-    public OptionModel optionModel;
-    public List<OrderDetail> order_details;
+    private String id;
+    private String user_id;
+    private String caterer_id;
+    private String option_id;
+    private String total;
+    private String coupon_cost ="0.0";
+    private String address_id;
+    private String address;
+    private String notes;
+    private String booking_date;
+    private String status_order;
+    private String is_end;
+    private String cancel_by;
+    private String is_pay;
+    private String created_at;
+    private String updated_at;
+    private UserModel.Data user;
+    private KitchenModel caterer;
+    private ZoneCover zone_cover;
+    private List<OrderDetail> order_details;
 
     public String getId() {
         return id;
@@ -84,35 +85,39 @@ public class OrderModel implements Serializable {
         return user;
     }
 
-    public AddressModel getAddress() {
-        return addressModel;
+    public String getAddress() {
+        return address;
     }
 
-    public CatererModel getCaterer() {
-        return catererModel;
+    public KitchenModel getCaterer() {
+        return caterer;
     }
 
-    public OptionModel getOption() {
-        return optionModel;
+    public ZoneCover getZone_cover() {
+        return zone_cover;
+    }
+
+    public String getCoupon_cost() {
+        return coupon_cost;
     }
 
     public List<OrderDetail> getOrder_details() {
         return order_details;
     }
     public static class OrderDetail implements Serializable{
-        public String id;
-        public String order_id;
-        public String offer_id;
-        public String qty;
-        public String dishes_id;
-        public String buffets_id;
-        public String feast_id;
-        public String created_at;
-        public String updated_at;
-        public Offer offer;
-        public CategoryDishModel.Dish dishes;
-        public BuffetModel buffetModel;
-        public FeastModel feastModel;
+        private String id;
+        private String order_id;
+        private String offer_id;
+        private String qty;
+        private String dishes_id;
+        private String buffets_id;
+        private String feast_id;
+        private String created_at;
+        private String updated_at;
+        private OfferModel offer;
+        private CategoryDishModel.Dish dishes;
+        private BuffetModel buffet;
+        private BuffetModel feast;
 
         public String getId() {
             return id;
@@ -150,7 +155,7 @@ public class OrderModel implements Serializable {
             return updated_at;
         }
 
-        public Offer getOffer() {
+        public OfferModel getOffer() {
             return offer;
         }
 
@@ -158,12 +163,12 @@ public class OrderModel implements Serializable {
             return dishes;
         }
 
-        public BuffetModel getBuffetModel() {
-            return buffetModel;
+        public BuffetModel getBuffet() {
+            return buffet;
         }
 
-        public FeastModel getFeastModel() {
-            return feastModel;
+        public BuffetModel getFeast() {
+            return feast;
         }
     }
 }

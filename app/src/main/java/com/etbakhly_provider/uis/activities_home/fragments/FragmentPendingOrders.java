@@ -1,13 +1,17 @@
 package com.etbakhly_provider.uis.activities_home.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +23,12 @@ import android.view.ViewGroup;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.PendingOrdersAdapter;
 import com.etbakhly_provider.databinding.FragmentOrderBinding;
+import com.etbakhly_provider.model.OrderModel;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.mvvm.FragmentPendingOrdersMvvm;
 import com.etbakhly_provider.uis.activities_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
-import com.etbakhly_provider.uis.order_details.OrderDetailsActivity;
+import com.etbakhly_provider.uis.activity_order_details.OrderDetailsActivity;
 
 
 public class FragmentPendingOrders extends BaseFragment {
@@ -32,6 +37,8 @@ public class FragmentPendingOrders extends BaseFragment {
     private HomeActivity activity;
     private FragmentPendingOrdersMvvm mvvm;
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
+    private int req;
+    private ActivityResultLauncher<Intent> launcher;
 
     public static FragmentPendingOrders newInstance() {
         FragmentPendingOrders fragment = new FragmentPendingOrders();
@@ -69,6 +76,15 @@ public class FragmentPendingOrders extends BaseFragment {
                 mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
                 activityHomeGeneralMvvm.getOnStatusSuccess().setValue("completed");
             }
+            activityHomeGeneralMvvm.getOnFragmentCompleteOrderRefreshed().setValue(true);
+
+        });
+
+        activityHomeGeneralMvvm.getOnFragmentPendingOrderRefreshed().observe(activity,isRefreshed->{
+            if (isRefreshed){
+                mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
+
+            }
         });
         adapter = new PendingOrdersAdapter(activity, this);
 
@@ -96,6 +112,12 @@ public class FragmentPendingOrders extends BaseFragment {
         binding.recyclerOrder.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.VERTICAL, false));
         mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
 
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (req==1&&result.getResultCode()== Activity.RESULT_OK){
+                mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
+                activityHomeGeneralMvvm.getOnFragmentCompleteOrderRefreshed().setValue(true);
+            }
+        });
     }
 
 
@@ -103,9 +125,11 @@ public class FragmentPendingOrders extends BaseFragment {
         mvvm.changeStatusOrder(status, id);
     }
 
-    public void navigateToDetails() {
-        Intent intent = new Intent(activity, OrderDetailsActivity.class);
-        startActivity(intent);
+    public void navigateToDetails(OrderModel orderModel) {
+        req =1;
+        Intent intent=new Intent(activity, OrderDetailsActivity.class);
+        intent.putExtra("order_id",orderModel.getId());
+        launcher.launch(intent);
     }
 
 

@@ -205,5 +205,21 @@
     <string name="delivered2">delivered</string>
     <string name="no_not_to_show">No notifications to show</string>
     <string name="change_language">Change language</string>
+    <string name="back">Back</string>
+    <string name="no_offers">No offers to show</string>
+    <string name="add_offer">Add offer</string>
+    <string name="offer_name">Offer name</string>
+    <string name="offer_details">Offer details</string>
+    <string name="offer_end_date">Offer end date</string>
+    <string name="booking_date">Booking date</string>
+    <string name="status">Status :</string>
+    <string name="received_your_order">Received your order</string>
+    <string name="delivered">Delivered</string>
+    <string name="customer_service_cost">Customer service cost</string>
+    <string name="coupon_value">Coupon value</string>
+    <string name="total">Total :</string>
+    <string name="free">Free</string>
+    <string name="not_available">Not available</string>
+
 
 </resources>

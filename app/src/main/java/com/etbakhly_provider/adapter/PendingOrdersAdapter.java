@@ -41,12 +41,9 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder=(MyHolder)holder;
         myHolder.binding.setModel(list.get(position));
-        myHolder.binding.llPendingDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentPendingOrders fragmentPendingOrders=(FragmentPendingOrders) fragment;
-                fragmentPendingOrders.navigateToDetails();
-            }
+        myHolder.itemView.setOnClickListener(view -> {
+            FragmentPendingOrders fragmentPendingOrders=(FragmentPendingOrders) fragment;
+            fragmentPendingOrders.navigateToDetails(list.get(myHolder.getAdapterPosition()));
         });
         myHolder.binding.btnPrepared.setOnClickListener(view -> {
             FragmentPendingOrders fragmentPendingOrders =(FragmentPendingOrders) fragment;
@@ -58,7 +55,7 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<RecyclerView.View
                 status = "delivery";
             }
 
-            fragmentPendingOrders.changeStatus(orderModel.id,status);
+            fragmentPendingOrders.changeStatus(orderModel.getId(),status);
         });
     }
 

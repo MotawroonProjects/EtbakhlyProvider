@@ -205,5 +205,21 @@
     <string name="delivered2">تم التسليم</string>
     <string name="no_not_to_show">لا توجد إشعارات لعرضها</string>
     <string name="change_language">تغيير اللغة</string>
+    <string name="back">رجوع</string>
+    <string name="no_offers">لا توجد عروض لعرضها</string>
+    <string name="add_offer">إضافة عرض</string>
+    <string name="offer_name">إسم العرض</string>
+    <string name="offer_details">تفاصيل العرض</string>
+    <string name="offer_end_date">تاريخ إنتهاء العرض</string>
+    <string name="booking_date">تاريخ الحجز :</string>
+    <string name="status">الحالة :</string>
+    <string name="received_your_order">استلمنا طلبك</string>
+    <string name="delivered">تم استلام الطلب</string>
+    <string name="customer_service_cost">خدمة</string>
+    <string name="coupon_value">قيمة الكوبون:</string>
+    <string name="total">الإجمالي :</string>
+    <string name="free">مجاني</string>
+    <string name="not_available">غير متوفر</string>
+
 
 </resources>

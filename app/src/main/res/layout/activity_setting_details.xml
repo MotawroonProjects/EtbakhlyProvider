@@ -10,6 +10,9 @@
             type="String" />
 
         <variable
+            name="status"
+            type="Boolean" />
+        <variable
             name="settings"
             type="com.etbakhly_provider.model.UserSettingsModel" />
 
@@ -108,7 +111,10 @@
                                 android:id="@+id/switchBusy"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                                tools:ignore="UseSwitchCompatOrMaterialXml"
+                                android:checked='@{status}'
+
+                                />
 
 
                         </LinearLayout>

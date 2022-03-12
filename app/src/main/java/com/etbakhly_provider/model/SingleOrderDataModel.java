@@ -1,12 +1,15 @@
 package com.etbakhly_provider.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class SingleOrderDataModel extends StatusResponse implements Serializable {
-    private SingleOrderModel SingelOrder;
+    @SerializedName(value = "SingelOrder", alternate = {"data"})
+    private OrderModel SingelOrder;
 
-    public SingleOrderModel getSingelOrder() {
+    public OrderModel getSingelOrder() {
         return SingelOrder;
     }
 }

@@ -22,7 +22,7 @@ import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.mvvm.FragmentCompletedOrdersMvvm;
 import com.etbakhly_provider.uis.activities_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
-import com.etbakhly_provider.uis.order_details.OrderDetailsActivity;
+import com.etbakhly_provider.uis.activity_order_details.OrderDetailsActivity;
 
 
 public class FragmentCompletedOrders extends BaseFragment {
@@ -70,8 +70,14 @@ public class FragmentCompletedOrders extends BaseFragment {
             }
         });
         adapter = new CompletedOrdersAdapter(activity, this);
-
         mvvm = ViewModelProviders.of(this).get(FragmentCompletedOrdersMvvm.class);
+
+        activityHomeGeneralMvvm.getOnFragmentCompleteOrderRefreshed().observe(activity,isRefreshed->{
+            if (isRefreshed){
+                mvvm.getCompletedOrders(getUserModel().getData().getCaterer().getId());
+
+            }
+        });
 
         mvvm.getIsDataLoading().observe(activity, isLoading -> binding.swipeRefresh.setRefreshing(isLoading));
 

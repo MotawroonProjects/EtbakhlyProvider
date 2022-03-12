@@ -16,6 +16,7 @@ import androidx.databinding.BindingAdapter;
 import com.etbakhly_provider.R;
 
 import com.etbakhly_provider.model.NotificationModel;
+import com.etbakhly_provider.model.OrderModel;
 import com.etbakhly_provider.tags.Tags;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -41,14 +42,28 @@ public class GeneralMethod {
     }
 
     @BindingAdapter("order_status")
-    public static void orderStatus(Button btnStatus, String status) {
-//        Log.e("ssss",status);
-        if (status.equals("approval")) {
-            btnStatus.setText(R.string.prepared);
-        } else if (status.equals("making")) {
-            btnStatus.setText(R.string.delivery_in_progress);
+    public static void orderStatus(Button btnStatus, OrderModel orderModel) {
+        if (orderModel!=null){
+            String status = orderModel.getStatus_order();
 
+            if (status.equals("new")){
+                btnStatus.setText(R.string.accept);
+
+            }
+            else if (status.equals("approval")) {
+                btnStatus.setText(R.string.prepared);
+            } else if (status.equals("making")) {
+                if (orderModel.getCaterer().getIs_delivry().equals("delivry")){
+                    btnStatus.setText(R.string.delivery_in_progress);
+
+                }else {
+                    btnStatus.setText(R.string.delivered2);
+
+                }
+
+            }
         }
+
 
     }
 

@@ -42,9 +42,9 @@ public class NewOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
-        myHolder.binding.llNewDetails.setOnClickListener(view -> {
+        myHolder.itemView.setOnClickListener(view -> {
             FragmentNewOrders fragmentNewOrders=(FragmentNewOrders) fragment;
-            fragmentNewOrders.navigateToDetails();
+            fragmentNewOrders.navigateToDetails(list.get(myHolder.getAdapterPosition()));
         });
         myHolder.binding.btnAccepted.setOnClickListener(view -> {
             FragmentNewOrders fragmentNewOrders = (FragmentNewOrders) fragment;

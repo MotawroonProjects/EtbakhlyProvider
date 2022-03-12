@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.etbakhly_provider.model.OrderModel;
 import com.etbakhly_provider.model.SingleOrderDataModel;
-import com.etbakhly_provider.model.SingleOrderModel;
 import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.tags.Tags;
 
@@ -24,27 +24,28 @@ import retrofit2.Response;
 public class ActivityOrderDetailsMvvm extends AndroidViewModel {
 
     private MutableLiveData<Boolean> isOrderDataLoading;
-    private MutableLiveData<SingleOrderModel> onOrderDetailsSuccess;
-    private CompositeDisposable disposable=new CompositeDisposable();
+    private MutableLiveData<OrderModel> onOrderDetailsSuccess;
+    private CompositeDisposable disposable = new CompositeDisposable();
+
     public ActivityOrderDetailsMvvm(@NonNull Application application) {
         super(application);
     }
 
     public MutableLiveData<Boolean> getIsOrderDataLoading() {
-        if (isOrderDataLoading==null){
-            isOrderDataLoading=new MutableLiveData<>();
+        if (isOrderDataLoading == null) {
+            isOrderDataLoading = new MutableLiveData<>();
         }
         return isOrderDataLoading;
     }
 
-    public MutableLiveData<SingleOrderModel> getOnOrderDetailsSuccess() {
-        if (onOrderDetailsSuccess==null){
-            onOrderDetailsSuccess=new MutableLiveData<>();
+    public MutableLiveData<OrderModel> getOnOrderDetailsSuccess() {
+        if (onOrderDetailsSuccess == null) {
+            onOrderDetailsSuccess = new MutableLiveData<>();
         }
         return onOrderDetailsSuccess;
     }
 
-    public void getOrderDetails(String order_id){
+    public void getOrderDetails(String order_id) {
         getIsOrderDataLoading().setValue(true);
         Api.getService(Tags.base_url).getOrderDetails(order_id)
                 .subscribeOn(Schedulers.io())
@@ -58,8 +59,8 @@ public class ActivityOrderDetailsMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<SingleOrderDataModel> response) {
                         getIsOrderDataLoading().setValue(false);
-                        if (response.isSuccessful()){
-                            if (response.body()!=null &&response.body().getStatus()==200 && response.body().getSingelOrder()!=null){
+                        if (response.isSuccessful()) {
+                            if (response.body() != null && response.body().getStatus() == 200 && response.body().getSingelOrder() != null) {
                                 onOrderDetailsSuccess.setValue(response.body().getSingelOrder());
                             }
                         }

@@ -85,4 +85,9 @@
     <color name="color12">#f2c333</color>
     <color name="color13">#F88F2E</color>
 
+    <color name="status1">#FCF3D6</color>
+    <color name="status2">#FEEDDD</color>
+    <color name="status3">#E3F0DF</color>
+    <color name="status4">#D5E3D5</color>
+
 </resources>

@@ -1,9 +1,14 @@
 package com.etbakhly_provider.uis.activities_home.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -26,7 +31,7 @@ import com.etbakhly_provider.mvvm.FragmentNewOrdersMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activities_home.HomeActivity;
 import com.etbakhly_provider.uis.activity_base.BaseFragment;
-import com.etbakhly_provider.uis.order_details.OrderDetailsActivity;
+import com.etbakhly_provider.uis.activity_order_details.OrderDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -37,6 +42,8 @@ public class FragmentNewOrders extends BaseFragment {
     private FragmentNewOrdersMvvm mvvm;
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
     private String reason = "";
+    private int req;
+    private ActivityResultLauncher<Intent> launcher;
 
     public static FragmentNewOrders newInstance() {
         FragmentNewOrders fragment = new FragmentNewOrders();
@@ -76,7 +83,6 @@ public class FragmentNewOrders extends BaseFragment {
         });
 
         mvvm.getOnDataSuccess().observe(activity, orderList -> {
-            Log.e("ggg",orderList.size()+"");
             if (orderList.size() > 0) {
                 if (adapter != null) {
                     adapter.updateList(orderList);
@@ -96,6 +102,8 @@ public class FragmentNewOrders extends BaseFragment {
             } else if (status == 2) {
                 mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
             }
+            activityHomeGeneralMvvm.getOnFragmentPendingOrderRefreshed().setValue(true);
+
         });
 
 
@@ -109,6 +117,12 @@ public class FragmentNewOrders extends BaseFragment {
 
         mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
 
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (req==1&&result.getResultCode()== Activity.RESULT_OK){
+                mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
+                activityHomeGeneralMvvm.getOnFragmentPendingOrderRefreshed().setValue(true);
+            }
+        });
     }
 
 
@@ -173,8 +187,10 @@ public class FragmentNewOrders extends BaseFragment {
     }
 
 
-    public void navigateToDetails() {
+    public void navigateToDetails(OrderModel orderModel) {
+        req =1;
         Intent intent=new Intent(activity, OrderDetailsActivity.class);
-        startActivity(intent);
+        intent.putExtra("order_id",orderModel.getId());
+        launcher.launch(intent);
     }
 }

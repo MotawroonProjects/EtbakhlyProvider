@@ -36,6 +36,8 @@ public class ActivityHomeGeneralMvvm extends AndroidViewModel {
     private MutableLiveData<UserModel> onTokenSuccess;
     private MutableLiveData<Boolean> onLoggedOutSuccess;
     private MutableLiveData<Boolean> onGallerySuccess;
+    private MutableLiveData<Boolean> onFragmentPendingOrderRefreshed;
+    private MutableLiveData<Boolean> onFragmentCompleteOrderRefreshed;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -74,6 +76,23 @@ public class ActivityHomeGeneralMvvm extends AndroidViewModel {
 
         return onLoggedOutSuccess;
     }
+
+    public MutableLiveData<Boolean> getOnFragmentPendingOrderRefreshed() {
+        if (onFragmentPendingOrderRefreshed == null) {
+            onFragmentPendingOrderRefreshed = new MutableLiveData<>();
+        }
+
+        return onFragmentPendingOrderRefreshed;
+    }
+
+    public MutableLiveData<Boolean> getOnFragmentCompleteOrderRefreshed() {
+        if (onFragmentCompleteOrderRefreshed == null) {
+            onFragmentCompleteOrderRefreshed = new MutableLiveData<>();
+        }
+
+        return onFragmentCompleteOrderRefreshed;
+    }
+
 
     public MutableLiveData<Boolean> onGallerySuccess() {
         if (onGallerySuccess == null) {
