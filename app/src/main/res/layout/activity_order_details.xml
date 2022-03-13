@@ -79,7 +79,7 @@
                         android:layout_marginEnd="16dp"
                         android:src="@drawable/ic_chat"
                         app:tint="@color/white"
-                        android:visibility="@{model==null?View.GONE:View.VISIBLE,default=gone}"
+                        android:visibility="gone"
                         />
 
                 </LinearLayout>

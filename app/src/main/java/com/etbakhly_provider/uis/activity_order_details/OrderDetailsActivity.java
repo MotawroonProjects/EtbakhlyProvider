@@ -208,6 +208,7 @@ public class OrderDetailsActivity extends BaseActivity {
 
         }
 
+        Log.e("status",model.getStatus_order());
         if (model.getStatus_order().equals("new") || model.getStatus_order().equals("completed")) {
             binding.chat.setVisibility(View.GONE);
         } else {
