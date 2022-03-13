@@ -90,7 +90,6 @@ public class SplashActivity extends BaseActivity {
                 });
 
 
-
     }
 
     private void setUpData() {

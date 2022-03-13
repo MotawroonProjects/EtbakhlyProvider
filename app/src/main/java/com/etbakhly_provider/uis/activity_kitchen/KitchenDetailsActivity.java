@@ -107,7 +107,7 @@ public class KitchenDetailsActivity extends BaseActivity {
         binding.pager.setAdapter(pagerAdapter);
         binding.pager.setOffscreenPageLimit(fragmentList.size());
 
-        if (!EventBus.getDefault().isRegistered(this)){
+        if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
     }
@@ -124,15 +124,15 @@ public class KitchenDetailsActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGalleryUploaded(NotResponse response){
-        Log.e("ss","ss");
+    public void onGalleryUploaded(NotResponse response) {
+        Log.e("ss", "ss");
         activityHomeGeneralMvvm.onGallerySuccess().setValue(true);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)){
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
     }

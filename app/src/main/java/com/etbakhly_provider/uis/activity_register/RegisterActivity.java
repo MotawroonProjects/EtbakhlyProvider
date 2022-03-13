@@ -45,7 +45,7 @@ public class RegisterActivity extends BaseActivity {
     private ActivityRegisterBinding binding;
     private RegisterModel model;
     private ActivityRegisterMvvm mvvm;
-    private String phone_code="", phone="";
+    private String phone_code = "", phone = "";
     private UserModel userModel;
     private SpinnerServiceAdapter spinnerServiceAdapter;
     private List<String> optionsList;
@@ -67,7 +67,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
-        if(intent.getStringExtra("phone")!=null) {
+        if (intent.getStringExtra("phone") != null) {
             phone_code = intent.getStringExtra("phone_code");
             phone = intent.getStringExtra("phone");
         }
@@ -135,7 +135,7 @@ public class RegisterActivity extends BaseActivity {
 
 
             model.setValid(true);
-         //   binding.llPhone.setVisibility(View.GONE);
+            //   binding.llPhone.setVisibility(View.GONE);
 
             if (userModel.getData().getPhoto() != null) {
                 String url = Tags.base_url + userModel.getData().getPhoto();
@@ -224,7 +224,7 @@ public class RegisterActivity extends BaseActivity {
                 mvvm.signUp(model, this);
 
             } else {
-                mvvm.update(model,userModel, this);
+                mvvm.update(model, userModel, this);
 
             }
         });

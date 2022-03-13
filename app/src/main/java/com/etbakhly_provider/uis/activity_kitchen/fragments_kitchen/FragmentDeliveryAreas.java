@@ -29,7 +29,7 @@ import com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity;
 import java.util.List;
 
 
-public class FragmentDeliveryAreas extends BaseFragment  {
+public class FragmentDeliveryAreas extends BaseFragment {
     private KitchenDetailsActivity activity;
     private FragmentDeliveryAreasBinding binding;
     private DeliveryDetailsAdapter adapter;
@@ -48,6 +48,7 @@ public class FragmentDeliveryAreas extends BaseFragment  {
         super.onAttach(context);
         activity = (KitchenDetailsActivity) context;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,20 +72,17 @@ public class FragmentDeliveryAreas extends BaseFragment  {
     }
 
     private void initView() {
-        if (model.getZone_cover().size()>0){
-            adapter=new DeliveryDetailsAdapter(activity);
+        if (model.getZone_cover().size() > 0) {
+            adapter = new DeliveryDetailsAdapter(activity);
             adapter.updateList(model.getZone_cover());
-            binding.recView.setLayoutManager(new GridLayoutManager(activity,2));
+            binding.recView.setLayoutManager(new GridLayoutManager(activity, 2));
             binding.recView.setAdapter(adapter);
             binding.tvNoData.setVisibility(View.GONE);
-        }else {
+        } else {
             binding.tvNoData.setVisibility(View.VISIBLE);
         }
 
     }
-
-
-
 
 
 }

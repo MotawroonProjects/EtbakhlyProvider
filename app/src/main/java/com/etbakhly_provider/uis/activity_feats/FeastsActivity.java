@@ -60,7 +60,7 @@ public class FeastsActivity extends BaseActivity {
         });
 
         mvvm.getOnStatusSuccess().observe(this, status -> {
-            mvvm.getFeasts(getUserModel().getData().getCaterer().getId(),this);
+            mvvm.getFeasts(getUserModel().getData().getCaterer().getId(), this);
         });
 
         binding.setLang(getLang());
@@ -77,16 +77,17 @@ public class FeastsActivity extends BaseActivity {
         });
         binding.addFeast.setOnClickListener(view -> {
             req = 1;
-            Intent intent=new Intent(FeastsActivity.this, AddFeastActivity.class);
+            Intent intent = new Intent(FeastsActivity.this, AddFeastActivity.class);
             launcher.launch(intent);
         });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req == 1 && result.getResultCode() == RESULT_OK ) {
-                mvvm.getFeasts(getUserModel().getData().getCaterer().getId(),this);
+            if (req == 1 && result.getResultCode() == RESULT_OK) {
+                mvvm.getFeasts(getUserModel().getData().getCaterer().getId(), this);
 
             }
         });
     }
+
     public void setItemData(BuffetModel feastsModel, int adapterPosition) {
         req = 1;
         mvvm.getSelectedPos().setValue(adapterPosition);

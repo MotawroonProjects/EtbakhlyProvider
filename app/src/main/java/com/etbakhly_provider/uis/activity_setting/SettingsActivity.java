@@ -42,18 +42,18 @@ public class SettingsActivity extends BaseActivity {
     private void initView() {
         preferences = Preferences.getInstance();
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req==1){
+            if (req == 1) {
                 if (result.getResultCode() == RESULT_OK) {
                     UserModel userModel = (UserModel) result.getData().getSerializableExtra("data");
                     preferences.createUpdateUserData(this, userModel);
                     binding.setModel(getUserModel());
                 }
-            }else if (req==2){
-                if (result.getResultCode()==RESULT_OK&&result.getData()!=null){
+            } else if (req == 2) {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     String lang = result.getData().getStringExtra("lang");
                     Intent intent = getIntent();
-                    intent.putExtra("lang",lang);
-                    setResult(RESULT_OK,intent);
+                    intent.putExtra("lang", lang);
+                    setResult(RESULT_OK, intent);
                     finish();
                 }
             }
@@ -85,8 +85,6 @@ public class SettingsActivity extends BaseActivity {
             Intent intent = new Intent(this, NotificationsActivity.class);
             startActivity(intent);
         });
-
-
 
 
     }

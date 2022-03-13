@@ -1,17 +1,21 @@
 package com.etbakhly_provider.mvvm;
 
 import android.app.Application;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.etbakhly_provider.R;
 import com.etbakhly_provider.model.OrderDataModel;
 import com.etbakhly_provider.model.OrderModel;
 import com.etbakhly_provider.model.StatusResponse;
 import com.etbakhly_provider.remote.Api;
 import com.etbakhly_provider.share.App;
+import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
 
 import java.io.IOException;
@@ -59,7 +63,6 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
 
     public void getNewOrders(String caterer_id) {
 
-        Log.e("cat_id",caterer_id);
         getIsDataLoading().setValue(true);
         Api.getService(Tags.base_url).getMyOrder(caterer_id, "new")
                 .subscribeOn(Schedulers.io())
@@ -73,7 +76,7 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<OrderDataModel> response) {
                         getIsDataLoading().setValue(false);
-                        Log.e("code",response.body().getStatus()+"_");
+                        Log.e("code", response.body().getStatus() + "_");
 
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200 && response.body().getData() != null) {
@@ -81,7 +84,7 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
                             }
                         } else {
                             try {
-                                Log.e("error",response.code()+""+response.errorBody().string());
+                                Log.e("error", response.code() + "" + response.errorBody().string());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -96,7 +99,12 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
                 });
     }
 
-    public void changeStatusOrder(String status_order, String order_id, String why_cancel) {
+    public void changeStatusOrder(String status_order, String order_id, String why_cancel, Context context) {
+        ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
         Api.getService(Tags.base_url).changeStatusOrder(order_id, status_order, why_cancel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -108,6 +116,7 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<StatusResponse> response) {
+                        dialog.dismiss();
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
                                 if (response.body().getStatus() == 200) {
@@ -128,6 +137,7 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         Log.e("error", e.getMessage());
+                        dialog.dismiss();
                     }
                 });
     }

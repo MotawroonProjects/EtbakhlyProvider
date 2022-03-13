@@ -56,7 +56,6 @@ public class AddDishesActivity extends BaseActivity {
     private List<DishNoteDetailsModel> dishNoteDetailsModelList = new ArrayList<>();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -18,7 +18,7 @@ import com.etbakhly_provider.uis.activities_home.fragments.FragmentPendingOrders
 
 import java.util.List;
 
-public class PendingOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class PendingOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<OrderModel> list;
     private Context context;
     private LayoutInflater inflater;
@@ -33,29 +33,38 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<RecyclerView.View
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        PendingOrderItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.pending_order_item,parent,false);
+        PendingOrderItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.pending_order_item, parent, false);
         return new MyHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MyHolder myHolder=(MyHolder)holder;
+        MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
         myHolder.itemView.setOnClickListener(view -> {
-            FragmentPendingOrders fragmentPendingOrders=(FragmentPendingOrders) fragment;
+            FragmentPendingOrders fragmentPendingOrders = (FragmentPendingOrders) fragment;
             fragmentPendingOrders.navigateToDetails(list.get(myHolder.getAdapterPosition()));
         });
         myHolder.binding.btnPrepared.setOnClickListener(view -> {
-            FragmentPendingOrders fragmentPendingOrders =(FragmentPendingOrders) fragment;
+            FragmentPendingOrders fragmentPendingOrders = (FragmentPendingOrders) fragment;
             OrderModel orderModel = list.get(holder.getLayoutPosition());
-            String status ="";
-            if (orderModel.getStatus_order().equals("approval")){
-                status ="making";
-            }else if (orderModel.getStatus_order().equals("making")){
-                status = "delivery";
+            String status = "";
+            if (orderModel.getStatus_order().equals("approval")) {
+                status = "making";
+            } else if (orderModel.getStatus_order().equals("making")) {
+
+                if (orderModel.getCaterer().getIs_delivry().equals("delivry")) {
+                    status = "delivery";
+
+                } else {
+                    status = "completed";
+                }
+            }else if (orderModel.getStatus_order().equals("delivery")){
+                status = "completed";
+
             }
 
-            fragmentPendingOrders.changeStatus(orderModel.getId(),status);
+            fragmentPendingOrders.changeStatus(orderModel.getId(), status);
         });
     }
 
@@ -68,21 +77,21 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    public static class MyHolder extends RecyclerView.ViewHolder{
+    public static class MyHolder extends RecyclerView.ViewHolder {
         public PendingOrderItemBinding binding;
-        public MyHolder(PendingOrderItemBinding binding)
-        {
+
+        public MyHolder(PendingOrderItemBinding binding) {
             super(binding.getRoot());
-            this.binding=binding;
+            this.binding = binding;
         }
     }
+
     public void updateList(List<OrderModel> list) {
         if (list != null) {
             this.list = list;
 
-        }
-        else{
-            this.list .clear();
+        } else {
+            this.list.clear();
         }
         notifyDataSetChanged();
     }

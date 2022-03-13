@@ -69,9 +69,9 @@ public class VerificationCodeActivity extends BaseActivity {
             if (userModel == null) {
                 navigateToSignUpActivity();
             } else {
-                Intent intent=getIntent();
-                intent.putExtra("data",userModel);
-                setResult(RESULT_OK,intent);
+                Intent intent = getIntent();
+                intent.putExtra("data", userModel);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
@@ -92,10 +92,10 @@ public class VerificationCodeActivity extends BaseActivity {
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK) {
-                UserModel userModel= (UserModel) result.getData().getSerializableExtra("data");
-                Intent intent=getIntent();
-                intent.putExtra("data",userModel);
-                setResult(RESULT_OK,intent);
+                UserModel userModel = (UserModel) result.getData().getSerializableExtra("data");
+                Intent intent = getIntent();
+                intent.putExtra("data", userModel);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });

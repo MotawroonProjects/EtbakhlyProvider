@@ -29,6 +29,7 @@ import com.etbakhly_provider.databinding.ActivityHomeBinding;
 import com.etbakhly_provider.databinding.DrawerHeaderBinding;
 import com.etbakhly_provider.language.Language;
 import com.etbakhly_provider.model.NotResponse;
+import com.etbakhly_provider.model.NotiFire;
 import com.etbakhly_provider.model.UserSettingsModel;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.uis.activities_home.fragments.FragmentNewOrders;
@@ -53,12 +54,24 @@ public class HomeActivity extends BaseActivity {
     private ActivityHomeGeneralMvvm activityHomeGeneralMvvm;
     private ActivityResultLauncher<Intent> launcher;
     private int req;
+    private String order_id = "";// is from firebase notification
+    private boolean isFromFireBase = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
+        getDataFromIntent();
         initView();
+
+    }
+
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("firebase")) {
+            isFromFireBase = true;
+            order_id = intent.getStringExtra("firebase");
+        }
 
     }
 
@@ -90,17 +103,23 @@ public class HomeActivity extends BaseActivity {
         binding.llLogout.setOnClickListener(view -> activityHomeGeneralMvvm.logout(getUserModel(), HomeActivity.this));
         activityHomeGeneralMvvm.updateToken(getUserModel());
 
+        if (isFromFireBase) {
+           /* setItemPos(4);
+            activityHomeGeneralMvvm.getDisplayFragmentNotification().setValue(true);*/
+        }
 
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req==1&&result.getResultCode()==RESULT_OK&&result.getData()!=null){
+            if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
                 String lang = result.getData().getStringExtra("lang");
                 refreshActivity(lang);
             }
         });
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
-
-
 
 
     @Override
@@ -122,6 +141,11 @@ public class HomeActivity extends BaseActivity {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onNewDataRefresh(NotiFire notiFire) {
+        activityHomeGeneralMvvm.getOnFragmentNewOrderRefreshed().setValue(true);
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -130,6 +154,14 @@ public class HomeActivity extends BaseActivity {
         } else {
             super.onBackPressed();
 
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
         }
     }
 }

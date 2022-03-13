@@ -122,7 +122,7 @@ public class AddOfferActivity extends BaseActivity implements DatePickerDialog.O
                 Toast.makeText(this, getResources().getString(R.string.succ), Toast.LENGTH_LONG).show();
                 Intent intent = getIntent();
                 intent.putExtra("data", offerModel);
-                intent.putExtra("action","add");
+                intent.putExtra("action", "add");
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -132,7 +132,7 @@ public class AddOfferActivity extends BaseActivity implements DatePickerDialog.O
                 Toast.makeText(this, R.string.updated, Toast.LENGTH_SHORT).show();
                 Intent intent = getIntent();
                 intent.putExtra("data", offerModel);
-                intent.putExtra("action","update");
+                intent.putExtra("action", "update");
 
                 setResult(RESULT_OK, intent);
                 finish();

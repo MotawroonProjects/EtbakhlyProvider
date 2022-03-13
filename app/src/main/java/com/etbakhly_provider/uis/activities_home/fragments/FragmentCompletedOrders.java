@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.CompletedOrdersAdapter;
 import com.etbakhly_provider.databinding.FragmentOrderBinding;
+import com.etbakhly_provider.model.OrderModel;
 import com.etbakhly_provider.mvvm.ActivityHomeGeneralMvvm;
 import com.etbakhly_provider.mvvm.FragmentCompletedOrdersMvvm;
 import com.etbakhly_provider.uis.activities_home.HomeActivity;
@@ -61,19 +63,13 @@ public class FragmentCompletedOrders extends BaseFragment {
     }
 
     private void initView() {
-        activityHomeGeneralMvvm = ViewModelProviders.of(this).get(ActivityHomeGeneralMvvm.class);
+        activityHomeGeneralMvvm = ViewModelProviders.of(activity).get(ActivityHomeGeneralMvvm.class);
 
-        activityHomeGeneralMvvm.getOnStatusSuccess().observe(activity, status -> {
-            if (status.equals("completed")) {
-                mvvm.getCompletedOrders(getUserModel().getData().getCaterer().getId());
-
-            }
-        });
         adapter = new CompletedOrdersAdapter(activity, this);
         mvvm = ViewModelProviders.of(this).get(FragmentCompletedOrdersMvvm.class);
 
-        activityHomeGeneralMvvm.getOnFragmentCompleteOrderRefreshed().observe(activity,isRefreshed->{
-            if (isRefreshed){
+        activityHomeGeneralMvvm.getOnFragmentCompleteOrderRefreshed().observe(activity, isRefreshed -> {
+            if (isRefreshed) {
                 mvvm.getCompletedOrders(getUserModel().getData().getCaterer().getId());
 
             }
@@ -102,8 +98,9 @@ public class FragmentCompletedOrders extends BaseFragment {
     }
 
 
-    public void navigateToDetails() {
-        Intent intent=new Intent(activity, OrderDetailsActivity.class);
+    public void navigateToDetails(OrderModel orderModel) {
+        Intent intent = new Intent(activity, OrderDetailsActivity.class);
+        intent.putExtra("order_id", orderModel.getId());
         startActivity(intent);
     }
 }

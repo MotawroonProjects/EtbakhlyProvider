@@ -82,6 +82,14 @@ public class FragmentNewOrders extends BaseFragment {
             binding.swipeRefresh.setRefreshing(isLoading);
         });
 
+        activityHomeGeneralMvvm.getOnFragmentNewOrderRefreshed().observe(activity, isRefreshed -> {
+            if (isRefreshed) {
+                mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
+
+            }
+
+        });
+
         mvvm.getOnDataSuccess().observe(activity, orderList -> {
             if (orderList.size() > 0) {
                 if (adapter != null) {
@@ -96,13 +104,12 @@ public class FragmentNewOrders extends BaseFragment {
 
         mvvm.getOnOrderStatusSuccess().observe(activity, status -> {
             if (status == 1) {
-                activityHomeGeneralMvvm.getOnStatusSuccess().setValue("approval");
+                activityHomeGeneralMvvm.getOnFragmentPendingOrderRefreshed().setValue(true);
                 activityHomeGeneralMvvm.getPosChangedSuccess().setValue(1);
                 mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
             } else if (status == 2) {
                 mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
             }
-            activityHomeGeneralMvvm.getOnFragmentPendingOrderRefreshed().setValue(true);
 
         });
 
@@ -118,9 +125,17 @@ public class FragmentNewOrders extends BaseFragment {
         mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req==1&&result.getResultCode()== Activity.RESULT_OK){
-                mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
-                activityHomeGeneralMvvm.getOnFragmentPendingOrderRefreshed().setValue(true);
+            if (req == 1 && result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                String order_status = result.getData().getStringExtra("order_status");
+                if (order_status.equals("approval")) {
+                    mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
+                    activityHomeGeneralMvvm.getOnFragmentPendingOrderRefreshed().setValue(true);
+                    activityHomeGeneralMvvm.getPosChangedSuccess().setValue(1);
+
+                } else if (order_status.equals("refusal")) {
+                    mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
+
+                }
             }
         });
     }
@@ -128,7 +143,7 @@ public class FragmentNewOrders extends BaseFragment {
 
     public void changeStatus(OrderModel orderModel, String status) {
         if (status.equals("approval")) {
-            mvvm.changeStatusOrder(status, orderModel.getId(), null);
+            mvvm.changeStatusOrder(status, orderModel.getId(), null, activity);
         } else {
             createReasonDialog(status, orderModel.getId());
         }
@@ -172,13 +187,13 @@ public class FragmentNewOrders extends BaseFragment {
                 if (!reason.isEmpty()) {
                     binding.anotherReason.setError(null);
                     Common.CloseKeyBoard(activity, binding.anotherReason);
-                    mvvm.changeStatusOrder(status, order_id, reason);
+                    mvvm.changeStatusOrder(status, order_id, reason, activity);
 
                 } else {
                     binding.anotherReason.setError(getString(R.string.field_required));
                 }
             } else {
-                mvvm.changeStatusOrder(status, order_id, reason);
+                mvvm.changeStatusOrder(status, order_id, reason, activity);
 
             }
             dialog.dismiss();
@@ -188,9 +203,9 @@ public class FragmentNewOrders extends BaseFragment {
 
 
     public void navigateToDetails(OrderModel orderModel) {
-        req =1;
-        Intent intent=new Intent(activity, OrderDetailsActivity.class);
-        intent.putExtra("order_id",orderModel.getId());
+        req = 1;
+        Intent intent = new Intent(activity, OrderDetailsActivity.class);
+        intent.putExtra("order_id", orderModel.getId());
         launcher.launch(intent);
     }
 }

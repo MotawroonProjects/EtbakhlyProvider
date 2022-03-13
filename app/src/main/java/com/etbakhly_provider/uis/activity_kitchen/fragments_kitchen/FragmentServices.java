@@ -87,6 +87,7 @@ public class FragmentServices extends BaseFragment {
 
 
     }
+
     private void createChooseDialog(String type) {
         AlertDialog dialog = new AlertDialog.Builder(activity).create();
         ChooseDialogBinding chooseDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.choose_dialog, null, false);
@@ -125,6 +126,7 @@ public class FragmentServices extends BaseFragment {
 //        intent.putExtra("kitchen_id", model.getId());
         startActivity(intent);
     }
+
     private void navigateToFeastsActivity() {
         Intent intent = new Intent(activity, FeastsActivity.class);
 //        intent.putExtra("kitchen_id", model.getId());
@@ -136,8 +138,6 @@ public class FragmentServices extends BaseFragment {
 //        intent.putExtra("kitchen_id", model.getId());
         startActivity(intent);
     }
-
-
 
 
 }

@@ -9,6 +9,7 @@ import com.etbakhly_provider.model.CategoryDataModel;
 import com.etbakhly_provider.model.CountryDataModel;
 import com.etbakhly_provider.model.DishesDataModel;
 import com.etbakhly_provider.model.GalleryDataModel;
+import com.etbakhly_provider.model.MessagesDataModel;
 import com.etbakhly_provider.model.NotificationDataModel;
 import com.etbakhly_provider.model.OfferDataModel;
 import com.etbakhly_provider.model.OrderDataModel;
@@ -17,6 +18,7 @@ import com.etbakhly_provider.model.PlaceMapDetailsData;
 import com.etbakhly_provider.model.SingleCategory;
 import com.etbakhly_provider.model.SingleDishModel;
 import com.etbakhly_provider.model.SingleKitchenDataModel;
+import com.etbakhly_provider.model.SingleMessageModel;
 import com.etbakhly_provider.model.SingleOfferDataModel;
 import com.etbakhly_provider.model.SingleOrderDataModel;
 import com.etbakhly_provider.model.StatusResponse;
@@ -380,6 +382,20 @@ public interface Service {
                                                        @Part("end_date") RequestBody end_date,
                                                        @Part("caterer_id") RequestBody caterer_id,
                                                        @Part("offer_id") RequestBody offer_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/one_chatRoom")
+    Single<Response<MessagesDataModel>> getChatMessages(@Field(value = "order_id") String order_id);
+
+    @Multipart
+    @POST("api/send_message")
+    Single<Response<SingleMessageModel>> sendMessages(@Part("order_id") RequestBody order_id,
+                                                      @Part("from_user_id") RequestBody from_user_id,
+                                                      @Part("to_user_id") RequestBody to_user_id,
+                                                      @Part("type") RequestBody type,
+                                                      @Part("message") RequestBody message,
+                                                      @Part MultipartBody.Part image
     );
 
 }

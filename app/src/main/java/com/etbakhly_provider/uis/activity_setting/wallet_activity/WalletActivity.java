@@ -12,6 +12,7 @@ import com.etbakhly_provider.R;
 import com.etbakhly_provider.adapter.TransactionAdapter;
 import com.etbakhly_provider.databinding.ActivityWalletBinding;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
+
 public class WalletActivity extends BaseActivity {
     private ActivityWalletBinding binding;
     private TransactionAdapter adapter;
@@ -28,7 +29,7 @@ public class WalletActivity extends BaseActivity {
         setSupportActionBar(binding.toolbar);
         binding.setLang(getLang());
 
-        adapter=new TransactionAdapter(this);
+        adapter = new TransactionAdapter(this);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setAdapter(adapter);
         binding.llBack.setOnClickListener(view -> finish());

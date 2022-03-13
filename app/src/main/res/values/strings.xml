@@ -220,6 +220,9 @@
     <string name="total">Total :</string>
     <string name="free">Free</string>
     <string name="not_available">Not available</string>
+    <string name="type_a_message">Type a message...</string>
+    <string name="attach_sent">attachment sent</string>
+    <string name="sent_order">sent an order</string>
 
 
 </resources>

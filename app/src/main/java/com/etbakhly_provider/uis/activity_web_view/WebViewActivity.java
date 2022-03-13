@@ -16,7 +16,7 @@ import com.etbakhly_provider.uis.activity_base.BaseActivity;
 
 public class WebViewActivity extends BaseActivity {
     private ActivityWebViewBinding binding;
-    private String url ="";
+    private String url = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

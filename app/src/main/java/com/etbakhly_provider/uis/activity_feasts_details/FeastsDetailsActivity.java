@@ -79,7 +79,7 @@ public class FeastsDetailsActivity extends BaseActivity {
         });
 
 
-        mvvm.getCategoryDishes(getUserModel().getData().getCaterer().getId(), model.getId(),this);
+        mvvm.getCategoryDishes(getUserModel().getData().getCaterer().getId(), model.getId(), this);
 
         mvvm.getOnCategoryDeletedSuccess().observe(this, pos -> {
             if (adapter != null) {
@@ -109,18 +109,18 @@ public class FeastsDetailsActivity extends BaseActivity {
             if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
                 DishModel dishModel = (DishModel) result.getData().getSerializableExtra("data");
                 String action = result.getData().getStringExtra("action");
-                if (action!=null){
-                    if(action.equals("add")){
+                if (action != null) {
+                    if (action.equals("add")) {
                         if (mvvm.onCategoryDataSuccess().getValue() != null && mvvm.getOnItemSelected().getValue() != null && adapter != null) {
                             List<DishModel> list = mvvm.onCategoryDataSuccess().getValue().get(mvvm.getOnItemSelected().getValue()).getDishes_buffet();
                             list.add(dishModel);
                             mvvm.getOnDishUpdatedSuccess().setValue(mvvm.getOnItemSelected().getValue());
 
                         }
-                    }else {
+                    } else {
                         if (mvvm.onCategoryDataSuccess().getValue() != null && mvvm.getOnItemSelected().getValue() != null && mvvm.getOnChildItemSelected().getValue() != null && adapter != null) {
                             List<DishModel> list = mvvm.onCategoryDataSuccess().getValue().get(mvvm.getOnItemSelected().getValue()).getDishes_buffet();
-                            list.set(mvvm.getOnChildItemSelected().getValue(),dishModel);
+                            list.set(mvvm.getOnChildItemSelected().getValue(), dishModel);
                             mvvm.getOnDishUpdatedSuccess().setValue(mvvm.getOnItemSelected().getValue());
 
                         }
@@ -143,7 +143,7 @@ public class FeastsDetailsActivity extends BaseActivity {
             if (!name.isEmpty()) {
                 fragmentBinding.edtName.setError(null);
                 Common.CloseKeyBoard(this, fragmentBinding.edtName);
-                mvvm.addCategory(name, getUserModel().getData().getCaterer().getId(),model.getId(),this);
+                mvvm.addCategory(name, getUserModel().getData().getCaterer().getId(), model.getId(), this);
                 dialog.dismiss();
 
             } else {

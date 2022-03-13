@@ -23,6 +23,7 @@ public class FragmentLanguage extends BottomSheetDialogFragment {
     private String lang = "";
     private String selectedLang;
     private HomeActivity activity;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -54,20 +55,20 @@ public class FragmentLanguage extends BottomSheetDialogFragment {
         }
 
         binding.rbAr.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
-                selectedLang="ar";
+            if (isChecked) {
+                selectedLang = "ar";
             }
         });
 
         binding.rbEn.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
-                selectedLang="en";
+            if (isChecked) {
+                selectedLang = "en";
             }
         });
 
         binding.btnConfirm.setOnClickListener(view -> {
-          dismiss();
-          activity.refreshActivity(selectedLang);
+            dismiss();
+            activity.refreshActivity(selectedLang);
         });
     }
 

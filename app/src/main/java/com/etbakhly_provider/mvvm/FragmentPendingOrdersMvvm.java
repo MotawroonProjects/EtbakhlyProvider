@@ -1,16 +1,20 @@
 package com.etbakhly_provider.mvvm;
 
 import android.app.Application;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.etbakhly_provider.R;
 import com.etbakhly_provider.model.OrderDataModel;
 import com.etbakhly_provider.model.OrderModel;
 import com.etbakhly_provider.model.StatusResponse;
 import com.etbakhly_provider.remote.Api;
+import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
 
 import java.util.List;
@@ -25,7 +29,7 @@ import retrofit2.Response;
 public class FragmentPendingOrdersMvvm extends AndroidViewModel {
     private MutableLiveData<Boolean> isDataLoading;
     private MutableLiveData<List<OrderModel>> onDataSuccess;
-    private MutableLiveData<Integer> onStatusSuccess;
+    private MutableLiveData<String> onStatusSuccess;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -47,7 +51,7 @@ public class FragmentPendingOrdersMvvm extends AndroidViewModel {
         return onDataSuccess;
     }
 
-    public MutableLiveData<Integer> getOnStatusSuccess() {
+    public MutableLiveData<String> getOnStatusSuccess() {
         if (onStatusSuccess == null) {
             onStatusSuccess = new MutableLiveData<>();
         }
@@ -84,7 +88,11 @@ public class FragmentPendingOrdersMvvm extends AndroidViewModel {
                 });
     }
 
-    public void changeStatusOrder(String status_order, String order_id) {
+    public void changeStatusOrder(String status_order, String order_id, Context context) {
+        ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
         Api.getService(Tags.base_url).changeStatusOrder(order_id, status_order, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -96,16 +104,12 @@ public class FragmentPendingOrdersMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<StatusResponse> response) {
+                        dialog.dismiss();
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
                                 if (response.body().getStatus() == 200) {
-                                    if (status_order.equals("making")) {
-                                        getOnStatusSuccess().setValue(1);
+                                    getOnStatusSuccess().setValue(status_order);
 
-                                    } else if (status_order.equals("delivery")) {
-                                        getOnStatusSuccess().setValue(2);
-
-                                    }
                                 }
                             }
                         } else {
@@ -115,6 +119,7 @@ public class FragmentPendingOrdersMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        dialog.dismiss();
                         Log.e("error", e.getMessage());
                     }
                 });

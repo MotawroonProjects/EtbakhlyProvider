@@ -220,6 +220,9 @@
     <string name="total">الإجمالي :</string>
     <string name="free">مجاني</string>
     <string name="not_available">غير متوفر</string>
+    <string name="type_a_message">إكتب رسالتك....</string>
+    <string name="attach_sent">تم إرفاق صورة</string>
+    <string name="sent_order">ارسل لك طلب جديد</string>
 
 
 </resources>

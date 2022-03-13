@@ -49,7 +49,7 @@ public class ContactUsActivity extends BaseActivity {
         binding.setContactUsModel(contactUsModel);
 
         binding.btnSend.setOnClickListener(view -> {
-                contactusActivityMvvm.contactus(this, contactUsModel);
+            contactusActivityMvvm.contactus(this, contactUsModel);
 
         });
         contactusActivityMvvm.send.observe(this, aBoolean -> {

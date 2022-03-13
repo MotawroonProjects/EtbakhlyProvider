@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,18 +71,18 @@ public class FragmentPendingOrders extends BaseFragment {
         mvvm = ViewModelProviders.of(this).get(FragmentPendingOrdersMvvm.class);
         activityHomeGeneralMvvm = ViewModelProviders.of(activity).get(ActivityHomeGeneralMvvm.class);
         mvvm.getOnStatusSuccess().observe(activity, status -> {
-            if (status == 1) {
-                mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
-            } else if (status == 2) {
-                mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
-                activityHomeGeneralMvvm.getOnStatusSuccess().setValue("completed");
+
+            if (status.equals("completed")) {
+                activityHomeGeneralMvvm.getOnFragmentCompleteOrderRefreshed().setValue(true);
+                activityHomeGeneralMvvm.getPosChangedSuccess().setValue(2);
             }
-            activityHomeGeneralMvvm.getOnFragmentCompleteOrderRefreshed().setValue(true);
+            mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
+
 
         });
 
-        activityHomeGeneralMvvm.getOnFragmentPendingOrderRefreshed().observe(activity,isRefreshed->{
-            if (isRefreshed){
+        activityHomeGeneralMvvm.getOnFragmentPendingOrderRefreshed().observe(activity, isRefreshed -> {
+            if (isRefreshed) {
                 mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
 
             }
@@ -113,22 +114,28 @@ public class FragmentPendingOrders extends BaseFragment {
         mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req==1&&result.getResultCode()== Activity.RESULT_OK){
+            if (req == 1 && result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                String order_status = result.getData().getStringExtra("order_status");
                 mvvm.getPendingOrder(getUserModel().getData().getCaterer().getId());
-                activityHomeGeneralMvvm.getOnFragmentCompleteOrderRefreshed().setValue(true);
+                if (order_status.equals("completed")) {
+                    activityHomeGeneralMvvm.getPosChangedSuccess().setValue(2);
+                    activityHomeGeneralMvvm.getOnFragmentCompleteOrderRefreshed().setValue(true);
+                }
+
+                Log.e("fragmentPendingfOrd", order_status);
             }
         });
     }
 
 
     public void changeStatus(String id, String status) {
-        mvvm.changeStatusOrder(status, id);
+        mvvm.changeStatusOrder(status, id, activity);
     }
 
     public void navigateToDetails(OrderModel orderModel) {
-        req =1;
-        Intent intent=new Intent(activity, OrderDetailsActivity.class);
-        intent.putExtra("order_id",orderModel.getId());
+        req = 1;
+        Intent intent = new Intent(activity, OrderDetailsActivity.class);
+        intent.putExtra("order_id", orderModel.getId());
         launcher.launch(intent);
     }
 

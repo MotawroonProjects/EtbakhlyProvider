@@ -24,6 +24,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GeneralMethod {
@@ -53,13 +59,10 @@ public class GeneralMethod {
             else if (status.equals("approval")) {
                 btnStatus.setText(R.string.prepared);
             } else if (status.equals("making")) {
-                if (orderModel.getCaterer().getIs_delivry().equals("delivry")){
-                    btnStatus.setText(R.string.delivery_in_progress);
+                btnStatus.setText(R.string.delivery_in_progress);
 
-                }else {
-                    btnStatus.setText(R.string.delivered2);
-
-                }
+            }else if (status.equals("delivery")){
+                btnStatus.setText(R.string.delivery_completed);
 
             }
         }
@@ -287,6 +290,27 @@ public class GeneralMethod {
                 textView.setText(model.getBody());
 
             }
+        }
+
+    }
+
+    @BindingAdapter("createAtMsg")
+    public static void dateCreateAtMsg(TextView textView, String s) {
+        if (s != null) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            try {
+                Date date = simpleDateFormat.parse(s);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm aa", Locale.ENGLISH);
+                dateFormat.setTimeZone(TimeZone.getDefault());
+                String d = dateFormat.format(date);
+                textView.setText(d);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
         }
 
     }

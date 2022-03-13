@@ -36,6 +36,7 @@ public class ActivityHomeGeneralMvvm extends AndroidViewModel {
     private MutableLiveData<UserModel> onTokenSuccess;
     private MutableLiveData<Boolean> onLoggedOutSuccess;
     private MutableLiveData<Boolean> onGallerySuccess;
+    private MutableLiveData<Boolean> onFragmentNewOrderRefreshed;
     private MutableLiveData<Boolean> onFragmentPendingOrderRefreshed;
     private MutableLiveData<Boolean> onFragmentCompleteOrderRefreshed;
 
@@ -91,6 +92,14 @@ public class ActivityHomeGeneralMvvm extends AndroidViewModel {
         }
 
         return onFragmentCompleteOrderRefreshed;
+    }
+
+    public MutableLiveData<Boolean> getOnFragmentNewOrderRefreshed() {
+        if (onFragmentNewOrderRefreshed == null) {
+            onFragmentNewOrderRefreshed = new MutableLiveData<>();
+        }
+
+        return onFragmentNewOrderRefreshed;
     }
 
 
