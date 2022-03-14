@@ -30,47 +30,47 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                >
+                android:background="@color/colorPrimary">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
+
                     <LinearLayout
                         android:id="@+id/llBack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        >
+                        android:orientation="horizontal">
+
                         <ImageView
                             android:id="@+id/arrow"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_left_arrow"
-                            app:tint="@color/white"
                             android:padding="3dp"
                             android:rotation='@{lang.equals("ar")?180:0}'
-                            />
+                            android:src="@drawable/ic_left_arrow"
+                            app:tint="@color/white" />
+
                         <TextView
                             android:id="@+id/tvTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
-                            android:textColor="@color/white"
-                            android:textSize="15sp"
                             android:text="@string/order_details"
-                            />
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
 
 
                     </LinearLayout>
+
                     <androidx.legacy.widget.Space
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        />
+                        android:layout_weight="1" />
+
                     <ImageView
                         android:id="@+id/chat"
                         android:layout_width="24dp"
@@ -78,9 +78,8 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:src="@drawable/ic_chat"
-                        app:tint="@color/white"
                         android:visibility="gone"
-                        />
+                        app:tint="@color/white" />
 
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
@@ -129,12 +128,59 @@
 
                     </FrameLayout>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/gray40"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/address"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@{model.address}"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/gray40"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/order_details"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="40dp" />
+
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
                         android:visibility='@{model==null?View.GONE:View.VISIBLE,default=gone}'
                         app:cardBackgroundColor="@color/gray40"
-                        app:cardCornerRadius="40dp"
+                        app:cardCornerRadius="8dp"
                         app:cardElevation="5dp"
                         app:contentPadding="8dp"
 

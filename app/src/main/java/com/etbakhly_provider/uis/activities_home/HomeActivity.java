@@ -37,6 +37,7 @@ import com.etbakhly_provider.uis.activities_home.fragments.FragmentCompletedOrde
 import com.etbakhly_provider.uis.activities_home.fragments.FragmentPendingOrders;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_login.LoginActivity;
+import com.etbakhly_provider.uis.activity_notifications.NotificationsActivity;
 import com.etbakhly_provider.uis.activity_setting.SettingsActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -91,6 +92,14 @@ public class HomeActivity extends BaseActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        if (getUserModel().getData().getType().equals("food_track")) {
+            binding.navView.inflateMenu(R.menu.menu_truck);
+
+        } else {
+            binding.navView.inflateMenu(R.menu.menu);
+        }
+
+
         binding.setModel(getUserModel());
         binding.setLang(getLang());
         DrawerHeaderBinding drawerHeaderBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.drawer_header, null, false);
@@ -104,8 +113,8 @@ public class HomeActivity extends BaseActivity {
         activityHomeGeneralMvvm.updateToken(getUserModel());
 
         if (isFromFireBase) {
-           /* setItemPos(4);
-            activityHomeGeneralMvvm.getDisplayFragmentNotification().setValue(true);*/
+            Intent intent = new Intent(this, NotificationsActivity.class);
+            startActivity(intent);
         }
 
 

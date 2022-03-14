@@ -55,7 +55,22 @@ public class FragmentNewOrders extends BaseFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity = (HomeActivity) context;
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (req == 1 && result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                String order_status = result.getData().getStringExtra("order_status");
+                if (order_status.equals("approval")) {
+                    mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
+                    activityHomeGeneralMvvm.getOnFragmentPendingOrderRefreshed().setValue(true);
+                    activityHomeGeneralMvvm.getPosChangedSuccess().setValue(1);
+
+                } else if (order_status.equals("refusal")) {
+                    mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
+
+                }
+            }
+        });
     }
+
 
     @Nullable
     @Override
@@ -124,20 +139,7 @@ public class FragmentNewOrders extends BaseFragment {
 
         mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
 
-        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req == 1 && result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                String order_status = result.getData().getStringExtra("order_status");
-                if (order_status.equals("approval")) {
-                    mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
-                    activityHomeGeneralMvvm.getOnFragmentPendingOrderRefreshed().setValue(true);
-                    activityHomeGeneralMvvm.getPosChangedSuccess().setValue(1);
 
-                } else if (order_status.equals("refusal")) {
-                    mvvm.getNewOrders(getUserModel().getData().getCaterer().getId());
-
-                }
-            }
-        });
     }
 
 

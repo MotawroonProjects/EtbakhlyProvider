@@ -43,6 +43,12 @@ public class BuffetActivity extends BaseActivity {
     }
 
     private void initView() {
+        if (getUserModel().getData().getType().equals("food_track")){
+            binding.tvTitle.setText(R.string.package_menu);
+        }else {
+            binding.tvTitle.setText(R.string.buffets_menu);
+
+        }
         mvvm = ViewModelProviders.of(this).get(ActivityBuffetsMvvm.class);
 
 

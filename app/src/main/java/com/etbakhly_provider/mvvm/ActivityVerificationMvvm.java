@@ -94,7 +94,7 @@ public class ActivityVerificationMvvm extends AndroidViewModel {
     public void sendSmsCode(String lang, String phone_code, String phone, VerificationCodeActivity activity) {
 
         startTimer();
-        login(activity,phone_code,phone);
+        login(activity, phone_code, phone);
      /*   mAuth.setLanguageCode(lang);
         PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 

@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-        name="lang"
-        type="String" />
+            name="lang"
+            type="String" />
+
         <variable
             name="model"
             type="com.etbakhly_provider.model.UserModel" />
@@ -14,40 +16,39 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:openDrawer="start"
-            >
+            tools:openDrawer="start">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
+
                 <com.google.android.material.appbar.AppBarLayout
                     android:id="@+id/appBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:elevation="0dp"
-                    >
+                    app:elevation="0dp">
+
                     <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
-                        >
+                        android:background="@color/colorPrimary">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
                             android:text="@{model.data.name}"
-                            />
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
                     </androidx.appcompat.widget.Toolbar>
                 </com.google.android.material.appbar.AppBarLayout>
 
@@ -72,35 +73,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
-                app:menu="@menu/menu"
                 android:background="@color/colorPrimary"
-                app:itemTextColor="@color/white"
                 app:itemIconTint="@color/white"
-                >
+                app:itemTextColor="@color/white">
+
                 <LinearLayout
                     android:id="@+id/llLogout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_marginBottom="36dp"
                     android:gravity="center"
-                    >
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_logout"
-                        app:tint="@color/white"
-                        />
+                        app:tint="@color/white" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:text="@string/logout"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        />
+                        android:text="@string/logout"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </com.google.android.material.navigation.NavigationView>
 
@@ -108,7 +107,6 @@
         </androidx.drawerlayout.widget.DrawerLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
 
 </layout>

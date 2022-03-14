@@ -23,6 +23,7 @@ import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen.FragmentDeliveryAreas;
 import com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen.FragmentGallery;
 import com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen.FragmentRatings;
+import com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen.FragmentServiceTruck;
 import com.etbakhly_provider.uis.activity_kitchen.fragments_kitchen.FragmentServices;
 
 import org.greenrobot.eventbus.EventBus;
@@ -97,7 +98,13 @@ public class KitchenDetailsActivity extends BaseActivity {
         titles.add(getString(R.string.ratings));
         titles.add(getString(R.string.delivery_areas));
 
-        fragmentList.add(FragmentServices.newInstance(model));
+        if (getUserModel().getData().getType().equals("food_track")) {
+            fragmentList.add(FragmentServiceTruck.newInstance(model));
+        } else {
+            fragmentList.add(FragmentServices.newInstance(model));
+
+        }
+
         fragmentList.add(FragmentGallery.newInstance(model));
         fragmentList.add(FragmentRatings.newInstance(model));
         fragmentList.add(FragmentDeliveryAreas.newInstance(model));
@@ -125,7 +132,6 @@ public class KitchenDetailsActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGalleryUploaded(NotResponse response) {
-        Log.e("ss", "ss");
         activityHomeGeneralMvvm.onGallerySuccess().setValue(true);
     }
 

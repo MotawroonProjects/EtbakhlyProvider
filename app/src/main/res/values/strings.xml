@@ -223,6 +223,11 @@
     <string name="type_a_message">Type a message...</string>
     <string name="attach_sent">attachment sent</string>
     <string name="sent_order">sent an order</string>
+    <string name="packages">Packages</string>
+    <string name="we_offer_you_a_food_cart">We offer you a food cart for all occasions private and public</string>
+    <string name="no_delivery_areas_to_show">No delivery areas to show</string>
+    <string name="package_menu">Package menu</string>
+    <string name="add_package">Add package</string>
 
 
 </resources>

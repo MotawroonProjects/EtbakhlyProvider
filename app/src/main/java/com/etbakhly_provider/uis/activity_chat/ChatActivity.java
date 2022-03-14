@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -95,7 +96,7 @@ public class ChatActivity extends BaseActivity {
                 }
             }
         });
-        adapter = new ChatAdapter(this, getUserModel().getData().getId(), model.getCaterer_image(), binding.recView);
+        adapter = new ChatAdapter(this, getUserModel().getData().getId(), model.getUser_image(), binding.recView);
         binding.recView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         binding.recView.setAdapter(adapter);
 
@@ -159,7 +160,7 @@ public class ChatActivity extends BaseActivity {
     public void onNewMessage(MessageModel messageModel) {
         imagePath = "";
         mvvm.addNewMessage(messageModel);
-        adapter.addMessage(messageModel);
+        adapter.notifyItemInserted(mvvm.onDataSuccess().getValue().size()-1);
 
     }
 

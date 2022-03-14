@@ -75,6 +75,13 @@ public class AddBuffetActivity extends BaseActivity {
 
     private void initView() {
         mvvm = ViewModelProviders.of(this).get(ActivityAddBuffetMvvm.class);
+        if (getUserModel().getData().getType().equals("food_track")){
+            binding.tvTitle.setText(R.string.add_package);
+        }else {
+            binding.tvTitle.setText(R.string.add_buffet);
+
+        }
+
         addBuffetModel = new AddBuffetModel();
 
         if (buffetModel != null) {

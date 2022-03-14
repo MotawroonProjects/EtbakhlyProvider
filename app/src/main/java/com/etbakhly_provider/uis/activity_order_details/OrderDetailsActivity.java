@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.etbakhly_provider.R;
+import com.etbakhly_provider.adapter.OrderDetailsAdapter;
 import com.etbakhly_provider.databinding.ActivityOrderDetailsBinding;
 import com.etbakhly_provider.databinding.DialogAlertBinding;
 import com.etbakhly_provider.model.ChatUserModel;
@@ -40,6 +42,7 @@ public class OrderDetailsActivity extends BaseActivity {
     private String order_id = "";
     private OrderModel model;
     private String reason = "";
+    private OrderDetailsAdapter adapter;
 
 
     @Override
@@ -59,6 +62,9 @@ public class OrderDetailsActivity extends BaseActivity {
 
         mvvm = ViewModelProviders.of(this).get(ActivityOrderDetailsMvvm.class);
         binding.setModel(null);
+        binding.recView.setLayoutManager(new GridLayoutManager(this,2));
+        adapter = new OrderDetailsAdapter(this);
+        binding.recView.setAdapter(adapter);
 
         mvvm.getIsOrderDataLoading().observe(this, isLoading -> {
             if (isLoading) {
@@ -142,7 +148,7 @@ public class OrderDetailsActivity extends BaseActivity {
         UserModel.Data user = orderModel.getUser();
         UserModel.Data catererUser = orderModel.getCaterer().getUser();
 
-        ChatUserModel model = new ChatUserModel(getUserModel().getData().getId(), getUserModel().getData().getName(), getUserModel().getData().getPhone_code() + getUserModel().getData().getPhone(), getUserModel().getData().getPhoto(), user.getId(), user.getName(), user.getPhone_code() + user.getPhone(), user.getPhoto(), orderModel.getCaterer().getAddress(), orderModel.getCaterer().getLatitude(), orderModel.getCaterer().getLongitude(), orderModel.getId(), orderModel.getTotal());
+        ChatUserModel model = new ChatUserModel(user.getId(), user.getName(), user.getPhoto() + user.getPhone(), user.getPhoto(), getUserModel().getData().getId(), getUserModel().getData().getName(), getUserModel().getData().getPhone_code() + getUserModel().getData().getPhone(), getUserModel().getData().getPhoto(), orderModel.getCaterer().getAddress(), orderModel.getCaterer().getLatitude(), orderModel.getCaterer().getLongitude(), orderModel.getId(), orderModel.getTotal());
         Intent intent = new Intent(this, ChatActivity.class);
         intent.putExtra("data", model);
         startActivity(intent);
@@ -201,6 +207,8 @@ public class OrderDetailsActivity extends BaseActivity {
 
 
     private void updateUi() {
+        adapter.updateList(model.getOrder_details());
+
         if (model.getCaterer().getIs_delivry().equals("delivry")) {
             updateStateHasDelivery();
         } else {

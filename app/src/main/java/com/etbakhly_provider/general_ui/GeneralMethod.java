@@ -49,19 +49,24 @@ public class GeneralMethod {
 
     @BindingAdapter("order_status")
     public static void orderStatus(Button btnStatus, OrderModel orderModel) {
-        if (orderModel!=null){
+        if (orderModel != null) {
             String status = orderModel.getStatus_order();
 
-            if (status.equals("new")){
+            if (status.equals("new")) {
                 btnStatus.setText(R.string.accept);
 
-            }
-            else if (status.equals("approval")) {
+            } else if (status.equals("approval")) {
                 btnStatus.setText(R.string.prepared);
             } else if (status.equals("making")) {
-                btnStatus.setText(R.string.delivery_in_progress);
+                if (orderModel.getCaterer().getIs_delivry().equals("delivry")) {
+                    btnStatus.setText(R.string.delivery_in_progress);
 
-            }else if (status.equals("delivery")){
+                } else {
+                    btnStatus.setText(R.string.delivery_completed);
+
+                }
+
+            } else if (status.equals("delivery")) {
                 btnStatus.setText(R.string.delivery_completed);
 
             }
@@ -70,10 +75,24 @@ public class GeneralMethod {
 
     }
 
-    @BindingAdapter("image3")
-    public static void image3(View view, String imageUrl) {
-        if (imageUrl != null) {
-            String imageUrl1 = imageUrl;
+
+    @BindingAdapter("orderDetailsImage")
+    public static void orderDetailsImage(View view, OrderModel.OrderDetail model) {
+        if (model != null) {
+
+            String imageUrl = "";
+            if (model.getBuffet() != null) {
+                imageUrl = model.getBuffet().getPhoto();
+            } else if (model.getFeast() != null) {
+                imageUrl = model.getFeast().getPhoto();
+
+            } else if (model.getOffer() != null) {
+                imageUrl = model.getOffer().getPhoto();
+            } else if (model.getDishes() != null) {
+                imageUrl = model.getDishes().getPhoto();
+            }
+
+            String imageUrl1 = Tags.base_url + imageUrl;
 
             view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
@@ -83,50 +102,65 @@ public class GeneralMethod {
 
                     if (view instanceof CircleImageView) {
                         CircleImageView imageView = (CircleImageView) view;
-                        if (imageUrl1 != null) {
-                            RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
-                            Glide.with(view.getContext()).asBitmap()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .load(imageUrl1)
-                                    //.centerCrop()
-                                    .apply(options)
-                                    .into(imageView);
-                        }
+                        RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
+                        Glide.with(view.getContext()).asBitmap()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .load(imageUrl1)
+                                .centerCrop()
+                                .apply(options)
+                                .into(imageView);
                     } else if (view instanceof RoundedImageView) {
                         RoundedImageView imageView = (RoundedImageView) view;
 
-                        if (imageUrl1 != null) {
-
-                            RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
-                            Glide.with(view.getContext()).asBitmap()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .load(imageUrl1)
-                                    //.centerCrop()
-                                    .apply(options)
-                                    .into(imageView);
-
-                        }
+                        RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
+                        Glide.with(view.getContext()).asBitmap()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .load(imageUrl1)
+                                .centerCrop()
+                                .apply(options)
+                                .into(imageView);
                     } else if (view instanceof ImageView) {
                         ImageView imageView = (ImageView) view;
 
-                        if (imageUrl1 != null) {
-
-                            RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
-                            Glide.with(view.getContext()).asBitmap()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .load(imageUrl1)
-                                    //.centerCrop()
-                                    .apply(options)
-                                    .into(imageView);
-                        }
+                        RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
+                        Glide.with(view.getContext()).asBitmap()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .load(imageUrl1)
+                                .centerCrop()
+                                .apply(options)
+                                .into(imageView);
                     }
 
                 }
             });
         }
 
+
     }
 
+
+    @BindingAdapter("orderDetailsTitle")
+    public static void orderDetailsTitle(TextView textView, OrderModel.OrderDetail model) {
+        if (model != null) {
+
+            String title = "";
+            if (model.getBuffet() != null) {
+                title = model.getBuffet().getTitel();
+            } else if (model.getFeast() != null) {
+                title = model.getFeast().getTitel();
+
+            } else if (model.getOffer() != null) {
+                title = model.getOffer().getTitle();
+            } else if (model.getDishes() != null) {
+                title = model.getDishes().getTitel();
+            }
+
+            textView.setText(title);
+
+        }
+
+
+    }
 
 
     @BindingAdapter("image")
@@ -188,7 +222,7 @@ public class GeneralMethod {
                 Glide.with(view.getContext()).asBitmap()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.circle_avatar)
-                        .load(Tags.base_url+imageUrl)
+                        .load(Tags.base_url + imageUrl)
                         .centerCrop()
                         .into(imageView);
 
@@ -201,7 +235,7 @@ public class GeneralMethod {
                 Glide.with(view.getContext()).asBitmap()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.circle_avatar)
-                        .load(Tags.base_url+imageUrl)
+                        .load(Tags.base_url + imageUrl)
                         .centerCrop()
                         .into(imageView);
 
@@ -214,14 +248,13 @@ public class GeneralMethod {
                 Glide.with(view.getContext()).asBitmap()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.circle_avatar)
-                        .load(Tags.base_url+imageUrl)
+                        .load(Tags.base_url + imageUrl)
                         .centerCrop()
                         .into(imageView);
             }
         }
 
     }
-
 
 
     @BindingAdapter("createAt")
