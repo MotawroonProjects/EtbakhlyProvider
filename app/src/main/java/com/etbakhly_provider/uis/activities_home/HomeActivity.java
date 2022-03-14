@@ -57,6 +57,7 @@ public class HomeActivity extends BaseActivity {
     private int req;
     private String order_id = "";// is from firebase notification
     private boolean isFromFireBase = false;
+    private  DrawerHeaderBinding drawerHeaderBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +103,7 @@ public class HomeActivity extends BaseActivity {
 
         binding.setModel(getUserModel());
         binding.setLang(getLang());
-        DrawerHeaderBinding drawerHeaderBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.drawer_header, null, false);
+        drawerHeaderBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.drawer_header, null, false);
         drawerHeaderBinding.setModel(getUserModel());
         binding.navView.addHeaderView(drawerHeaderBinding.getRoot());
 
@@ -130,6 +131,16 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getUserModel()!=null){
+            binding.setModel(getUserModel());
+            drawerHeaderBinding.setModel(getUserModel());
+        }
+
+
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
