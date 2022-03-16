@@ -23,6 +23,7 @@ import com.etbakhly_provider.mvvm.ActivityBuffetDetailsMvvm;
 import com.etbakhly_provider.mvvm.ActivityFeastDetailsMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.uis.activity_add_buffet.add_buffet_dish_activity.AddBuffetDishActivity;
+import com.etbakhly_provider.uis.activity_add_feast.activity_add_feast_dish.AddFeastDishActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_buffet_details.BuffetDetailsActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -168,7 +169,7 @@ public class FeastsDetailsActivity extends BaseActivity {
     public void navigateToAddNewBuffetDish(BuffetModel.Category category, int adapterPosition) {
         mvvm.getOnItemSelected().setValue(adapterPosition);
         req = 1;
-        Intent intent = new Intent(this, AddBuffetDishActivity.class);
+        Intent intent = new Intent(this, AddFeastDishActivity.class);
         intent.putExtra("data3", model.getId());
         intent.putExtra("data", category.getId());
         launcher.launch(intent);
@@ -179,7 +180,7 @@ public class FeastsDetailsActivity extends BaseActivity {
         mvvm.getOnItemSelected().setValue(mainCategoryPos);
         mvvm.getOnChildItemSelected().setValue(adapterPosition);
         req = 1;
-        Intent intent = new Intent(this, AddBuffetDishActivity.class);
+        Intent intent = new Intent(this, AddFeastDishActivity.class);
         intent.putExtra("data", dishModel.getCategory_dishes_id());
         intent.putExtra("data3", model.getId());
         intent.putExtra("data2", dishModel);

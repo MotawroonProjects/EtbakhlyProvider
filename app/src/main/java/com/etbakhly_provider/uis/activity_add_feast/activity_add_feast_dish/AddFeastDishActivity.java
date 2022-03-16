@@ -3,7 +3,6 @@ package com.etbakhly_provider.uis.activity_add_feast.activity_add_feast_dish;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -21,15 +20,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.etbakhly_provider.R;
-import com.etbakhly_provider.databinding.ActivityAddBuffetDishBinding;
 import com.etbakhly_provider.databinding.ActivityAddFeastDishBinding;
 import com.etbakhly_provider.model.AddBuffetDishModel;
 import com.etbakhly_provider.model.DishModel;
-import com.etbakhly_provider.mvvm.ActivityAddBuffetDishMvvm;
 import com.etbakhly_provider.mvvm.ActivityAddFeastDishMvvm;
 import com.etbakhly_provider.share.Common;
 import com.etbakhly_provider.tags.Tags;
-import com.etbakhly_provider.uis.activity_add_buffet.add_buffet_dish_activity.AddBuffetDishActivity;
 import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
@@ -40,7 +36,7 @@ public class AddFeastDishActivity extends BaseActivity {
 
     private ActivityAddFeastDishBinding binding;
     private ActivityAddFeastDishMvvm mvvm;
-    private AddBuffetDishModel addBuffetDishModel;
+    private AddBuffetDishModel addFeastDishModel;
     private ActivityResultLauncher<Intent> launcher;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -49,7 +45,7 @@ public class AddFeastDishActivity extends BaseActivity {
     private int selectedReq = 0;
     private Uri uri = null;
     private String category_dish_id = "";
-    private String buffet_id = "";
+    private String feast_id = "";
     private DishModel dishModel;
 
     @Override
@@ -63,7 +59,7 @@ public class AddFeastDishActivity extends BaseActivity {
     private void getDataFromIntent() {
         Intent intent = getIntent();
         category_dish_id = intent.getStringExtra("data");
-        buffet_id = intent.getStringExtra("data3");
+        feast_id = intent.getStringExtra("data3");
 
         if (intent.hasExtra("data2")) {
             dishModel = (DishModel) intent.getSerializableExtra("data2");
@@ -90,25 +86,25 @@ public class AddFeastDishActivity extends BaseActivity {
             finish();
         });
 
-        addBuffetDishModel = new AddBuffetDishModel();
-        addBuffetDishModel.setBuffets_id(buffet_id);
-        addBuffetDishModel.setCategory_dishes_id(category_dish_id);
+        addFeastDishModel = new AddBuffetDishModel();
+        addFeastDishModel.setBuffets_id(feast_id);
+        addFeastDishModel.setCategory_dishes_id(category_dish_id);
         if (dishModel != null) {
             binding.tvTitle.setText(getString(R.string.update));
-            addBuffetDishModel.setId(dishModel.getId());
-            addBuffetDishModel.setTitel(dishModel.getTitel());
-            addBuffetDishModel.setPrice(dishModel.getPrice());
-            addBuffetDishModel.setQty(dishModel.getQty());
-            addBuffetDishModel.setDetails(dishModel.getDetails());
+            addFeastDishModel.setId(dishModel.getId());
+            addFeastDishModel.setTitel(dishModel.getTitel());
+            addFeastDishModel.setPrice(dishModel.getPrice());
+            addFeastDishModel.setQty(dishModel.getQty());
+            addFeastDishModel.setDetails(dishModel.getDetails());
             if (dishModel.getPhoto() != null && !dishModel.getPhoto().isEmpty()) {
                 if (dishModel.getPhoto() != null && !dishModel.getPhoto().isEmpty()) {
                     Picasso.get().load(Tags.base_url + dishModel.getPhoto()).fit().into(binding.image);
                     binding.icon.setVisibility(View.GONE);
-                    addBuffetDishModel.setPhoto(dishModel.getPhoto());
+                    addFeastDishModel.setPhoto(dishModel.getPhoto());
                 }
             }
         }
-        binding.setModel(addBuffetDishModel);
+        binding.setModel(addFeastDishModel);
         binding.setLang(getLang());
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -116,7 +112,7 @@ public class AddFeastDishActivity extends BaseActivity {
                 if (selectedReq == READ_REQ) {
 
                     uri = result.getData().getData();
-                    addBuffetDishModel.setPhoto(uri.toString());
+                    addFeastDishModel.setPhoto(uri.toString());
 
                     File file = new File(Common.getImagePath(this, uri));
                     Picasso.get().load(file).fit().into(binding.image);
@@ -126,7 +122,7 @@ public class AddFeastDishActivity extends BaseActivity {
                     Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
                     uri = getUriFromBitmap(bitmap);
                     if (uri != null) {
-                        addBuffetDishModel.setPhoto(uri.toString());
+                        addFeastDishModel.setPhoto(uri.toString());
                         String path = Common.getImagePath(this, uri);
                         if (path != null) {
                             Picasso.get().load(new File(path)).fit().into(binding.image);
@@ -159,12 +155,12 @@ public class AddFeastDishActivity extends BaseActivity {
         binding.llBack.setOnClickListener(view -> finish());
 
         binding.btnDone.setOnClickListener(view -> {
-            if (addBuffetDishModel.isDataValid(this)) {
+            if (addFeastDishModel.isDataValid(this)) {
                 if (dishModel == null) {
-                    mvvm.storeBuffetsDishes(this, addBuffetDishModel);
+                    mvvm.storeFeastDishes(this, addFeastDishModel);
 
                 } else {
-                    mvvm.updateBuffetsDishes(this, addBuffetDishModel);
+                    mvvm.updateFeastDishes(this, addFeastDishModel);
 
                 }
             }

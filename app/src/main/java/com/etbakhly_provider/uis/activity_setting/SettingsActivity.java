@@ -65,7 +65,6 @@ public class SettingsActivity extends BaseActivity {
         binding.llKitchenDetails.setOnClickListener(view -> {
             Intent intent = new Intent(this, KitchenDetailsActivity.class);
             startActivity(intent);
-            finish();
         });
         binding.llSettings.setOnClickListener(view -> {
             Intent intent = new Intent(this, SettingDetailsActivity.class);

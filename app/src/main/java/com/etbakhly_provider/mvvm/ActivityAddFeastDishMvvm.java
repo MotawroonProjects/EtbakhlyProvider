@@ -54,7 +54,7 @@ public class ActivityAddFeastDishMvvm extends AndroidViewModel {
         return onDishAddedSuccess;
     }
 
-    public void storeBuffetsDishes(Context context, AddBuffetDishModel addBuffetDishModel) {
+    public void storeFeastDishes(Context context, AddBuffetDishModel addBuffetDishModel) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -64,12 +64,11 @@ public class ActivityAddFeastDishMvvm extends AndroidViewModel {
         RequestBody price = Common.getRequestBodyText(addBuffetDishModel.getPrice());
         RequestBody category_dishes_id = Common.getRequestBodyText(addBuffetDishModel.getCategory_dishes_id() + "");
         RequestBody details = Common.getRequestBodyText(addBuffetDishModel.getDetails());
-        RequestBody buffet_id = Common.getRequestBodyText(addBuffetDishModel.getBuffets_id());
+        RequestBody feast_id = Common.getRequestBodyText(addBuffetDishModel.getBuffets_id());
 
         MultipartBody.Part image = Common.getMultiPart(context, Uri.parse(addBuffetDishModel.getPhoto()), "photo");
 
-        Log.e("dd",addBuffetDishModel.getCategory_dishes_id());
-        Api.getService(Tags.base_url).storeFeastDishes(titel, category_dishes_id, price, details, image, qty,buffet_id)
+        Api.getService(Tags.base_url).storeFeastDishes(titel, category_dishes_id, price, details, image, qty,feast_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleDishModel>>() {
@@ -80,6 +79,7 @@ public class ActivityAddFeastDishMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<SingleDishModel> response) {
+                        Log.e("link",response.toString());
                         dialog.dismiss();
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200) {
@@ -98,12 +98,14 @@ public class ActivityAddFeastDishMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        dialog.dismiss();
+
                         Log.e("error", e.getMessage());
                     }
                 });
     }
 
-    public void updateBuffetsDishes(Context context, AddBuffetDishModel addBuffetDishModel) {
+    public void updateFeastDishes(Context context, AddBuffetDishModel addBuffetDishModel) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -149,6 +151,8 @@ public class ActivityAddFeastDishMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        dialog.dismiss();
+
                         Log.e("error", e.getMessage());
                     }
                 });

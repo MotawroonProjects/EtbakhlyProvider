@@ -94,7 +94,7 @@ public class FragmentSignup2Mvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<UserModel> userModelResponse) {
                         dialog.dismiss();
 
-                        Log.e("lllll", userModelResponse.toString() + "_");
+                        Log.e("lllll", userModelResponse.body().getMessage().toString() + "_");
 
 
                         if (userModelResponse.isSuccessful()) {

@@ -63,7 +63,9 @@
             android:paddingEnd="16dp"
             android:textColor="@color/black"
             android:textColorHint="@color/gray5"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:inputType="text"
+            />
 
         <FrameLayout
             android:layout_width="match_parent"

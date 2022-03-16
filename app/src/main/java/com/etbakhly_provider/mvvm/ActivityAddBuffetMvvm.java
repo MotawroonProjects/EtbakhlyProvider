@@ -88,7 +88,6 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
         if (addBuffetModel.getPhoto() != null && !addBuffetModel.getPhoto().isEmpty()) {
             image = Common.getMultiPart(context, uri, "photo");
         }
-        Log.e("id", addBuffetModel.getCategory_dishes_id() + "__" + addBuffetModel.getCaterer_id());
 
         Api.getService(Tags.base_url).storeBuffet(titel, number_people, service_provider_type, order_time, image, price, category_dishes_id, caterer_id)
                 .subscribeOn(Schedulers.io())
@@ -171,14 +170,16 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        dialog.dismiss();
+
                         Log.d("error", e.getMessage());
                     }
                 });
 
     }
 
-    public void getCategoryDishes(String kitchen_id, Context context) {
-        Api.getService(Tags.base_url).getDishes("all", kitchen_id, "buffet","all",null)
+    public void getCategoryDishes(String kitchen_id, String service_type) {
+        Api.getService(Tags.base_url).getDishes("all", kitchen_id, service_type,"all",null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<DishesDataModel>>() {
@@ -204,6 +205,7 @@ public class ActivityAddBuffetMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+
                         Log.e("error", e.getMessage());
                     }
                 });

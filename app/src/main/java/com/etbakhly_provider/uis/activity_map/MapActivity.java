@@ -176,8 +176,10 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
 
                         if (response.isSuccessful() && response.body() != null) {
 
+                            Log.e("query",query);
 
                             if (response.body().getCandidates().size() > 0) {
+
 
                                 address = response.body().getCandidates().get(0).getFormatted_address().replace("Unnamed Road,", "");
                                 binding.edtSearch.setText(address + "");

@@ -134,12 +134,13 @@
                         android:visibility="gone" />
 
                     <TextView
+                        android:id="@+id/tvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="3dp"
-                        android:text="@string/buffet_name"
+                        android:text="@string/package_name"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 

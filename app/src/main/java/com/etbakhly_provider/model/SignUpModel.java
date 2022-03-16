@@ -73,7 +73,21 @@ public class SignUpModel extends BaseObservable implements Serializable {
                 && !process_time_from.isEmpty()
                 && !process_time_to.isEmpty()
 
+
         ) {
+
+            if (tax.isEmpty()) {
+                this.tax = "0";
+
+            }
+            if (discount.isEmpty()) {
+                this.discount = "0";
+
+            }
+            if (customers_service.isEmpty()) {
+                this.customers_service = "0";
+
+            }
 
 
             if (is_delivery.equals("delivry")) {
@@ -315,7 +329,6 @@ public class SignUpModel extends BaseObservable implements Serializable {
     public String getLng() {
         return lng;
     }
-
 
 
     public void setLng(String lng) {

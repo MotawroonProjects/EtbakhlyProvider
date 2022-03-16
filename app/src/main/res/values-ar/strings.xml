@@ -228,6 +228,8 @@
     <string name="no_delivery_areas_to_show">لا توجد مناطق توصيل لعرضها</string>
     <string name="package_menu">قائمة الباكجات</string>
     <string name="add_package">إضافة باكج</string>
+    <string name="package_name">إسم الباكج</string>
+    <string name="cnt_log_number">عفوا! لايمكنك الدخول بهذا الرقم . هذا الرقم خاص بالعميل</string>
 
 
 </resources>

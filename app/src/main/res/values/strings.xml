@@ -228,6 +228,8 @@
     <string name="no_delivery_areas_to_show">No delivery areas to show</string>
     <string name="package_menu">Package menu</string>
     <string name="add_package">Add package</string>
+    <string name="package_name">Package name</string>
+    <string name="cnt_log_number">Sorry! you cannot login with this number ,number is client</string>
 
 
 </resources>

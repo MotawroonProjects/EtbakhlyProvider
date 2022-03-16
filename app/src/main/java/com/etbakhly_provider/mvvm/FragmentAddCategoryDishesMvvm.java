@@ -40,30 +40,44 @@ public class FragmentAddCategoryDishesMvvm extends AndroidViewModel {
 
     public FragmentAddCategoryDishesMvvm(@NonNull Application application) {
         super(application);
+
+
+    }
+
+    public void getDepartment(String user_type,Context context){
         List<BuffetModel.Category> list = new ArrayList<>();
 
-
         BuffetModel.Category model1 = new BuffetModel.Category();
-        model1.setTitel(application.getString(R.string.dishes));
+        model1.setTitel(context.getString(R.string.dishes));
         model1.setId("dishe");
-
+        list.add(model1);
 
         BuffetModel.Category model2 = new BuffetModel.Category();
-        model2.setTitel(application.getString(R.string.buffets));
-        model2.setId("buffet");
+        if (user_type.equals("food_track")){
+            model2.setTitel(context.getString(R.string.packages));
+            model2.setId("package");
+            list.add(model2);
 
-        BuffetModel.Category model3 = new BuffetModel.Category();
-        model3.setTitel(application.getString(R.string.banquets));
-        model3.setId("feast");
+        }else {
+            model2.setTitel(context.getString(R.string.buffets));
+            model2.setId("buffet");
+
+            BuffetModel.Category model3 = new BuffetModel.Category();
+            model3.setTitel(context.getString(R.string.banquets));
+            model3.setId("feast");
+            list.add(model2);
+            list.add(model3);
+        }
 
 
-        list.add(model1);
-        list.add(model2);
-        list.add(model3);
+
+
+
+
+
 
         getOnCategorySuccess().setValue(list);
         getOnSelectedCategorySuccess().setValue(model1);
-
     }
 
     public MutableLiveData<Boolean> getCategoryAddedSuccess() {

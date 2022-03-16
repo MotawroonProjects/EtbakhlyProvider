@@ -10,6 +10,10 @@ public class UserModel extends StatusResponse {
         return data;
     }
 
+    public void setData(Data data) {
+        this.data = data;
+    }
+
     public static class Data implements Serializable {
         private String id;
         private String name;

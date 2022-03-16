@@ -54,6 +54,7 @@ public class AddBuffetActivity extends BaseActivity {
     private final int READ_REQ = 1, CAMERA_REQ = 2;
     private int selectedReq = 0;
     private Uri uri = null;
+    
 
 
     @Override
@@ -75,10 +76,16 @@ public class AddBuffetActivity extends BaseActivity {
 
     private void initView() {
         mvvm = ViewModelProviders.of(this).get(ActivityAddBuffetMvvm.class);
-        if (getUserModel().getData().getType().equals("food_track")){
+        String service_type = "buffet";
+
+        if (getUserModel().getData().getType().equals("food_track")) {
+            service_type = "package";
+
             binding.tvTitle.setText(R.string.add_package);
-        }else {
+            binding.tvName.setText(R.string.package_name);
+        } else {
             binding.tvTitle.setText(R.string.add_buffet);
+            binding.tvName.setText(R.string.buffet_name);
 
         }
 
@@ -179,7 +186,7 @@ public class AddBuffetActivity extends BaseActivity {
             }
         });
 
-        mvvm.getCategoryDishes(getUserModel().getData().getCaterer().getId(), this);
+        mvvm.getCategoryDishes(getUserModel().getData().getCaterer().getId(), service_type);
 
         binding.btnDone.setOnClickListener(view -> {
             if (addBuffetModel.isDataValid(this)) {

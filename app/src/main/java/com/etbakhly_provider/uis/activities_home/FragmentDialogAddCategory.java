@@ -31,6 +31,7 @@ public class FragmentDialogAddCategory extends BottomSheetDialogFragment {
     private AddCategoryDialogFragmentBinding binding;
     private SpinnerDishCategoryAdapter adapter;
     private FragmentAddCategoryDishesMvvm mvvm;
+    private Preferences preferences;
 
 
     @Override
@@ -54,10 +55,12 @@ public class FragmentDialogAddCategory extends BottomSheetDialogFragment {
     }
 
     private void initView() {
+        preferences = Preferences.getInstance();
         mvvm = ViewModelProviders.of(this).get(FragmentAddCategoryDishesMvvm.class);
         adapter = new SpinnerDishCategoryAdapter(new ArrayList<>(), activity);
         binding.spinner.setAdapter(adapter);
 
+        mvvm.getDepartment(preferences.getUserData(activity).getData().getType(), activity);
         mvvm.getCategoryAddedSuccess().observe(this, isAdded -> {
             if (isAdded) {
                 dismiss();

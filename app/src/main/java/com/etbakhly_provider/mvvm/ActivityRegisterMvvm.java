@@ -130,11 +130,11 @@ public class ActivityRegisterMvvm extends AndroidViewModel {
                         dialog.dismiss();
                         Log.e("res", userModelResponse.code() + "__" + userModelResponse.toString());
                         if (userModelResponse.isSuccessful()) {
-                            Log.e("llll", userModelResponse.body().getStatus() + "");
                             if (userModelResponse.body() != null) {
                                 if (userModelResponse.body().getStatus() == 200) {
-
-                                    getUserData().setValue(userModelResponse.body());
+                                    UserModel userModel2 = userModelResponse.body();
+                                    userModel2.setFireBaseToken(userModel.getFireBaseToken());
+                                    getUserData().setValue(userModel2);
                                 }  else if (userModelResponse.body().getStatus() == 403) {
                                     Toast.makeText(context, R.string.em_exist, Toast.LENGTH_LONG).show();
                                 }
