@@ -20,8 +20,10 @@ public class LoginModel extends BaseObservable implements Serializable {
     public LoginModel() {
         phone_code = "+966";
         phone = "";
+
+
     }
-    
+
 
     public boolean isDataValid(Context context) {
         if (!phone.isEmpty()) {
@@ -29,6 +31,7 @@ public class LoginModel extends BaseObservable implements Serializable {
             return true;
         } else {
             error_phone.set(context.getString(R.string.field_required));
+
 
             return false;
         }
