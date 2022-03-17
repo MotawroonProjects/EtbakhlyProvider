@@ -22,7 +22,6 @@ public class LoginModel extends BaseObservable implements Serializable {
         phone = "";
 
 
-
     }
 
 
