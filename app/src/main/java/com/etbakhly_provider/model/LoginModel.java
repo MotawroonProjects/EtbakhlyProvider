@@ -21,6 +21,7 @@ public class LoginModel extends BaseObservable implements Serializable {
         phone_code = "+966";
         phone = "";
     }
+    
 
     public boolean isDataValid(Context context) {
         if (!phone.isEmpty()) {
