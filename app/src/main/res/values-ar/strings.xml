@@ -230,6 +230,7 @@
     <string name="add_package">إضافة باكج</string>
     <string name="package_name">إسم الباكج</string>
     <string name="cnt_log_number">عفوا! لايمكنك الدخول بهذا الرقم . هذا الرقم خاص بالعميل</string>
+    <string name="logout2">هل تريد تسجيل الخروج ؟</string>
 
 
 </resources>

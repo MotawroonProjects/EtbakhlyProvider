@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.etbakhly_provider.R;
@@ -39,6 +40,7 @@ import com.etbakhly_provider.uis.activity_base.BaseActivity;
 import com.etbakhly_provider.uis.activity_login.LoginActivity;
 import com.etbakhly_provider.uis.activity_notifications.NotificationsActivity;
 import com.etbakhly_provider.uis.activity_setting.SettingsActivity;
+import com.google.android.material.navigation.NavigationView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -57,7 +59,7 @@ public class HomeActivity extends BaseActivity {
     private int req;
     private String order_id = "";// is from firebase notification
     private boolean isFromFireBase = false;
-    private  DrawerHeaderBinding drawerHeaderBinding;
+    private DrawerHeaderBinding drawerHeaderBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +112,7 @@ public class HomeActivity extends BaseActivity {
         navController = Navigation.findNavController(this, R.id.navHostFragment);
         NavigationUI.setupWithNavController(binding.navView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerView);
-        binding.llLogout.setOnClickListener(view -> activityHomeGeneralMvvm.logout(getUserModel(), HomeActivity.this));
+        //
         activityHomeGeneralMvvm.updateToken(getUserModel());
 
         if (isFromFireBase) {
@@ -119,22 +121,22 @@ public class HomeActivity extends BaseActivity {
         }
 
 
-        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (req == 1 && result.getResultCode() == RESULT_OK && result.getData() != null) {
-                String lang = result.getData().getStringExtra("lang");
-                refreshActivity(lang);
-            }
-        });
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+
+
+    }
+
+    public void logout(){
+        activityHomeGeneralMvvm.logout(getUserModel(), HomeActivity.this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (getUserModel()!=null){
+        if (getUserModel() != null) {
             binding.setModel(getUserModel());
             drawerHeaderBinding.setModel(getUserModel());
         }

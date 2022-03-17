@@ -230,6 +230,7 @@
     <string name="add_package">Add package</string>
     <string name="package_name">Package name</string>
     <string name="cnt_log_number">Sorry! you cannot login with this number ,number is client</string>
+    <string name="logout2">Logout ?</string>
 
 
 </resources>

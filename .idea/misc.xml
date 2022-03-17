@@ -186,7 +186,7 @@
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/activity_order_details.xml" value="0.18" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/activity_register.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/activity_setting_details.xml" value="0.24895104895104894" />
-        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/activity_settings.xml" value="0.25" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/activity_settings.xml" value="0.29605263157894735" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/activity_sign_up.xml" value="0.20102564102564102" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/activity_web_view.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/add_buffet_dish_row.xml" value="0.20416666666666666" />
@@ -212,6 +212,7 @@
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/dish_buffet_row2.xml" value="0.22" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/drawer_header.xml" value="0.1648148148148148" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/fragment_bottom_sheet_language_dialog.xml" value="0.1648148148148148" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/fragment_bottom_sheet_logout_dialog.xml" value="0.33" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/fragment_delivery_areas.xml" value="0.1648148148148148" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/fragment_gallery.xml" value="0.1648148148148148" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/CookMe/EtbakhlyProvider/app/src/main/res/layout/fragment_service_truck.xml" value="0.1648148148148148" />

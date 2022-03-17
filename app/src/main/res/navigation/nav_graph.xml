@@ -24,6 +24,13 @@
         android:label=""
         tools:layout="@layout/fragment_bottom_sheet_language_dialog" />
 
+    <dialog
+        android:id="@+id/fragmentLogout"
+        android:name="com.etbakhly_provider.uis.activities_home.fragments.FragmentLogout"
+        android:label=""
+        tools:layout="@layout/fragment_bottom_sheet_logout_dialog" />
+
+
     <activity
         android:id="@+id/activityKitchenDetails"
         android:name="com.etbakhly_provider.uis.activity_kitchen.KitchenDetailsActivity"

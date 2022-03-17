@@ -36,4 +36,9 @@
         android:id="@+id/activityMore"
         android:icon="@drawable/ic_more"
         android:title="@string/more" />
+
+    <item
+        android:id="@+id/fragmentLogout"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/logout" />
 </menu>
