@@ -95,8 +95,8 @@ public class ActivityVerificationMvvm extends AndroidViewModel {
     public void sendSmsCode(String lang, String phone_code, String phone, VerificationCodeActivity activity) {
 
         startTimer();
-        login(activity, phone_code, phone);
-     /*   mAuth.setLanguageCode(lang);
+       // login(activity, phone_code, phone);
+        mAuth.setLanguageCode(lang);
         PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
@@ -135,7 +135,6 @@ public class ActivityVerificationMvvm extends AndroidViewModel {
                 .build();
 
         PhoneAuthProvider.verifyPhoneNumber(options);
-*/
 
     }
 
