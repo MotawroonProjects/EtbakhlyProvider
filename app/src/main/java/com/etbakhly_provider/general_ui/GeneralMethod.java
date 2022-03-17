@@ -298,20 +298,8 @@ public class GeneralMethod {
             Context context = textView.getContext();
             String text = "";
             if (model.getOrder_id() != null && !model.getOrder_id().isEmpty()) {
-                if (model.getBody().equals("approval")) {
-                    text = context.getString(R.string.order_approved) + " " + model.getCaterer_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
-                } else if (model.getBody().equals("refusal")) {
-                    text = context.getString(R.string.order_refused) + " " + model.getCaterer_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
-
-                } else if (model.getBody().equals("making")) {
-                    text = context.getString(R.string.your_order_from) + " " + model.getCaterer_name() + " " + context.getString(R.string.order_num) + " #" + model.getOrder_id() + "\n" + context.getString(R.string.status_pending);
-
-                } else if (model.getBody().equals("delivery")) {
-                    text = context.getString(R.string.your_order_from) + " " + model.getCaterer_name() + " " + context.getString(R.string.order_num) + " #" + model.getOrder_id() + "\n" + context.getString(R.string.delivering);
-
-                } else if (model.getBody().equals("completed")) {
-                    text = context.getString(R.string.your_order_from) + " " + model.getCaterer_name() + " " + context.getString(R.string.order_num) + " #" + model.getOrder_id() + "\n" + context.getString(R.string.delivered2);
-
+                if (model.getBody().equals("new")) {
+                    text = model.getUser_name() + "\n" + context.getString(R.string.sent_order) + " " + context.getString(R.string.order_num) + " #" + model.getOrder_id();
                 } else {
                     text = model.getBody();
 

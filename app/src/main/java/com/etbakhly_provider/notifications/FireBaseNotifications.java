@@ -186,7 +186,6 @@ public class FireBaseNotifications extends FirebaseMessagingService {
             String text = "";
             if (body.equals("new")) {
                 text = user_name + "\n" + getString(R.string.sent_order) + " " + getString(R.string.order_num) + " #" + order_id;
-
             }
             notificationCompat.setContentTitle(title);
             notificationCompat.setContentText(text);
@@ -206,6 +205,7 @@ public class FireBaseNotifications extends FirebaseMessagingService {
             EventBus.getDefault().post(new NotiFire(true));
 
         } else {
+            Log.e("11", "11");
 
             notificationCompat.setContentTitle(title);
             notificationCompat.setContentText(body);
@@ -294,7 +294,8 @@ public class FireBaseNotifications extends FirebaseMessagingService {
             user_image = fromUser.getPhoto();
         }
 
-        ChatUserModel model = new ChatUserModel(getUserModel().getData().getId(), getUserModel().getData().getName(), getUserModel().getData().getPhone_code() + getUserModel().getData().getPhone(), getUserModel().getData().getPhone(), user_id, user_name, user_phone, user_image, address, latitude, longitude, order_id, total);
+
+        ChatUserModel model = new ChatUserModel(user_id, user_name, user_phone, user_image, getUserModel().getData().getId(), getUserModel().getData().getName(), getUserModel().getData().getPhone_code() + getUserModel().getData().getPhone(), getUserModel().getData().getPhoto(), address, latitude, longitude, order_id, total);
 
         return model;
 

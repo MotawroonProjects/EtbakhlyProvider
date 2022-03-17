@@ -21,6 +21,7 @@ public class BuffetModel implements Serializable {
     private String updated_at;
     private boolean isInCart = false;
     private int amountInCart = 0;
+    private KitchenModel caterer;
     private List<Category> categor_dishes;
 
 
@@ -127,5 +128,9 @@ public class BuffetModel implements Serializable {
         public void setId(String id) {
             this.id = id;
         }
+    }
+
+    public KitchenModel getCaterer() {
+        return caterer;
     }
 }

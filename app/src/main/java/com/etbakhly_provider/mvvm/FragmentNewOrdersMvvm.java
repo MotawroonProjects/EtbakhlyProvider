@@ -105,6 +105,7 @@ public class FragmentNewOrdersMvvm extends AndroidViewModel {
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
+        Log.e("status",status_order);
         Api.getService(Tags.base_url).changeStatusOrder(order_id, status_order, why_cancel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

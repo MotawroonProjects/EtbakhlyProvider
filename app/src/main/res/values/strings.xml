@@ -74,7 +74,7 @@
     <string name="delivery_address">Delivery Address</string>
     <string name="day_and_date">Day and date</string>
     <string name="price">Price</string>
-    <string name="what_is_the_reason_for_rejection">What is the reason for rejection</string>
+    <string name="what_is_the_reason_for_rejection">What is the reason for refuse</string>
     <string name="busy">Busy</string>
     <string name="the_place_is_not_in_my_delivery_areas">The place is not in my delivery areas</string>
     <string name="another_reason">Another reason</string>

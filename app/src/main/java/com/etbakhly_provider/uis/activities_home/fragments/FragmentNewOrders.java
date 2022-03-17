@@ -182,11 +182,13 @@ public class FragmentNewOrders extends BaseFragment {
         binding.radio3.setOnClickListener(view -> {
             reason = "";
             binding.anotherReason.setVisibility(View.VISIBLE);
+            Log.e("dd","ff");
         });
         binding.btnDone.setOnClickListener(view -> {
             if (binding.radio3.isChecked()) {
                 reason = binding.anotherReason.getText().toString();
                 if (!reason.isEmpty()) {
+                    dialog.dismiss();
                     binding.anotherReason.setError(null);
                     Common.CloseKeyBoard(activity, binding.anotherReason);
                     mvvm.changeStatusOrder(status, order_id, reason, activity);
@@ -195,10 +197,11 @@ public class FragmentNewOrders extends BaseFragment {
                     binding.anotherReason.setError(getString(R.string.field_required));
                 }
             } else {
+                dialog.dismiss();
+
                 mvvm.changeStatusOrder(status, order_id, reason, activity);
 
             }
-            dialog.dismiss();
 
         });
     }

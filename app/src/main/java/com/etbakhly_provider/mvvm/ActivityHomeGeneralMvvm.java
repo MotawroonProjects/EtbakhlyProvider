@@ -168,7 +168,6 @@ public class ActivityHomeGeneralMvvm extends AndroidViewModel {
         if (userModel == null) {
             return;
         }
-        Log.e("token", userModel.getFireBaseToken());
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
@@ -187,6 +186,7 @@ public class ActivityHomeGeneralMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<StatusResponse> response) {
                         dialog.dismiss();
+                        Log.e("error",response.body().getMessage().toString());
                         if (response.isSuccessful()) {
                             Log.e("status", response.body().getStatus() + "");
                             if (response.body() != null) {
@@ -210,7 +210,7 @@ public class ActivityHomeGeneralMvvm extends AndroidViewModel {
                     public void onError(@NonNull Throwable e) {
                         dialog.dismiss();
 
-                        Log.e("token", e.toString());
+                        Log.e("error", e.toString());
 
                     }
                 });

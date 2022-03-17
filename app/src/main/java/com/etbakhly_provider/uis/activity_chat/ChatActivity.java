@@ -160,7 +160,8 @@ public class ChatActivity extends BaseActivity {
     public void onNewMessage(MessageModel messageModel) {
         imagePath = "";
         mvvm.addNewMessage(messageModel);
-        adapter.notifyItemInserted(mvvm.onDataSuccess().getValue().size()-1);
+        adapter.notifyItemInserted(mvvm.onDataSuccess().getValue().size() - 1);
+        binding.recView.scrollToPosition(mvvm.onDataSuccess().getValue().size() - 1);
 
     }
 
@@ -198,6 +199,7 @@ public class ChatActivity extends BaseActivity {
 
 
     }
+
 
     private File getImageFile() {
         File imageFile = null;
